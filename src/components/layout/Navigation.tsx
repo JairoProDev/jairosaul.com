@@ -3,13 +3,15 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Brain, Menu, X } from 'lucide-react';
+import { Brain, Menu, X, Command, Settings } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { siteConfig } from '@/lib/config';
+import { usePlasticity } from './PlasticityProvider';
 
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
+  const { openCommandPalette, openSystemPanel } = usePlasticity();
 
   const isActive = (href: string) => {
     if (href === '/') {
@@ -33,7 +35,7 @@ export function Navigation() {
               <div className="absolute inset-0 rounded-full bg-acetylcholine-500/20 animate-pulse" />
             </div>
             <span className="font-serif text-xl font-semibold text-glutamate-500">
-              Cerebrum
+              Mastermind
             </span>
           </Link>
 
@@ -57,6 +59,24 @@ export function Navigation() {
                 <div className="absolute inset-0 bg-acetylcholine-500/10 rounded-lg opacity-0 hover:opacity-100 transition-opacity duration-200" />
               </Link>
             ))}
+          </div>
+
+          {/* Accesos Rápidos */}
+          <div className="hidden md:flex items-center space-x-2">
+            <button
+              onClick={openCommandPalette}
+              className="p-2 text-cortex-400 hover:text-acetylcholine-500 hover:bg-cortex-700 rounded-lg transition-colors"
+              title="Paleta de Comandos (⌘K)"
+            >
+              <Command className="h-5 w-5" />
+            </button>
+            <button
+              onClick={openSystemPanel}
+              className="p-2 text-cortex-400 hover:text-dopamine-500 hover:bg-cortex-700 rounded-lg transition-colors"
+              title="Panel del Sistema (⌘,)"
+            >
+              <Settings className="h-5 w-5" />
+            </button>
           </div>
 
           {/* Mobile menu button */}

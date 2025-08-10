@@ -219,7 +219,7 @@ export default function Cerebrum({ onRegionClick }: CerebrumProps) {
       
       {/* Overlay de información */}
       <div className="absolute top-8 left-8 text-white">
-        <h2 className="text-2xl font-bold mb-2">Cerebrum Digitalis</h2>
+        <h2 className="text-2xl font-bold mb-2">Mastermind Digitalis</h2>
         <p className="text-sm opacity-80">Navega por las regiones cerebrales para explorar el contenido</p>
       </div>
       

@@ -32,7 +32,7 @@ export default function HomePage() {
                 className="inline-flex items-center px-6 py-3 bg-acetylcholine-500 text-white rounded-lg font-medium hover:bg-acetylcholine-600 hover:scale-105 transition-all duration-200"
               >
                 <Brain className="mr-2 h-5 w-5" />
-                Explorar Cortex 3D
+                Explorar Cerebrum 3D
               </Link>
             </div>
           </div>

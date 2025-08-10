@@ -1,11 +1,11 @@
 import { SiteConfig } from '@/types/content';
 
 export const siteConfig: SiteConfig = {
-  title: 'Jairo Saúl Salas Quiñones',
+  title: 'Mastermind Digitalis - Jairo Saúl Salas Quiñones',
   description: 'Construyendo el futuro de la tecnología en Latinoamérica. Un sistema a la vez.',
   author: {
     name: 'Jairo Saúl Salas Quiñones',
-    email: 'jairo@jairosaul.com',
+    email: 'JairoProDev@gmail.com',
     bio: 'Fundador técnico obsesionado con eliminar la ineficiencia y crear oportunidades a través de sistemas tecnológicos. Aspiro a la excelencia, no a la mediocridad.',
     location: 'Cusco, Perú',
     avatar: '/images/jairo-avatar.jpg',
@@ -13,34 +13,49 @@ export const siteConfig: SiteConfig = {
   social: [
     {
       platform: 'LinkedIn',
-      url: 'https://linkedin.com/in/jairosaul',
+      url: 'https://linkedin.com/in/JairoSaulProDev',
       icon: 'linkedin',
     },
     {
       platform: 'Twitter',
-      url: 'https://twitter.com/jairosaul',
+      url: 'https://twitter.com/JairoSaulProDev',
       icon: 'twitter',
     },
     {
       platform: 'GitHub',
-      url: 'https://github.com/jairosaul',
+      url: 'https://github.com/JairoSaulProDev',
       icon: 'github',
     },
     {
       platform: 'YouTube',
-      url: 'https://youtube.com/@jairosaul',
+      url: 'https://youtube.com/@JairoSaulProDev',
       icon: 'youtube',
+    },
+    {
+      platform: 'Instagram',
+      url: 'https://instagram.com/JairoSaulProDev',
+      icon: 'instagram',
+    },
+    {
+      platform: 'TikTok',
+      url: 'https://tiktok.com/@JairoSaulProDev',
+      icon: 'tiktok',
+    },
+    {
+      platform: 'Pinterest',
+      url: 'https://pinterest.com/JairoSaulProDev',
+      icon: 'pinterest',
     },
   ],
   navigation: [
     {
-      label: 'Cerebrum',
+      label: 'Mastermind',
       href: '/',
-      description: 'La corteza principal - Tu declaración de intenciones',
+      description: 'El centro de control - Tu declaración de intenciones',
       icon: 'brain',
     },
     {
-      label: 'Cortex 3D',
+      label: 'Cerebrum 3D',
       href: '/cortex',
       description: 'Experiencia inmersiva - Navega por las regiones cerebrales',
       icon: 'brain',
