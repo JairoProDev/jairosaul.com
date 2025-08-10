@@ -1,6 +1,6 @@
 
 import Link from 'next/link';
-import { ArrowDown, Code, Lightbulb, BookOpen, MessageCircle, ExternalLink } from 'lucide-react';
+import { ArrowDown, Code, Lightbulb, BookOpen, MessageCircle, ExternalLink, Brain } from 'lucide-react';
 import { Navigation } from '@/components/layout/Navigation';
 import { siteConfig } from '@/lib/config';
 
@@ -22,10 +22,18 @@ export default function HomePage() {
               <span className="text-acetylcholine-500 font-medium">Un sistema a la vez.</span>
             </p>
 
-            <div className="flex justify-center">
+            <div className="flex flex-col items-center space-y-6">
               <div className="text-acetylcholine-500 animate-bounce">
                 <ArrowDown className="h-8 w-8" />
               </div>
+              
+              <Link
+                href="/cortex"
+                className="inline-flex items-center px-6 py-3 bg-acetylcholine-500 text-white rounded-lg font-medium hover:bg-acetylcholine-600 hover:scale-105 transition-all duration-200"
+              >
+                <Brain className="mr-2 h-5 w-5" />
+                Explorar Cortex 3D
+              </Link>
             </div>
           </div>
         </div>

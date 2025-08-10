@@ -40,6 +40,12 @@ export const siteConfig: SiteConfig = {
       icon: 'brain',
     },
     {
+      label: 'Cortex 3D',
+      href: '/cortex',
+      description: 'Experiencia inmersiva - Navega por las regiones cerebrales',
+      icon: 'brain',
+    },
+    {
       label: 'Manifiesto',
       href: '/manifiesto',
       description: 'Los principios fundamentales que guían mi visión',
