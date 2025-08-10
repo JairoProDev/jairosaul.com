@@ -23,6 +23,7 @@ export interface Project extends BaseContent {
     revenue?: number;
     growth?: string;
   };
+  content: string;
 }
 
 export interface Idea extends BaseContent {
