@@ -1,0 +1,110 @@
+'use client';
+
+import { useState } from 'react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { Brain, Menu, X } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { siteConfig } from '@/lib/config';
+
+export function Navigation() {
+  const [isOpen, setIsOpen] = useState(false);
+  const pathname = usePathname();
+
+  const isActive = (href: string) => {
+    if (href === '/') {
+      return pathname === '/';
+    }
+    return pathname.startsWith(href);
+  };
+
+  return (
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-cortex-900/80 backdrop-blur-md border-b border-cortex-700">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-16">
+          {/* Logo */}
+          <Link 
+            href="/" 
+            className="flex items-center space-x-2 group"
+            onClick={() => setIsOpen(false)}
+          >
+            <div className="relative hover:scale-110 transition-transform duration-200">
+              <Brain className="h-8 w-8 text-acetylcholine-500" />
+              <div className="absolute inset-0 rounded-full bg-acetylcholine-500/20 animate-pulse" />
+            </div>
+            <span className="font-serif text-xl font-semibold text-glutamate-500">
+              Cerebrum
+            </span>
+          </Link>
+
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center space-x-8">
+            {siteConfig.navigation.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={cn(
+                  "relative px-3 py-2 text-sm font-medium transition-colors duration-200",
+                  isActive(item.href)
+                    ? "text-acetylcholine-500"
+                    : "text-cortex-300 hover:text-glutamate-500"
+                )}
+              >
+                {item.label}
+                {isActive(item.href) && (
+                  <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-acetylcholine-500" />
+                )}
+                <div className="absolute inset-0 bg-acetylcholine-500/10 rounded-lg opacity-0 hover:opacity-100 transition-opacity duration-200" />
+              </Link>
+            ))}
+          </div>
+
+          {/* Mobile menu button */}
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="md:hidden p-2 rounded-lg text-cortex-300 hover:text-glutamate-500 hover:bg-cortex-800 transition-colors"
+          >
+            {isOpen ? (
+              <X className="h-6 w-6" />
+            ) : (
+              <Menu className="h-6 w-6" />
+            )}
+          </button>
+        </div>
+
+        {/* Mobile Navigation */}
+        {isOpen && (
+          <div className="md:hidden border-t border-cortex-700">
+            <div className="py-4 space-y-2">
+              {siteConfig.navigation.map((item, index) => (
+                <div
+                  key={item.href}
+                  className="fade-in"
+                  style={{ animationDelay: `${index * 100}ms` }}
+                >
+                  <Link
+                    href={item.href}
+                    onClick={() => setIsOpen(false)}
+                    className={cn(
+                      "block px-4 py-3 text-base font-medium rounded-lg transition-colors duration-200",
+                      isActive(item.href)
+                        ? "text-acetylcholine-500 bg-acetylcholine-500/10"
+                        : "text-cortex-300 hover:text-glutamate-500 hover:bg-cortex-800"
+                    )}
+                  >
+                    {item.label}
+                    {item.description && (
+                      <p className="text-sm text-cortex-400 mt-1">
+                        {item.description}
+                      </p>
+                    )}
+                  </Link>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    </nav>
+  );
+}
