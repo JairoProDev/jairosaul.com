@@ -16,20 +16,20 @@ const lora = Lora({
 });
 
 export const metadata: Metadata = {
-  title: "Mastermind Digitalis - Jairo Saúl Salas Quiñones",
+  title: "JairoSaul.com - Jairo Saúl Salas Quiñones",
   description: "Construyendo el futuro de la tecnología en Latinoamérica. Un sistema a la vez.",
   keywords: ['Jairo Saúl', 'tecnología', 'startups', 'Latinoamérica', 'fundador', 'desarrollo'],
   authors: [{ name: 'Jairo Saúl Salas Quiñones' }],
   creator: 'Jairo Saúl Salas Quiñones',
   openGraph: {
-    title: 'Mastermind Digitalis - Jairo Saúl Salas Quiñones',
+    title: 'JairoSaul.com - Jairo Saúl Salas Quiñones',
     description: 'Construyendo el futuro de la tecnología en Latinoamérica. Un sistema a la vez.',
     type: 'website',
     locale: 'es_ES',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Mastermind Digitalis - Jairo Saúl Salas Quiñones',
+    title: 'JairoSaul.com - Jairo Saúl Salas Quiñones',
     description: 'Construyendo el futuro de la tecnología en Latinoamérica. Un sistema a la vez.',
   },
 };

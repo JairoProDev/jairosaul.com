@@ -1,4 +1,4 @@
-# 🧠 Mastermind Digitalis
+# 🧠 JairoSaul.com
 
 > **Construyendo el futuro de la tecnología en Latinoamérica. Un sistema a la vez.**
 
@@ -6,7 +6,7 @@ El sitio web personal de Jairo Saúl Salas Quiñones - una embajada digital que 
 
 ## 🎯 Visión
 
-Mastermind Digitalis no es solo un sitio web personal. Es una declaración de intenciones, un laboratorio de ideas, y una plataforma de conexión estratégica. Cada elemento está diseñado para reflejar la filosofía de construcción de sistemas y la búsqueda de la excelencia.
+JairoSaul.com no es solo un sitio web personal. Es una declaración de intenciones, un laboratorio de ideas, y una plataforma de conexión estratégica. Cada elemento está diseñado para reflejar la filosofía de construcción de sistemas y la búsqueda de la excelencia.
 
 ## 🏗️ Arquitectura
 

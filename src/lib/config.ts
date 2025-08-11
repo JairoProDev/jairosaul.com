@@ -1,7 +1,7 @@
 import { SiteConfig } from '@/types/content';
 
 export const siteConfig: SiteConfig = {
-  title: 'Mastermind Digitalis - Jairo Saúl Salas Quiñones',
+  title: 'JairoSaul.com - Jairo Saúl Salas Quiñones',
   description: 'Construyendo el futuro de la tecnología en Latinoamérica. Un sistema a la vez.',
   author: {
     name: 'Jairo Saúl Salas Quiñones',
@@ -49,7 +49,7 @@ export const siteConfig: SiteConfig = {
   ],
   navigation: [
     {
-      label: 'Mastermind',
+      label: 'JairoSaul.com',
       href: '/',
       description: 'El centro de control - Tu declaración de intenciones',
       icon: 'brain',

@@ -25,3 +25,53 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+/* Animaciones CSS para el cerebro */
+@keyframes animate-pulse-slow {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+@keyframes animate-spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes animate-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-pulse-slow {
+  animation: animate-pulse-slow 3s ease-in-out infinite;
+}
+
+.animate-spin-slow {
+  animation: animate-spin-slow 8s linear infinite;
+}
+
+.animate-fade-in {
+  animation: animate-fade-in 0.3s ease-out forwards;
+}
+
+.animation-delay-300 {
+  animation-delay: 300ms;
+}
+
+.animation-delay-600 {
+  animation-delay: 600ms;
+}
+

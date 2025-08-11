@@ -1,12 +1,12 @@
 'use client';
 
-import { useRef, useState, useEffect } from 'react';
-import { Canvas, useFrame, useThree } from '@react-three/fiber';
+import { useRef, useState } from 'react';
+import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, Html } from '@react-three/drei';
 import * as THREE from 'three';
 import { brainRegions } from '@/lib/config';
 
-interface BrainRegionProps {
+interface BrainLobeProps {
   position: [number, number, number];
   color: string;
   name: string;
@@ -14,7 +14,7 @@ interface BrainRegionProps {
   onClick: () => void;
 }
 
-function BrainRegion({ position, color, name, description, onClick }: BrainRegionProps) {
+function BrainLobe({ position, color, name, description, onClick }: BrainLobeProps) {
   const meshRef = useRef<THREE.Mesh>(null);
   const [hovered, setHovered] = useState(false);
 
@@ -65,78 +65,7 @@ function BrainRegion({ position, color, name, description, onClick }: BrainRegio
   );
 }
 
-function NeuralConnections() {
-  const pointsRef = useRef<THREE.Points>(null);
-  const [points] = useState(() => {
-    const points = [];
-    for (let i = 0; i < 1000; i++) {
-      points.push(
-        (Math.random() - 0.5) * 20,
-        (Math.random() - 0.5) * 20,
-        (Math.random() - 0.5) * 20
-      );
-    }
-    return new Float32Array(points);
-  });
-
-  useFrame(() => {
-    if (pointsRef.current) {
-      pointsRef.current.rotation.y += 0.001;
-    }
-  });
-
-  return (
-    <points ref={pointsRef}>
-      <bufferGeometry>
-        <bufferAttribute
-          attach="attributes-position"
-          args={[points, 3]}
-        />
-      </bufferGeometry>
-      <pointsMaterial
-        size={0.05}
-        color="#4f46e5"
-        transparent
-        opacity={0.6}
-      />
-    </points>
-  );
-}
-
-function BrainWaves() {
-  const wavesRef = useRef<THREE.Mesh>(null);
-
-  useFrame((state) => {
-    if (wavesRef.current) {
-      wavesRef.current.rotation.y += 0.002;
-      const material = wavesRef.current.material as THREE.MeshBasicMaterial;
-      if (material) {
-        material.opacity = 0.3 + Math.sin(state.clock.elapsedTime * 2) * 0.1;
-      }
-    }
-  });
-
-  return (
-    <mesh ref={wavesRef}>
-      <sphereGeometry args={[8, 32, 32]} />
-      <meshBasicMaterial
-        color="#4f46e5"
-        transparent
-        opacity={0.3}
-        wireframe
-      />
-    </mesh>
-  );
-}
-
-function CerebrumScene({ onRegionClick }: { onRegionClick: (href: string) => void }) {
-  const { camera } = useThree();
-
-  useEffect(() => {
-    // Posición inicial de la cámara
-    camera.position.set(0, 0, 10);
-  }, [camera]);
-
+function SimpleBrainScene({ onRegionClick }: { onRegionClick: (href: string) => void }) {
   const regions = [
     {
       ...brainRegions.frontal,
@@ -163,23 +92,14 @@ function CerebrumScene({ onRegionClick }: { onRegionClick: (href: string) => voi
   return (
     <>
       {/* Luz ambiental */}
-      <ambientLight intensity={0.4} />
+      <ambientLight intensity={0.5} />
       
       {/* Luz direccional */}
       <directionalLight position={[10, 10, 5]} intensity={1} />
       
-      {/* Luz puntual para efectos dramáticos */}
-      <pointLight position={[0, 0, 5]} intensity={0.5} color="#4f46e5" />
-      
-      {/* Ondas cerebrales de fondo */}
-      <BrainWaves />
-      
-      {/* Conexiones neuronales */}
-      <NeuralConnections />
-      
       {/* Regiones cerebrales */}
       {regions.map((region) => (
-        <BrainRegion
+        <BrainLobe
           key={region.name}
           position={region.position}
           color={region.color}
@@ -203,18 +123,26 @@ function CerebrumScene({ onRegionClick }: { onRegionClick: (href: string) => voi
   );
 }
 
-interface CerebrumProps {
+interface SimpleBrainProps {
   onRegionClick: (href: string) => void;
 }
 
-export default function Cerebrum({ onRegionClick }: CerebrumProps) {
+export default function SimpleBrain({ onRegionClick }: SimpleBrainProps) {
+  console.log('SimpleBrain: renderizando componente');
+
   return (
     <div className="w-full h-screen relative">
       <Canvas
         camera={{ position: [0, 0, 10], fov: 75 }}
         style={{ background: 'linear-gradient(to bottom, #0f0f23, #1a1a2e)' }}
+        onError={(error) => {
+          console.error('Canvas error:', error);
+        }}
+        onCreated={() => {
+          console.log('Canvas creado exitosamente');
+        }}
       >
-        <CerebrumScene onRegionClick={onRegionClick} />
+        <SimpleBrainScene onRegionClick={onRegionClick} />
       </Canvas>
       
       {/* Overlay de información */}

@@ -35,7 +35,7 @@ export function Navigation() {
               <div className="absolute inset-0 rounded-full bg-acetylcholine-500/20 animate-pulse" />
             </div>
             <span className="font-serif text-xl font-semibold text-glutamate-500">
-              Mastermind
+              JairoSaulProDev
             </span>
           </Link>
 
