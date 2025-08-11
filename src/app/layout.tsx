@@ -17,20 +17,20 @@ const lora = Lora({
 
 export const metadata: Metadata = {
   title: "JairoSaul.com - Jairo Saúl Salas Quiñones",
-  description: "Construyendo el futuro de la tecnología en Latinoamérica. Un sistema a la vez.",
+  description: "Startup Founder | FullStack Software Engineer | Scientific Content Creator ",
   keywords: ['Jairo Saúl', 'tecnología', 'startups', 'Latinoamérica', 'fundador', 'desarrollo'],
   authors: [{ name: 'Jairo Saúl Salas Quiñones' }],
   creator: 'Jairo Saúl Salas Quiñones',
   openGraph: {
     title: 'JairoSaul.com - Jairo Saúl Salas Quiñones',
-    description: 'Construyendo el futuro de la tecnología en Latinoamérica. Un sistema a la vez.',
+    description: 'Startup Founder | FullStack Software Engineer | Scientific Content Creator ',
     type: 'website',
     locale: 'es_ES',
   },
   twitter: {
     card: 'summary_large_image',
     title: 'JairoSaul.com - Jairo Saúl Salas Quiñones',
-    description: 'Construyendo el futuro de la tecnología en Latinoamérica. Un sistema a la vez.',
+    description: 'Startup Founder | FullStack Software Engineer | Scientific Content Creator ',
   },
 };
 

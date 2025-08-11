@@ -2,7 +2,7 @@ import { SiteConfig } from '@/types/content';
 
 export const siteConfig: SiteConfig = {
   title: 'JairoSaul.com - Jairo Saúl Salas Quiñones',
-  description: 'Construyendo el futuro de la tecnología en Latinoamérica. Un sistema a la vez.',
+  description: 'Startup Founder | FullStack Software Engineer | Scientific Content Creator ',
   author: {
     name: 'Jairo Saúl Salas Quiñones',
     email: 'JairoProDev@gmail.com',

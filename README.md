@@ -1,6 +1,6 @@
 # 🧠 JairoSaul.com
 
-> **Construyendo el futuro de la tecnología en Latinoamérica. Un sistema a la vez.**
+> **Startup Founder | FullStack Software Engineer | Scientific Content Creator **
 
 El sitio web personal de Jairo Saúl Salas Quiñones - una embajada digital que combina diseño neuro-biónico con funcionalidad de élite para crear una experiencia única de navegación.
 
