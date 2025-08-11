@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Brain, Menu, X, Command, Settings } from 'lucide-react';
+import { Brain, Menu, X, Command, Settings, User, Code, Lightbulb, Eye, BookOpen, MessageCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { siteConfig } from '@/lib/config';
 import { usePlasticity } from './PlasticityProvider';
@@ -40,25 +40,40 @@ export function Navigation() {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
-            {siteConfig.navigation.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={cn(
-                  "relative px-3 py-2 text-sm font-medium transition-colors duration-200",
-                  isActive(item.href)
-                    ? "text-acetylcholine-500"
-                    : "text-cortex-300 hover:text-glutamate-500"
-                )}
-              >
-                {item.label}
-                {isActive(item.href) && (
-                  <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-acetylcholine-500" />
-                )}
-                <div className="absolute inset-0 bg-acetylcholine-500/10 rounded-lg opacity-0 hover:opacity-100 transition-opacity duration-200" />
-              </Link>
-            ))}
+          <div className="hidden md:flex items-center space-x-6">
+            {siteConfig.navigation.map((item) => {
+              const getIcon = () => {
+                switch (item.href) {
+                  case '/sobre-mi': return <User className="h-4 w-4" />;
+                  case '/proyectos': return <Code className="h-4 w-4" />;
+                  case '/ideas': return <Lightbulb className="h-4 w-4" />;
+                  case '/vision': return <Eye className="h-4 w-4" />;
+                  case '/cortex': return <Brain className="h-4 w-4" />;
+                  case '/manifiesto': return <BookOpen className="h-4 w-4" />;
+                  case '/contacto': return <MessageCircle className="h-4 w-4" />;
+                  default: return null;
+                }
+              };
+
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={cn(
+                    "relative inline-flex items-center space-x-2 px-3 py-2 text-sm font-medium transition-colors duration-200 rounded-lg",
+                    isActive(item.href)
+                      ? "text-acetylcholine-500 bg-acetylcholine-500/10"
+                      : "text-cortex-300 hover:text-glutamate-500 hover:bg-cortex-700"
+                  )}
+                >
+                  {getIcon()}
+                  <span>{item.label}</span>
+                  {isActive(item.href) && (
+                    <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-acetylcholine-500 rounded-full" />
+                  )}
+                </Link>
+              );
+            })}
           </div>
 
           {/* Accesos Rápidos */}

@@ -2,11 +2,11 @@ import { SiteConfig } from '@/types/content';
 
 export const siteConfig: SiteConfig = {
   title: 'JairoSaul.com - Jairo Saul Salas Quiñones',
-  description: 'Startup Founder | FullStack Software Engineer | Scientific Content Creator ',
+  description: 'Startup Technical Founder | FullStack Software Engineer | Business Developer | Scientific Content Creator',
   author: {
     name: 'Jairo Saul Salas Quiñones',
     email: 'JairoProDev@gmail.com',
-    bio: 'Software Engineer | Full Stack Developer | Startup Founder | Scientific Popularizer. Fundador técnico obsesionado con eliminar la ineficiencia y crear oportunidades a través de sistemas tecnológicos. Aspiro a la excelencia, no a la mediocridad.',
+    bio: 'Startup Technical Founder | FullStack Software Engineer | Business Developer | Scientific Content Creator. Fundador técnico obsesionado con eliminar la ineficiencia y crear oportunidades a través de sistemas tecnológicos. Aspiro a la excelencia, no a la mediocridad.',
     location: 'Cusco, Perú 🇵🇪 LATAM → World 🌐',
     phone: '+51 937 054 328',
     birthday: 'September 18, 2002',
@@ -99,8 +99,8 @@ export const siteConfig: SiteConfig = {
     },
   ],
   projects: {
-    featured: ['buscadis', 'publicadis', 'noticiadis'],
-    all: ['buscadis', 'publicadis', 'noticiadis'],
+    featured: ['buscadis', 'uplify', 'diveredu'],
+    all: ['buscadis', 'publicadis', 'noticiadis', 'uplify', 'diveredu', 'journews', 'playbook'],
   },
   ideas: {
     featured: [

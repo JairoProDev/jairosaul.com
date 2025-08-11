@@ -8,7 +8,7 @@ import { Navigation } from '@/components/layout/Navigation';
 const personalInfo = {
   name: "Jairo Saul",
   lastName: "Salas Quiñones",
-  title: "Software Engineer | Full Stack Developer | Startup Founder",
+  title: "Startup Technical Founder | FullStack Software Engineer | Business Developer | Scientific Content Creator",
   email: "JairoProDev@gmail.com",
   phone: "+51 937 054 328",
   birthday: "September 18, 2002",
