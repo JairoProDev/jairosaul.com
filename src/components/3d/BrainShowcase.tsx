@@ -3,7 +3,7 @@
 import { useMemo, useRef, useState, Suspense, useEffect } from 'react';
 import * as THREE from 'three';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { OrbitControls, Html } from '@react-three/drei';
+import { OrbitControls, Html, useGLTF } from '@react-three/drei';
 import type { OrbitControls as OrbitControlsImpl } from 'three-stdlib';
 import DNAHelix from './DNAHelix';
 
@@ -81,20 +81,102 @@ function createBrainMaterial() {
   return mat;
 }
 
+type BrainStyle = 'segmented' | 'wireframe' | 'crystal' | 'hologram' | 'lowpoly';
+
 function ProceduralBrain() {
   const meshRef = useRef<THREE.Mesh>(null);
-  // const materialRef = useRef<THREE.Material | null>(null); // not needed
 
   const geometry = useMemo(() => {
-    const geom = new THREE.IcosahedronGeometry(1, 6);
+    const geom = new THREE.IcosahedronGeometry(1, 8); // Más subdivisiones para más detalle
     const pos = geom.attributes.position as THREE.BufferAttribute;
+
+    const clamp = (v: number, a: number, b: number) => Math.min(b, Math.max(a, v));
+    const smoothstep = (e0: number, e1: number, x: number) => {
+      const t = clamp((x - e0) / (e1 - e0), 0, 1);
+      return t * t * (3 - 2 * t);
+    };
+
     for (let i = 0; i < pos.count; i++) {
-      const x = pos.getX(i); const y = pos.getY(i); const z = pos.getZ(i);
-      const r = Math.sqrt(x * x + y * y + z * z);
-      const folds = Math.sin(x * 8.0) * Math.cos(y * 7.0) * Math.sin(z * 9.0) * 0.06;
-      const scale = 1.0 + folds + (Math.sin(r * 12.0) * 0.03);
-      pos.setXYZ(i, x * scale, y * scale, z * scale);
+      const vx = pos.getX(i); const vy = pos.getY(i); const vz = pos.getZ(i);
+      const dir = new THREE.Vector3(vx, vy, vz).normalize();
+
+      // Forma base del cerebro: elipsoide asimétrico
+      const scaleX = 1.4; // Más ancho
+      const scaleY = 1.1; // Altura media
+      const scaleZ = 1.6; // Más profundo
+      let x = dir.x * scaleX;
+      let y = dir.y * scaleY;
+      let z = dir.z * scaleZ;
+
+      // Cisura longitudinal (división entre hemisferios)
+      const fissureDepth = 0.15;
+      const fissureWidth = 0.3;
+      const fissure = smoothstep(0, fissureWidth, Math.abs(dir.x));
+      const fissureEffect = (1 - fissure) * fissureDepth;
+      x *= (1 - fissureEffect);
+
+      // Lóbulos específicos
+      // Frontal (superior-anterior)
+      if (dir.y > 0.3 && dir.z > -0.2) {
+        const frontal = smoothstep(0.3, 0.8, dir.y) * smoothstep(-0.2, 0.5, dir.z);
+        const bulge = 0.12 * frontal;
+        x *= (1 + bulge * Math.abs(dir.x));
+        y *= (1 + bulge);
+      }
+
+      // Temporal (lateral)
+      if (Math.abs(dir.x) > 0.6 && dir.y < 0.2) {
+        const temporal = smoothstep(0.6, 0.9, Math.abs(dir.x)) * smoothstep(0.2, -0.3, dir.y);
+        const bulge = 0.08 * temporal;
+        x *= (1 + bulge);
+        z *= (1 + bulge * 0.5);
+      }
+
+      // Parietal (superior-posterior)
+      if (dir.y > 0.2 && dir.z < -0.3) {
+        const parietal = smoothstep(0.2, 0.7, dir.y) * smoothstep(-0.3, -0.8, dir.z);
+        const bulge = 0.10 * parietal;
+        y *= (1 + bulge);
+        z *= (1 + bulge * 0.3);
+      }
+
+      // Occipital (posterior)
+      if (dir.z < -0.5) {
+        const occipital = smoothstep(-0.5, -0.9, dir.z);
+        const bulge = 0.15 * occipital;
+        z *= (1 + bulge);
+        y *= (1 + bulge * 0.2);
+      }
+
+      // Cerebelo (inferior-posterior)
+      if (dir.y < -0.2 && dir.z < -0.2) {
+        const cerebellum = smoothstep(-0.2, -0.6, dir.y) * smoothstep(-0.2, -0.7, dir.z);
+        const bulge = 0.20 * cerebellum;
+        y *= (1 + bulge);
+        z *= (1 + bulge * 0.4);
+      }
+
+      // Tallo cerebral (inferior-central)
+      if (dir.y < -0.4 && Math.abs(dir.x) < 0.3) {
+        const stem = smoothstep(-0.4, -0.8, dir.y) * smoothstep(0.3, 0, Math.abs(dir.x));
+        const extension = 0.25 * stem;
+        y -= extension;
+        z *= (1 + extension * 0.2);
+      }
+
+      // Pliegues (gyri y sulci) con múltiples frecuencias
+      const g1 = Math.sin(x * 25.0) * Math.cos(y * 23.0) * Math.sin(z * 27.0) * 0.008;
+      const g2 = Math.sin(x * 45.0 + y * 5.0) * Math.cos(z * 43.0) * 0.005;
+      const g3 = Math.sin(y * 35.0 + z * 7.0) * Math.cos(x * 33.0) * 0.004;
+      const folds = g1 + g2 + g3;
+
+      // Aplicar deformación final
+      const radial = 1.0 + folds;
+      x *= radial; y *= radial; z *= radial;
+
+      pos.setXYZ(i, x, y, z);
     }
+
     geom.computeVertexNormals();
     return geom;
   }, []);
@@ -109,6 +191,132 @@ function ProceduralBrain() {
   const mat = useMemo(() => createBrainMaterial(), []);
 
   return <mesh ref={meshRef} geometry={geometry} material={mat} castShadow receiveShadow scale={1.05} />;
+}
+
+function GLBBrain({ style }: { style: BrainStyle }) {
+  const { scene } = useGLTF('/models/brain.glb');
+  const groupRef = useRef<THREE.Group>(null);
+
+  const mat = useMemo(() => {
+    if (style === 'crystal') {
+      const m = new THREE.MeshPhysicalMaterial({
+        color: new THREE.Color('#7dd3fc'),
+        roughness: 0.05,
+        metalness: 0.0,
+        clearcoat: 1.0,
+        clearcoatRoughness: 0.1,
+        transmission: 0.9,
+        ior: 1.52,
+        thickness: 1.2,
+        transparent: true,
+      });
+      return m;
+    }
+    return createBrainMaterial();
+  }, [style]);
+
+  useMemo(() => {
+    scene.traverse((obj) => {
+      if (obj instanceof THREE.Mesh) {
+        const mesh = obj as THREE.Mesh;
+        mesh.castShadow = true;
+        mesh.receiveShadow = true;
+        mesh.material = mat;
+      }
+    });
+  }, [scene, mat]);
+
+  useFrame((_, delta) => {
+    if (groupRef.current) groupRef.current.rotation.y += 0.003;
+    (mat as unknown as { tick?: (dt: number) => void }).tick?.(delta);
+  });
+
+  return <primitive ref={groupRef} object={scene} scale={1.05} />;
+}
+
+function SegmentedBrain() {
+  const meshRef = useRef<THREE.Mesh>(null);
+  const geometry = useMemo(() => {
+    const geom = new THREE.IcosahedronGeometry(1, 3); // lowpoly para ver facetas
+    const pos = geom.attributes.position as THREE.BufferAttribute;
+    const colors: number[] = [];
+    const colorA = new THREE.Color('#ef4444'); // rojo
+    const colorB = new THREE.Color('#10b981'); // verde
+    const colorC = new THREE.Color('#a78bfa'); // violeta
+    const colorD = new THREE.Color('#f59e0b'); // naranja
+    for (let i = 0; i < pos.count; i++) {
+      const v = new THREE.Vector3(pos.getX(i), pos.getY(i), pos.getZ(i)).normalize();
+      let c: THREE.Color;
+      if (v.x >= 0.15 && v.y >= 0) c = colorA; // frontal
+      else if (v.x < -0.05 && v.z > 0) c = colorB; // temporal
+      else if (v.y > 0.4) c = colorD; // parietal
+      else c = colorC; // occipital
+      colors.push(c.r, c.g, c.b);
+    }
+    geom.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
+    geom.computeVertexNormals();
+    return geom;
+  }, []);
+
+  useFrame(() => { if (meshRef.current) meshRef.current.rotation.y += 0.003; });
+
+  return (
+    <mesh ref={meshRef} geometry={geometry} scale={1.05} castShadow receiveShadow>
+      <meshStandardMaterial vertexColors roughness={0.35} metalness={0.05} />
+    </mesh>
+  );
+}
+
+function WireframeBrain() {
+  const group = useRef<THREE.Group>(null);
+  const baseGeom = useMemo(() => new THREE.IcosahedronGeometry(1, 3), []);
+  const edges = useMemo(() => new THREE.EdgesGeometry(baseGeom), [baseGeom]);
+  const positions = useMemo(() => baseGeom.attributes.position.array as Float32Array, [baseGeom]);
+  useFrame(() => { if (group.current) group.current.rotation.y += 0.003; });
+  return (
+    <group ref={group} scale={1.05}>
+      <points>
+        <bufferGeometry>
+          <bufferAttribute attach="attributes-position" args={[positions, 3]} />
+        </bufferGeometry>
+        <pointsMaterial color="#93c5fd" size={0.04} sizeAttenuation transparent opacity={0.9} depthWrite={false} blending={THREE.AdditiveBlending} />
+      </points>
+      <lineSegments geometry={edges}>
+        <lineBasicMaterial color="#60a5fa" transparent opacity={0.35} depthWrite={false} blending={THREE.AdditiveBlending} />
+      </lineSegments>
+    </group>
+  );
+}
+
+function HologramBrain() {
+  const { scene } = useGLTF('/models/brain_hologram.glb');
+  const groupRef = useRef<THREE.Group>(null);
+
+  useMemo(() => {
+    scene.traverse((obj) => {
+      if (obj instanceof THREE.Mesh) {
+        const mesh = obj as THREE.Mesh;
+        mesh.castShadow = true;
+        mesh.receiveShadow = true;
+        // Material holográfico con emisión
+        mesh.material = new THREE.MeshStandardMaterial({
+          color: new THREE.Color('#22d3ee'),
+          emissive: new THREE.Color('#3b82f6'),
+          emissiveIntensity: 0.8,
+          transparent: true,
+          opacity: 0.9,
+          metalness: 0.1,
+          roughness: 0.2,
+        });
+      }
+    });
+  }, [scene]);
+
+  useFrame((_, delta) => {
+    if (groupRef.current) groupRef.current.rotation.y += 0.003;
+  });
+
+  return <primitive ref={groupRef} object={scene} scale={1.05} />;
 }
 
 function NeuralParticles({ count = 1000 }: { count?: number }) {
@@ -172,7 +380,6 @@ function SynapseArcs({ arcs = 20 }: { arcs?: number }) {
             <tubeGeometry args={[t.curve, 32, 0.009, 8, false]} />
             <meshBasicMaterial color={t.color} transparent opacity={0.3} />
           </mesh>
-          {/* pulso luminoso que recorre el arco */}
           <PulseAlongCurve curve={t.curve} color={t.color} phase={t.phase} />
         </group>
       ))}
@@ -242,18 +449,52 @@ function RoboticArm() {
     group.current.rotation.z = Math.sin(clock.elapsedTime * 0.6) * 0.2;
   });
   return (
-    <group ref={group} position={[1.7, -0.6, -0.6]} rotation={[0, -0.5, 0]}>
+    <group ref={group} position={[2.2, -0.8, -0.8]} rotation={[0, -0.3, 0]}>
+      {/* Base */}
       <mesh castShadow>
-        <cylinderGeometry args={[0.05, 0.07, 0.6, 16]} />
-        <meshStandardMaterial color="#94a3b8" metalness={0.8} roughness={0.2} />
+        <cylinderGeometry args={[0.08, 0.12, 0.3, 16]} />
+        <meshStandardMaterial color="#374151" metalness={0.9} roughness={0.1} />
       </mesh>
-      <mesh position={[0, 0.4, 0]} castShadow>
-        <cylinderGeometry args={[0.04, 0.06, 0.5, 16]} />
-        <meshStandardMaterial color="#e2e8f0" metalness={0.7} roughness={0.3} />
+      
+      {/* Brazo principal */}
+      <mesh position={[0, 0.25, 0]} rotation={[0, 0, Math.PI / 6]} castShadow>
+        <boxGeometry args={[0.06, 0.8, 0.06]} />
+        <meshStandardMaterial color="#6b7280" metalness={0.8} roughness={0.2} />
       </mesh>
-      <mesh position={[0, 0.8, 0]} castShadow>
-        <sphereGeometry args={[0.08, 24, 24]} />
-        <meshStandardMaterial color="#60a5fa" emissive="#3b82f6" emissiveIntensity={0.7} />
+      
+      {/* Articulación */}
+      <mesh position={[0.2, 0.65, 0]} castShadow>
+        <sphereGeometry args={[0.08, 16, 16]} />
+        <meshStandardMaterial color="#9ca3af" metalness={0.7} roughness={0.3} />
+      </mesh>
+      
+      {/* Brazo secundario */}
+      <mesh position={[0.4, 0.65, 0]} rotation={[0, 0, -Math.PI / 4]} castShadow>
+        <boxGeometry args={[0.05, 0.6, 0.05]} />
+        <meshStandardMaterial color="#6b7280" metalness={0.8} roughness={0.2} />
+      </mesh>
+      
+      {/* Pinza */}
+      <group position={[0.6, 0.35, 0]}>
+        <mesh castShadow>
+          <cylinderGeometry args={[0.04, 0.06, 0.2, 8]} />
+          <meshStandardMaterial color="#d1d5db" metalness={0.6} roughness={0.4} />
+        </mesh>
+        {/* Dedos de la pinza */}
+        <mesh position={[0.02, 0.15, 0]} rotation={[0, 0, Math.PI / 8]} castShadow>
+          <boxGeometry args={[0.02, 0.15, 0.02]} />
+          <meshStandardMaterial color="#9ca3af" metalness={0.7} roughness={0.3} />
+        </mesh>
+        <mesh position={[-0.02, 0.15, 0]} rotation={[0, 0, -Math.PI / 8]} castShadow>
+          <boxGeometry args={[0.02, 0.15, 0.02]} />
+          <meshStandardMaterial color="#9ca3af" metalness={0.7} roughness={0.3} />
+        </mesh>
+      </group>
+      
+      {/* Luz de estado */}
+      <mesh position={[0.2, 0.65, 0.1]} castShadow>
+        <sphereGeometry args={[0.03, 12, 12]} />
+        <meshStandardMaterial color="#60a5fa" emissive="#3b82f6" emissiveIntensity={0.8} />
       </mesh>
     </group>
   );
@@ -267,11 +508,10 @@ function BrainScene({ onFocus }: { onFocus: (lobe: typeof LOBES[number]) => void
       <directionalLight position={[-6, 5, -3]} intensity={0.6} />
 
       <group>
-        <ProceduralBrain />
         <NeuralParticles />
         <SynapseArcs />
         <LobeHotspots onFocus={onFocus} />
-        <DNAHelix position={[-1.6, -0.1, 0.6]} scale={0.85} />
+        <DNAHelix position={[-2.5, 0, 0]} scale={0.8} />
         <RoboticArm />
       </group>
     </>
@@ -309,11 +549,22 @@ function CameraTransition({
 }
 
 export default function BrainShowcase() {
+  const [hasModel, setHasModel] = useState<boolean | null>(null);
+  const [style, setStyle] = useState<BrainStyle>('wireframe');
   const cameraRef = useRef<THREE.PerspectiveCamera>(null);
   const controlsRef = useRef<OrbitControlsImpl | null>(null);
   const transitionRef = useRef<{
     t: number; dur: number; startPos: THREE.Vector3; startTarget: THREE.Vector3; endPos: THREE.Vector3; endTarget: THREE.Vector3; href?: string;
   } | null>(null);
+
+  // Comprobar si existe el GLB para usarlo; fallback a procedimental
+  useEffect(() => {
+    let mounted = true;
+    fetch('/models/brain.glb', { method: 'HEAD' })
+      .then((r) => mounted && setHasModel(r.ok))
+      .catch(() => mounted && setHasModel(false));
+    return () => { mounted = false; };
+  }, []);
 
   const startTransition = (lobe: typeof LOBES[number]) => {
     const cam = cameraRef.current as THREE.PerspectiveCamera;
@@ -342,10 +593,40 @@ export default function BrainShowcase() {
       >
         <Suspense fallback={null}>
           <BrainScene onFocus={startTransition} />
+          {/* Elegimos estilo/modelo */}
+          {style === 'segmented' ? (
+            <SegmentedBrain />
+          ) : style === 'wireframe' ? (
+            <WireframeBrain />
+          ) : style === 'hologram' ? (
+            <HologramBrain />
+          ) : hasModel ? (
+            <GLBBrain style={style} />
+          ) : (
+            <ProceduralBrain />
+          )}
         </Suspense>
-        <OrbitControls ref={controlsRef as unknown as React.RefObject<OrbitControlsImpl>} enablePan={false} minDistance={2.2} maxDistance={6} autoRotate autoRotateSpeed={0.5} />
+        <OrbitControls ref={controlsRef as unknown as React.RefObject<OrbitControlsImpl>} enablePan={false} minDistance={2.2} maxDistance={6} autoRotate autoRotateSpeed={0.35} />
         <CameraTransition cameraRef={cameraRef} controlsRef={controlsRef} transitionRef={transitionRef} />
       </Canvas>
+      {/* HUD de estilos */}
+      <div className="pointer-events-auto absolute left-4 bottom-4 z-20 flex gap-2 text-xs">
+        {([
+          { k: 'segmented', label: 'Segmentado' },
+          { k: 'wireframe', label: 'Wireframe' },
+          { k: 'hologram', label: 'Holograma' },
+          { k: 'crystal', label: 'Cristal' },
+          { k: 'lowpoly', label: 'Low‑poly' },
+        ] as { k: BrainStyle; label: string }[]).map((opt) => (
+          <button
+            key={opt.k}
+            onClick={() => setStyle(opt.k)}
+            className={`px-2 py-1 rounded-md border ${style === opt.k ? 'bg-acetylcholine-500/20 border-acetylcholine-500 text-white' : 'bg-cortex-800/70 border-cortex-700 text-cortex-200'} backdrop-blur`}
+          >
+            {opt.label}
+          </button>
+        ))}
+      </div>
     </div>
   );
 }
