@@ -39,7 +39,7 @@ export default function HomePage() {
                       className="btn-quantum inline-flex items-center px-6 py-3 bg-gradient-to-r from-acetylcholine-500 to-emerald-500 text-white rounded-xl font-semibold hover:from-acetylcholine-600 hover:to-emerald-600 transition-all duration-300 transform hover:scale-105"
                     >
                       <Brain className="mr-2 h-5 w-5" />
-                      Explorar Cerebrum 3D
+                      Explorar Brain 3D
                     </Link>
                     <Link
                       href="/proyectos"
@@ -95,7 +95,7 @@ export default function HomePage() {
             </h2>
                           <p className="text-base md:text-lg text-cortex-200 leading-relaxed max-w-3xl mx-auto">
               Mi filosofía central es <span className="text-emerald-400 font-medium">"La Reconstrucción"</span>. 
-              Habiendo identificado 170 áreas de mejora en mi vida, estoy en un proceso diario y disciplinado 
+              Habiendo identificado +100 áreas de mejora en mi vida, estoy en un proceso diario y disciplinado 
               de transformación radical. Mi misión es doble: construir sistemas tecnológicos que empoderen a otros 
               y usar mi propia vida como laboratorio para la superación humana.
             </p>
@@ -103,7 +103,7 @@ export default function HomePage() {
               href="/manifiesto"
               className="inline-flex items-center mt-4 px-5 py-2 bg-emerald-600 text-white rounded-lg font-medium hover:bg-emerald-700 transition-colors"
             >
-              Leer mi manifiesto completo
+              Leer el manifiesto completo
               <BookOpen className="ml-2 h-4 w-4" />
             </Link>
           </div>
@@ -217,7 +217,7 @@ export default function HomePage() {
               </div>
               <p className="text-cortex-300 mb-6">
                 <span className="text-emerald-400 font-medium">El Explorador</span> - 
-                Mi laboratorio de reconstrucción: Plan de 170 Días, hábitos del 1% superior, 
+                Mi laboratorio de reconstrucción: Plan de +100 Días, hábitos del 1% superior, 
                 filosofía antifragil y el diseño sistemático de una vida extraordinaria.
               </p>
               <div className="space-y-2">

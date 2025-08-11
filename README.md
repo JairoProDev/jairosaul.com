@@ -1,6 +1,6 @@
 # 🧠 JairoSaul.com
 
-> **Startup Founder | FullStack Software Engineer | Scientific Content Creator **
+> **Startup Technical Founder | FullStack Software Engineer | Business Developer | Scientific Content Creator **
 
 El sitio web personal de Jairo Saul Salas Quiñones - una embajada digital que combina diseño neuro-biónico con funcionalidad de élite para crear una experiencia única de navegación.
 
@@ -93,8 +93,8 @@ src/
 
 ```bash
 # Clonar el repositorio
-git clone https://github.com/jairosaul/cerebrum-digitalis.git
-cd cerebrum-digitalis
+git clone https://github.com/jairosaul/brain-digitalis.git
+cd brain-digitalis
 
 # Instalar dependencias
 npm install
@@ -220,7 +220,7 @@ Este proyecto está bajo la Licencia MIT. Ver `LICENSE` para más detalles.
 
 ## 🧠 Filosofía del Proyecto
 
-Cerebrum Digitalis representa más que un sitio web. Es una manifestación de:
+Brain Digitalis representa más que un sitio web. Es una manifestación de:
 
 - **Claridad Manifiesta**: Cada elemento tiene un propósito
 - **Complejidad Revelada**: La sofisticación está en los detalles

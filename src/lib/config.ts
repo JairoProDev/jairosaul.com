@@ -80,7 +80,7 @@ export const siteConfig: SiteConfig = {
       icon: 'eye',
     },
     {
-      label: 'Cerebrum 3D',
+      label: 'Brain 3D',
       href: '/cortex',
       description: 'Experiencia inmersiva - Navega por las regiones cerebrales',
       icon: 'brain',
