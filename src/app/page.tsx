@@ -166,9 +166,48 @@ export default function HomePage() {
       {/* Mi Filosofía - Layout Intercalado */}
       <section className="py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
-            {/* Tarjeta de Filosofía */}
-            <div className="lg:col-span-2 bg-cortex-800/30 backdrop-blur-sm border border-cortex-700 rounded-2xl p-8 fade-in">
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 items-start">
+            {/* Componente 1: Proyectos y Startups */}
+            <div className="lg:col-span-1 bg-cortex-800/30 backdrop-blur-sm border border-cortex-700 rounded-2xl p-6 fade-in">
+              <div className="flex items-start space-x-4">
+                <div className="flex-shrink-0">
+                  <div className="w-12 h-12 bg-acetylcholine-500 rounded-full flex items-center justify-center">
+                    <Code className="w-6 h-6 text-white" />
+                  </div>
+                </div>
+                <div className="flex-1">
+                  <h3 className="font-serif text-lg font-bold text-white mb-3">
+                    Proyectos Activos
+                  </h3>
+                  <p className="text-cortex-300 text-sm mb-4">
+                    Startups y aplicaciones en desarrollo activo
+                  </p>
+                  <div className="space-y-2 text-cortex-200">
+                    <div className="flex items-start space-x-2">
+                      <div className="w-1.5 h-1.5 bg-acetylcholine-400 rounded-full mt-2 flex-shrink-0"></div>
+                      <p className="text-xs">
+                        <span className="text-acetylcholine-400 font-medium">Buscadis</span> - Marketplace inteligente
+                      </p>
+                    </div>
+                    <div className="flex items-start space-x-2">
+                      <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full mt-2 flex-shrink-0"></div>
+                      <p className="text-xs">
+                        <span className="text-emerald-400 font-medium">DiverEdu</span> - Educación personalizada
+                      </p>
+                    </div>
+                    <div className="flex items-start space-x-2">
+                      <div className="w-1.5 h-1.5 bg-cyber-400 rounded-full mt-2 flex-shrink-0"></div>
+                      <p className="text-xs">
+                        <span className="text-cyber-400 font-medium">Uplify</span> - Plataforma de contenido
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Componente 2: Filosofía y Sistema de Pensamiento */}
+            <div className="lg:col-span-1 bg-cortex-800/30 backdrop-blur-sm border border-cortex-700 rounded-2xl p-6 fade-in">
               <div className="flex items-start space-x-4">
                 <div className="flex-shrink-0">
                   <div className="w-12 h-12 bg-emerald-500 rounded-full flex items-center justify-center">
@@ -178,26 +217,29 @@ export default function HomePage() {
                   </div>
                 </div>
                 <div className="flex-1">
-                  <h2 className="font-serif text-xl md:text-2xl font-bold text-white mb-3">
-                    Mi Filosofía: &ldquo;La Reconstrucción&rdquo;
-                  </h2>
-                  <div className="space-y-3 text-cortex-200">
+                  <h3 className="font-serif text-lg font-bold text-white mb-3">
+                    Sistema de Pensamiento
+                  </h3>
+                  <p className="text-cortex-300 text-sm mb-4">
+                    Filosofía para la excelencia personal y profesional
+                  </p>
+                  <div className="space-y-2 text-cortex-200">
                     <div className="flex items-start space-x-2">
                       <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full mt-2 flex-shrink-0"></div>
-                      <p className="text-sm">
-                        <span className="text-emerald-400 font-medium">Transformación radical</span> documentada día a día
+                      <p className="text-xs">
+                        <span className="text-emerald-400 font-medium">ProDev</span> - Excelencia profesional
                       </p>
                     </div>
                     <div className="flex items-start space-x-2">
                       <div className="w-1.5 h-1.5 bg-acetylcholine-400 rounded-full mt-2 flex-shrink-0"></div>
-                      <p className="text-sm">
-                        <span className="text-acetylcholine-400 font-medium">Sistema operativo</span> para la superación humana
+                      <p className="text-xs">
+                        <span className="text-acetylcholine-400 font-medium">GrowHack</span> - Superación personal
                       </p>
                     </div>
                     <div className="flex items-start space-x-2">
                       <div className="w-1.5 h-1.5 bg-cyber-400 rounded-full mt-2 flex-shrink-0"></div>
-                      <p className="text-sm">
-                        <span className="text-cyber-400 font-medium">Mi vida como laboratorio</span> de excelencia personal
+                      <p className="text-xs">
+                        <span className="text-cyber-400 font-medium">Antifragilidad</span> - Resiliencia mental
                       </p>
                     </div>
                   </div>
@@ -205,10 +247,49 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Brain 3D Interactive */}
-            <div className="flex justify-center items-center h-80 md:h-96 fade-in">
+            {/* Brain 3D Interactive - Contenedor central */}
+            <div className="lg:col-span-2 flex justify-center items-center h-80 md:h-96 fade-in">
               <div className="w-full h-full">
                 <Brain3DInteractive />
+              </div>
+            </div>
+
+            {/* Componente 3: Experiencia y Contenido */}
+            <div className="lg:col-span-1 bg-cortex-800/30 backdrop-blur-sm border border-cortex-700 rounded-2xl p-6 fade-in">
+              <div className="flex items-start space-x-4">
+                <div className="flex-shrink-0">
+                  <div className="w-12 h-12 bg-cyber-500 rounded-full flex items-center justify-center">
+                    <Brain className="w-6 h-6 text-white" />
+                  </div>
+                </div>
+                <div className="flex-1">
+                  <h3 className="font-serif text-lg font-bold text-white mb-3">
+                    Experiencia 3D
+                  </h3>
+                  <p className="text-cortex-300 text-sm mb-4">
+                    Exploración interactiva y contenido científico
+                  </p>
+                  <div className="space-y-2 text-cortex-200">
+                    <div className="flex items-start space-x-2">
+                      <div className="w-1.5 h-1.5 bg-cyber-400 rounded-full mt-2 flex-shrink-0"></div>
+                      <p className="text-xs">
+                        <span className="text-cyber-400 font-medium">Brain 3D</span> - Cerebro interactivo
+                      </p>
+                    </div>
+                    <div className="flex items-start space-x-2">
+                      <div className="w-1.5 h-1.5 bg-acetylcholine-400 rounded-full mt-2 flex-shrink-0"></div>
+                      <p className="text-xs">
+                        <span className="text-acetylcholine-400 font-medium">Ideas</span> - Blog y filosofía
+                      </p>
+                    </div>
+                    <div className="flex items-start space-x-2">
+                      <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full mt-2 flex-shrink-0"></div>
+                      <p className="text-xs">
+                        <span className="text-emerald-400 font-medium">Conexiones</span> - Redes y contacto
+                      </p>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
