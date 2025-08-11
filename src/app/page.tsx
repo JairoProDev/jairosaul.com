@@ -91,8 +91,9 @@ export default function HomePage() {
                   {/* Enhanced Content */}
                   <div className="text-center lg:text-left space-y-6">
                     <div>
-                      <h1 className="font-serif text-3xl md:text-5xl lg:text-6xl font-bold bg-gradient-to-br from-white via-slate-200 to-slate-300 bg-clip-text text-transparent mb-4 leading-tight">
-                        Ing. Jairo Saul Salas Quiñones
+                      <h1 className="font-serif text-3xl md:text-5xl lg:text-6xl font-bold mb-4 leading-tight">
+                        <span className="bg-gradient-to-r from-acetylcholine-400 to-emerald-400 bg-clip-text text-transparent">Ing.</span>{" "}
+                        <span className="bg-gradient-to-br from-white via-slate-200 to-slate-300 bg-clip-text text-transparent">Jairo Saul Salas Quiñones</span>
                       </h1>
                       
                       <div className="text-lg md:text-xl lg:text-2xl leading-relaxed space-y-2">
@@ -166,127 +167,171 @@ export default function HomePage() {
       {/* Mi Filosofía - Layout Intercalado */}
       <section className="py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 items-start">
-            {/* Componente 1: Proyectos y Startups */}
-            <div className="lg:col-span-1 bg-cortex-800/30 backdrop-blur-sm border border-cortex-700 rounded-2xl p-6 fade-in">
-              <div className="flex items-start space-x-4">
-                <div className="flex-shrink-0">
-                  <div className="w-12 h-12 bg-acetylcholine-500 rounded-full flex items-center justify-center">
-                    <Code className="w-6 h-6 text-white" />
-                  </div>
-                </div>
-                <div className="flex-1">
-                  <h3 className="font-serif text-lg font-bold text-white mb-3">
-                    Proyectos Activos
-                  </h3>
-                  <p className="text-cortex-300 text-sm mb-4">
-                    Startups y aplicaciones en desarrollo activo
-                  </p>
-                  <div className="space-y-2 text-cortex-200">
-                    <div className="flex items-start space-x-2">
-                      <div className="w-1.5 h-1.5 bg-acetylcholine-400 rounded-full mt-2 flex-shrink-0"></div>
-                      <p className="text-xs">
-                        <span className="text-acetylcholine-400 font-medium">Buscadis</span> - Marketplace inteligente
-                      </p>
-                    </div>
-                    <div className="flex items-start space-x-2">
-                      <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full mt-2 flex-shrink-0"></div>
-                      <p className="text-xs">
-                        <span className="text-emerald-400 font-medium">DiverEdu</span> - Educación personalizada
-                      </p>
-                    </div>
-                    <div className="flex items-start space-x-2">
-                      <div className="w-1.5 h-1.5 bg-cyber-400 rounded-full mt-2 flex-shrink-0"></div>
-                      <p className="text-xs">
-                        <span className="text-cyber-400 font-medium">Uplify</span> - Plataforma de contenido
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Componente 2: Filosofía y Sistema de Pensamiento */}
-            <div className="lg:col-span-1 bg-cortex-800/30 backdrop-blur-sm border border-cortex-700 rounded-2xl p-6 fade-in">
-              <div className="flex items-start space-x-4">
-                <div className="flex-shrink-0">
-                  <div className="w-12 h-12 bg-emerald-500 rounded-full flex items-center justify-center">
-                    <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                    </svg>
-                  </div>
-                </div>
-                <div className="flex-1">
-                  <h3 className="font-serif text-lg font-bold text-white mb-3">
-                    Sistema de Pensamiento
-                  </h3>
-                  <p className="text-cortex-300 text-sm mb-4">
-                    Filosofía para la excelencia personal y profesional
-                  </p>
-                  <div className="space-y-2 text-cortex-200">
-                    <div className="flex items-start space-x-2">
-                      <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full mt-2 flex-shrink-0"></div>
-                      <p className="text-xs">
-                        <span className="text-emerald-400 font-medium">ProDev</span> - Excelencia profesional
-                      </p>
-                    </div>
-                    <div className="flex items-start space-x-2">
-                      <div className="w-1.5 h-1.5 bg-acetylcholine-400 rounded-full mt-2 flex-shrink-0"></div>
-                      <p className="text-xs">
-                        <span className="text-acetylcholine-400 font-medium">GrowHack</span> - Superación personal
-                      </p>
-                    </div>
-                    <div className="flex items-start space-x-2">
-                      <div className="w-1.5 h-1.5 bg-cyber-400 rounded-full mt-2 flex-shrink-0"></div>
-                      <p className="text-xs">
-                        <span className="text-cyber-400 font-medium">Antifragilidad</span> - Resiliencia mental
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Brain 3D Interactive - Contenedor central */}
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 items-start">
+            {/* Brain 3D Interactive - Contenedor izquierdo */}
             <div className="lg:col-span-2 flex justify-center items-center h-80 md:h-96 fade-in">
               <div className="w-full h-full">
                 <Brain3DInteractive />
               </div>
             </div>
 
-            {/* Componente 3: Experiencia y Contenido */}
-            <div className="lg:col-span-1 bg-cortex-800/30 backdrop-blur-sm border border-cortex-700 rounded-2xl p-6 fade-in">
-              <div className="flex items-start space-x-4">
-                <div className="flex-shrink-0">
-                  <div className="w-12 h-12 bg-cyber-500 rounded-full flex items-center justify-center">
-                    <Brain className="w-6 h-6 text-white" />
+            {/* Componentes en grid 2x2 a la derecha */}
+            <div className="lg:col-span-2">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 h-full">
+                {/* Componente 1: Proyectos y Startups */}
+                <div className="bg-cortex-800/30 backdrop-blur-sm border border-cortex-700 rounded-2xl p-4 fade-in">
+                  <div className="flex items-start space-x-3">
+                    <div className="flex-shrink-0">
+                      <div className="w-10 h-10 bg-acetylcholine-500 rounded-full flex items-center justify-center">
+                        <Code className="w-5 h-5 text-white" />
+                      </div>
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="font-serif text-base font-bold text-white mb-2">
+                        Proyectos Activos
+                      </h3>
+                      <p className="text-cortex-300 text-xs mb-3">
+                        Startups y aplicaciones en desarrollo activo
+                      </p>
+                      <div className="space-y-1 text-cortex-200">
+                        <div className="flex items-start space-x-2">
+                          <div className="w-1 h-1 bg-acetylcholine-400 rounded-full mt-1.5 flex-shrink-0"></div>
+                          <p className="text-xs">
+                            <span className="text-acetylcholine-400 font-medium">Buscadis</span> - Marketplace
+                          </p>
+                        </div>
+                        <div className="flex items-start space-x-2">
+                          <div className="w-1 h-1 bg-emerald-400 rounded-full mt-1.5 flex-shrink-0"></div>
+                          <p className="text-xs">
+                            <span className="text-emerald-400 font-medium">DiverEdu</span> - Educación
+                          </p>
+                        </div>
+                        <div className="flex items-start space-x-2">
+                          <div className="w-1 h-1 bg-cyber-400 rounded-full mt-1.5 flex-shrink-0"></div>
+                          <p className="text-xs">
+                            <span className="text-cyber-400 font-medium">Uplify</span> - Contenido
+                          </p>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <div className="flex-1">
-                  <h3 className="font-serif text-lg font-bold text-white mb-3">
-                    Experiencia 3D
-                  </h3>
-                  <p className="text-cortex-300 text-sm mb-4">
-                    Exploración interactiva y contenido científico
-                  </p>
-                  <div className="space-y-2 text-cortex-200">
-                    <div className="flex items-start space-x-2">
-                      <div className="w-1.5 h-1.5 bg-cyber-400 rounded-full mt-2 flex-shrink-0"></div>
-                      <p className="text-xs">
-                        <span className="text-cyber-400 font-medium">Brain 3D</span> - Cerebro interactivo
-                      </p>
+
+                {/* Componente 2: Filosofía y Sistema de Pensamiento */}
+                <div className="bg-cortex-800/30 backdrop-blur-sm border border-cortex-700 rounded-2xl p-4 fade-in">
+                  <div className="flex items-start space-x-3">
+                    <div className="flex-shrink-0">
+                      <div className="w-10 h-10 bg-emerald-500 rounded-full flex items-center justify-center">
+                        <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                        </svg>
+                      </div>
                     </div>
-                    <div className="flex items-start space-x-2">
-                      <div className="w-1.5 h-1.5 bg-acetylcholine-400 rounded-full mt-2 flex-shrink-0"></div>
-                      <p className="text-xs">
-                        <span className="text-acetylcholine-400 font-medium">Ideas</span> - Blog y filosofía
+                    <div className="flex-1">
+                      <h3 className="font-serif text-base font-bold text-white mb-2">
+                        Sistema de Pensamiento
+                      </h3>
+                      <p className="text-cortex-300 text-xs mb-3">
+                        Filosofía para la excelencia personal y profesional
                       </p>
+                      <div className="space-y-1 text-cortex-200">
+                        <div className="flex items-start space-x-2">
+                          <div className="w-1 h-1 bg-emerald-400 rounded-full mt-1.5 flex-shrink-0"></div>
+                          <p className="text-xs">
+                            <span className="text-emerald-400 font-medium">ProDev</span> - Excelencia
+                          </p>
+                        </div>
+                        <div className="flex items-start space-x-2">
+                          <div className="w-1 h-1 bg-acetylcholine-400 rounded-full mt-1.5 flex-shrink-0"></div>
+                          <p className="text-xs">
+                            <span className="text-acetylcholine-400 font-medium">GrowHack</span> - Superación
+                          </p>
+                        </div>
+                        <div className="flex items-start space-x-2">
+                          <div className="w-1 h-1 bg-cyber-400 rounded-full mt-1.5 flex-shrink-0"></div>
+                          <p className="text-xs">
+                            <span className="text-cyber-400 font-medium">Antifragilidad</span> - Resiliencia
+                          </p>
+                        </div>
+                      </div>
                     </div>
-                    <div className="flex items-start space-x-2">
-                      <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full mt-2 flex-shrink-0"></div>
-                      <p className="text-xs">
-                        <span className="text-emerald-400 font-medium">Conexiones</span> - Redes y contacto
+                  </div>
+                </div>
+
+                {/* Componente 3: Experiencia y Contenido */}
+                <div className="bg-cortex-800/30 backdrop-blur-sm border border-cortex-700 rounded-2xl p-4 fade-in">
+                  <div className="flex items-start space-x-3">
+                    <div className="flex-shrink-0">
+                      <div className="w-10 h-10 bg-cyber-500 rounded-full flex items-center justify-center">
+                        <Brain className="w-5 h-5 text-white" />
+                      </div>
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="font-serif text-base font-bold text-white mb-2">
+                        Experiencia 3D
+                      </h3>
+                      <p className="text-cortex-300 text-xs mb-3">
+                        Exploración interactiva y contenido científico
                       </p>
+                      <div className="space-y-1 text-cortex-200">
+                        <div className="flex items-start space-x-2">
+                          <div className="w-1 h-1 bg-cyber-400 rounded-full mt-1.5 flex-shrink-0"></div>
+                          <p className="text-xs">
+                            <span className="text-cyber-400 font-medium">Brain 3D</span> - Interactivo
+                          </p>
+                        </div>
+                        <div className="flex items-start space-x-2">
+                          <div className="w-1 h-1 bg-acetylcholine-400 rounded-full mt-1.5 flex-shrink-0"></div>
+                          <p className="text-xs">
+                            <span className="text-acetylcholine-400 font-medium">Ideas</span> - Blog
+                          </p>
+                        </div>
+                        <div className="flex items-start space-x-2">
+                          <div className="w-1 h-1 bg-emerald-400 rounded-full mt-1.5 flex-shrink-0"></div>
+                          <p className="text-xs">
+                            <span className="text-emerald-400 font-medium">Conexiones</span> - Redes
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Componente 4: Nuevo componente */}
+                <div className="bg-cortex-800/30 backdrop-blur-sm border border-cortex-700 rounded-2xl p-4 fade-in">
+                  <div className="flex items-start space-x-3">
+                    <div className="flex-shrink-0">
+                      <div className="w-10 h-10 bg-purple-500 rounded-full flex items-center justify-center">
+                        <Target className="w-5 h-5 text-white" />
+                      </div>
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="font-serif text-base font-bold text-white mb-2">
+                        Impacto Global
+                      </h3>
+                      <p className="text-cortex-300 text-xs mb-3">
+                        Transformación tecnológica y social
+                      </p>
+                      <div className="space-y-1 text-cortex-200">
+                        <div className="flex items-start space-x-2">
+                          <div className="w-1 h-1 bg-purple-400 rounded-full mt-1.5 flex-shrink-0"></div>
+                          <p className="text-xs">
+                            <span className="text-purple-400 font-medium">Innovación</span> - Tecnología
+                          </p>
+                        </div>
+                        <div className="flex items-start space-x-2">
+                          <div className="w-1 h-1 bg-pink-400 rounded-full mt-1.5 flex-shrink-0"></div>
+                          <p className="text-xs">
+                            <span className="text-pink-400 font-medium">Educación</span> - Futuro
+                          </p>
+                        </div>
+                        <div className="flex items-start space-x-2">
+                          <div className="w-1 h-1 bg-indigo-400 rounded-full mt-1.5 flex-shrink-0"></div>
+                          <p className="text-xs">
+                            <span className="text-indigo-400 font-medium">Comunidad</span> - Crecimiento
+                          </p>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>

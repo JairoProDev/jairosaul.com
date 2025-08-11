@@ -299,7 +299,7 @@ function BrainScene() {
         enableRotate={true}
         autoRotate={true}
         autoRotateSpeed={0.3}
-        minDistance={3.5}
+        minDistance={4}
         maxDistance={12}
         minPolarAngle={0}
         maxPolarAngle={Math.PI}
@@ -311,10 +311,10 @@ function BrainScene() {
 export default function Brain3DInteractive() {
   return (
     <div className="w-full h-full rounded-xl overflow-hidden">
-      <Canvas
-        camera={{ position: [0, 0, 6], fov: 45 }}
-        style={{ width: '100%', height: '100%' }}
-      >
+              <Canvas
+          camera={{ position: [0, 0, 7], fov: 45 }}
+          style={{ width: '100%', height: '100%' }}
+        >
         <Suspense fallback={null}>
           <BrainScene />
         </Suspense>
