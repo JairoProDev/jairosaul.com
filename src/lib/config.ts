@@ -6,8 +6,10 @@ export const siteConfig: SiteConfig = {
   author: {
     name: 'Jairo Saúl Salas Quiñones',
     email: 'JairoProDev@gmail.com',
-    bio: 'Fundador técnico obsesionado con eliminar la ineficiencia y crear oportunidades a través de sistemas tecnológicos. Aspiro a la excelencia, no a la mediocridad.',
-    location: 'Cusco, Perú',
+    bio: 'Software Engineer | Full Stack Developer | Startup Founder | Scientific Popularizer. Fundador técnico obsesionado con eliminar la ineficiencia y crear oportunidades a través de sistemas tecnológicos. Aspiro a la excelencia, no a la mediocridad.',
+    location: 'Cusco, Perú 🇵🇪 LATAM → World 🌐',
+    phone: '+51 937 054 328',
+    birthday: 'September 18, 2002',
     avatar: '/images/jairo-avatar.jpg',
   },
   social: [
@@ -53,6 +55,12 @@ export const siteConfig: SiteConfig = {
       href: '/',
       description: 'El centro de control - Tu declaración de intenciones',
       icon: 'brain',
+    },
+    {
+      label: 'Sobre Mí',
+      href: '/sobre-mi',
+      description: 'Mi perfil profesional y proyectos personales',
+      icon: 'user',
     },
     {
       label: 'Cerebrum 3D',

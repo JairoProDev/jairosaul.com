@@ -66,6 +66,8 @@ export interface SiteConfig {
     bio: string;
     location: string;
     avatar: string;
+    phone?: string;
+    birthday?: string;
   };
   social: SocialLink[];
   navigation: NavigationItem[];
