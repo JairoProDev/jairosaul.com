@@ -2,6 +2,7 @@
 
 import { Mail, Phone, Calendar, MapPin, Github, Linkedin, Twitter, Youtube, Instagram, Facebook, MessageCircle } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 const personalInfo = {
   name: "Jairo Saul",
@@ -118,13 +119,15 @@ export default function SobreMiPage() {
               
               {/* Foto de Perfil */}
               <div className="text-center mb-6">
-                <div className="w-32 h-32 mx-auto mb-4 rounded-full bg-gradient-to-br from-acetylcholine-500 to-dopamine-500 p-1">
-                  <img
-                    src="/images/profile.png"
-                    alt="Foto de perfil"
-                    className="w-full h-full object-cover rounded-full bg-cortex-900"
-                  />
-                </div>
+                                            <div className="w-32 h-32 mx-auto mb-4 rounded-full bg-gradient-to-br from-acetylcholine-500 to-dopamine-500 p-1">
+                              <Image
+                                src="/images/profile.png"
+                                alt="Foto de perfil"
+                                width={128}
+                                height={128}
+                                className="w-full h-full object-cover rounded-full bg-cortex-900"
+                              />
+                            </div>
                 <h1 className="text-2xl font-bold text-white mb-1">{personalInfo.name}</h1>
                 <p className="text-cortex-300 text-sm">{personalInfo.lastName}</p>
                 <p className="text-acetylcholine-400 text-sm mt-2">{personalInfo.title}</p>

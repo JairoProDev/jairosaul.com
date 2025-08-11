@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { plasticityEngine } from '@/lib/plasticity';
 import { siteConfig } from '@/lib/config';
@@ -18,7 +18,8 @@ import {
   BarChart3,
   Zap,
   Eye,
-  Command
+  Command,
+  Home
 } from 'lucide-react';
 
 interface CommandPaletteProps {
@@ -43,54 +44,7 @@ export default function CommandPalette({ isOpen, onClose, onOpenSystemPanel }: C
   const inputRef = useRef<HTMLInputElement>(null);
   const [commands, setCommands] = useState<CommandItem[]>([]);
 
-  useEffect(() => {
-    if (isOpen) {
-      inputRef.current?.focus();
-      generateCommands();
-    }
-  }, [isOpen]);
-
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'k' && (e.metaKey || e.ctrlKey)) {
-        e.preventDefault();
-        if (isOpen) {
-          onClose();
-        } else {
-          // Trigger open - this would be handled by parent
-        }
-      }
-
-      if (!isOpen) return;
-
-      if (e.key === 'Escape') {
-        onClose();
-      }
-
-      if (e.key === 'ArrowDown') {
-        e.preventDefault();
-        setSelectedIndex((prev) => (prev + 1) % filteredCommands.length);
-      }
-
-      if (e.key === 'ArrowUp') {
-        e.preventDefault();
-        setSelectedIndex((prev) => (prev - 1 + filteredCommands.length) % filteredCommands.length);
-      }
-
-      if (e.key === 'Enter') {
-        e.preventDefault();
-        if (filteredCommands[selectedIndex]) {
-          filteredCommands[selectedIndex].action();
-          onClose();
-        }
-      }
-    };
-
-    document.addEventListener('keydown', handleKeyDown);
-    return () => document.removeEventListener('keydown', handleKeyDown);
-  }, [isOpen, selectedIndex]);
-
-  const generateCommands = () => {
+  const generateCommands = useCallback(() => {
     const memory = plasticityEngine.getMemory();
     const stats = plasticityEngine.getUsageStats();
     const behavior = plasticityEngine.analyzeBehavior();
@@ -143,39 +97,36 @@ export default function CommandPalette({ isOpen, onClose, onOpenSystemPanel }: C
     const recentCommands: CommandItem[] = memory.visitedPages
       .slice(-5)
       .reverse()
-      .map((page) => {
-        const navItem = siteConfig.navigation.find(nav => nav.href === page);
-        return {
-          id: `recent-${page}`,
-          title: navItem?.label || page,
-          description: `Visitar ${navItem?.description || page}`,
-          icon: <Clock className="h-4 w-4" />,
-          action: () => router.push(page),
-          category: 'recent',
-        };
-      });
+      .map((page) => ({
+        id: `recent-${page}`,
+        title: page,
+        description: `Visitar ${page}`,
+        icon: <Home className="h-4 w-4" />,
+        action: () => router.push(page),
+        category: 'recent' as const,
+      }));
 
     const statsCommands: CommandItem[] = [
       {
-        id: 'stats-visits',
-        title: `Visitas Totales: ${stats.totalVisits}`,
-        description: 'Número total de visitas al sitio',
-        icon: <Activity className="h-4 w-4" />,
-        action: () => {},
-        category: 'stats',
-      },
-      {
         id: 'stats-pages',
-        title: `Páginas Exploradas: ${stats.uniquePagesVisited}`,
-        description: 'Número de páginas únicas visitadas',
-        icon: <BarChart3 className="h-4 w-4" />,
+        title: 'Páginas Visitadas',
+        description: `${stats.uniquePagesVisited} páginas únicas`,
+        icon: <Eye className="h-4 w-4" />,
         action: () => {},
         category: 'stats',
       },
       {
-        id: 'stats-pattern',
-        title: `Patrón: ${behavior.explorationPattern}`,
-        description: 'Tu patrón de exploración actual',
+        id: 'stats-time',
+        title: 'Tiempo Total',
+        description: `${Math.round(stats.totalTimeSpent / 60)} minutos`,
+        icon: <Zap className="h-4 w-4" />,
+        action: () => {},
+        category: 'stats',
+      },
+      {
+        id: 'stats-behavior',
+        title: 'Patrón de Comportamiento',
+        description: behavior.explorationPattern || 'Explorador',
         icon: <Brain className="h-4 w-4" />,
         action: () => {},
         category: 'stats',
@@ -183,7 +134,56 @@ export default function CommandPalette({ isOpen, onClose, onOpenSystemPanel }: C
     ];
 
     setCommands([...navigationCommands, ...systemCommands, ...recentCommands, ...statsCommands]);
-  };
+  }, [router, onOpenSystemPanel]);
+
+  useEffect(() => {
+    if (isOpen) {
+      inputRef.current?.focus();
+      generateCommands();
+    }
+  }, [isOpen, generateCommands]);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'k' && (e.metaKey || e.ctrlKey)) {
+        e.preventDefault();
+        if (isOpen) {
+          onClose();
+        } else {
+          // Trigger open - this would be handled by parent
+        }
+      }
+
+      if (!isOpen) return;
+
+      if (e.key === 'Escape') {
+        onClose();
+      }
+
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        setSelectedIndex((prev) => (prev + 1) % filteredCommands.length);
+      }
+
+      if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        setSelectedIndex((prev) => (prev - 1 + filteredCommands.length) % filteredCommands.length);
+      }
+
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        if (filteredCommands[selectedIndex]) {
+          filteredCommands[selectedIndex].action();
+          onClose();
+        }
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, selectedIndex, onClose]);
+
+
 
   const getIconForNavigation = (iconName: string) => {
     switch (iconName) {

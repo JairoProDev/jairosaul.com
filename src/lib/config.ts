@@ -10,7 +10,7 @@ export const siteConfig: SiteConfig = {
     location: 'Cusco, Perú 🇵🇪 LATAM → World 🌐',
     phone: '+51 937 054 328',
     birthday: 'September 18, 2002',
-    avatar: '/images/jairo-avatar.jpg',
+    avatar: '/images/profile.png',
   },
   social: [
     {
@@ -63,18 +63,6 @@ export const siteConfig: SiteConfig = {
       icon: 'user',
     },
     {
-      label: 'Cerebrum 3D',
-      href: '/cortex',
-      description: 'Experiencia inmersiva - Navega por las regiones cerebrales',
-      icon: 'brain',
-    },
-    {
-      label: 'Manifiesto',
-      href: '/manifiesto',
-      description: 'Los principios fundamentales que guían mi visión',
-      icon: 'book-open',
-    },
-    {
       label: 'Proyectos',
       href: '/proyectos',
       description: 'Engramas de construcción - Mis creaciones tecnológicas',
@@ -87,6 +75,24 @@ export const siteConfig: SiteConfig = {
       icon: 'lightbulb',
     },
     {
+      label: 'Visión',
+      href: '/vision',
+      description: 'Mi visión del futuro y próximos proyectos',
+      icon: 'eye',
+    },
+    {
+      label: 'Cerebrum 3D',
+      href: '/cortex',
+      description: 'Experiencia inmersiva - Navega por las regiones cerebrales',
+      icon: 'brain',
+    },
+    {
+      label: 'Manifiesto',
+      href: '/manifiesto',
+      description: 'Los principios fundamentales que guían mi visión',
+      icon: 'book-open',
+    },
+    {
       label: 'Sinapsis',
       href: '/contacto',
       description: 'Establecer conexión - Trabajemos juntos',
@@ -95,7 +101,7 @@ export const siteConfig: SiteConfig = {
   ],
   projects: {
     featured: ['buscadis', 'publicadis', 'noticiadis'],
-    all: ['buscadis', 'publicadis', 'noticiadis', 'jairoprodev', 'jairogrowhack'],
+    all: ['buscadis', 'publicadis', 'noticiadis'],
   },
   ideas: {
     featured: [
@@ -108,14 +114,10 @@ export const siteConfig: SiteConfig = {
       jairoprodev: [
         'estrategias-startups-latam',
         'nextjs-arquitectura-escalable',
-        'levantar-capital-startup',
-        'tecnologias-emergentes-2024',
       ],
       jairogrowhack: [
         'habitos-alto-rendimiento',
         'filosofia-estoica-emprendedores',
-        'nutricion-funcion-cognitiva',
-        'rutinas-entrenamiento-productividad',
       ],
     },
   },

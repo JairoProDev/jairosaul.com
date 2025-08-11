@@ -18,8 +18,8 @@ export default function HomePage() {
             </h1>
             
             <p className="text-xl md:text-2xl text-cortex-300 mb-8 max-w-4xl mx-auto leading-relaxed animate-fade-in-delay">
-              Construyendo el futuro de la tecnología en Latinoamérica.{' '}
-              <span className="text-acetylcholine-500 font-medium">Un sistema a la vez.</span>
+            Startup Founder | Full-Stack Software Engineer |{' '}
+              <span className="text-acetylcholine-500 font-medium">Scientific Content Creator</span>
             </p>
 
             <div className="flex flex-col items-center space-y-6">

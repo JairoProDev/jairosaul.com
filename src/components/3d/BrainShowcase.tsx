@@ -312,7 +312,7 @@ function HologramBrain() {
     });
   }, [scene]);
 
-  useFrame((_, delta) => {
+  useFrame(() => {
     if (groupRef.current) groupRef.current.rotation.y += 0.003;
   });
 
@@ -335,11 +335,11 @@ function NeuralParticles({ count = 1000 }: { count?: number }) {
     return new Float32Array(arr);
   });
 
-  useFrame((state) => {
+  useFrame(({ clock }) => {
     if (!pointsRef.current) return;
     pointsRef.current.rotation.y += 0.0008;
     const mat = pointsRef.current.material as THREE.PointsMaterial;
-    mat.opacity = 0.3 + Math.sin(state.clock.elapsedTime * 1.2) * 0.1;
+    mat.opacity = 0.3 + Math.sin(clock.elapsedTime * 1.2) * 0.1;
   });
 
   return (

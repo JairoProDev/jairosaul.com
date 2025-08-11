@@ -104,7 +104,6 @@ export default function DNAHelix({
       {basePairs.map((pos, idx) => {
         const baseType = idx % 4; // A, T, G, C
         const colors = ['#ef4444', '#10b981', '#f59e0b', '#8b5cf6']; // Rojo, Verde, Naranja, Violeta
-        const baseNames = ['A', 'T', 'G', 'C'];
         
         return (
           <group key={`base-${idx}`} position={pos}>
