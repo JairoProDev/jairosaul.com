@@ -3,6 +3,7 @@
 import { Mail, Phone, Calendar, MapPin, Github, Linkedin, Twitter, Youtube, Instagram, Facebook, MessageCircle } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { Navigation } from '@/components/layout/Navigation';
 
 const personalInfo = {
   name: "Jairo Saul",
@@ -109,8 +110,9 @@ const startups = [
 
 export default function SobreMiPage() {
   return (
-    <div className="min-h-screen bg-cortex-900 text-glutamate-500">
-      <div className="container mx-auto px-4 py-8">
+    <div className="min-h-screen bg-cortex-900 text-glutamate-500 neural-bg">
+      <Navigation />
+      <div className="container mx-auto px-4 pt-24 pb-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           
           {/* Sidebar - Información Personal */}

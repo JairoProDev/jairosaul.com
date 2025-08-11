@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { Navigation } from '@/components/layout/Navigation';
 import { siteConfig } from '@/lib/config';
-import { MessageCircle, Mail, Linkedin, Twitter, Github, Youtube, Send, CheckCircle } from 'lucide-react';
+import { MessageCircle, Mail, Linkedin, Twitter, Github, Youtube, Send, CheckCircle, Instagram, Facebook, MessageSquare, Zap } from 'lucide-react';
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -189,37 +189,59 @@ export default function ContactPage() {
               </div>
 
               {/* Redes Sociales */}
-              <div className="bg-cortex-800 border border-cortex-700 rounded-xl p-8">
+              <div className="bg-cortex-800 border border-cortex-700 rounded-xl p-6">
                 <h3 className="font-serif text-xl font-semibold text-glutamate-500 mb-4">
                   Conecta en Redes
                 </h3>
-                <div className="space-y-4">
-                  {siteConfig.social.map((social) => (
-                    <a
-                      key={social.platform}
-                      href={social.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center p-3 bg-cortex-700 rounded-lg hover:bg-cortex-600 transition-colors group"
-                    >
-                      {social.platform === 'LinkedIn' && (
-                        <Linkedin className="h-5 w-5 text-acetylcholine-500 mr-3 group-hover:text-acetylcholine-400" />
-                      )}
-                      {social.platform === 'Twitter' && (
-                        <Twitter className="h-5 w-5 text-acetylcholine-500 mr-3 group-hover:text-acetylcholine-400" />
-                      )}
-                      {social.platform === 'GitHub' && (
-                        <Github className="h-5 w-5 text-acetylcholine-500 mr-3 group-hover:text-acetylcholine-400" />
-                      )}
-                      {social.platform === 'YouTube' && (
-                        <Youtube className="h-5 w-5 text-acetylcholine-500 mr-3 group-hover:text-acetylcholine-400" />
-                      )}
-                      <span className="text-cortex-300 group-hover:text-glutamate-500">
-                        {social.platform}
-                      </span>
-                    </a>
-                  ))}
+                <div className="grid grid-cols-4 gap-3">
+                  {siteConfig.social.map((social) => {
+                    const getIcon = () => {
+                      switch (social.platform) {
+                        case 'LinkedIn': return <Linkedin className="h-5 w-5" />;
+                        case 'Twitter': return <Twitter className="h-5 w-5" />;
+                        case 'GitHub': return <Github className="h-5 w-5" />;
+                        case 'YouTube': return <Youtube className="h-5 w-5" />;
+                        case 'Instagram': return <Instagram className="h-5 w-5" />;
+                        case 'TikTok': return <MessageSquare className="h-5 w-5" />;
+                        case 'Pinterest': return <Zap className="h-5 w-5" />;
+                        case 'WhatsApp': return <MessageCircle className="h-5 w-5" />;
+                        default: return <Mail className="h-5 w-5" />;
+                      }
+                    };
+
+                    const getColor = () => {
+                      switch (social.platform) {
+                        case 'LinkedIn': return 'hover:bg-blue-500/20 hover:text-blue-400';
+                        case 'Twitter': return 'hover:bg-sky-500/20 hover:text-sky-400';
+                        case 'GitHub': return 'hover:bg-gray-500/20 hover:text-gray-400';
+                        case 'YouTube': return 'hover:bg-red-500/20 hover:text-red-400';
+                        case 'Instagram': return 'hover:bg-pink-500/20 hover:text-pink-400';
+                        case 'TikTok': return 'hover:bg-emerald-500/20 hover:text-emerald-400';
+                        case 'Pinterest': return 'hover:bg-red-600/20 hover:text-red-500';
+                        case 'WhatsApp': return 'hover:bg-green-500/20 hover:text-green-400';
+                        default: return 'hover:bg-acetylcholine-500/20 hover:text-acetylcholine-400';
+                      }
+                    };
+
+                    return (
+                      <a
+                        key={social.platform}
+                        href={social.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={`flex items-center justify-center w-12 h-12 bg-cortex-700 rounded-full transition-all duration-300 group ${getColor()}`}
+                        title={social.platform}
+                      >
+                        <div className="text-cortex-300 group-hover:scale-110 transition-transform">
+                          {getIcon()}
+                        </div>
+                      </a>
+                    );
+                  })}
                 </div>
+                <p className="text-xs text-cortex-400 mt-3 text-center">
+                  Sígueme en todas las plataformas para contenido exclusivo
+                </p>
               </div>
 
               {/* Tipos de Colaboración */}

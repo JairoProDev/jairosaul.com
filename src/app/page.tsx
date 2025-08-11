@@ -1,5 +1,6 @@
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { ArrowDown, Code, Lightbulb, BookOpen, MessageCircle, ExternalLink, Brain } from 'lucide-react';
 import { Navigation } from '@/components/layout/Navigation';
 import { siteConfig } from '@/lib/config';
@@ -12,39 +13,72 @@ export default function HomePage() {
       <Navigation />
       
       {/* Hero Section - La Declaración */}
-      <section className="pt-32 pb-16 px-4 sm:px-6 lg:px-8 relative z-10">
+      <section className="pt-24 pb-12 px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center fade-in">
-            <div className="consciousness-glow rounded-3xl p-12 mb-8">
-              <h1 className="font-serif text-5xl md:text-7xl font-bold text-white mb-6 animate-fade-in">
-                Jairo Saul Salas Quiñones
-              </h1>
-              
-              <p className="text-xl md:text-2xl text-cortex-200 mb-8 max-w-4xl mx-auto leading-relaxed animate-fade-in-delay">
-                Startup Founder | Full-Stack Software Engineer |{' '}
-                <span className="text-acetylcholine-400 font-medium">Scientific Content Creator</span>
-              </p>
-
-              <div className="flex flex-col items-center space-y-6">
-                <div className="text-acetylcholine-500 animate-bounce">
-                  <ArrowDown className="h-8 w-8" />
-                </div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center fade-in">
+            {/* Contenido Principal */}
+            <div className="text-center lg:text-left">
+              <div className="consciousness-glow rounded-3xl p-8 lg:p-12">
+                <h1 className="font-serif text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6 animate-fade-in">
+                  Jairo Saul Salas Quiñones
+                </h1>
                 
-                <div className="flex flex-col sm:flex-row gap-4">
-                  <Link
-                    href="/cortex"
-                    className="btn-quantum inline-flex items-center px-8 py-4 bg-gradient-to-r from-acetylcholine-500 to-neural-500 text-white rounded-xl font-semibold hover:from-acetylcholine-600 hover:to-neural-600 transition-all duration-300 transform hover:scale-105"
-                  >
-                    <Brain className="mr-3 h-6 w-6" />
-                    Explorar Cerebrum 3D
-                  </Link>
-                  <Link
-                    href="/proyectos"
-                    className="btn-quantum inline-flex items-center px-8 py-4 bg-gradient-to-r from-cortex-700 to-transistor-700 text-white rounded-xl font-semibold hover:from-cortex-600 hover:to-transistor-600 transition-all duration-300 transform hover:scale-105"
-                  >
-                    <Code className="mr-3 h-6 w-6" />
-                    Ver Proyectos
-                  </Link>
+                <p className="text-lg md:text-xl lg:text-2xl text-cortex-200 mb-8 leading-relaxed animate-fade-in-delay">
+                  Startup Founder | Full-Stack Software Engineer |{' '}
+                  <span className="text-acetylcholine-400 font-medium">Scientific Content Creator</span>
+                </p>
+
+                <div className="flex flex-col items-center lg:items-start space-y-6">
+                  <div className="text-acetylcholine-500 animate-bounce lg:hidden">
+                    <ArrowDown className="h-8 w-8" />
+                  </div>
+                  
+                  <div className="flex flex-col sm:flex-row gap-4">
+                    <Link
+                      href="/cortex"
+                      className="btn-quantum inline-flex items-center px-6 py-3 bg-gradient-to-r from-acetylcholine-500 to-emerald-500 text-white rounded-xl font-semibold hover:from-acetylcholine-600 hover:to-emerald-600 transition-all duration-300 transform hover:scale-105"
+                    >
+                      <Brain className="mr-2 h-5 w-5" />
+                      Explorar Cerebrum 3D
+                    </Link>
+                    <Link
+                      href="/proyectos"
+                      className="btn-quantum inline-flex items-center px-6 py-3 bg-gradient-to-r from-emerald-600 to-cyber-600 text-white rounded-xl font-semibold hover:from-emerald-700 hover:to-cyber-700 transition-all duration-300 transform hover:scale-105"
+                    >
+                      <Code className="mr-2 h-5 w-5" />
+                      Ver Proyectos
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Foto Personal */}
+            <div className="flex justify-center lg:justify-end animate-fade-in-delay">
+              <div className="relative">
+                <div className="w-80 h-80 lg:w-96 lg:h-96 relative">
+                  {/* Efectos de resplandor */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-acetylcholine-500/30 to-emerald-500/30 rounded-full blur-xl animate-pulse"></div>
+                  <div className="absolute inset-4 bg-gradient-to-br from-acetylcholine-400/20 to-emerald-400/20 rounded-full blur-lg animate-pulse" style={{ animationDelay: '1s' }}></div>
+                  
+                  {/* Foto principal */}
+                  <div className="relative w-full h-full rounded-full overflow-hidden border-4 border-gradient-to-br from-acetylcholine-500 to-emerald-500 p-1">
+                    <div className="w-full h-full rounded-full overflow-hidden bg-gradient-to-br from-cortex-800 to-cortex-700">
+                      <Image
+                        src="/images/profile.jpg"
+                        alt="Jairo Saul Salas Quiñones"
+                        width={384}
+                        height={384}
+                        className="w-full h-full object-cover rounded-full"
+                        priority
+                      />
+                    </div>
+                  </div>
+                  
+                  {/* Partículas flotantes */}
+                  <div className="absolute -top-4 -right-4 w-3 h-3 bg-acetylcholine-400 rounded-full animate-ping"></div>
+                  <div className="absolute -bottom-4 -left-4 w-2 h-2 bg-emerald-400 rounded-full animate-ping" style={{ animationDelay: '2s' }}></div>
+                  <div className="absolute top-1/2 -right-6 w-1 h-1 bg-cyber-400 rounded-full animate-ping" style={{ animationDelay: '3s' }}></div>
                 </div>
               </div>
             </div>
@@ -53,20 +87,21 @@ export default function HomePage() {
       </section>
 
       {/* Mi Misión */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-12 fade-in">
-            <h2 className="font-serif text-3xl md:text-4xl font-bold text-white mb-6">
+      <section className="py-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-8 fade-in">
+            <h2 className="font-serif text-2xl md:text-3xl font-bold text-white mb-4">
               Mi Misión
             </h2>
-            <p className="text-lg text-cortex-200 leading-relaxed">
-              Mi obsesión es eliminar la ineficiencia y crear oportunidades a través de sistemas tecnológicos. 
-              Aspiro a la excelencia, no a la mediocridad. Junto a mi socia y cofundadora, Shantall, 
-              construimos soluciones que transforman realidades.
+                          <p className="text-base md:text-lg text-cortex-200 leading-relaxed max-w-3xl mx-auto">
+              Mi filosofía central es <span className="text-emerald-400 font-medium">"La Reconstrucción"</span>. 
+              Habiendo identificado 170 áreas de mejora en mi vida, estoy en un proceso diario y disciplinado 
+              de transformación radical. Mi misión es doble: construir sistemas tecnológicos que empoderen a otros 
+              y usar mi propia vida como laboratorio para la superación humana.
             </p>
             <Link 
               href="/manifiesto"
-              className="inline-flex items-center mt-6 px-6 py-3 bg-dopamine-500 text-white rounded-lg font-medium hover:bg-dopamine-600 transition-colors"
+              className="inline-flex items-center mt-4 px-5 py-2 bg-emerald-600 text-white rounded-lg font-medium hover:bg-emerald-700 transition-colors"
             >
               Leer mi manifiesto completo
               <BookOpen className="ml-2 h-4 w-4" />
@@ -78,12 +113,13 @@ export default function HomePage() {
       {/* Mis Creaciones - Proyectos */}
       <section className="py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12 fade-in">
-            <h2 className="font-serif text-3xl md:text-4xl font-bold text-white mb-6">
-              Mis Creaciones
+          <div className="text-center mb-8 fade-in">
+            <h2 className="font-serif text-2xl md:text-3xl font-bold text-white mb-4">
+              Mis Frentes de Batalla
             </h2>
-            <p className="text-lg text-cortex-200 max-w-2xl mx-auto">
-              Engramas de construcción - Sistemas tecnológicos que solucionan problemas fundamentales
+            <p className="text-base md:text-lg text-cortex-200 max-w-3xl mx-auto">
+              Tres misiones paralelas: construir el ecosistema tecnológico del futuro, 
+              diseñar el sistema operativo para la superación humana, y documentar la reconstrucción radical de una vida.
             </p>
           </div>
 
@@ -134,12 +170,13 @@ export default function HomePage() {
       {/* Mi Laboratorio de Ideas */}
       <section className="py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12 fade-in">
-            <h2 className="font-serif text-3xl md:text-4xl font-bold text-glutamate-500 mb-6">
-              Mi Laboratorio de Ideas
+          <div className="text-center mb-8 fade-in">
+            <h2 className="font-serif text-2xl md:text-3xl font-bold text-glutamate-500 mb-4">
+              Mi Sistema de Pensamiento
             </h2>
-            <p className="text-lg text-cortex-300 max-w-2xl mx-auto">
-              Nodos de memoria - Pensamientos y estrategias para construir el futuro
+            <p className="text-base md:text-lg text-cortex-300 max-w-3xl mx-auto">
+              Dos vertientes de conocimiento: la construcción de imperios tecnológicos 
+              y el diseño del súper-humano. De la trinchera a la cumbre, documentando cada aprendizaje.
             </p>
           </div>
 
@@ -153,8 +190,9 @@ export default function HomePage() {
                 </h3>
               </div>
               <p className="text-cortex-300 mb-6">
-                Construyendo el futuro - Estrategias de startups, lecciones como fundador técnico, 
-                análisis de tecnología y cómo levantar capital.
+                <span className="text-acetylcholine-400 font-medium">El Constructor</span> - 
+                Desde la trinchera del emprendedor: estrategias de construcción, lecciones de fundador técnico, 
+                arquitectura de sistemas y la guerra contra la mediocridad profesional.
               </p>
               <div className="space-y-2">
                 {siteConfig.ideas.categories.jairoprodev.slice(0, 3).map((idea) => (
@@ -178,8 +216,9 @@ export default function HomePage() {
                 </h3>
               </div>
               <p className="text-cortex-300 mb-6">
-                Diseñando al súper-humano - Hábitos de alto rendimiento, nutrición para la máxima 
-                función cognitiva, filosofía estoica para emprendedores.
+                <span className="text-emerald-400 font-medium">El Explorador</span> - 
+                Mi laboratorio de reconstrucción: Plan de 170 Días, hábitos del 1% superior, 
+                filosofía antifragil y el diseño sistemático de una vida extraordinaria.
               </p>
               <div className="space-y-2">
                 {siteConfig.ideas.categories.jairogrowhack.slice(0, 3).map((idea) => (
@@ -211,11 +250,13 @@ export default function HomePage() {
       <section className="py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto text-center">
           <div className="fade-in">
-            <h2 className="font-serif text-3xl md:text-4xl font-bold text-glutamate-500 mb-6">
-              ¿Tienes un proyecto que puede cambiar el mundo?
+            <h2 className="font-serif text-2xl md:text-3xl font-bold text-glutamate-500 mb-4">
+              ¿Eres constructor o explorador?
             </h2>
-            <p className="text-lg text-cortex-300 mb-8">
-              Establezcamos una sinapsis. Trabajemos juntos para construir el futuro.
+            <p className="text-base md:text-lg text-cortex-300 mb-6">
+              Si aspiras a la excelencia y rechazas la mediocridad, si buscas construir algo que importe 
+              o reconstruir tu propia vida desde cero, establezcamos una sinapsis. 
+              Juntos podemos construir el futuro y diseñar la mejor versión de nosotros mismos.
             </p>
             <Link 
               href="/contacto"

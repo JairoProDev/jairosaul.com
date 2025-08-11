@@ -48,6 +48,11 @@ export const siteConfig: SiteConfig = {
       url: 'https://pinterest.com/JairoSaulProDev',
       icon: 'pinterest',
     },
+    {
+      platform: 'WhatsApp',
+      url: 'https://wa.me/51937054328',
+      icon: 'whatsapp',
+    },
   ],
   navigation: [
     {
