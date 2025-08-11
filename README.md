@@ -2,7 +2,7 @@
 
 > **Startup Founder | FullStack Software Engineer | Scientific Content Creator **
 
-El sitio web personal de Jairo Saúl Salas Quiñones - una embajada digital que combina diseño neuro-biónico con funcionalidad de élite para crear una experiencia única de navegación.
+El sitio web personal de Jairo Saul Salas Quiñones - una embajada digital que combina diseño neuro-biónico con funcionalidad de élite para crear una experiencia única de navegación.
 
 ## 🎯 Visión
 
@@ -230,7 +230,7 @@ Cerebrum Digitalis representa más que un sitio web. Es una manifestación de:
 ## 📞 Contacto
 
 - **Email**: jairo@jairosaul.com
-- **LinkedIn**: [Jairo Saúl Salas Quiñones](https://linkedin.com/in/jairosaul)
+- **LinkedIn**: [Jairo Saul Salas Quiñones](https://linkedin.com/in/jairosaul)
 - **Twitter**: [@jairosaul](https://twitter.com/jairosaul)
 
 ---

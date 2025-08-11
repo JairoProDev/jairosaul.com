@@ -3,37 +3,50 @@ import Link from 'next/link';
 import { ArrowDown, Code, Lightbulb, BookOpen, MessageCircle, ExternalLink, Brain } from 'lucide-react';
 import { Navigation } from '@/components/layout/Navigation';
 import { siteConfig } from '@/lib/config';
+import NeuralParticles from '@/components/ui/NeuralParticles';
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-cortex-900 neural-bg">
+    <div className="min-h-screen bg-cortex-900 neural-bg relative">
+      <NeuralParticles />
       <Navigation />
       
       {/* Hero Section - La Declaración */}
-      <section className="pt-32 pb-16 px-4 sm:px-6 lg:px-8">
+      <section className="pt-32 pb-16 px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="max-w-7xl mx-auto">
           <div className="text-center fade-in">
-            <h1 className="font-serif text-5xl md:text-7xl font-bold text-glutamate-500 mb-6 animate-fade-in">
-              Jairo Saúl Salas Quiñones
-            </h1>
-            
-            <p className="text-xl md:text-2xl text-cortex-300 mb-8 max-w-4xl mx-auto leading-relaxed animate-fade-in-delay">
-            Startup Founder | Full-Stack Software Engineer |{' '}
-              <span className="text-acetylcholine-500 font-medium">Scientific Content Creator</span>
-            </p>
-
-            <div className="flex flex-col items-center space-y-6">
-              <div className="text-acetylcholine-500 animate-bounce">
-                <ArrowDown className="h-8 w-8" />
-              </div>
+            <div className="consciousness-glow rounded-3xl p-12 mb-8">
+              <h1 className="font-serif text-5xl md:text-7xl font-bold text-white mb-6 animate-fade-in">
+                Jairo Saul Salas Quiñones
+              </h1>
               
-              <Link
-                href="/cortex"
-                className="inline-flex items-center px-6 py-3 bg-acetylcholine-500 text-white rounded-lg font-medium hover:bg-acetylcholine-600 hover:scale-105 transition-all duration-200"
-              >
-                <Brain className="mr-2 h-5 w-5" />
-                Explorar Cerebrum 3D
-              </Link>
+              <p className="text-xl md:text-2xl text-cortex-200 mb-8 max-w-4xl mx-auto leading-relaxed animate-fade-in-delay">
+                Startup Founder | Full-Stack Software Engineer |{' '}
+                <span className="text-acetylcholine-400 font-medium">Scientific Content Creator</span>
+              </p>
+
+              <div className="flex flex-col items-center space-y-6">
+                <div className="text-acetylcholine-500 animate-bounce">
+                  <ArrowDown className="h-8 w-8" />
+                </div>
+                
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <Link
+                    href="/cortex"
+                    className="btn-quantum inline-flex items-center px-8 py-4 bg-gradient-to-r from-acetylcholine-500 to-neural-500 text-white rounded-xl font-semibold hover:from-acetylcholine-600 hover:to-neural-600 transition-all duration-300 transform hover:scale-105"
+                  >
+                    <Brain className="mr-3 h-6 w-6" />
+                    Explorar Cerebrum 3D
+                  </Link>
+                  <Link
+                    href="/proyectos"
+                    className="btn-quantum inline-flex items-center px-8 py-4 bg-gradient-to-r from-cortex-700 to-transistor-700 text-white rounded-xl font-semibold hover:from-cortex-600 hover:to-transistor-600 transition-all duration-300 transform hover:scale-105"
+                  >
+                    <Code className="mr-3 h-6 w-6" />
+                    Ver Proyectos
+                  </Link>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -43,10 +56,10 @@ export default function HomePage() {
       <section className="py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12 fade-in">
-            <h2 className="font-serif text-3xl md:text-4xl font-bold text-glutamate-500 mb-6">
+            <h2 className="font-serif text-3xl md:text-4xl font-bold text-white mb-6">
               Mi Misión
             </h2>
-            <p className="text-lg text-cortex-300 leading-relaxed">
+            <p className="text-lg text-cortex-200 leading-relaxed">
               Mi obsesión es eliminar la ineficiencia y crear oportunidades a través de sistemas tecnológicos. 
               Aspiro a la excelencia, no a la mediocridad. Junto a mi socia y cofundadora, Shantall, 
               construimos soluciones que transforman realidades.
@@ -66,10 +79,10 @@ export default function HomePage() {
       <section className="py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12 fade-in">
-            <h2 className="font-serif text-3xl md:text-4xl font-bold text-glutamate-500 mb-6">
+            <h2 className="font-serif text-3xl md:text-4xl font-bold text-white mb-6">
               Mis Creaciones
             </h2>
-            <p className="text-lg text-cortex-300 max-w-2xl mx-auto">
+            <p className="text-lg text-cortex-200 max-w-2xl mx-auto">
               Engramas de construcción - Sistemas tecnológicos que solucionan problemas fundamentales
             </p>
           </div>
@@ -82,17 +95,24 @@ export default function HomePage() {
                 style={{ animationDelay: `${index * 100}ms` }}
               >
                 <Link href={`/proyectos/${project}`}>
-                  <div className="bg-cortex-800 border border-cortex-700 rounded-xl p-6 h-full hover:border-acetylcholine-500 transition-all duration-300 card-hover">
-                    <div className="flex items-center justify-between mb-4">
-                      <Code className="h-8 w-8 text-acetylcholine-500" />
-                      <ExternalLink className="h-4 w-4 text-cortex-400 group-hover:text-acetylcholine-500 transition-colors" />
+                  <div className="card-neural rounded-2xl p-8 h-full hover:border-acetylcholine-500 transition-all duration-300">
+                    <div className="flex items-center justify-between mb-6">
+                      <div className="transistor-glow p-3 rounded-xl">
+                        <Code className="h-8 w-8 text-acetylcholine-500" />
+                      </div>
+                      <ExternalLink className="h-5 w-5 text-cortex-400 group-hover:text-acetylcholine-500 transition-colors" />
                     </div>
-                    <h3 className="font-serif text-xl font-semibold text-glutamate-500 mb-2 capitalize">
+                    <h3 className="font-serif text-2xl font-semibold text-white mb-3 capitalize">
                       {project}
                     </h3>
-                    <p className="text-cortex-300 text-sm">
+                    <p className="text-cortex-200 text-sm leading-relaxed">
                       Solucionando problemas fundamentales en Latinoamérica
                     </p>
+                    <div className="mt-6 flex space-x-2">
+                      <div className="w-2 h-2 bg-acetylcholine-500 rounded-full animate-pulse"></div>
+                      <div className="w-2 h-2 bg-neural-500 rounded-full animate-pulse" style={{ animationDelay: '0.5s' }}></div>
+                      <div className="w-2 h-2 bg-cyber-500 rounded-full animate-pulse" style={{ animationDelay: '1s' }}></div>
+                    </div>
                   </div>
                 </Link>
               </div>

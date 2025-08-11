@@ -16,20 +16,20 @@ const lora = Lora({
 });
 
 export const metadata: Metadata = {
-  title: "JairoSaul.com - Jairo Saúl Salas Quiñones",
+  title: "JairoSaul.com - Jairo Saul Salas Quiñones",
   description: "Startup Founder | FullStack Software Engineer | Scientific Content Creator ",
-  keywords: ['Jairo Saúl', 'tecnología', 'startups', 'Latinoamérica', 'fundador', 'desarrollo'],
-  authors: [{ name: 'Jairo Saúl Salas Quiñones' }],
-  creator: 'Jairo Saúl Salas Quiñones',
+  keywords: ['Jairo Saul', 'tecnología', 'startups', 'Latinoamérica', 'fundador', 'desarrollo'],
+  authors: [{ name: 'Jairo Saul Salas Quiñones' }],
+  creator: 'Jairo Saul Salas Quiñones',
   openGraph: {
-    title: 'JairoSaul.com - Jairo Saúl Salas Quiñones',
+    title: 'JairoSaul.com - Jairo Saul Salas Quiñones',
     description: 'Startup Founder | FullStack Software Engineer | Scientific Content Creator ',
     type: 'website',
     locale: 'es_ES',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'JairoSaul.com - Jairo Saúl Salas Quiñones',
+    title: 'JairoSaul.com - Jairo Saul Salas Quiñones',
     description: 'Startup Founder | FullStack Software Engineer | Scientific Content Creator ',
   },
 };

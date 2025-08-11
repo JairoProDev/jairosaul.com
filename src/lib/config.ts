@@ -1,10 +1,10 @@
 import { SiteConfig } from '@/types/content';
 
 export const siteConfig: SiteConfig = {
-  title: 'JairoSaul.com - Jairo Saúl Salas Quiñones',
+  title: 'JairoSaul.com - Jairo Saul Salas Quiñones',
   description: 'Startup Founder | FullStack Software Engineer | Scientific Content Creator ',
   author: {
-    name: 'Jairo Saúl Salas Quiñones',
+    name: 'Jairo Saul Salas Quiñones',
     email: 'JairoProDev@gmail.com',
     bio: 'Software Engineer | Full Stack Developer | Startup Founder | Scientific Popularizer. Fundador técnico obsesionado con eliminar la ineficiencia y crear oportunidades a través de sistemas tecnológicos. Aspiro a la excelencia, no a la mediocridad.',
     location: 'Cusco, Perú 🇵🇪 LATAM → World 🌐',
@@ -50,12 +50,6 @@ export const siteConfig: SiteConfig = {
     },
   ],
   navigation: [
-    {
-      label: 'JairoSaul.com',
-      href: '/',
-      description: 'El centro de control - Tu declaración de intenciones',
-      icon: 'brain',
-    },
     {
       label: 'Sobre Mí',
       href: '/sobre-mi',

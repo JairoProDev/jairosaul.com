@@ -3,7 +3,7 @@ import { Navigation } from '@/components/layout/Navigation';
 
 
 const manifesto = {
-  title: "El Manifiesto de un Constructor de Futuro",
+  title: "Mi Manifiesto para construir el Futuro",
   sections: [
     {
       title: "1. Obsesión por el Problema",
@@ -76,7 +76,7 @@ export default function ManifestoPage() {
             </h1>
             <p className="text-xl text-cortex-300 max-w-2xl mx-auto leading-relaxed">
               Los principios fundamentales que guían mi visión y mis acciones. 
-              No son promesas vacías, son compromisos que vivo cada día.
+              Son compromisos que vivo cada día.
             </p>
           </div>
 

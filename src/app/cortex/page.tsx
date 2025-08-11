@@ -15,7 +15,7 @@ export default function CortexPage() {
           className="inline-flex items-center text-white hover:text-acetylcholine-400 transition-colors"
         >
           <ArrowLeft className="h-5 w-5 mr-2" />
-          Volver al JairoSaul.com
+          Volver al inicio
         </Link>
       </div>
 
