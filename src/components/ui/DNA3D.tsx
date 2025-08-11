@@ -2,7 +2,8 @@
 
 import { useMemo, useRef } from 'react';
 import * as THREE from 'three';
-import { useFrame, Canvas } from '@react-three/fiber';
+import { Canvas, useFrame } from '@react-three/fiber';
+import { OrbitControls } from '@react-three/drei';
 
 interface DNA3DProps {
   className?: string;
@@ -125,6 +126,30 @@ function DNA3DModel({ size = 200 }: { size: number }) {
   );
 }
 
+function DNAScene() {
+  return (
+    <>
+      <ambientLight intensity={0.6} />
+      <pointLight position={[2, 2, 2]} intensity={0.8} color="#3b82f6" />
+      <pointLight position={[-2, -2, 2]} intensity={0.8} color="#10b981" />
+      
+      <DNA3DModel size={200} />
+      
+      <OrbitControls
+        enablePan={true}
+        enableZoom={true}
+        enableRotate={true}
+        autoRotate={true}
+        autoRotateSpeed={0.4}
+        minDistance={1.5}
+        maxDistance={4}
+        minPolarAngle={0}
+        maxPolarAngle={Math.PI}
+      />
+    </>
+  );
+}
+
 export default function DNA3D({ className = '', size = 200 }: DNA3DProps) {
   return (
     <div className={`relative ${className}`}>
@@ -140,10 +165,7 @@ export default function DNA3D({ className = '', size = 200 }: DNA3DProps) {
           camera={{ position: [0, 0, 3], fov: 50 }}
           style={{ width: '100%', height: '100%' }}
         >
-          <ambientLight intensity={0.6} />
-          <pointLight position={[2, 2, 2]} intensity={0.8} color="#3b82f6" />
-          <pointLight position={[-2, -2, 2]} intensity={0.8} color="#10b981" />
-          <DNA3DModel size={size} />
+          <DNAScene />
         </Canvas>
       </div>
       

@@ -231,7 +231,7 @@ function GLBBrain({ style }: { style: BrainStyle }) {
     (mat as unknown as { tick?: (dt: number) => void }).tick?.(delta);
   });
 
-  return <primitive ref={groupRef} object={scene} scale={1.05} />;
+  return <primitive ref={groupRef} object={scene} scale={0.8} />;
 }
 
 function SegmentedBrain() {
@@ -587,7 +587,7 @@ export default function BrainShowcase() {
       <Canvas
         shadows
         dpr={[1, 1.75]}
-        camera={{ position: [0, 0, 3.3], fov: 55 }}
+        camera={{ position: [0, 0, 4.5], fov: 45 }}
         onCreated={({ camera }) => { cameraRef.current = camera as THREE.PerspectiveCamera; }}
         gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
       >
@@ -606,7 +606,7 @@ export default function BrainShowcase() {
             <ProceduralBrain />
           )}
         </Suspense>
-        <OrbitControls ref={controlsRef as unknown as React.RefObject<OrbitControlsImpl>} enablePan={false} minDistance={2.2} maxDistance={6} autoRotate autoRotateSpeed={0.35} />
+        <OrbitControls ref={controlsRef as unknown as React.RefObject<OrbitControlsImpl>} enablePan={true} minDistance={2.5} maxDistance={8} autoRotate autoRotateSpeed={0.3} />
         <CameraTransition cameraRef={cameraRef} controlsRef={controlsRef} transitionRef={transitionRef} />
       </Canvas>
       {/* HUD de estilos */}
