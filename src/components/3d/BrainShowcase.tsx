@@ -375,7 +375,7 @@ function SynapseArcs({ arcs = 20 }: { arcs?: number }) {
   return (
     <group ref={group}>
       {tubes.map((t, idx) => (
-        <group key={idx}>
+        <group key={`tube-${idx}`}>
           <mesh>
             <tubeGeometry args={[t.curve, 32, 0.009, 8, false]} />
             <meshBasicMaterial color={t.color} transparent opacity={0.3} />

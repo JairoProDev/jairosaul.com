@@ -112,7 +112,7 @@ function NeuralParticles({ count = 30 }: { count?: number }) {
   return (
     <group>
       {particles.map((particle, i) => (
-        <mesh key={i} position={[particle.x, particle.y, particle.z]}>
+        <mesh key={`neural-particle-${i}`} position={[particle.x, particle.y, particle.z]}>
           <sphereGeometry args={[0.02, 4, 4]} />
           <meshStandardMaterial
             color="#10b981"
@@ -158,7 +158,7 @@ function SynapticConnections({ count = 50 }: { count?: number }) {
   return (
     <group>
       {connections.map((connection, i) => (
-        <line key={i}>
+        <line key={`connection-${i}`}>
           <bufferGeometry>
             <bufferAttribute
               attach="attributes-position"
@@ -204,7 +204,7 @@ function NeurotransmitterParticles({ count = 100 }: { count?: number }) {
   return (
     <group>
       {particles.map((particle, i) => (
-        <mesh key={i} position={[particle.x, particle.y, particle.z]}>
+        <mesh key={`neuro-particle-${i}`} position={[particle.x, particle.y, particle.z]}>
           <sphereGeometry args={[0.015, 4, 4]} />
           <meshStandardMaterial
             color={particle.color}
@@ -244,9 +244,9 @@ function NeuralExplosions({ count = 8 }: { count?: number }) {
   return (
     <group>
       {explosions.map((explosion, i) => (
-        <group key={i} position={[explosion.x, explosion.y, explosion.z]}>
+        <group key={`explosion-${i}`} position={[explosion.x, explosion.y, explosion.z]}>
           {[...Array(12)].map((_, j) => (
-            <mesh key={j} position={[
+            <mesh key={`explosion-particle-${i}-${j}`} position={[
               Math.cos(j * Math.PI / 6) * (0.5 + explosion.time * 2),
               Math.sin(j * Math.PI / 6) * (0.5 + explosion.time * 2),
               0

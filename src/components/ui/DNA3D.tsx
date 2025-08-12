@@ -222,7 +222,7 @@ export default function DNA3D({ className = '', size = 200 }: DNA3DProps) {
       <div className="absolute inset-0 pointer-events-none">
         {[...Array(6)].map((_, i) => (
           <div
-            key={i}
+            key={`floating-particle-${i}`}
             className="absolute w-1 h-1 bg-gradient-to-r from-acetylcholine-400 to-emerald-400 rounded-full animate-ping"
             style={{
               left: `${20 + Math.random() * 60}%`,
