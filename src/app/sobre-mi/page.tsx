@@ -1,9 +1,12 @@
 'use client';
 
-import { Mail, Phone, Calendar, MapPin, Github, Linkedin, Twitter, Youtube, Instagram, Facebook, MessageCircle } from 'lucide-react';
+import { Mail, Phone, Calendar, MapPin, Github, Linkedin, Twitter, Youtube, Instagram, Facebook, MessageCircle, Dna, Brain, Cpu, Atom, Microscope, FlaskConical, TestTube, CircuitBoard, Network, Wifi, Satellite, Rocket, Globe, Shield, Award, Star, Sparkles, Zap, Target } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Navigation } from '@/components/layout/Navigation';
+import NeuralBackground from '@/components/ui/NeuralBackground';
+import ThemedButton from '@/components/ui/ThemedButton';
+import ThemedCard from '@/components/ui/ThemedCard';
 
 const personalInfo = {
   name: "Jairo Saul",
@@ -110,7 +113,10 @@ const startups = [
 
 export default function SobreMiPage() {
   return (
-    <div className="min-h-screen bg-cortex-900 text-glutamate-500 neural-bg">
+    <div className="min-h-screen bg-gradient-to-br from-cortex-900 via-cortex-800 to-cortex-900 relative overflow-hidden">
+      {/* Neural Background con tema genético */}
+      <NeuralBackground theme="genetic" intensity="medium" />
+      
       <Navigation />
       <div className="container mx-auto px-4 pt-24 pb-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">

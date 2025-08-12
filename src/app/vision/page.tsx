@@ -3,6 +3,7 @@
 import { Navigation } from '@/components/layout/Navigation';
 import { Eye, Globe, Rocket, Target, Users, Zap } from 'lucide-react';
 import Link from 'next/link';
+import NeuralBackground from '@/components/ui/NeuralBackground';
 
 const visionSections = [
   {
@@ -86,7 +87,10 @@ const futureProjects = [
 
 export default function VisionPage() {
   return (
-    <div className="min-h-screen bg-cortex-900 neural-bg">
+    <div className="min-h-screen bg-gradient-to-br from-cortex-900 via-cortex-800 to-cortex-900 relative overflow-hidden">
+      {/* Neural Background con tema híbrido */}
+      <NeuralBackground theme="hybrid" intensity="high" />
+      
       <Navigation />
       
       <div className="pt-32 pb-16 px-4 sm:px-6 lg:px-8">

@@ -2,6 +2,7 @@
 
 import { Navigation } from '@/components/layout/Navigation';
 import { Code, Lightbulb, Target, TrendingUp, Users, DollarSign } from 'lucide-react';
+import NeuralBackground from '@/components/ui/NeuralBackground';
 
 const strategiesContent = {
   title: "Estrategias de Startups en LATAM",
@@ -71,7 +72,10 @@ const strategiesContent = {
 
 export default function EstrategiasStartupsPage() {
   return (
-    <div className="min-h-screen bg-cortex-900 neural-bg">
+    <div className="min-h-screen bg-gradient-to-br from-cortex-900 via-cortex-800 to-cortex-900 relative overflow-hidden">
+      {/* Neural Background con tema neural */}
+      <NeuralBackground theme="neural" intensity="medium" />
+      
       <Navigation />
       
       <div className="pt-24 pb-12 px-4 sm:px-6 lg:px-8">

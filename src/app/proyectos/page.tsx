@@ -3,6 +3,7 @@ import { getAllProjects } from '@/lib/mdx';
 import { formatDate } from '@/lib/utils';
 import Link from 'next/link';
 import { Code, ExternalLink, Calendar, Users, TrendingUp } from 'lucide-react';
+import NeuralBackground from '@/components/ui/NeuralBackground';
 
 export default function ProyectosPage() {
   const projects = getAllProjects();
@@ -34,7 +35,10 @@ export default function ProyectosPage() {
   };
 
   return (
-    <div className="min-h-screen bg-cortex-900 neural-bg">
+    <div className="min-h-screen bg-gradient-to-br from-cortex-900 via-cortex-800 to-cortex-900 relative overflow-hidden">
+      {/* Neural Background con tema robótico */}
+      <NeuralBackground theme="robotic" intensity="medium" />
+      
       <Navigation />
       
       <div className="pt-32 pb-16 px-4 sm:px-6 lg:px-8">

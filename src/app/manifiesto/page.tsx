@@ -3,6 +3,10 @@
 
 import { useState } from 'react';
 import { Navigation } from '@/components/layout/Navigation';
+import NeuralBackground from '@/components/ui/NeuralBackground';
+import ThemedButton from '@/components/ui/ThemedButton';
+import ThemedCard from '@/components/ui/ThemedCard';
+import { Dna, Brain, Cpu, Atom, Microscope, FlaskConical, TestTube, CircuitBoard, Network, Wifi, Satellite, Rocket, Globe, Shield, Award, Star, Sparkles, Zap, Target, Code, Lightbulb, BookOpen, MessageCircle, ExternalLink } from 'lucide-react';
 
 
 const manifiestos = {
@@ -133,7 +137,10 @@ export default function ManifestoPage() {
   const currentManifesto = manifiestos[activeTab];
 
   return (
-    <div className="min-h-screen bg-cortex-900 neural-bg">
+    <div className="min-h-screen bg-gradient-to-br from-cortex-900 via-cortex-800 to-cortex-900 relative overflow-hidden">
+      {/* Neural Background con tema híbrido */}
+      <NeuralBackground theme="hybrid" intensity="high" />
+      
       <Navigation />
       
       <div className="pt-24 pb-12 px-4 sm:px-6 lg:px-8">

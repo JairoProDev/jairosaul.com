@@ -3,6 +3,7 @@
 import { Navigation } from '@/components/layout/Navigation';
 import { TrendingUp, Target, Brain, Clock, Users, Zap, Check, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
+import NeuralBackground from '@/components/ui/NeuralBackground';
 
 const uplifyProject = {
   name: "Uplify",
@@ -86,7 +87,10 @@ const uplifyProject = {
 
 export default function UplifyProjectPage() {
   return (
-    <div className="min-h-screen bg-cortex-900 neural-bg">
+    <div className="min-h-screen bg-gradient-to-br from-cortex-900 via-cortex-800 to-cortex-900 relative overflow-hidden">
+      {/* Neural Background con tema genético */}
+      <NeuralBackground theme="genetic" intensity="medium" />
+      
       <Navigation />
       
       <div className="pt-24 pb-12 px-4 sm:px-6 lg:px-8">

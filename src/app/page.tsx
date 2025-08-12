@@ -1,16 +1,22 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { Code, Lightbulb, BookOpen, MessageCircle, ExternalLink, Brain, Target, Eye, TrendingUp } from 'lucide-react';
+import { Code, Lightbulb, BookOpen, MessageCircle, ExternalLink, Brain, Target, Eye, TrendingUp, Zap, Cpu, Dna, Atom, Microscope, FlaskConical, TestTube, CircuitBoard, Network, Wifi, Satellite, Rocket, Globe, Shield, Award, Star, Sparkles } from 'lucide-react';
 import { Navigation } from '@/components/layout/Navigation';
 import NeuralParticles from '@/components/ui/NeuralParticles';
 import { DNAHelix, Minibrain } from '@/components/ui/NeuralCircuits';
 import DNA3D from '@/components/ui/DNA3D';
 import Brain3DInteractive from '@/components/ui/Brain3DInteractive';
+import NeuralBackground from '@/components/ui/NeuralBackground';
+import ThemedButton from '@/components/ui/ThemedButton';
+import ThemedCard from '@/components/ui/ThemedCard';
 
 export default function HomePage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-cortex-900 via-cortex-800 to-cortex-900 relative overflow-hidden">
+      {/* Neural Background con tema híbrido */}
+      <NeuralBackground theme="hybrid" intensity="high" />
+      
       {/* Premium metallic background effect */}
       <div className="absolute inset-0 bg-gradient-to-br from-slate-500/5 via-transparent to-emerald-500/5"></div>
       <div className="absolute inset-0" style={{
@@ -110,25 +116,25 @@ export default function HomePage() {
                       </div>
                     </div>
 
-                    {/* Premium Action Buttons */}
-                    <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                      <Link
-                        href="/cortex"
-                        className="group relative inline-flex items-center px-6 py-3 bg-gradient-to-r from-acetylcholine-500 via-acetylcholine-600 to-emerald-500 text-white rounded-xl font-semibold shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105 overflow-hidden"
-                      >
-                        <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                        <Brain className="mr-2 h-5 w-5 relative z-10" />
-                        <span className="relative z-10">Explorar Brain 3D</span>
-                      </Link>
-                      <Link
-                        href="/proyectos"
-                        className="group relative inline-flex items-center px-6 py-3 bg-gradient-to-r from-emerald-600 via-cyber-600 to-cyber-500 text-white rounded-xl font-semibold shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105 overflow-hidden"
-                      >
-                        <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                        <Code className="mr-2 h-5 w-5 relative z-10" />
-                        <span className="relative z-10">Ver Proyectos</span>
-                      </Link>
-                    </div>
+                                              {/* Premium Action Buttons */}
+                          <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                            <ThemedButton
+                              href="/cortex"
+                              variant="neural"
+                              size="lg"
+                              icon={<Brain className="h-5 w-5" />}
+                            >
+                              Explorar Brain 3D
+                            </ThemedButton>
+                            <ThemedButton
+                              href="/proyectos"
+                              variant="genetic"
+                              size="lg"
+                              icon={<Code className="h-5 w-5" />}
+                            >
+                              Ver Proyectos
+                            </ThemedButton>
+                          </div>
                     
                     {/* Premium Social Links */}
                     <div className="flex space-x-4 justify-center lg:justify-start pt-4">
@@ -179,162 +185,124 @@ export default function HomePage() {
             <div className="lg:col-span-2">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 h-full">
                 {/* Componente 1: Proyectos y Startups */}
-                <div className="bg-cortex-800/30 backdrop-blur-sm border border-cortex-700 rounded-2xl p-4 fade-in">
-                  <div className="flex items-start space-x-3">
-                    <div className="flex-shrink-0">
-                      <div className="w-10 h-10 bg-acetylcholine-500 rounded-full flex items-center justify-center">
-                        <Code className="w-5 h-5 text-white" />
-                      </div>
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="font-serif text-base font-bold text-white mb-2">
-                        Proyectos Activos
-                      </h3>
-                      <p className="text-cortex-300 text-xs mb-3">
-                        Startups y aplicaciones en desarrollo activo
+                <ThemedCard
+                  variant="neural"
+                  icon={<Code className="w-5 h-5" />}
+                  title="Proyectos Activos"
+                  description="Startups y aplicaciones en desarrollo activo"
+                  className="fade-in"
+                >
+                  <div className="space-y-1 text-cortex-200">
+                    <div className="flex items-start space-x-2">
+                      <div className="w-1 h-1 bg-acetylcholine-400 rounded-full mt-1.5 flex-shrink-0"></div>
+                      <p className="text-xs">
+                        <span className="text-acetylcholine-400 font-medium">Buscadis</span> - Marketplace
                       </p>
-                      <div className="space-y-1 text-cortex-200">
-                        <div className="flex items-start space-x-2">
-                          <div className="w-1 h-1 bg-acetylcholine-400 rounded-full mt-1.5 flex-shrink-0"></div>
-                          <p className="text-xs">
-                            <span className="text-acetylcholine-400 font-medium">Buscadis</span> - Marketplace
-                          </p>
-                        </div>
-                        <div className="flex items-start space-x-2">
-                          <div className="w-1 h-1 bg-emerald-400 rounded-full mt-1.5 flex-shrink-0"></div>
-                          <p className="text-xs">
-                            <span className="text-emerald-400 font-medium">DiverEdu</span> - Educación
-                          </p>
-                        </div>
-                        <div className="flex items-start space-x-2">
-                          <div className="w-1 h-1 bg-cyber-400 rounded-full mt-1.5 flex-shrink-0"></div>
-                          <p className="text-xs">
-                            <span className="text-cyber-400 font-medium">Uplify</span> - Contenido
-                          </p>
-                        </div>
-                      </div>
+                    </div>
+                    <div className="flex items-start space-x-2">
+                      <div className="w-1 h-1 bg-emerald-400 rounded-full mt-1.5 flex-shrink-0"></div>
+                      <p className="text-xs">
+                        <span className="text-emerald-400 font-medium">DiverEdu</span> - Educación
+                      </p>
+                    </div>
+                    <div className="flex items-start space-x-2">
+                      <div className="w-1 h-1 bg-cyber-400 rounded-full mt-1.5 flex-shrink-0"></div>
+                      <p className="text-xs">
+                        <span className="text-cyber-400 font-medium">Uplify</span> - Contenido
+                      </p>
                     </div>
                   </div>
-                </div>
+                </ThemedCard>
 
                 {/* Componente 2: Filosofía y Sistema de Pensamiento */}
-                <div className="bg-cortex-800/30 backdrop-blur-sm border border-cortex-700 rounded-2xl p-4 fade-in">
-                  <div className="flex items-start space-x-3">
-                    <div className="flex-shrink-0">
-                      <div className="w-10 h-10 bg-emerald-500 rounded-full flex items-center justify-center">
-                        <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                        </svg>
-                      </div>
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="font-serif text-base font-bold text-white mb-2">
-                        Sistema de Pensamiento
-                      </h3>
-                      <p className="text-cortex-300 text-xs mb-3">
-                        Filosofía para la excelencia personal y profesional
+                <ThemedCard
+                  variant="genetic"
+                  icon={<Zap className="w-5 h-5" />}
+                  title="Sistema de Pensamiento"
+                  description="Filosofía para la excelencia personal y profesional"
+                  className="fade-in"
+                >
+                  <div className="space-y-1 text-cortex-200">
+                    <div className="flex items-start space-x-2">
+                      <div className="w-1 h-1 bg-emerald-400 rounded-full mt-1.5 flex-shrink-0"></div>
+                      <p className="text-xs">
+                        <span className="text-emerald-400 font-medium">ProDev</span> - Excelencia
                       </p>
-                      <div className="space-y-1 text-cortex-200">
-                        <div className="flex items-start space-x-2">
-                          <div className="w-1 h-1 bg-emerald-400 rounded-full mt-1.5 flex-shrink-0"></div>
-                          <p className="text-xs">
-                            <span className="text-emerald-400 font-medium">ProDev</span> - Excelencia
-                          </p>
-                        </div>
-                        <div className="flex items-start space-x-2">
-                          <div className="w-1 h-1 bg-acetylcholine-400 rounded-full mt-1.5 flex-shrink-0"></div>
-                          <p className="text-xs">
-                            <span className="text-acetylcholine-400 font-medium">GrowHack</span> - Superación
-                          </p>
-                        </div>
-                        <div className="flex items-start space-x-2">
-                          <div className="w-1 h-1 bg-cyber-400 rounded-full mt-1.5 flex-shrink-0"></div>
-                          <p className="text-xs">
-                            <span className="text-cyber-400 font-medium">Antifragilidad</span> - Resiliencia
-                          </p>
-                        </div>
-                      </div>
+                    </div>
+                    <div className="flex items-start space-x-2">
+                      <div className="w-1 h-1 bg-acetylcholine-400 rounded-full mt-1.5 flex-shrink-0"></div>
+                      <p className="text-xs">
+                        <span className="text-acetylcholine-400 font-medium">GrowHack</span> - Superación
+                      </p>
+                    </div>
+                    <div className="flex items-start space-x-2">
+                      <div className="w-1 h-1 bg-cyber-400 rounded-full mt-1.5 flex-shrink-0"></div>
+                      <p className="text-xs">
+                        <span className="text-cyber-400 font-medium">Antifragilidad</span> - Resiliencia
+                      </p>
                     </div>
                   </div>
-                </div>
+                </ThemedCard>
 
                 {/* Componente 3: Experiencia y Contenido */}
-                <div className="bg-cortex-800/30 backdrop-blur-sm border border-cortex-700 rounded-2xl p-4 fade-in">
-                  <div className="flex items-start space-x-3">
-                    <div className="flex-shrink-0">
-                      <div className="w-10 h-10 bg-cyber-500 rounded-full flex items-center justify-center">
-                        <Brain className="w-5 h-5 text-white" />
-                      </div>
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="font-serif text-base font-bold text-white mb-2">
-                        Experiencia 3D
-                      </h3>
-                      <p className="text-cortex-300 text-xs mb-3">
-                        Exploración interactiva y contenido científico
+                <ThemedCard
+                  variant="robotic"
+                  icon={<Brain className="w-5 h-5" />}
+                  title="Experiencia 3D"
+                  description="Exploración interactiva y contenido científico"
+                  className="fade-in"
+                >
+                  <div className="space-y-1 text-cortex-200">
+                    <div className="flex items-start space-x-2">
+                      <div className="w-1 h-1 bg-cyber-400 rounded-full mt-1.5 flex-shrink-0"></div>
+                      <p className="text-xs">
+                        <span className="text-cyber-400 font-medium">Brain 3D</span> - Interactivo
                       </p>
-                      <div className="space-y-1 text-cortex-200">
-                        <div className="flex items-start space-x-2">
-                          <div className="w-1 h-1 bg-cyber-400 rounded-full mt-1.5 flex-shrink-0"></div>
-                          <p className="text-xs">
-                            <span className="text-cyber-400 font-medium">Brain 3D</span> - Interactivo
-                          </p>
-                        </div>
-                        <div className="flex items-start space-x-2">
-                          <div className="w-1 h-1 bg-acetylcholine-400 rounded-full mt-1.5 flex-shrink-0"></div>
-                          <p className="text-xs">
-                            <span className="text-acetylcholine-400 font-medium">Ideas</span> - Blog
-                          </p>
-                        </div>
-                        <div className="flex items-start space-x-2">
-                          <div className="w-1 h-1 bg-emerald-400 rounded-full mt-1.5 flex-shrink-0"></div>
-                          <p className="text-xs">
-                            <span className="text-emerald-400 font-medium">Conexiones</span> - Redes
-                          </p>
-                        </div>
-                      </div>
+                    </div>
+                    <div className="flex items-start space-x-2">
+                      <div className="w-1 h-1 bg-acetylcholine-400 rounded-full mt-1.5 flex-shrink-0"></div>
+                      <p className="text-xs">
+                        <span className="text-acetylcholine-400 font-medium">Ideas</span> - Blog
+                      </p>
+                    </div>
+                    <div className="flex items-start space-x-2">
+                      <div className="w-1 h-1 bg-emerald-400 rounded-full mt-1.5 flex-shrink-0"></div>
+                      <p className="text-xs">
+                        <span className="text-emerald-400 font-medium">Conexiones</span> - Redes
+                      </p>
                     </div>
                   </div>
-                </div>
+                </ThemedCard>
 
-                {/* Componente 4: Nuevo componente */}
-                <div className="bg-cortex-800/30 backdrop-blur-sm border border-cortex-700 rounded-2xl p-4 fade-in">
-                  <div className="flex items-start space-x-3">
-                    <div className="flex-shrink-0">
-                      <div className="w-10 h-10 bg-purple-500 rounded-full flex items-center justify-center">
-                        <Target className="w-5 h-5 text-white" />
-                      </div>
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="font-serif text-base font-bold text-white mb-2">
-                        Impacto Global
-                      </h3>
-                      <p className="text-cortex-300 text-xs mb-3">
-                        Transformación tecnológica y social
+                {/* Componente 4: Impacto Global */}
+                <ThemedCard
+                  variant="hybrid"
+                  icon={<Globe className="w-5 h-5" />}
+                  title="Impacto Global"
+                  description="Transformación tecnológica y social"
+                  className="fade-in"
+                >
+                  <div className="space-y-1 text-cortex-200">
+                    <div className="flex items-start space-x-2">
+                      <div className="w-1 h-1 bg-purple-400 rounded-full mt-1.5 flex-shrink-0"></div>
+                      <p className="text-xs">
+                        <span className="text-purple-400 font-medium">Innovación</span> - Tecnología
                       </p>
-                      <div className="space-y-1 text-cortex-200">
-                        <div className="flex items-start space-x-2">
-                          <div className="w-1 h-1 bg-purple-400 rounded-full mt-1.5 flex-shrink-0"></div>
-                          <p className="text-xs">
-                            <span className="text-purple-400 font-medium">Innovación</span> - Tecnología
-                          </p>
-                        </div>
-                        <div className="flex items-start space-x-2">
-                          <div className="w-1 h-1 bg-pink-400 rounded-full mt-1.5 flex-shrink-0"></div>
-                          <p className="text-xs">
-                            <span className="text-pink-400 font-medium">Educación</span> - Futuro
-                          </p>
-                        </div>
-                        <div className="flex items-start space-x-2">
-                          <div className="w-1 h-1 bg-indigo-400 rounded-full mt-1.5 flex-shrink-0"></div>
-                          <p className="text-xs">
-                            <span className="text-indigo-400 font-medium">Comunidad</span> - Crecimiento
-                          </p>
-                        </div>
-                      </div>
+                    </div>
+                    <div className="flex items-start space-x-2">
+                      <div className="w-1 h-1 bg-pink-400 rounded-full mt-1.5 flex-shrink-0"></div>
+                      <p className="text-xs">
+                        <span className="text-pink-400 font-medium">Educación</span> - Futuro
+                      </p>
+                    </div>
+                    <div className="flex items-start space-x-2">
+                      <div className="w-1 h-1 bg-indigo-400 rounded-full mt-1.5 flex-shrink-0"></div>
+                      <p className="text-xs">
+                        <span className="text-indigo-400 font-medium">Comunidad</span> - Crecimiento
+                      </p>
                     </div>
                   </div>
-                </div>
+                </ThemedCard>
               </div>
             </div>
           </div>
@@ -435,86 +403,72 @@ export default function HomePage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {/* Buscadis */}
-            <div className="group fade-in bg-cortex-800/30 backdrop-blur-sm border border-cortex-700 rounded-xl p-6 hover:border-acetylcholine-500 transition-all duration-300">
-              <div className="flex items-center space-x-3 mb-4">
-                <div className="w-10 h-10 bg-acetylcholine-500 rounded-lg flex items-center justify-center">
-                  <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                  </svg>
-                </div>
-                <div>
-                  <h3 className="font-serif text-lg font-bold text-white">Buscadis</h3>
-                  <div className="flex space-x-2">
-                    <span className="px-2 py-1 bg-green-500/20 text-green-400 text-xs rounded-full">Activo</span>
-                    <span className="px-2 py-1 bg-acetylcholine-500/20 text-acetylcholine-400 text-xs rounded-full">Marketplace</span>
-                  </div>
-                      </div>
-                    </div>
-              <p className="text-cortex-300 text-sm mb-4">
-                Marketplace de avisos clasificados que conecta oportunidades en Latinoamérica
-              </p>
+            <ThemedCard
+              variant="neural"
+              icon={<svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>}
+              title="Buscadis"
+              description="Marketplace de avisos clasificados que conecta oportunidades en Latinoamérica"
+              className="fade-in"
+            >
+              <div className="flex space-x-2 mb-3">
+                <span className="px-2 py-1 bg-green-500/20 text-green-400 text-xs rounded-full">Activo</span>
+                <span className="px-2 py-1 bg-acetylcholine-500/20 text-acetylcholine-400 text-xs rounded-full">Marketplace</span>
+              </div>
               <Link href="/proyectos/buscadis" className="text-acetylcholine-400 text-sm hover:text-acetylcholine-300 flex items-center">
                 Ver proyecto <ExternalLink className="w-3 h-3 ml-1" />
               </Link>
-            </div>
+            </ThemedCard>
 
             {/* Uplify */}
-            <div className="group fade-in bg-cortex-800/30 backdrop-blur-sm border border-cortex-700 rounded-xl p-6 hover:border-emerald-500 transition-all duration-300">
-              <div className="flex items-center space-x-3 mb-4">
-                <div className="w-10 h-10 bg-emerald-500 rounded-lg flex items-center justify-center">
-                  <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-                  </svg>
-                    </div>
-                <div>
-                  <h3 className="font-serif text-lg font-bold text-white">Uplify</h3>
-                  <div className="flex space-x-2">
-                    <span className="px-2 py-1 bg-yellow-500/20 text-yellow-400 text-xs rounded-full">Desarrollo</span>
-                    <span className="px-2 py-1 bg-emerald-500/20 text-emerald-400 text-xs rounded-full">Productividad</span>
-                  </div>
-                </div>
+            <ThemedCard
+              variant="genetic"
+              icon={<svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+              </svg>}
+              title="Uplify"
+              description="Sistema operativo para la superación humana y desarrollo personal"
+              className="fade-in"
+            >
+              <div className="flex space-x-2 mb-3">
+                <span className="px-2 py-1 bg-yellow-500/20 text-yellow-400 text-xs rounded-full">Desarrollo</span>
+                <span className="px-2 py-1 bg-emerald-500/20 text-emerald-400 text-xs rounded-full">Productividad</span>
               </div>
-              <p className="text-cortex-300 text-sm mb-4">
-                Sistema operativo para la superación humana y desarrollo personal
-              </p>
               <Link href="/proyectos/uplify" className="text-emerald-400 text-sm hover:text-emerald-300 flex items-center">
                 Ver proyecto <ExternalLink className="w-3 h-3 ml-1" />
-                </Link>
-            </div>
+              </Link>
+            </ThemedCard>
 
             {/* DiverEdu */}
-            <div className="group fade-in bg-cortex-800/30 backdrop-blur-sm border border-cortex-700 rounded-xl p-6 hover:border-cyber-500 transition-all duration-300">
-              <div className="flex items-center space-x-3 mb-4">
-                <div className="w-10 h-10 bg-cyber-500 rounded-lg flex items-center justify-center">
-                  <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                  </svg>
-                </div>
-                <div>
-                  <h3 className="font-serif text-lg font-bold text-white">DiverEdu</h3>
-                  <div className="flex space-x-2">
-                    <span className="px-2 py-1 bg-blue-500/20 text-blue-400 text-xs rounded-full">Planificación</span>
-                    <span className="px-2 py-1 bg-cyber-500/20 text-cyber-400 text-xs rounded-full">Educación</span>
-                  </div>
-                </div>
+            <ThemedCard
+              variant="robotic"
+              icon={<svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+              </svg>}
+              title="DiverEdu"
+              description="YouTube de la educación - Plataforma de contenido educativo diverso"
+              className="fade-in"
+            >
+              <div className="flex space-x-2 mb-3">
+                <span className="px-2 py-1 bg-blue-500/20 text-blue-400 text-xs rounded-full">Planificación</span>
+                <span className="px-2 py-1 bg-cyber-500/20 text-cyber-400 text-xs rounded-full">Educación</span>
               </div>
-              <p className="text-cortex-300 text-sm mb-4">
-                YouTube de la educación - Plataforma de contenido educativo diverso
-              </p>
               <Link href="/proyectos/diveredu" className="text-cyber-400 text-sm hover:text-cyber-300 flex items-center">
                 Ver proyecto <ExternalLink className="w-3 h-3 ml-1" />
               </Link>
-            </div>
+            </ThemedCard>
           </div>
 
           <div className="text-center mt-12 fade-in">
-            <Link 
+            <ThemedButton
               href="/proyectos"
-              className="inline-flex items-center px-6 py-3 bg-acetylcholine-500 text-white rounded-lg font-medium hover:bg-acetylcholine-600 transition-colors"
+              variant="hybrid"
+              size="lg"
+              icon={<Code className="h-4 w-4" />}
             >
               Ver todos los proyectos
-              <Code className="ml-2 h-4 w-4" />
-            </Link>
+            </ThemedButton>
           </div>
         </div>
       </section>
