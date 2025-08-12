@@ -154,7 +154,7 @@ export default function EstrategiasStartupsPage() {
                       <h4 className="font-medium text-white mb-3 text-sm">Principios Clave:</h4>
                       <ul className="space-y-2">
                         {strategy.principles.map((principle, principleIndex) => (
-                          <li key={principleIndex} className="flex items-start space-x-2">
+                          <li key={`principle-${strategy.title}-${principleIndex}`} className="flex items-start space-x-2">
                             <div className={`w-1.5 h-1.5 rounded-full mt-2 flex-shrink-0 ${
                               strategy.color === 'acetylcholine' ? 'bg-acetylcholine-400' :
                               strategy.color === 'emerald' ? 'bg-emerald-400' :

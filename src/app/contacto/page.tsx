@@ -4,9 +4,7 @@ import { useState } from 'react';
 import { Navigation } from '@/components/layout/Navigation';
 import { siteConfig } from '@/lib/config';
 import NeuralBackground from '@/components/ui/NeuralBackground';
-import ThemedButton from '@/components/ui/ThemedButton';
-import ThemedCard from '@/components/ui/ThemedCard';
-import { MessageCircle, Mail, Linkedin, Twitter, Github, Youtube, Send, CheckCircle, Instagram, Facebook, MessageSquare, Zap, Dna, Brain, Cpu, Atom, Microscope, FlaskConical, TestTube, CircuitBoard, Network, Wifi, Satellite, Rocket, Globe, Shield, Award, Star, Sparkles, Target } from 'lucide-react';
+import { MessageCircle, Mail, Linkedin, Twitter, Github, Youtube, Send, CheckCircle, Instagram, MessageSquare, Zap } from 'lucide-react';
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({

@@ -1,12 +1,10 @@
 'use client';
 
-import { Mail, Phone, Calendar, MapPin, Github, Linkedin, Twitter, Youtube, Instagram, Facebook, MessageCircle, Dna, Brain, Cpu, Atom, Microscope, FlaskConical, TestTube, CircuitBoard, Network, Wifi, Satellite, Rocket, Globe, Shield, Award, Star, Sparkles, Zap, Target } from 'lucide-react';
+import { Mail, Phone, Calendar, MapPin, Github, Linkedin, Twitter, Youtube, Instagram, Facebook, MessageCircle } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Navigation } from '@/components/layout/Navigation';
 import NeuralBackground from '@/components/ui/NeuralBackground';
-import ThemedButton from '@/components/ui/ThemedButton';
-import ThemedCard from '@/components/ui/ThemedCard';
 
 const personalInfo = {
   name: "Jairo Saul",
@@ -215,7 +213,7 @@ export default function SobreMiPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {personalProjects.map((project, index) => (
                   <Link 
-                    key={index} 
+                    key={`personal-project-${project.name}-${index}`}
                     href={project.href}
                     className="group p-4 bg-cortex-700/50 hover:bg-cortex-700 rounded-lg transition-all duration-300 border border-cortex-600 hover:border-acetylcholine-500/50"
                   >
@@ -239,7 +237,7 @@ export default function SobreMiPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {startups.map((startup, index) => (
                   <Link 
-                    key={index} 
+                    key={`startup-${startup.name}-${index}`}
                     href={startup.href}
                     className="group p-4 bg-cortex-700/50 hover:bg-cortex-700 rounded-lg transition-all duration-300 border border-cortex-600 hover:border-dopamine-500/50"
                   >

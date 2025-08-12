@@ -122,8 +122,6 @@ function DNA3DModel({ size = 200 }: { size: number }) {
           0.08 * Math.sin(angle + Math.PI)
         );
         
-        // Vector de dirección para el puente horizontal
-        const bridgeDirection = new THREE.Vector3().subVectors(strandB, strandA).normalize();
         const bridgeLength = 0.16; // Longitud del puente
         const bridgeCenter = new THREE.Vector3().addVectors(strandA, strandB).multiplyScalar(0.5);
         

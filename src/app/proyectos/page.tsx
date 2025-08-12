@@ -134,7 +134,7 @@ export default function ProyectosPage() {
                         {/* Resultados */}
                         <div className="space-y-2">
                           {project.results.slice(0, 3).map((result, resultIndex) => (
-                            <div key={resultIndex} className="flex items-center">
+                            <div key={`result-${project.slug}-${resultIndex}`} className="flex items-center">
                               <div className="w-2 h-2 bg-acetylcholine-500 rounded-full mr-3" />
                               <span className="text-sm text-cortex-300">{result}</span>
                             </div>

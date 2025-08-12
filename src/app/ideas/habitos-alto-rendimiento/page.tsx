@@ -170,7 +170,7 @@ export default function HabitosAltoRendimientoPage() {
                       <h4 className="font-medium text-white mb-3 text-sm">Protocolo de Implementación:</h4>
                       <ul className="space-y-2">
                         {habit.principles.map((principle, principleIndex) => (
-                          <li key={principleIndex} className="flex items-start space-x-2">
+                          <li key={`principle-${habit.title}-${principleIndex}`} className="flex items-start space-x-2">
                             <div className={`w-1.5 h-1.5 rounded-full mt-2 flex-shrink-0 ${
                               habit.color === 'acetylcholine' ? 'bg-acetylcholine-400' :
                               habit.color === 'emerald' ? 'bg-emerald-400' :

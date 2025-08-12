@@ -130,7 +130,7 @@ export default function VisionPage() {
                 <div className="space-y-3">
                   <h3 className="font-semibold text-acetylcholine-400 mb-3">Objetivos Clave:</h3>
                   {section.goals.map((goal, goalIndex) => (
-                    <div key={goalIndex} className="flex items-start space-x-3">
+                    <div key={`goal-${section.title}-${goalIndex}`} className="flex items-start space-x-3">
                       <div className="w-2 h-2 bg-acetylcholine-500 rounded-full mt-2 flex-shrink-0" />
                       <span className="text-cortex-300 text-sm">{goal}</span>
                     </div>

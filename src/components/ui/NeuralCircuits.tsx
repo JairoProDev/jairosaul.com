@@ -220,23 +220,15 @@ interface ScrollActivatedCircuitsProps {
 
 export function ScrollActivatedCircuits({ children }: ScrollActivatedCircuitsProps) {
   const [scrollY, setScrollY] = useState(0);
-  const [activeSection, setActiveSection] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => {
       setScrollY(window.scrollY);
-      
-      // Calculate active section based on scroll position
-      const windowHeight = window.innerHeight;
-      const documentHeight = document.documentElement.scrollHeight;
-      const scrollPercentage = scrollY / (documentHeight - windowHeight);
-      
-      setActiveSection(Math.floor(scrollPercentage * 5)); // 5 sections
     };
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [scrollY]);
+  }, []);
 
   return (
     <div className="relative">

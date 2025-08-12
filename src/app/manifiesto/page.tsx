@@ -4,9 +4,6 @@
 import { useState } from 'react';
 import { Navigation } from '@/components/layout/Navigation';
 import NeuralBackground from '@/components/ui/NeuralBackground';
-import ThemedButton from '@/components/ui/ThemedButton';
-import ThemedCard from '@/components/ui/ThemedCard';
-import { Dna, Brain, Cpu, Atom, Microscope, FlaskConical, TestTube, CircuitBoard, Network, Wifi, Satellite, Rocket, Globe, Shield, Award, Star, Sparkles, Zap, Target, Code, Lightbulb, BookOpen, MessageCircle, ExternalLink } from 'lucide-react';
 
 
 const manifiestos = {
@@ -230,7 +227,7 @@ export default function ManifestoPage() {
                           <ul className="space-y-2">
                             {section.principles.map((principle, principleIndex) => (
                               <li
-                                key={principleIndex}
+                                key={`principle-${section.title}-${principleIndex}`}
                                 className="flex items-start space-x-2"
                               >
                                 <div className={`w-1.5 h-1.5 rounded-full mt-2 flex-shrink-0 ${

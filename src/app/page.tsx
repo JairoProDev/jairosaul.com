@@ -1,7 +1,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { Code, Lightbulb, BookOpen, MessageCircle, ExternalLink, Brain, Target, Eye, TrendingUp, Zap, Cpu, Dna, Atom, Microscope, FlaskConical, TestTube, CircuitBoard, Network, Wifi, Satellite, Rocket, Globe, Shield, Award, Star, Sparkles } from 'lucide-react';
+import { Code, Lightbulb, BookOpen, MessageCircle, ExternalLink, Brain, Target, Eye, TrendingUp, Zap, Globe } from 'lucide-react';
 import { Navigation } from '@/components/layout/Navigation';
 import NeuralParticles from '@/components/ui/NeuralParticles';
 import { DNAHelix, Minibrain } from '@/components/ui/NeuralCircuits';
@@ -152,7 +152,7 @@ export default function HomePage() {
                         
                       ].map((social, index) => (
                         <a 
-                          key={index}
+                          key={`social-${social.href}-${index}`}
                           href={social.href} 
                           target="_blank" 
                           className={`p-3 bg-gradient-to-br from-slate-700/50 to-slate-800/50 hover:from-${social.color}-500/20 hover:to-${social.color}-600/20 backdrop-blur-sm border border-slate-600/30 hover:border-${social.color}-500/50 rounded-full transition-all duration-300 group shadow-lg hover:shadow-xl`}

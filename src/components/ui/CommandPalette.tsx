@@ -13,9 +13,6 @@ import {
   BookOpen, 
   MessageCircle, 
   Settings,
-  Clock,
-  Activity,
-  BarChart3,
   Zap,
   Eye,
   Command,
@@ -136,6 +133,11 @@ export default function CommandPalette({ isOpen, onClose, onOpenSystemPanel }: C
     setCommands([...navigationCommands, ...systemCommands, ...recentCommands, ...statsCommands]);
   }, [router, onOpenSystemPanel]);
 
+  const filteredCommands = commands.filter((command) =>
+    command.title.toLowerCase().includes(query.toLowerCase()) ||
+    command.description.toLowerCase().includes(query.toLowerCase())
+  );
+
   useEffect(() => {
     if (isOpen) {
       inputRef.current?.focus();
@@ -181,7 +183,7 @@ export default function CommandPalette({ isOpen, onClose, onOpenSystemPanel }: C
 
     document.addEventListener('keydown', handleKeyDown);
     return () => document.removeEventListener('keydown', handleKeyDown);
-  }, [isOpen, selectedIndex, onClose]);
+  }, [isOpen, selectedIndex, onClose, filteredCommands]);
 
 
 
@@ -195,11 +197,6 @@ export default function CommandPalette({ isOpen, onClose, onOpenSystemPanel }: C
       default: return <Brain className="h-4 w-4" />;
     }
   };
-
-  const filteredCommands = commands.filter((command) =>
-    command.title.toLowerCase().includes(query.toLowerCase()) ||
-    command.description.toLowerCase().includes(query.toLowerCase())
-  );
 
   const getCategoryColor = (category: string) => {
     switch (category) {

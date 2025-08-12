@@ -50,9 +50,9 @@ class PlasticityEngine {
         const parsed = JSON.parse(stored);
         return { ...this.getDefaultMemory(), ...parsed };
       }
-    } catch (error) {
-      console.warn('Error loading plasticity memory:', error);
-    }
+          } catch (_error) {
+        // console.warn('Error loading plasticity memory:', error);
+      }
 
     return this.getDefaultMemory();
   }
@@ -84,8 +84,8 @@ class PlasticityEngine {
 
     try {
       localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this.memory));
-    } catch (error) {
-      console.warn('Error saving plasticity memory:', error);
+    } catch (_error) {
+      // console.warn('Error saving plasticity memory:', error);
     }
   }
 

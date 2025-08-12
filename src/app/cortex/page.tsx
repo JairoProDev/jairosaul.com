@@ -1,8 +1,6 @@
 'use client';
 
 import dynamic from 'next/dynamic';
-import Link from 'next/link';
-import { ArrowLeft } from 'lucide-react';
 import { Navigation } from '@/components/layout/Navigation';
 import NeuralBackground from '@/components/ui/NeuralBackground';
 

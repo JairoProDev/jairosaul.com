@@ -149,7 +149,7 @@ export default function UplifyProjectPage() {
 
             <div className="space-y-4 fade-in">
               {uplifyProject.problem.stats.map((stat, index) => (
-                <div key={index} className="bg-synaptic-500/10 border border-synaptic-500/30 rounded-xl p-4 text-center">
+                <div key={`stat-${stat.number}-${index}`} className="bg-synaptic-500/10 border border-synaptic-500/30 rounded-xl p-4 text-center">
                   <div className="text-3xl font-bold text-synaptic-400">{stat.number}</div>
                   <div className="text-xs text-cortex-300">{stat.label}</div>
                 </div>
@@ -213,7 +213,7 @@ export default function UplifyProjectPage() {
               <div className="space-y-3">
                 <h3 className="font-medium text-emerald-400 mb-3">Roadmap:</h3>
                 {uplifyProject.vision.milestones.map((milestone, index) => (
-                  <div key={index} className="flex items-start space-x-3">
+                  <div key={`milestone-${index}`} className="flex items-start space-x-3">
                     <div className="w-2 h-2 bg-emerald-400 rounded-full mt-2 flex-shrink-0"></div>
                     <span className="text-cortex-300 text-sm">{milestone}</span>
                   </div>
@@ -231,7 +231,7 @@ export default function UplifyProjectPage() {
               </p>
               <div className="space-y-3">
                 {uplifyProject.techStack.map((tech, index) => (
-                  <div key={index} className="flex items-center space-x-3">
+                  <div key={`tech-${tech}-${index}`} className="flex items-center space-x-3">
                     <Check className="w-4 h-4 text-emerald-400" />
                     <span className="text-cortex-300 text-sm">{tech}</span>
                   </div>
