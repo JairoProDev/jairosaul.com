@@ -113,7 +113,7 @@ export function Navigation() {
             <div className="py-4 space-y-2">
               {siteConfig.navigation.map((item, index) => (
                 <div
-                  key={item.href}
+                  key={`mobile-nav-${item.href}`}
                   className="fade-in"
                   style={{ animationDelay: `${index * 100}ms` }}
                 >
