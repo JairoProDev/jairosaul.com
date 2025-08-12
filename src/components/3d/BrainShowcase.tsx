@@ -194,6 +194,16 @@ function ProceduralBrain() {
 }
 
 function GLBBrain({ style }: { style: BrainStyle }) {
+  // Use procedural brain instead of loading GLB to avoid 404 errors
+  if (style === 'crystal') {
+    return <ProceduralBrain />;
+  }
+  return <WireframeBrain />;
+}
+
+// Disabled GLB loading to avoid 404 errors
+/*
+function GLBBrainOriginal({ style }: { style: BrainStyle }) {
   const { scene } = useGLTF('/models/brain.glb');
   const groupRef = useRef<THREE.Group>(null);
 
@@ -233,6 +243,7 @@ function GLBBrain({ style }: { style: BrainStyle }) {
 
   return <primitive ref={groupRef} object={scene} scale={0.8} />;
 }
+*/
 
 function SegmentedBrain() {
   const meshRef = useRef<THREE.Mesh>(null);
@@ -289,6 +300,13 @@ function WireframeBrain() {
 }
 
 function HologramBrain() {
+  // Use wireframe fallback instead of trying to load the model
+  return <WireframeBrain />;
+};
+
+// Disabled Hologram loading to avoid 404 errors
+/*
+function HologramBrainOriginal() {
   const { scene } = useGLTF('/models/brain_hologram.glb');
   const groupRef = useRef<THREE.Group>(null);
 
@@ -318,6 +336,7 @@ function HologramBrain() {
 
   return <primitive ref={groupRef} object={scene} scale={1.05} />;
 }
+*/
 
 function NeuralParticles({ count = 1000 }: { count?: number }) {
   const pointsRef = useRef<THREE.Points>(null);
@@ -549,7 +568,7 @@ function CameraTransition({
 }
 
 export default function BrainShowcase() {
-  const [hasModel, setHasModel] = useState<boolean | null>(null);
+  const [_hasModel, setHasModel] = useState<boolean | null>(null);
   const [style, setStyle] = useState<BrainStyle>('wireframe');
   const cameraRef = useRef<THREE.PerspectiveCamera>(null);
   const controlsRef = useRef<OrbitControlsImpl | null>(null);
@@ -559,11 +578,8 @@ export default function BrainShowcase() {
 
   // Comprobar si existe el GLB para usarlo; fallback a procedimental
   useEffect(() => {
-    let mounted = true;
-    fetch('/models/brain.glb', { method: 'HEAD' })
-      .then((r) => mounted && setHasModel(r.ok))
-      .catch(() => mounted && setHasModel(false));
-    return () => { mounted = false; };
+    // Set hasModel directly to false to avoid the fetch issues
+    setHasModel(false);
   }, []);
 
   const startTransition = (lobe: typeof LOBES[number]) => {
@@ -599,9 +615,9 @@ export default function BrainShowcase() {
           ) : style === 'wireframe' ? (
             <WireframeBrain />
           ) : style === 'hologram' ? (
-            <HologramBrain />
-          ) : hasModel ? (
-            <GLBBrain style={style} />
+            <WireframeBrain />
+          ) : style === 'crystal' ? (
+            <ProceduralBrain />
           ) : (
             <ProceduralBrain />
           )}

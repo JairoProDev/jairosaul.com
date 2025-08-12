@@ -220,15 +220,22 @@ export default function DNA3D({ className = '', size = 200 }: DNA3DProps) {
       
       {/* Floating particles around DNA */}
       <div className="absolute inset-0 pointer-events-none">
-        {[...Array(6)].map((_, i) => (
+        {[
+          {left: "22.6372%", top: "47.1296%", delay: "0s", duration: "2.28679s"},
+          {left: "69.1012%", top: "71.8435%", delay: "0.5s", duration: "3.60166s"},
+          {left: "70.3569%", top: "45.396%", delay: "1s", duration: "2.41883s"},
+          {left: "62.8187%", top: "61.2132%", delay: "1.5s", duration: "2.16796s"},
+          {left: "76.2992%", top: "29.015%", delay: "2s", duration: "3.1644s"},
+          {left: "60.5761%", top: "55.3474%", delay: "2.5s", duration: "2.5369s"}
+        ].map((particle, i) => (
           <div
             key={`floating-particle-${i}`}
             className="absolute w-1 h-1 bg-gradient-to-r from-acetylcholine-400 to-emerald-400 rounded-full animate-ping"
             style={{
-              left: `${20 + Math.random() * 60}%`,
-              top: `${20 + Math.random() * 60}%`,
-              animationDelay: `${i * 0.5}s`,
-              animationDuration: `${2 + Math.random() * 2}s`
+              left: particle.left,
+              top: particle.top,
+              animationDelay: particle.delay,
+              animationDuration: particle.duration
             }}
           />
         ))}
