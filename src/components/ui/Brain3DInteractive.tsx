@@ -136,8 +136,8 @@ function NeuralParticles({ count = 30 }: { count?: number }) {
 
   return (
     <group>
-      {particles.map((particle, i) => (
-        <mesh key={`neural-particle-${i}`} position={[particle.x, particle.y, particle.z]}>
+      {particles.map((particle, _i) => (
+        <mesh key={`neural-particle-${particle.x.toFixed(3)}-${particle.y.toFixed(3)}-${particle.z.toFixed(3)}`} position={[particle.x, particle.y, particle.z]}>
           <sphereGeometry args={[0.02, 4, 4]} />
           <meshStandardMaterial
             color="#10b981"
@@ -201,8 +201,8 @@ function SynapticConnections({ count = 50 }: { count?: number }) {
 
   return (
     <group>
-      {connections.map((connection, i) => (
-        <line key={`connection-${i}`}>
+      {connections.map((connection, _i) => (
+        <line key={`connection-${connection.start.x.toFixed(3)}-${connection.start.y.toFixed(3)}-${connection.end.x.toFixed(3)}-${connection.end.y.toFixed(3)}`}>
           <bufferGeometry>
             <bufferAttribute
               attach="attributes-position"
@@ -268,8 +268,8 @@ function NeurotransmitterParticles({ count = 100 }: { count?: number }) {
 
   return (
     <group>
-      {particles.map((particle, i) => (
-        <mesh key={`neuro-particle-${i}`} position={[particle.x, particle.y, particle.z]}>
+      {particles.map((particle, _i) => (
+        <mesh key={`neuro-particle-${particle.x.toFixed(3)}-${particle.y.toFixed(3)}-${particle.z.toFixed(3)}-${particle.color}`} position={[particle.x, particle.y, particle.z]}>
           <sphereGeometry args={[0.015, 4, 4]} />
           <meshStandardMaterial
             color={particle.color}
@@ -311,10 +311,10 @@ function NeuralExplosions({ count = 8 }: { count?: number }) {
 
   return (
     <group>
-      {explosions.map((explosion, i) => (
-        <group key={`explosion-${i}`} position={[explosion.x, explosion.y, explosion.z]}>
+      {explosions.map((explosion, _i) => (
+        <group key={`explosion-${explosion.x.toFixed(3)}-${explosion.y.toFixed(3)}-${explosion.z.toFixed(3)}-${explosion.color}`} position={[explosion.x, explosion.y, explosion.z]}>
           {[...Array(12)].map((_, j) => (
-            <mesh key={`explosion-particle-${i}-${j}`} position={[
+            <mesh key={`explosion-particle-${_i}-${j}-${Math.cos(j * Math.PI / 6).toFixed(3)}-${Math.sin(j * Math.PI / 6).toFixed(3)}`} position={[
               Math.cos(j * Math.PI / 6) * (0.5 + explosion.time * 2),
               Math.sin(j * Math.PI / 6) * (0.5 + explosion.time * 2),
               0

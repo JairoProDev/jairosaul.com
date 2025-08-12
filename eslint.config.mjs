@@ -26,7 +26,7 @@ const eslintConfig = [
       "react/no-unescaped-entities": "off",
       "react/display-name": "off",
       "react/no-unknown-property": "off", // Para Three.js
-      "react/no-array-index-key": "warn",
+      "react/no-array-index-key": "off",
       "no-console": "warn",
       "no-debugger": "error",
       "no-unused-expressions": "warn",

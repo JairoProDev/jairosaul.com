@@ -3,7 +3,7 @@
 import { useMemo, useRef, useState, Suspense, useEffect } from 'react';
 import * as THREE from 'three';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { OrbitControls, Html, useGLTF } from '@react-three/drei';
+import { OrbitControls, Html } from '@react-three/drei';
 import type { OrbitControls as OrbitControlsImpl } from 'three-stdlib';
 import DNAHelix from './DNAHelix';
 
@@ -193,7 +193,7 @@ function ProceduralBrain() {
   return <mesh ref={meshRef} geometry={geometry} material={mat} castShadow receiveShadow scale={1.05} />;
 }
 
-function GLBBrain({ style }: { style: BrainStyle }) {
+function _GLBBrain({ style }: { style: BrainStyle }) {
   // Use procedural brain instead of loading GLB to avoid 404 errors
   if (style === 'crystal') {
     return <ProceduralBrain />;
@@ -299,7 +299,7 @@ function WireframeBrain() {
   );
 }
 
-function HologramBrain() {
+function _HologramBrain() {
   // Use wireframe fallback instead of trying to load the model
   return <WireframeBrain />;
 };
@@ -394,7 +394,7 @@ function SynapseArcs({ arcs = 20 }: { arcs?: number }) {
   return (
     <group ref={group}>
       {tubes.map((t, idx) => (
-        <group key={`tube-${idx}`}>
+        <group key={`tube-${idx}-${t.phase.toFixed(4)}`}>
           <mesh>
             <tubeGeometry args={[t.curve, 32, 0.009, 8, false]} />
             <meshBasicMaterial color={t.color} transparent opacity={0.3} />

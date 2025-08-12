@@ -106,7 +106,7 @@ export default function DNAHelix({
         const colors = ['#ef4444', '#10b981', '#f59e0b', '#8b5cf6']; // Rojo, Verde, Naranja, Violeta
         
         return (
-          <group key={`base-${idx}`} position={pos}>
+          <group key={`base-${idx}-${pos.x.toFixed(3)}-${pos.y.toFixed(3)}-${pos.z.toFixed(3)}`} position={pos}>
             {/* Base nitrogenada A */}
             <mesh position={[0.02, 0, 0]}>
               <boxGeometry args={[0.04, 0.02, 0.02]} />
@@ -130,7 +130,7 @@ export default function DNAHelix({
 
       {/* Azúcares (puntos brillantes en las hélices) */}
       {sugarPhosphate.map((pos, idx) => (
-        <mesh key={`sugar-${idx}`} position={pos}>
+        <mesh key={`sugar-${idx}-${pos.x.toFixed(3)}-${pos.y.toFixed(3)}-${pos.z.toFixed(3)}`} position={pos}>
           <sphereGeometry args={[0.008, 8, 8]} />
           <meshStandardMaterial color="#fbbf24" emissive="#fbbf24" emissiveIntensity={0.6} />
         </mesh>
@@ -147,7 +147,7 @@ export default function DNAHelix({
         const center = pos.clone().add(direction.multiplyScalar(0.5));
         
         return (
-          <mesh key={`connector-${idx}`} position={center}>
+          <mesh key={`connector-${idx}-${center.x.toFixed(3)}-${center.y.toFixed(3)}-${center.z.toFixed(3)}`} position={center}>
             <cylinderGeometry args={[0.002, 0.002, distance, 6]} />
             <meshStandardMaterial color="#60a5fa" emissive="#60a5fa" emissiveIntensity={0.2} />
           </mesh>

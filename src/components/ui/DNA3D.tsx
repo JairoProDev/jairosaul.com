@@ -126,7 +126,7 @@ function DNA3DModel({ size = 200 }: { size: number }) {
         const bridgeCenter = new THREE.Vector3().addVectors(strandA, strandB).multiplyScalar(0.5);
         
         return (
-          <group key={`base-${idx}`}>
+          <group key={`base-${idx}-${pos.y.toFixed(3)}-${angle.toFixed(3)}`}>
             {/* Base nitrogenada A - Adenina (Azul) */}
             <mesh position={strandA}>
               <boxGeometry args={[0.02, 0.012, 0.012]} />
@@ -162,7 +162,7 @@ function DNA3DModel({ size = 200 }: { size: number }) {
 
       {/* Azúcares y fosfatos */}
       {sugarPhosphates.map((pos, idx) => (
-        <mesh key={`sugar-${idx}`} position={pos}>
+        <mesh key={`sugar-${idx}-${pos.x.toFixed(3)}-${pos.y.toFixed(3)}-${pos.z.toFixed(3)}`} position={pos}>
           <sphereGeometry args={[0.004, 6, 6]} />
           <meshStandardMaterial 
             color={idx % 2 === 0 ? "#fbbf24" : "#f59e0b"} 
@@ -227,9 +227,9 @@ export default function DNA3D({ className = '', size = 200 }: DNA3DProps) {
           {left: "62.8187%", top: "61.2132%", delay: "1.5s", duration: "2.16796s"},
           {left: "76.2992%", top: "29.015%", delay: "2s", duration: "3.1644s"},
           {left: "60.5761%", top: "55.3474%", delay: "2.5s", duration: "2.5369s"}
-        ].map((particle, i) => (
+        ].map((particle, _i) => (
           <div
-            key={`floating-particle-${i}`}
+            key={`floating-particle-${particle.left}-${particle.top}-${particle.delay}`}
             className="absolute w-1 h-1 bg-gradient-to-r from-acetylcholine-400 to-emerald-400 rounded-full animate-ping"
             style={{
               left: particle.left,
