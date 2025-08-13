@@ -3,23 +3,23 @@
 import { useMemo, useRef, Suspense } from 'react';
 import * as THREE from 'three';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { OrbitControls, useGLTF } from '@react-three/drei';
+import { OrbitControls } from '@react-three/drei';
 
 function createBrainMaterial() {
   type PulseMaterial = THREE.MeshPhysicalMaterial & { tick?: (dt: number) => void };
-  const mat = new THREE.MeshPhysicalMaterial({
-    color: new THREE.Color('#ffffff'), // Color blanco base
-    roughness: 0.2,
-    metalness: 0.05,
-    clearcoat: 0.8,
-    clearcoatRoughness: 0.1,
-    transmission: 0.3, // Más transparente
-    ior: 1.1,
-    thickness: 0.2,
+      const mat = new THREE.MeshPhysicalMaterial({
+    color: new THREE.Color('#e2e2e2'), // Color gris claro más cercano al color real del cerebro
+    roughness: 0.25, 
+    metalness: 0.03,
+    clearcoat: 0.9,
+    clearcoatRoughness: 0.15,
+    transmission: 0.2, // Menos transparente para más solidez
+    ior: 1.2,
+    thickness: 0.25,
     emissive: new THREE.Color('#3b82f6'),
-    emissiveIntensity: 0.2,
+    emissiveIntensity: 0.15,
     transparent: true,
-    opacity: 0.85, // Transparencia adicional
+    opacity: 0.92, // Menos transparencia para más definición
   }) as PulseMaterial;
 
   let shaderRef: { uniforms: Record<string, { value: number }> } | null = null;
@@ -62,29 +62,190 @@ function createBrainMaterial() {
   return mat;
 }
 
-function GLBBrain() {
-  const { scene } = useGLTF('/models/brain.glb');
+function ProceduralBrain() {
   const groupRef = useRef<THREE.Group>(null);
-
+  const mainMeshRef = useRef<THREE.Mesh>(null);
   const mat = useMemo(() => createBrainMaterial(), []);
+  
+  // Geometría principal del cerebro
+  const geometry = useMemo(() => {
+    // Usamos una subdivisión mayor para más detalle
+    const geom = new THREE.IcosahedronGeometry(1, 6);
+    const pos = geom.attributes.position as THREE.BufferAttribute;
 
-  useMemo(() => {
-    scene.traverse((obj) => {
-      if (obj instanceof THREE.Mesh) {
-        const mesh = obj as THREE.Mesh;
-        mesh.castShadow = true;
-        mesh.receiveShadow = true;
-        mesh.material = mat;
+    const clamp = (v: number, a: number, b: number) => Math.min(b, Math.max(a, v));
+    const smoothstep = (e0: number, e1: number, x: number) => {
+      const t = clamp((x - e0) / (e1 - e0), 0, 1);
+      return t * t * (3 - 2 * t);
+    };
+    
+    // Función de ruido simple para crear más detalle
+    const noise = (x: number, y: number, z: number, scale = 1) => {
+      return Math.sin(x * 7.3 * scale) * Math.cos(y * 6.2 * scale) * Math.sin(z * 5.1 * scale) * 0.5 +
+             Math.sin(x * 11.9 * scale + 0.5) * Math.cos(y * 10.8 * scale + 1.2) * Math.sin(z * 9.7 * scale + 0.7) * 0.25 +
+             Math.sin(x * 25.6 * scale + 1.7) * Math.cos(y * 24.8 * scale + 2.3) * Math.sin(z * 23.7 * scale + 3.1) * 0.125;
+    };
+
+    for (let i = 0; i < pos.count; i++) {
+      const vx = pos.getX(i); const vy = pos.getY(i); const vz = pos.getZ(i);
+      const dir = new THREE.Vector3(vx, vy, vz).normalize();
+
+      // Forma base del cerebro: elipsoide asimétrico más pronunciado
+      const scaleX = 1.5; // Más ancho
+      const scaleY = 1.15; // Altura media
+      const scaleZ = 1.65; // Más profundo
+      let x = dir.x * scaleX;
+      let y = dir.y * scaleY;
+      let z = dir.z * scaleZ;
+
+      // Cisura longitudinal (división entre hemisferios) - más profunda
+      const fissureDepth = 0.25;
+      const fissureWidth = 0.35;
+      const fissure = smoothstep(0, fissureWidth, Math.abs(dir.x));
+      const fissureEffect = (1 - fissure) * fissureDepth;
+      x *= (1 - fissureEffect);
+      
+      // Cisura central (Rolando)
+      if (dir.z > -0.1 && dir.z < 0.3) {
+        const centralSulcus = smoothstep(-0.1, 0.1, dir.z) * smoothstep(0.3, 0.1, dir.z);
+        const depth = 0.12 * centralSulcus;
+        z -= depth * dir.z;
       }
-    });
-  }, [scene, mat]);
+
+      // Lóbulos específicos con más volumen
+      // Frontal (superior-anterior)
+      if (dir.y > 0.3 && dir.z > -0.2) {
+        const frontal = smoothstep(0.3, 0.8, dir.y) * smoothstep(-0.2, 0.5, dir.z);
+        const bulge = 0.15 * frontal;
+        x *= (1 + bulge * Math.abs(dir.x));
+        y *= (1 + bulge);
+        
+        // Añadir convolucionado al lóbulo frontal
+        const frontNoise = noise(x * 2, y * 2, z * 2, 2.5) * 0.06 * frontal;
+        x += frontNoise * dir.x;
+        y += frontNoise * dir.y;
+        z += frontNoise * dir.z;
+      }
+
+      // Temporal (lateral) - más prominente
+      if (Math.abs(dir.x) > 0.5 && dir.y < 0.2) {
+        const temporal = smoothstep(0.5, 0.9, Math.abs(dir.x)) * smoothstep(0.2, -0.4, dir.y);
+        const bulge = 0.12 * temporal;
+        x *= (1 + bulge);
+        z *= (1 + bulge * 0.7);
+        
+        // Surco temporal superior
+        if (dir.y > -0.2 && dir.y < 0) {
+          const temporalSulcus = smoothstep(-0.2, -0.1, dir.y) * smoothstep(0, -0.1, dir.y);
+          const depth = 0.1 * temporalSulcus * temporal;
+          y -= depth;
+        }
+      }
+
+      // Parietal (superior-posterior)
+      if (dir.y > 0.2 && dir.z < -0.2) {
+        const parietal = smoothstep(0.2, 0.7, dir.y) * smoothstep(-0.2, -0.8, dir.z);
+        const bulge = 0.14 * parietal;
+        y *= (1 + bulge);
+        z *= (1 + bulge * 0.4);
+        
+        // Más textura al lóbulo parietal
+        const parietalNoise = noise(x, y, z, 3.2) * 0.05 * parietal;
+        x += parietalNoise * dir.x;
+        y += parietalNoise * dir.y;
+        z += parietalNoise * dir.z;
+      }
+
+      // Occipital (posterior) - más pronunciado
+      if (dir.z < -0.5) {
+        const occipital = smoothstep(-0.5, -0.9, dir.z);
+        const bulge = 0.18 * occipital;
+        z *= (1 + bulge);
+        y *= (1 + bulge * 0.25);
+        
+        // Surco calcáreo
+        if (Math.abs(dir.x) < 0.2) {
+          const calcarine = smoothstep(0.2, 0.05, Math.abs(dir.x));
+          const depth = 0.12 * calcarine * occipital;
+          x -= depth * dir.x;
+        }
+      }
+
+      // Cerebelo (inferior-posterior) - más detallado
+      if (dir.y < -0.2 && dir.z < -0.3) {
+        const cerebellum = smoothstep(-0.2, -0.6, dir.y) * smoothstep(-0.3, -0.8, dir.z);
+        const bulge = 0.22 * cerebellum;
+        y *= (1 + bulge);
+        z *= (1 + bulge * 0.5);
+        
+        // Añadir surcos cerebelosos
+        if (cerebellum > 0.2) {
+          const cerebellarFolds = Math.sin(x * 18) * Math.sin(y * 20) * Math.sin(z * 22) * 0.03;
+          x += cerebellarFolds * dir.x;
+          y += cerebellarFolds * dir.y;
+          z += cerebellarFolds * dir.z;
+        }
+      }
+
+      // Tallo cerebral (inferior-central)
+      if (dir.y < -0.5 && Math.abs(dir.x) < 0.3 && dir.z > -0.3) {
+        const stem = smoothstep(-0.5, -0.8, dir.y) * smoothstep(0.3, 0, Math.abs(dir.x)) * smoothstep(-0.3, 0.2, dir.z);
+        const extension = 0.3 * stem;
+        y -= extension;
+        
+        // Estrechar el tallo
+        x *= (1 - stem * 0.3);
+        z *= (1 - stem * 0.2);
+      }
+
+      // Pliegues cerebrales (gyri y sulci) con múltiples frecuencias y más profundidad
+      let gyriDepth = 0.0;
+      
+      // Primera capa de surcos principales - más profundos
+      const g1 = Math.sin(x * 28.0) * Math.cos(y * 26.0) * Math.sin(z * 30.0) * 0.012;
+      
+      // Segunda capa de surcos secundarios
+      const g2 = Math.sin(x * 52.0 + y * 7.0) * Math.cos(z * 48.0) * 0.008;
+      
+      // Tercera capa de micropliegues
+      const g3 = Math.sin(y * 38.0 + z * 9.0) * Math.cos(x * 42.0) * 0.006;
+      
+      // Capa adicional de surcos aleatorios para más realismo
+      const g4 = Math.sin(x * 78.0 + z * 5.0) * Math.cos(y * 82.0 + x * 3.0) * 0.004;
+      
+      gyriDepth = g1 + g2 + g3 + g4;
+
+      // Aplicar deformación final con mayor intensidad en los pliegues
+      const radial = 1.0 + gyriDepth * 1.2; // Aumentar la intensidad de los pliegues
+      x *= radial; y *= radial; z *= radial;
+
+      pos.setXYZ(i, x, y, z);
+    }
+
+    geom.computeVertexNormals();
+    return geom;
+  }, []);
 
   useFrame((_, delta) => {
-    if (groupRef.current) groupRef.current.rotation.y += 0.003;
-    (mat as unknown as { tick?: (dt: number) => void }).tick?.(delta);
+    if (groupRef.current) {
+      groupRef.current.rotation.y += 0.003;
+      const matWithTick = mat as unknown as { tick?: (dt: number) => void };
+      if (matWithTick?.tick) matWithTick.tick(delta);
+    }
   });
 
-  return <primitive ref={groupRef} object={scene} scale={0.6} />; // Más pequeño
+  return (
+    <group ref={groupRef}>
+      {/* Cerebro principal con material complejo */}
+      <mesh ref={mainMeshRef} geometry={geometry} material={mat} scale={0.6} castShadow receiveShadow />
+      
+      {/* Efecto de brillo/halo alrededor del cerebro */}
+      <mesh scale={0.62}>
+        <sphereGeometry args={[1, 32, 32]} />
+        <meshBasicMaterial color="#60a5fa" transparent opacity={0.03} side={THREE.BackSide} />
+      </mesh>
+    </group>
+  );
 }
 
 function NeuralParticles({ count = 30 }: { count?: number }) {
@@ -137,7 +298,7 @@ function NeuralParticles({ count = 30 }: { count?: number }) {
   return (
     <group>
       {particles.map((particle, _i) => (
-        <mesh key={`neural-particle-${particle.x.toFixed(3)}-${particle.y.toFixed(3)}-${particle.z.toFixed(3)}`} position={[particle.x, particle.y, particle.z]}>
+        <mesh key={`neural-particle-${_i}-${particle.x.toFixed(2)}-${particle.y.toFixed(2)}-${particle.z.toFixed(2)}`} position={[particle.x, particle.y, particle.z]}>
           <sphereGeometry args={[0.02, 4, 4]} />
           <meshStandardMaterial
             color="#10b981"
@@ -202,7 +363,7 @@ function SynapticConnections({ count = 50 }: { count?: number }) {
   return (
     <group>
       {connections.map((connection, _i) => (
-        <line key={`connection-${connection.start.x.toFixed(3)}-${connection.start.y.toFixed(3)}-${connection.end.x.toFixed(3)}-${connection.end.y.toFixed(3)}`}>
+        <line key={`connection-${_i}-${connection.start.x.toFixed(2)}-${connection.start.y.toFixed(2)}-${connection.end.z.toFixed(2)}`}>
           <bufferGeometry>
             <bufferAttribute
               attach="attributes-position"
@@ -269,7 +430,7 @@ function NeurotransmitterParticles({ count = 100 }: { count?: number }) {
   return (
     <group>
       {particles.map((particle, _i) => (
-        <mesh key={`neuro-particle-${particle.x.toFixed(3)}-${particle.y.toFixed(3)}-${particle.z.toFixed(3)}-${particle.color}`} position={[particle.x, particle.y, particle.z]}>
+        <mesh key={`neuro-particle-${_i}-${particle.x.toFixed(3)}-${particle.y.toFixed(3)}-${particle.z.toFixed(3)}`} position={[particle.x, particle.y, particle.z]}>
           <sphereGeometry args={[0.015, 4, 4]} />
           <meshStandardMaterial
             color={particle.color}
@@ -312,9 +473,9 @@ function NeuralExplosions({ count = 8 }: { count?: number }) {
   return (
     <group>
       {explosions.map((explosion, _i) => (
-        <group key={`explosion-${explosion.x.toFixed(3)}-${explosion.y.toFixed(3)}-${explosion.z.toFixed(3)}-${explosion.color}`} position={[explosion.x, explosion.y, explosion.z]}>
+        <group key={`explosion-${_i}-${explosion.x.toFixed(2)}-${explosion.y.toFixed(2)}-${explosion.z.toFixed(2)}`} position={[explosion.x, explosion.y, explosion.z]}>
           {[...Array(12)].map((_, j) => (
-            <mesh key={`explosion-particle-${_i}-${j}-${Math.cos(j * Math.PI / 6).toFixed(3)}-${Math.sin(j * Math.PI / 6).toFixed(3)}`} position={[
+            <mesh key={`explosion-particle-${_i}-${j}`} position={[
               Math.cos(j * Math.PI / 6) * (0.5 + explosion.time * 2),
               Math.sin(j * Math.PI / 6) * (0.5 + explosion.time * 2),
               0
@@ -355,7 +516,7 @@ function BrainScene() {
       <pointLight position={[1, 1, 1]} intensity={0.4} color="#ffffff" />
       <pointLight position={[-1, -1, -1]} intensity={0.4} color="#ffffff" />
       
-      <GLBBrain />
+      <ProceduralBrain />
       <NeuralParticles count={30} />
       <SynapticConnections count={50} />
       <NeurotransmitterParticles count={100} />

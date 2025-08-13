@@ -576,9 +576,8 @@ export default function BrainShowcase() {
     t: number; dur: number; startPos: THREE.Vector3; startTarget: THREE.Vector3; endPos: THREE.Vector3; endTarget: THREE.Vector3; href?: string;
   } | null>(null);
 
-  // Comprobar si existe el GLB para usarlo; fallback a procedimental
+  // No intentamos cargar el GLB, usamos siempre modelos procedurales
   useEffect(() => {
-    // Set hasModel directly to false to avoid the fetch issues
     setHasModel(false);
   }, []);
 
