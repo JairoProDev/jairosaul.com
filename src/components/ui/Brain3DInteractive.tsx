@@ -62,185 +62,277 @@ function createBrainMaterial() {
   return mat;
 }
 
-function ProceduralBrain() {
-  const groupRef = useRef<THREE.Group>(null);
-  const mainMeshRef = useRef<THREE.Mesh>(null);
-  const mat = useMemo(() => createBrainMaterial(), []);
-  
-  // Geometría principal del cerebro
-  const geometry = useMemo(() => {
-    // Usamos una subdivisión mayor para más detalle
-    const geom = new THREE.IcosahedronGeometry(1, 6);
-    const pos = geom.attributes.position as THREE.BufferAttribute;
+// Colores suaves para cada parte del cerebro (con tonos más suaves y profesionales)
+const LOBE_COLORS = {
+  frontal: '#ff8a80', // Rojo suave
+  parietal: '#ffab40', // Naranja suave
+  temporal: '#80cbc4', // Verde azulado suave
+  occipital: '#b39ddb', // Púrpura suave
+  cerebellum: '#90caf9', // Azul suave
+  stem: '#e0e0e0', // Gris claro
+};
 
+function RealisticBrain() {
+  const groupRef = useRef<THREE.Group>(null);
+  const rotationRef = useRef(0);
+  
+  // Usaremos un único modelo principal con subdivisiones más suaves
+  // pero con shaders personalizados para distinguir las regiones
+  const brainGeometry = useMemo(() => {
+    // Usamos una resolución alta para obtener más detalle
+    const baseGeom = new THREE.IcosahedronGeometry(1, 7); 
+    const positions = baseGeom.attributes.position as THREE.BufferAttribute;
+    const uvs: number[] = [];
+    
+    // Funciones auxiliares
     const clamp = (v: number, a: number, b: number) => Math.min(b, Math.max(a, v));
     const smoothstep = (e0: number, e1: number, x: number) => {
       const t = clamp((x - e0) / (e1 - e0), 0, 1);
       return t * t * (3 - 2 * t);
     };
     
-    // Función de ruido simple para crear más detalle
+    // Función de ruido 3D suavizada
     const noise = (x: number, y: number, z: number, scale = 1) => {
-      return Math.sin(x * 7.3 * scale) * Math.cos(y * 6.2 * scale) * Math.sin(z * 5.1 * scale) * 0.5 +
-             Math.sin(x * 11.9 * scale + 0.5) * Math.cos(y * 10.8 * scale + 1.2) * Math.sin(z * 9.7 * scale + 0.7) * 0.25 +
-             Math.sin(x * 25.6 * scale + 1.7) * Math.cos(y * 24.8 * scale + 2.3) * Math.sin(z * 23.7 * scale + 3.1) * 0.125;
+      return Math.sin(x * 9.1 * scale) * Math.cos(y * 8.7 * scale) * Math.sin(z * 7.3 * scale) * 0.5 +
+             Math.sin(x * 19.3 * scale + 0.9) * Math.cos(y * 17.1 * scale + 1.7) * Math.sin(z * 15.2 * scale + 0.8) * 0.25 +
+             Math.sin(x * 37.9 * scale + 2.3) * Math.cos(y * 33.7 * scale + 3.1) * Math.sin(z * 31.1 * scale + 4.2) * 0.12;
     };
-
-    for (let i = 0; i < pos.count; i++) {
-      const vx = pos.getX(i); const vy = pos.getY(i); const vz = pos.getZ(i);
+    
+    // Variables de forma cerebral
+    const scaleX = 1.2;
+    const scaleY = 0.95;
+    const scaleZ = 1.3;
+    
+    // Transformación de vértices para dar forma cerebral
+    for (let i = 0; i < positions.count; i++) {
+      // Obtener posición normalizada
+      const vx = positions.getX(i);
+      const vy = positions.getY(i);
+      const vz = positions.getZ(i);
       const dir = new THREE.Vector3(vx, vy, vz).normalize();
-
-      // Forma base del cerebro: elipsoide asimétrico más pronunciado
-      const scaleX = 1.5; // Más ancho
-      const scaleY = 1.15; // Altura media
-      const scaleZ = 1.65; // Más profundo
+      
+      // Determinar la región cerebral basada en la posición
+      // Usamos esta información para crear UVs que se usarán en el shader
+      // para colorear cada región y crear transiciones suaves
+      let regionValue = 0;
+      
+      // Lóbulo frontal: 0.1-0.2
+      if (dir.y > 0.3 && dir.z > -0.1) {
+        regionValue = 0.15;
+      }
+      // Lóbulo parietal: 0.2-0.3
+      else if (dir.y > 0.15 && dir.z < -0.1 && dir.z > -0.5) {
+        regionValue = 0.25;
+      }
+      // Lóbulo temporal: 0.3-0.4
+      else if (Math.abs(dir.x) > 0.4 && dir.y < 0.2 && dir.y > -0.3) {
+        regionValue = 0.35;
+      }
+      // Lóbulo occipital: 0.4-0.5
+      else if (dir.z < -0.5 && dir.y > -0.3) {
+        regionValue = 0.45;
+      }
+      // Cerebelo: 0.5-0.6
+      else if (dir.y < -0.3 && dir.z < -0.2) {
+        regionValue = 0.55;
+      }
+      // Tallo cerebral: 0.6-0.7
+      else if (dir.y < -0.5 && Math.abs(dir.x) < 0.25 && dir.z > -0.3) {
+        regionValue = 0.65;
+      }
+      else {
+        // Zona de transición: valor interpolado
+        regionValue = 0.15 + (dir.y + 1) * 0.2 + (dir.z + 1) * 0.1;
+      }
+      
+      // Guardamos este valor como coordenada U en las texturas
+      // La coordenada V se puede usar para otro parámetro como la profundidad
+      uvs.push(regionValue, (dir.y + 1) / 2);
+      
+      // Forma base cerebral: elipsoide asimétrico
       let x = dir.x * scaleX;
       let y = dir.y * scaleY;
       let z = dir.z * scaleZ;
-
-      // Cisura longitudinal (división entre hemisferios) - más profunda
-      const fissureDepth = 0.25;
-      const fissureWidth = 0.35;
+      
+      // Cisura longitudinal suave (entre hemisferios)
+      const fissureDepth = 0.12;
+      const fissureWidth = 0.25;
       const fissure = smoothstep(0, fissureWidth, Math.abs(dir.x));
       const fissureEffect = (1 - fissure) * fissureDepth;
       x *= (1 - fissureEffect);
       
-      // Cisura central (Rolando)
-      if (dir.z > -0.1 && dir.z < 0.3) {
-        const centralSulcus = smoothstep(-0.1, 0.1, dir.z) * smoothstep(0.3, 0.1, dir.z);
-        const depth = 0.12 * centralSulcus;
-        z -= depth * dir.z;
-      }
-
-      // Lóbulos específicos con más volumen
-      // Frontal (superior-anterior)
-      if (dir.y > 0.3 && dir.z > -0.2) {
-        const frontal = smoothstep(0.3, 0.8, dir.y) * smoothstep(-0.2, 0.5, dir.z);
-        const bulge = 0.15 * frontal;
+      // Deformaciones específicas basadas en la región
+      // Aplicamos bultos y depresiones de forma más sutil y orgánica
+      
+      // Frontal (más prominente en la parte superior-frontal)
+      if (dir.y > 0.3 && dir.z > -0.1) {
+        const frontalFactor = smoothstep(0.3, 0.8, dir.y) * smoothstep(-0.1, 0.5, dir.z);
+        const bulge = 0.1 * frontalFactor;
         x *= (1 + bulge * Math.abs(dir.x));
-        y *= (1 + bulge);
-        
-        // Añadir convolucionado al lóbulo frontal
-        const frontNoise = noise(x * 2, y * 2, z * 2, 2.5) * 0.06 * frontal;
-        x += frontNoise * dir.x;
-        y += frontNoise * dir.y;
-        z += frontNoise * dir.z;
+        y *= (1 + bulge * 0.8);
       }
-
-      // Temporal (lateral) - más prominente
-      if (Math.abs(dir.x) > 0.5 && dir.y < 0.2) {
-        const temporal = smoothstep(0.5, 0.9, Math.abs(dir.x)) * smoothstep(0.2, -0.4, dir.y);
-        const bulge = 0.12 * temporal;
+      
+      // Temporal (protuberancias laterales)
+      if (Math.abs(dir.x) > 0.4 && dir.y < 0.2 && dir.y > -0.3) {
+        const tempFactor = smoothstep(0.4, 0.9, Math.abs(dir.x)) * smoothstep(0.2, -0.1, dir.y);
+        const bulge = 0.08 * tempFactor;
         x *= (1 + bulge);
-        z *= (1 + bulge * 0.7);
-        
-        // Surco temporal superior
-        if (dir.y > -0.2 && dir.y < 0) {
-          const temporalSulcus = smoothstep(-0.2, -0.1, dir.y) * smoothstep(0, -0.1, dir.y);
-          const depth = 0.1 * temporalSulcus * temporal;
-          y -= depth;
-        }
+        z *= (1 + bulge * 0.3);
       }
-
-      // Parietal (superior-posterior)
-      if (dir.y > 0.2 && dir.z < -0.2) {
-        const parietal = smoothstep(0.2, 0.7, dir.y) * smoothstep(-0.2, -0.8, dir.z);
-        const bulge = 0.14 * parietal;
-        y *= (1 + bulge);
-        z *= (1 + bulge * 0.4);
-        
-        // Más textura al lóbulo parietal
-        const parietalNoise = noise(x, y, z, 3.2) * 0.05 * parietal;
-        x += parietalNoise * dir.x;
-        y += parietalNoise * dir.y;
-        z += parietalNoise * dir.z;
+      
+      // Cisura de Silvio (entre lóbulo temporal y frontal) - más sutil
+      if (Math.abs(dir.x) > 0.4 && dir.y > -0.05 && dir.y < 0.15) {
+        const sylvianFactor = smoothstep(-0.05, 0.05, dir.y) * smoothstep(0.15, 0.05, dir.y);
+        y -= 0.08 * sylvianFactor;
       }
-
-      // Occipital (posterior) - más pronunciado
-      if (dir.z < -0.5) {
-        const occipital = smoothstep(-0.5, -0.9, dir.z);
-        const bulge = 0.18 * occipital;
+      
+      // Occipital
+      if (dir.z < -0.5 && dir.y > -0.3) {
+        const occipitalFactor = smoothstep(-0.5, -0.9, dir.z);
+        const bulge = 0.12 * occipitalFactor;
         z *= (1 + bulge);
-        y *= (1 + bulge * 0.25);
+      }
+      
+      // Cerebelo - más orgánico
+      if (dir.y < -0.3 && dir.z < -0.2) {
+        const cerebellumFactor = smoothstep(-0.3, -0.7, dir.y) * smoothstep(-0.2, -0.6, dir.z);
+        const bulge = 0.15 * cerebellumFactor;
+        y *= (1 + bulge * 0.5);
+        z *= (1 + bulge * 0.3);
         
-        // Surco calcáreo
-        if (Math.abs(dir.x) < 0.2) {
-          const calcarine = smoothstep(0.2, 0.05, Math.abs(dir.x));
-          const depth = 0.12 * calcarine * occipital;
-          x -= depth * dir.x;
+        // Surcos del cerebelo - más finos y detallados
+        if (cerebellumFactor > 0.3) {
+          const folds = Math.sin(x * 25) * Math.sin(z * 27) * 0.03 * cerebellumFactor;
+          y += folds;
         }
       }
-
-      // Cerebelo (inferior-posterior) - más detallado
-      if (dir.y < -0.2 && dir.z < -0.3) {
-        const cerebellum = smoothstep(-0.2, -0.6, dir.y) * smoothstep(-0.3, -0.8, dir.z);
-        const bulge = 0.22 * cerebellum;
-        y *= (1 + bulge);
-        z *= (1 + bulge * 0.5);
-        
-        // Añadir surcos cerebelosos
-        if (cerebellum > 0.2) {
-          const cerebellarFolds = Math.sin(x * 18) * Math.sin(y * 20) * Math.sin(z * 22) * 0.03;
-          x += cerebellarFolds * dir.x;
-          y += cerebellarFolds * dir.y;
-          z += cerebellarFolds * dir.z;
-        }
+      
+      // Tallo cerebral - más integrado con el resto del cerebro
+      if (dir.y < -0.5 && Math.abs(dir.x) < 0.25 && dir.z > -0.3) {
+        y -= 0.2;
+        x *= 0.8;
       }
-
-      // Tallo cerebral (inferior-central)
-      if (dir.y < -0.5 && Math.abs(dir.x) < 0.3 && dir.z > -0.3) {
-        const stem = smoothstep(-0.5, -0.8, dir.y) * smoothstep(0.3, 0, Math.abs(dir.x)) * smoothstep(-0.3, 0.2, dir.z);
-        const extension = 0.3 * stem;
-        y -= extension;
-        
-        // Estrechar el tallo
-        x *= (1 - stem * 0.3);
-        z *= (1 - stem * 0.2);
-      }
-
-      // Pliegues cerebrales (gyri y sulci) con múltiples frecuencias y más profundidad
-      let gyriDepth = 0.0;
       
-      // Primera capa de surcos principales - más profundos
-      const g1 = Math.sin(x * 28.0) * Math.cos(y * 26.0) * Math.sin(z * 30.0) * 0.012;
+      // Pliegues cerebrales (gyri y sulci) - más orgánicos y menos pronunciados
+      // Varían ligeramente según la región pero manteniendo cohesión
+      const baseNoiseFreq = dir.y < -0.3 ? 24.0 : 18.0; // Frecuencia mayor para cerebelo
+      const baseNoiseAmp = dir.y < -0.3 ? 0.04 : 0.03; // Amplitud según región
       
-      // Segunda capa de surcos secundarios
-      const g2 = Math.sin(x * 52.0 + y * 7.0) * Math.cos(z * 48.0) * 0.008;
+      const gyriNoise = noise(x, y, z, 1.0) * baseNoiseAmp;
+      x += gyriNoise * dir.x * 0.8;
+      y += gyriNoise * dir.y * 0.8;
+      z += gyriNoise * dir.z * 0.8;
       
-      // Tercera capa de micropliegues
-      const g3 = Math.sin(y * 38.0 + z * 9.0) * Math.cos(x * 42.0) * 0.006;
-      
-      // Capa adicional de surcos aleatorios para más realismo
-      const g4 = Math.sin(x * 78.0 + z * 5.0) * Math.cos(y * 82.0 + x * 3.0) * 0.004;
-      
-      gyriDepth = g1 + g2 + g3 + g4;
-
-      // Aplicar deformación final con mayor intensidad en los pliegues
-      const radial = 1.0 + gyriDepth * 1.2; // Aumentar la intensidad de los pliegues
-      x *= radial; y *= radial; z *= radial;
-
-      pos.setXYZ(i, x, y, z);
+      // Aplicar la deformación final
+      positions.setXYZ(i, x, y, z);
     }
-
-    geom.computeVertexNormals();
-    return geom;
+    
+    // Añadir el atributo UV para el mapeado de regiones en el shader
+    baseGeom.setAttribute('uv', new THREE.Float32BufferAttribute(uvs, 2));
+    baseGeom.computeVertexNormals();
+    return baseGeom;
   }, []);
-
-  useFrame((_, delta) => {
+  
+  // Material con shader personalizado para las regiones cerebrales
+  const brainMaterial = useMemo(() => {
+    const material = new THREE.MeshPhysicalMaterial({
+      roughness: 0.3,
+      metalness: 0.1,
+      clearcoat: 0.8,
+      clearcoatRoughness: 0.2,
+      transmission: 0.15,
+      thickness: 0.5,
+      envMapIntensity: 0.3,
+    });
+    
+    // Personalizar el shader para colorear regiones
+    material.onBeforeCompile = (shader) => {
+      shader.uniforms.regionColors = { value: [
+        new THREE.Color(LOBE_COLORS.frontal),
+        new THREE.Color(LOBE_COLORS.parietal),
+        new THREE.Color(LOBE_COLORS.temporal),
+        new THREE.Color(LOBE_COLORS.occipital),
+        new THREE.Color(LOBE_COLORS.cerebellum),
+        new THREE.Color(LOBE_COLORS.stem),
+      ] };
+      
+      // Añadir variables uniforms al shader
+      shader.vertexShader = shader.vertexShader.replace(
+        'varying vec3 vViewPosition;',
+        'varying vec3 vViewPosition;\nvarying vec2 vUv;'
+      );
+      
+      shader.vertexShader = shader.vertexShader.replace(
+        '#include <uv_vertex>',
+        '#include <uv_vertex>\nvUv = uv;'
+      );
+      
+      // Modificar el fragment shader para incluir el coloreado por regiones
+      shader.fragmentShader = shader.fragmentShader.replace(
+        'varying vec3 vViewPosition;',
+        'varying vec3 vViewPosition;\nvarying vec2 vUv;\nuniform vec3 regionColors[6];'
+      );
+      
+      shader.fragmentShader = shader.fragmentShader.replace(
+        '#include <color_fragment>',
+        `
+        #include <color_fragment>
+        // Determinar la región basada en la coordenada U
+        float regionVal = vUv.x;
+        vec3 regionColor;
+        
+        // Transiciones suaves entre regiones usando smoothstep
+        if (regionVal < 0.2) {
+            // Frontal
+            float t = smoothstep(0.1, 0.2, regionVal);
+            regionColor = regionColors[0];
+        } else if (regionVal < 0.3) {
+            // Transición frontal-parietal
+            float t = smoothstep(0.2, 0.3, regionVal);
+            regionColor = mix(regionColors[0], regionColors[1], t);
+        } else if (regionVal < 0.4) {
+            // Transición parietal-temporal
+            float t = smoothstep(0.3, 0.4, regionVal);
+            regionColor = mix(regionColors[1], regionColors[2], t);
+        } else if (regionVal < 0.5) {
+            // Transición temporal-occipital
+            float t = smoothstep(0.4, 0.5, regionVal);
+            regionColor = mix(regionColors[2], regionColors[3], t);
+        } else if (regionVal < 0.6) {
+            // Transición occipital-cerebelo
+            float t = smoothstep(0.5, 0.6, regionVal);
+            regionColor = mix(regionColors[3], regionColors[4], t);
+        } else {
+            // Cerebelo y tallo
+            float t = smoothstep(0.6, 0.7, regionVal);
+            regionColor = mix(regionColors[4], regionColors[5], t);
+        }
+        
+        // Aplicar el color regional con una ligera variación basada en la coord V
+        float vFactor = vUv.y * 0.15;
+        diffuseColor.rgb = regionColor * (0.9 + vFactor);
+        `
+      );
+    };
+    
+    return material;
+  }, []);
+  
+  // Animación de rotación suave
+  useFrame((state) => {
     if (groupRef.current) {
-      groupRef.current.rotation.y += 0.003;
-      const matWithTick = mat as unknown as { tick?: (dt: number) => void };
-      if (matWithTick?.tick) matWithTick.tick(delta);
+      rotationRef.current += 0.003;
+      groupRef.current.rotation.y = rotationRef.current;
     }
   });
-
+  
   return (
-    <group ref={groupRef}>
-      {/* Cerebro principal con material complejo */}
-      <mesh ref={mainMeshRef} geometry={geometry} material={mat} scale={0.6} castShadow receiveShadow />
+    <group ref={groupRef} scale={0.65}>
+      {/* Cerebro unificado con colores por regiones */}
+      <mesh geometry={brainGeometry} material={brainMaterial} castShadow receiveShadow />
       
       {/* Efecto de brillo/halo alrededor del cerebro */}
-      <mesh scale={0.62}>
+      <mesh scale={1.08}>
         <sphereGeometry args={[1, 32, 32]} />
         <meshBasicMaterial color="#60a5fa" transparent opacity={0.03} side={THREE.BackSide} />
       </mesh>
@@ -516,7 +608,7 @@ function BrainScene() {
       <pointLight position={[1, 1, 1]} intensity={0.4} color="#ffffff" />
       <pointLight position={[-1, -1, -1]} intensity={0.4} color="#ffffff" />
       
-      <ProceduralBrain />
+      <RealisticBrain />
       <NeuralParticles count={30} />
       <SynapticConnections count={50} />
       <NeurotransmitterParticles count={100} />
