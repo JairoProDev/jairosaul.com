@@ -71,12 +71,14 @@ export default function HomePage() {
                         <div className="absolute inset-0 bg-gradient-to-br from-slate-400 via-slate-300 to-slate-500 rounded-full p-1 shadow-2xl">
                           <div className="w-full h-full bg-gradient-to-br from-slate-800 to-slate-900 rounded-full p-1">
                             <Image
-                              src="/images/profile.jpg"
+                              src={`${process.env.NEXT_PUBLIC_BASE_URL || ''}/images/profile.jpg`}
                               alt="Jairo Saul Salas Quiñones"
                               width={320}
                               height={320}
                               className="w-full h-full object-cover rounded-full shadow-inner"
                               priority
+                              unoptimized={false}
+                              loading="eager"
                             />
                           </div>
                         </div>
