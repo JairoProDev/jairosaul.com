@@ -6,6 +6,9 @@ const nextConfig = {
     mdxRs: true,
   },
   
+  // Asegurar que las imágenes estáticas se sirven correctamente
+  assetPrefix: process.env.NODE_ENV === 'production' ? 'https://www.jairosaul.com' : '',
+  
   // Optimizaciones de imágenes
   images: {
     formats: ['image/webp', 'image/avif'],
