@@ -69,9 +69,9 @@ export default function HomePage() {
                         {/* Metallic frame */}
                         <div className="absolute inset-0 bg-gradient-to-br from-slate-400 via-slate-300 to-slate-500 rounded-full p-1 shadow-2xl">
                           <div className="w-full h-full bg-gradient-to-br from-slate-800 to-slate-900 rounded-full p-1">
-                            {/* Use regular img tag to bypass Next.js image optimization issues */}
+                            {/* Use regular img tag with WebP format for better optimization */}
                             <img
-                              src="/images/profile.png"
+                              src="/images/profile.webp"
                               alt="Jairo Saul Salas Quiñones"
                               className="w-full h-full object-cover rounded-full shadow-inner"
                             />
