@@ -1,6 +1,5 @@
 
 import Link from 'next/link';
-import Image from 'next/image';
 import { Code, Lightbulb, BookOpen, MessageCircle, ExternalLink, Brain, Target, Eye, TrendingUp, Zap, Globe } from 'lucide-react';
 import { Navigation } from '@/components/layout/Navigation';
 import NeuralParticles from '@/components/ui/NeuralParticles';
@@ -72,7 +71,7 @@ export default function HomePage() {
                           <div className="w-full h-full bg-gradient-to-br from-slate-800 to-slate-900 rounded-full p-1">
                             {/* Use regular img tag to bypass Next.js image optimization issues */}
                             <img
-                              src="/images/profile.jpg"
+                              src="/images/profile.png"
                               alt="Jairo Saul Salas Quiñones"
                               className="w-full h-full object-cover rounded-full shadow-inner"
                             />

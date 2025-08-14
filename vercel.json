@@ -61,6 +61,21 @@
       "source": "/blog",
       "destination": "/ideas",
       "permanent": true
+    },
+    {
+      "source": "/proyectos/buscadis",
+      "destination": "/proyectos",
+      "permanent": false
+    },
+    {
+      "source": "/proyectos/publicadis",
+      "destination": "/proyectos",
+      "permanent": false
+    },
+    {
+      "source": "/proyectos/diveredu",
+      "destination": "/proyectos",
+      "permanent": false
     }
   ]
 }
