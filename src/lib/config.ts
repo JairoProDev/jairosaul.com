@@ -10,7 +10,7 @@ export const siteConfig: SiteConfig = {
     location: 'Cusco, Perú 🇵🇪 LATAM → World 🌐',
     phone: '+51 937 054 328',
     birthday: 'September 18, 2002',
-    avatar: '/images/profile.png',
+    avatar: '/images/profile.webp',
   },
   social: [
     {

@@ -127,7 +127,7 @@ export default function SobreMiPage() {
               <div className="text-center mb-6">
                                             <div className="w-32 h-32 mx-auto mb-4 rounded-full bg-gradient-to-br from-acetylcholine-500 to-dopamine-500 p-1">
                               <Image
-                                src="/images/profile.png"
+                                src="/images/profile.webp"
                                 alt="Foto de perfil"
                                 width={128}
                                 height={128}
