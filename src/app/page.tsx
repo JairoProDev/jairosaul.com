@@ -6,6 +6,7 @@ import NeuralParticles from '@/components/ui/NeuralParticles';
 import { DNAHelix, Minibrain } from '@/components/ui/NeuralCircuits';
 import DNA3D from '@/components/ui/DNA3D';
 import Brain3DInteractive from '@/components/ui/Brain3DInteractive';
+import ProfileImage from '@/components/ui/ProfileImage';
 import NeuralBackground from '@/components/ui/NeuralBackground';
 import ThemedButton from '@/components/ui/ThemedButton';
 import ThemedCard from '@/components/ui/ThemedCard';
@@ -69,9 +70,8 @@ export default function HomePage() {
                         {/* Metallic frame */}
                         <div className="absolute inset-0 bg-gradient-to-br from-slate-400 via-slate-300 to-slate-500 rounded-full p-1 shadow-2xl">
                           <div className="w-full h-full bg-gradient-to-br from-slate-800 to-slate-900 rounded-full p-1">
-                            {/* Use regular img tag with WebP format for better optimization */}
-                            <img
-                              src="/images/profile.webp"
+                            {/* Use ProfileImage component with fallback */}
+                            <ProfileImage
                               alt="Jairo Saul Salas Quiñones"
                               className="w-full h-full object-cover rounded-full shadow-inner"
                             />
