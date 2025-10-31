@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 
 interface ProfileImageProps {
   className?: string;
@@ -19,11 +20,14 @@ export default function ProfileImage({ className = "", alt = "Profile" }: Profil
   };
 
   return (
-    <img
+    <Image
       src={imageSrc}
       alt={alt}
       className={className}
       onError={handleError}
+      width={400}
+      height={400}
+      priority
     />
   );
 }
