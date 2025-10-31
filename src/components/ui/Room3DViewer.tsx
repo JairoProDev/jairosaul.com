@@ -10,42 +10,41 @@ interface Room3DProps {
   scale?: number;
 }
 
-function Room3DModel({ modelPath = '/models/room.glb', scale = 1 }: Room3DProps) {
+function GLTFRoom3DModel({ modelPath, scale }: { modelPath: string; scale: number }) {
   const meshRef = useRef<THREE.Group>(null);
-  
+  const { scene } = useGLTF(modelPath);
+
+  useFrame(() => {
+    if (meshRef.current) {
+      meshRef.current.rotation.y += 0.002;
+    }
+  });
+
+  return (
+    <group ref={meshRef}>
+      <primitive
+        object={scene}
+        scale={[scale, scale, scale]}
+        position={[0, -1, 0]}
+      />
+    </group>
+  );
+}
+
+function Room3DModel({ modelPath = '/models/room.glb', scale = 1 }: Room3DProps) {
   // Si no hay modelo específico, crear una habitación procedural simple
   if (!modelPath || modelPath === '/models/room.glb') {
     return <ProceduralRoom scale={scale} />;
   }
 
-  try {
-    const { scene } = useGLTF(modelPath);
-    
-    useFrame((state) => {
-      if (meshRef.current) {
-        meshRef.current.rotation.y += 0.002;
-      }
-    });
-
-    return (
-      <group ref={meshRef}>
-        <primitive 
-          object={scene} 
-          scale={[scale, scale, scale]}
-          position={[0, -1, 0]}
-        />
-      </group>
-    );
-  } catch (error) {
-    console.warn('Could not load room model, using procedural room');
-    return <ProceduralRoom scale={scale} />;
-  }
+  // Load the GLTF model - Suspense will handle loading and errors
+  return <GLTFRoom3DModel modelPath={modelPath} scale={scale} />;
 }
 
 function ProceduralRoom({ scale = 1 }: { scale: number }) {
   const groupRef = useRef<THREE.Group>(null);
 
-  useFrame((state) => {
+  useFrame(() => {
     if (groupRef.current) {
       groupRef.current.rotation.y += 0.001;
     }

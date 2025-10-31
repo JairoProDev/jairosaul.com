@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import { Brain, RotateCcw, Palette } from 'lucide-react';
 import Brain3DInteractive from './Brain3DInteractive';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, useGLTF } from '@react-three/drei';
 import { Suspense } from 'react';
