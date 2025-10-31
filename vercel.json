@@ -5,6 +5,18 @@
   "installCommand": "npm install",
   "outputDirectory": ".next",
   "regions": ["iad1"],
+  
+  "rewrites": [
+    {
+      "source": "/vector",
+      "destination": "https://vector-livid.vercel.app"
+    },
+    {
+      "source": "/vector/:path*",
+      "destination": "https://vector-livid.vercel.app/:path*"
+    }
+  ],
+
   "headers": [
     {
       "source": "/(.*)",
@@ -100,4 +112,3 @@
     }
   ]
 }
-
