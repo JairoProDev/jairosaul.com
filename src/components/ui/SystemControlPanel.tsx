@@ -2,18 +2,17 @@
 
 import { useState, useEffect } from 'react';
 import { plasticityEngine, UserPreferences } from '@/lib/plasticity';
-import { 
-  Settings, 
-  Brain, 
-  Eye, 
-  Volume2, 
-  VolumeX, 
-  RotateCcw, 
+import {
+  Settings,
+  Brain,
+  Eye,
+  Volume2,
+  VolumeX,
+  RotateCcw,
   Zap,
   Activity,
   BarChart3,
-  X,
-  Save
+  X
 } from 'lucide-react';
 
 interface SystemControlPanelProps {
@@ -236,20 +235,31 @@ export default function SystemControlPanel({ isOpen, onClose }: SystemControlPan
         </div>
 
         {/* Acciones */}
-        <div className="flex justify-end space-x-3">
+        <div className="flex justify-between items-center">
           <button
-            onClick={() => plasticityEngine.clearMemory()}
-            className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors"
+            onClick={() => {
+              if (window.confirm('¿Estás seguro de que quieres limpiar toda la memoria? Esta acción no se puede deshacer.')) {
+                plasticityEngine.clearMemory();
+                window.location.reload();
+              }
+            }}
+            className="px-4 py-2 bg-red-500/10 text-red-400 border border-red-500/30 rounded-lg hover:bg-red-500/20 transition-colors text-sm"
           >
             Limpiar Memoria
           </button>
           <button
             onClick={onClose}
-            className="px-4 py-2 bg-acetylcholine-500 text-white rounded-lg hover:bg-acetylcholine-600 transition-colors flex items-center"
+            className="px-6 py-2 bg-acetylcholine-500 text-white rounded-lg hover:bg-acetylcholine-600 transition-colors"
           >
-            <Save className="h-4 w-4 mr-2" />
-            Guardar
+            Cerrar
           </button>
+        </div>
+
+        {/* Auto-save indicator */}
+        <div className="mt-4 pt-4 border-t border-cortex-700">
+          <p className="text-xs text-cortex-400 text-center">
+            ✓ Las preferencias se guardan automáticamente
+          </p>
         </div>
       </div>
     </div>

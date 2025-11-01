@@ -1,0 +1,599 @@
+---
+title: "Arquitectura Next.js Escalable: De 0 a 1M Usuarios"
+description: "Guía completa para construir aplicaciones Next.js que escalen sin reescribir desde cero"
+category: "guias"
+featured: true
+date: "2025-01-01"
+difficulty: "advanced"
+readingTime: "20 min"
+tags: ["nextjs", "arquitectura", "escalabilidad", "desarrollo"]
+---
+
+# Arquitectura Next.js Escalable
+
+Cómo construir apps Next.js que escalen de 0 a 1M+ usuarios sin reescribir.
+
+## La Realidad
+
+La mayoría de tutoriales te muestran MVPs. Esto te muestra producción.
+
+**Lo que aprenderás:**
+- Estructura de carpetas que escala
+- Patterns de código mantenibles
+- Performance optimization real
+- Deploy y DevOps
+- Monitoreo y debugging
+
+---
+
+## Estructura de Carpetas
+
+### ❌ Mal (No escalable)
+
+```
+src/
+├── app/
+│   ├── page.tsx
+│   ├── about.tsx
+│   └── products.tsx
+├── components/
+│   ├── Button.tsx
+│   ├── Card.tsx
+│   └── Modal.tsx (100 componentes más...)
+└── lib/
+    └── utils.ts
+```
+
+**Problemas:**
+- Components folder se vuelve inmanejable
+- No hay separación de concerns
+- Difícil encontrar código
+- Testing pesadilla
+
+---
+
+### ✅ Bien (Escalable)
+
+```
+src/
+├── app/                          # Pages (Next.js 13+ App Router)
+│   ├── (auth)/                   # Route groups
+│   │   ├── login/
+│   │   └── signup/
+│   ├── (dashboard)/
+│   │   ├── layout.tsx
+│   │   ├── page.tsx
+│   │   └── settings/
+│   ├── api/                      # API routes
+│   │   ├── auth/
+│   │   ├── users/
+│   │   └── products/
+│   ├── layout.tsx
+│   └── page.tsx
+│
+├── components/                    # Shared components
+│   ├── ui/                       # Generic UI (Button, Card, etc.)
+│   │   ├── button/
+│   │   │   ├── Button.tsx
+│   │   │   ├── Button.test.tsx
+│   │   │   └── index.ts
+│   │   └── card/
+│   ├── layout/                   # Layout components (Header, Footer)
+│   ├── forms/                    # Form components
+│   └── features/                 # Feature-specific components
+│       ├── auth/
+│       └── dashboard/
+│
+├── lib/                          # Business logic & utilities
+│   ├── api/                      # API clients
+│   │   ├── client.ts
+│   │   └── endpoints/
+│   ├── auth/                     # Auth logic
+│   ├── db/                       # Database
+│   │   ├── prisma.ts
+│   │   └── queries/
+│   ├── hooks/                    # Custom React hooks
+│   ├── utils/                    # Utilities
+│   ├── validations/              # Zod schemas
+│   └── constants/                # Constants
+│
+├── types/                        # TypeScript types
+│   ├── api.ts
+│   ├── models.ts
+│   └── index.ts
+│
+├── styles/                       # Global styles
+│   ├── globals.css
+│   └── themes/
+│
+├── config/                       # Configuration
+│   ├── site.ts
+│   └── env.ts
+│
+└── tests/                        # Test utilities
+    ├── helpers/
+    └── fixtures/
+```
+
+**Ventajas:**
+- Escalabilidad clara
+- Fácil de navegar
+- Separación de concerns
+- Testing estructurado
+- Onboarding rápido para nuevos devs
+
+---
+
+## Patterns de Código
+
+### 1. Server Components vs Client Components
+
+**Regla de oro:** Server por default, Client solo cuando necesites interactividad.
+
+```tsx
+// ✅ Server Component (Default)
+// app/products/page.tsx
+import { getProducts } from '@/lib/db/queries/products';
+
+export default async function ProductsPage() {
+  const products = await getProducts(); // Direct DB call
+
+  return (
+    <div>
+      {products.map(product => (
+        <ProductCard key={product.id} product={product} />
+      ))}
+    </div>
+  );
+}
+
+// ✅ Client Component (cuando necesites interactividad)
+// components/features/products/ProductCard.tsx
+'use client';
+
+import { useState } from 'react';
+
+export function ProductCard({ product }) {
+  const [liked, setLiked] = useState(false);
+
+  return (
+    <div>
+      <h3>{product.name}</h3>
+      <button onClick={() => setLiked(!liked)}>
+        {liked ? '❤️' : '🤍'}
+      </button>
+    </div>
+  );
+}
+```
+
+**Beneficios:**
+- Menos JavaScript enviado al cliente
+- Mejor SEO
+- Faster Time to Interactive
+- Acceso directo a DB desde Server Components
+
+---
+
+### 2. Data Fetching Strategy
+
+```tsx
+// ✅ Parallel data fetching
+export default async function DashboardPage() {
+  // Fetch en paralelo
+  const [user, stats, notifications] = await Promise.all([
+    getUser(),
+    getStats(),
+    getNotifications()
+  ]);
+
+  return <Dashboard user={user} stats={stats} notifications={notifications} />;
+}
+
+// ✅ Con Suspense boundaries para mejor UX
+export default function DashboardPage() {
+  return (
+    <div>
+      <Suspense fallback={<UserSkeleton />}>
+        <UserSection />
+      </Suspense>
+
+      <Suspense fallback={<StatsSkeleton />}>
+        <StatsSection />
+      </Suspense>
+    </div>
+  );
+}
+```
+
+---
+
+### 3. API Routes Pattern
+
+```tsx
+// app/api/products/route.ts
+import { NextRequest, NextResponse } from 'next/server';
+import { z } from 'zod';
+import { auth } from '@/lib/auth';
+import { createProduct } from '@/lib/db/queries/products';
+
+// Validation schema
+const createProductSchema = z.object({
+  name: z.string().min(3),
+  price: z.number().positive(),
+  description: z.string().optional(),
+});
+
+export async function POST(req: NextRequest) {
+  try {
+    // 1. Auth check
+    const session = await auth(req);
+    if (!session) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    // 2. Parse & validate body
+    const body = await req.json();
+    const validatedData = createProductSchema.parse(body);
+
+    // 3. Business logic
+    const product = await createProduct({
+      ...validatedData,
+      userId: session.user.id,
+    });
+
+    // 4. Response
+    return NextResponse.json(product, { status: 201 });
+
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      return NextResponse.json(
+        { error: 'Validation failed', details: error.errors },
+        { status: 400 }
+      );
+    }
+
+    console.error('Create product error:', error);
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    );
+  }
+}
+```
+
+---
+
+### 4. Database Layer (Prisma)
+
+```typescript
+// lib/db/prisma.ts
+import { PrismaClient } from '@prisma/client';
+
+// Singleton pattern para evitar múltiples conexiones
+const globalForPrisma = global as unknown as { prisma: PrismaClient };
+
+export const prisma =
+  globalForPrisma.prisma ||
+  new PrismaClient({
+    log: process.env.NODE_ENV === 'development' ? ['query', 'error', 'warn'] : ['error'],
+  });
+
+if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma;
+
+// lib/db/queries/products.ts
+import { prisma } from '../prisma';
+import { cache } from 'react';
+
+// React cache para deduplication
+export const getProducts = cache(async () => {
+  return prisma.product.findMany({
+    where: { published: true },
+    orderBy: { createdAt: 'desc' },
+    take: 50,
+  });
+});
+
+export const getProductById = cache(async (id: string) => {
+  return prisma.product.findUnique({
+    where: { id },
+    include: {
+      user: { select: { name: true, image: true } },
+      reviews: { take: 10, orderBy: { createdAt: 'desc' } },
+    },
+  });
+});
+```
+
+---
+
+## Performance Optimization
+
+### 1. Image Optimization
+
+```tsx
+import Image from 'next/image';
+
+// ✅ Optimizado
+export function ProductImage({ src, alt }) {
+  return (
+    <Image
+      src={src}
+      alt={alt}
+      width={600}
+      height={400}
+      quality={80}
+      loading="lazy"
+      placeholder="blur"
+      blurDataURL={`data:image/svg+xml;base64,${toBase64(shimmer(600, 400))}`}
+    />
+  );
+}
+```
+
+### 2. Code Splitting
+
+```tsx
+import dynamic from 'next/dynamic';
+
+// ✅ Lazy load heavy components
+const HeavyChart = dynamic(() => import('@/components/features/HeavyChart'), {
+  loading: () => <ChartSkeleton />,
+  ssr: false, // Si no necesita SSR
+});
+
+// ✅ Lazy load modals
+const CheckoutModal = dynamic(() => import('@/components/features/CheckoutModal'));
+```
+
+### 3. Caching Strategy
+
+```tsx
+// app/products/[id]/page.tsx
+export const revalidate = 3600; // Revalidar cada hora
+
+// O revalidar on-demand
+import { revalidatePath } from 'next/cache';
+
+export async function updateProduct(id: string, data: UpdateData) {
+  await prisma.product.update({ where: { id }, data });
+  revalidatePath(`/products/${id}`);
+}
+```
+
+---
+
+## Environment & Configuration
+
+```typescript
+// config/env.ts
+import { z } from 'zod';
+
+const envSchema = z.object({
+  DATABASE_URL: z.string().url(),
+  NEXTAUTH_SECRET: z.string().min(32),
+  NEXTAUTH_URL: z.string().url(),
+  STRIPE_SECRET_KEY: z.string().startsWith('sk_'),
+  // ... más variables
+});
+
+export const env = envSchema.parse(process.env);
+
+// Ahora tienes type-safety:
+// env.DATABASE_URL ✅ (typed & validated)
+// env.SOME_TYPO ❌ (TypeScript error)
+```
+
+---
+
+## Testing
+
+### Unit Tests
+
+```typescript
+// components/ui/button/Button.test.tsx
+import { render, screen } from '@testing-library/react';
+import { Button } from './Button';
+
+describe('Button', () => {
+  it('renders with correct text', () => {
+    render(<Button>Click me</Button>);
+    expect(screen.getByText('Click me')).toBeInTheDocument();
+  });
+
+  it('calls onClick handler', async () => {
+    const handleClick = jest.fn();
+    render(<Button onClick={handleClick}>Click me</Button>);
+
+    await userEvent.click(screen.getByText('Click me'));
+    expect(handleClick).toHaveBeenCalledTimes(1);
+  });
+});
+```
+
+### Integration Tests
+
+```typescript
+// tests/integration/products.test.ts
+import { createMocks } from 'node-mocks-http';
+import { POST } from '@/app/api/products/route';
+
+describe('/api/products', () => {
+  it('creates product with valid data', async () => {
+    const { req } = createMocks({
+      method: 'POST',
+      body: {
+        name: 'Test Product',
+        price: 99.99,
+      },
+    });
+
+    const res = await POST(req);
+    const data = await res.json();
+
+    expect(res.status).toBe(201);
+    expect(data).toHaveProperty('id');
+  });
+});
+```
+
+---
+
+## Deployment
+
+### Vercel (Recomendado para Next.js)
+
+```bash
+# .vercelignore
+node_modules
+.next
+.env.local
+
+# vercel.json
+{
+  "framework": "nextjs",
+  "buildCommand": "npm run build",
+  "devCommand": "npm run dev",
+  "installCommand": "npm install",
+  "regions": ["iad1"], # Región más cercana a tus usuarios
+  "env": {
+    "DATABASE_URL": "@database-url",
+    "NEXTAUTH_SECRET": "@nextauth-secret"
+  }
+}
+```
+
+### Docker (Para self-hosting)
+
+```dockerfile
+# Dockerfile
+FROM node:18-alpine AS base
+
+# Dependencies
+FROM base AS deps
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci
+
+# Builder
+FROM base AS builder
+WORKDIR /app
+COPY --from=deps /app/node_modules ./node_modules
+COPY . .
+RUN npm run build
+
+# Runner
+FROM base AS runner
+WORKDIR /app
+ENV NODE_ENV production
+
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nextjs
+
+COPY --from=builder /app/public ./public
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+
+USER nextjs
+EXPOSE 3000
+ENV PORT 3000
+
+CMD ["node", "server.js"]
+```
+
+---
+
+## Monitoring & Error Tracking
+
+### Sentry Setup
+
+```typescript
+// instrumentation.ts (Next.js 13+)
+export async function register() {
+  if (process.env.NEXT_RUNTIME === 'nodejs') {
+    await import('./sentry.server.config');
+  }
+
+  if (process.env.NEXT_RUNTIME === 'edge') {
+    await import('./sentry.edge.config');
+  }
+}
+
+// sentry.server.config.ts
+import * as Sentry from '@sentry/nextjs';
+
+Sentry.init({
+  dsn: process.env.SENTRY_DSN,
+  tracesSampleRate: 0.1,
+  environment: process.env.NODE_ENV,
+});
+```
+
+### Analytics
+
+```tsx
+// app/layout.tsx
+import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/next';
+
+export default function RootLayout({ children }) {
+  return (
+    <html>
+      <body>
+        {children}
+        <Analytics />
+        <SpeedInsights />
+      </body>
+    </html>
+  );
+}
+```
+
+---
+
+## Checklist de Escalabilidad
+
+```
+[ ] Estructura de carpetas feature-based
+[ ] Server Components por default
+[ ] Client Components solo cuando necesario
+[ ] Data fetching optimizado (paralelo + Suspense)
+[ ] Image optimization con next/image
+[ ] Code splitting estratégico
+[ ] Caching configurado correctamente
+[ ] Environment variables type-safe
+[ ] Tests (unit + integration)
+[ ] Error tracking (Sentry)
+[ ] Analytics & monitoring
+[ ] CI/CD pipeline
+[ ] Database indexes optimizados
+[ ] API rate limiting
+[ ] Security headers configurados
+```
+
+---
+
+## Recursos
+
+### Documentación Oficial
+- [Next.js Docs](https://nextjs.org/docs)
+- [React Docs](https://react.dev)
+- [Prisma Docs](https://www.prisma.io/docs)
+
+### Tools
+- **Prisma Studio** - DB GUI
+- **React DevTools** - Debugging
+- **Vercel Analytics** - Performance
+- **Lighthouse** - Audits
+
+### Learning
+- [Next.js Learn](https://nextjs.org/learn)
+- [Vercel Templates](https://vercel.com/templates)
+- [Next.js Weekly](https://nextjsweekly.com)
+
+---
+
+La arquitectura perfecta no existe.
+La arquitectura que evoluciona con tu producto, sí.
+
+¡Construye algo increíble! 🚀

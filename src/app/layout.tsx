@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Inter, Lora } from "next/font/google";
 import "./globals.css";
 import PlasticityProvider from '@/components/layout/PlasticityProvider';
+import StructuredData from '@/components/seo/StructuredData';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -88,7 +89,7 @@ export const metadata: Metadata = {
     },
   },
   verification: {
-    google: 'your-google-verification-code',
+    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || '',
   },
   category: 'technology',
   classification: 'Personal Website',
@@ -108,6 +109,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es" className={`${inter.variable} ${lora.variable}`}>
+      <head>
+        <StructuredData type="person" />
+        <StructuredData type="website" />
+        <link rel="icon" href="/brain-icon.svg" type="image/svg+xml" />
+        <link rel="icon" href="/favicon-32x32.png" sizes="32x32" type="image/png" />
+        <link rel="icon" href="/favicon-16x16.png" sizes="16x16" type="image/png" />
+        <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
+      </head>
       <body className="bg-cortex-900 text-glutamate-500 font-sans antialiased">
         <PlasticityProvider>
           {children}

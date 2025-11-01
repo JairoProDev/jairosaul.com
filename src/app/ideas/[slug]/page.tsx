@@ -4,6 +4,8 @@ import { getIdeaBySlug, getRelatedIdeas, getAllIdeaSlugs } from '@/lib/mdx';
 import { formatDate } from '@/lib/utils';
 import Link from 'next/link';
 import { Clock, Calendar, Tag, ArrowLeft, Code, Lightbulb } from 'lucide-react';
+import GiscusComments from '@/components/engagement/GiscusComments';
+import NewsletterSignup from '@/components/engagement/NewsletterSignup';
 
 interface IdeaPageProps {
   params: Promise<{
@@ -163,6 +165,16 @@ export default async function IdeaPage({ params }: IdeaPageProps) {
               </div>
             </section>
           )}
+
+          {/* Newsletter Signup */}
+          <section className="mt-16 fade-in">
+            <NewsletterSignup />
+          </section>
+
+          {/* Comments */}
+          <section className="mt-16 pt-16 border-t border-cortex-700 fade-in">
+            <GiscusComments theme="dark" />
+          </section>
 
           {/* Call to Action */}
           <section className="mt-16 pt-16 border-t border-cortex-700 text-center fade-in">
