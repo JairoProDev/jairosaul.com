@@ -74,6 +74,12 @@ export const siteConfig: SiteConfig = {
       icon: 'lightbulb',
     },
     {
+      label: 'Recursos',
+      href: '/recursos',
+      description: 'Herramientas, libros, frameworks y guías curadas',
+      icon: 'library',
+    },
+    {
       label: 'Visión',
       href: '/vision',
       description: 'Mi visión del futuro y próximos proyectos',
