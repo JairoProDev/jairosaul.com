@@ -1,0 +1,183 @@
+import * as THREE from 'three';
+import type { SceneConfig } from '@/components/rooms3d/types';
+
+export const ROOMS_SCENES: Record<SceneConfig['id'], SceneConfig> = {
+  founder: {
+    id: 'founder',
+    title: 'Founder Suite',
+    subtitle: 'strategy • business • leadership',
+    description:
+      'Estrategia, métricas, decisiones. Donde se diseña el mapa del imperio: GTM, growth, sistemas y ejecución.',
+    accent: '#fb7185',
+    environmentPreset: 'city',
+    defaultCameraPos: new THREE.Vector3(6.2, 3.6, 6.2),
+    defaultCameraTarget: new THREE.Vector3(0.4, 0.6, -2.2),
+    hotspots: [
+      {
+        id: 'board',
+        title: 'Strategy Board',
+        subtitle: 'GTM • moat • execution',
+        accent: '#fb7185',
+        point: new THREE.Vector3(-3.7, 1.55, 0.0),
+        cameraPos: new THREE.Vector3(-6.6, 2.9, -2.8),
+        cameraTarget: new THREE.Vector3(-3.95, 1.3, 0.0),
+        signals: ['Board: live', 'Flow: evolving', 'Focus: leverage'],
+        projects: ['GTM plan', 'Pricing', 'Distribution'],
+      },
+      {
+        id: 'finance',
+        title: 'Finance & Metrics',
+        subtitle: 'MRR • CAC • runway',
+        accent: '#f59e0b',
+        point: new THREE.Vector3(0.0, -1.2, 1.0),
+        cameraPos: new THREE.Vector3(1.4, 5.2, 7.7),
+        cameraTarget: new THREE.Vector3(0.0, -1.45, 1.0),
+        signals: ['Dashboard: realtime', 'Runway: tracked', 'Ops: healthy'],
+        projects: ['Traction map', 'Funnel', 'Retention'],
+      },
+      {
+        id: 'nexus',
+        title: 'Founder Desk',
+        subtitle: 'reports • planning',
+        accent: '#60a5fa',
+        point: new THREE.Vector3(2.2, 0.25, -2.1),
+        cameraPos: new THREE.Vector3(6.3, 3.6, 6.1),
+        cameraTarget: new THREE.Vector3(1.9, -0.25, -2.1),
+      },
+    ],
+  },
+
+  coder: {
+    id: 'coder',
+    title: 'Coder Bay',
+    subtitle: 'builder • hacker • engineer',
+    description:
+      'El command center: pantallas vivas, infraestructura, prototipos. Donde el código se vuelve producto.',
+    accent: '#60a5fa',
+    environmentPreset: 'warehouse',
+    defaultCameraPos: new THREE.Vector3(6.3, 3.6, 6.1),
+    defaultCameraTarget: new THREE.Vector3(1.9, -0.25, -2.1),
+    hotspots: [
+      {
+        id: 'nexus',
+        title: 'Nexus Station',
+        subtitle: 'multi‑screen command center',
+        accent: '#60a5fa',
+        point: new THREE.Vector3(2.2, 0.25, -2.1),
+        cameraPos: new THREE.Vector3(6.3, 3.6, 6.1),
+        cameraTarget: new THREE.Vector3(1.9, -0.25, -2.1),
+        signals: ['IDE: hot', 'CI: green', 'GPU: engaged'],
+        projects: ['Neuro‑Link v4', 'AI training', 'Platform'],
+      },
+      {
+        id: 'server',
+        title: 'Server Nexus',
+        subtitle: 'compute + knowledge rack',
+        accent: '#34d399',
+        point: new THREE.Vector3(-2.55, 1.15, -3.15),
+        cameraPos: new THREE.Vector3(-6.4, 3.0, 3.8),
+        cameraTarget: new THREE.Vector3(-2.7, 0.8, -3.4),
+        signals: ['Cluster: ONLINE', 'Vault: encrypted', 'Activity: pulsing'],
+        projects: ['Ops playbooks', 'Security R&D', 'Pipelines'],
+      },
+      {
+        id: 'rnd',
+        title: 'R&D Corner',
+        subtitle: 'hardware + experiments',
+        accent: '#a78bfa',
+        point: new THREE.Vector3(3.15, 0.65, -0.9),
+        cameraPos: new THREE.Vector3(7.4, 2.6, -1.2),
+        cameraTarget: new THREE.Vector3(3.35, 0.6, -0.8),
+      },
+    ],
+  },
+
+  research: {
+    id: 'research',
+    title: 'Research Lab',
+    subtitle: 'science • experiments • prototypes',
+    description:
+      'Un laboratorio de R&D: instrumentos, experimentos, trazabilidad y descubrimiento. La ciencia aterrizada en sistemas.',
+    accent: '#a78bfa',
+    environmentPreset: 'night',
+    defaultCameraPos: new THREE.Vector3(7.4, 2.6, -1.2),
+    defaultCameraTarget: new THREE.Vector3(3.35, 0.6, -0.8),
+    hotspots: [
+      {
+        id: 'rnd',
+        title: 'Hardware R&D',
+        subtitle: 'microscope • printer • UV',
+        accent: '#a78bfa',
+        point: new THREE.Vector3(3.15, 0.65, -0.9),
+        cameraPos: new THREE.Vector3(7.4, 2.6, -1.2),
+        cameraTarget: new THREE.Vector3(3.35, 0.6, -0.8),
+        signals: ['Microscope: calibrated', 'Printer: standby', 'Bench: ready'],
+        projects: ['Prototypes', 'Materials', 'Bio/microfluidics'],
+      },
+      {
+        id: 'knowledge',
+        title: 'Lab Notes',
+        subtitle: 'logs • diagrams',
+        accent: '#22d3ee',
+        point: new THREE.Vector3(-3.75, 1.55, 0.0),
+        cameraPos: new THREE.Vector3(-6.6, 2.9, -2.8),
+        cameraTarget: new THREE.Vector3(-3.95, 1.3, 0.0),
+      },
+      {
+        id: 'nexus',
+        title: 'Compute Desk',
+        subtitle: 'training • simulation',
+        accent: '#60a5fa',
+        point: new THREE.Vector3(2.2, 0.25, -2.1),
+        cameraPos: new THREE.Vector3(6.3, 3.6, 6.1),
+        cameraTarget: new THREE.Vector3(1.9, -0.25, -2.1),
+      },
+    ],
+  },
+
+  human: {
+    id: 'human',
+    title: 'Human Studio',
+    subtitle: 'study • training • calm',
+    description:
+      'Crecimiento personal: lectura, entrenamiento ligero, meditación. El sistema que sostiene al constructor.',
+    accent: '#34d399',
+    environmentPreset: 'studio',
+    defaultCameraPos: new THREE.Vector3(5.6, 3.8, 6.8),
+    defaultCameraTarget: new THREE.Vector3(0.2, -1.1, 1.4),
+    hotspots: [
+      {
+        id: 'training',
+        title: 'Training Zone',
+        subtitle: 'mobility • strength',
+        accent: '#34d399',
+        point: new THREE.Vector3(0.0, -1.2, 1.0),
+        cameraPos: new THREE.Vector3(1.4, 5.0, 7.4),
+        cameraTarget: new THREE.Vector3(0.0, -1.45, 1.0),
+        signals: ['Breath: steady', 'Body: primed', 'Mind: focused'],
+        projects: ['Curriculum', 'Habits', 'Recovery'],
+      },
+      {
+        id: 'meditation',
+        title: 'Meditation',
+        subtitle: 'calm loop',
+        accent: '#60a5fa',
+        point: new THREE.Vector3(-1.0, -1.2, 1.3),
+        cameraPos: new THREE.Vector3(-2.8, 2.8, 7.2),
+        cameraTarget: new THREE.Vector3(-1.0, -1.3, 1.3),
+      },
+      {
+        id: 'knowledge',
+        title: 'Reading / Notes',
+        subtitle: 'study mode',
+        accent: '#f59e0b',
+        point: new THREE.Vector3(-3.75, 1.55, 0.0),
+        cameraPos: new THREE.Vector3(-6.2, 2.8, -1.8),
+        cameraTarget: new THREE.Vector3(-3.95, 1.3, 0.0),
+      },
+    ],
+  },
+};
+
+export const ROOMS_SCENE_ORDER: Array<SceneConfig['id']> = ['founder', 'coder', 'research', 'human'];
+
