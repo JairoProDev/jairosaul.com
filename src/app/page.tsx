@@ -6,7 +6,7 @@ import NeuralParticles from '@/components/ui/NeuralParticles';
 import { DNAHelix, Minibrain } from '@/components/ui/NeuralCircuits';
 import DNA3D from '@/components/ui/DNA3D';
 import BrainModelSelector from '@/components/ui/BrainModelSelector';
-import Room3DViewer from '@/components/ui/Room3DViewer';
+import Rooms3DPreview from '@/components/rooms3d/Rooms3DPreview';
 import ProfileImage from '@/components/ui/ProfileImage';
 import NeuralBackground from '@/components/ui/NeuralBackground';
 import ThemedButton from '@/components/ui/ThemedButton';
@@ -307,86 +307,85 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Espacio de Trabajo 3D - Layout Intercalado Inverso */}
+      {/* 4 Rooms 3D - Intercalado */}
       <section className="py-12 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-slate-900/20 to-transparent">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-8 fade-in">
-            <h2 className="font-serif text-2xl md:text-3xl font-bold text-white mb-4">
-              Mi Espacio de Trabajo Virtual
-            </h2>
+          <div className="text-center mb-10 fade-in">
+            <h2 className="font-serif text-2xl md:text-3xl font-bold text-white mb-4">4 Workspaces, 4 Roles</h2>
             <p className="text-base md:text-lg text-cortex-200 max-w-3xl mx-auto">
-              Una representación 3D del ambiente donde nacen las ideas y se construyen los proyectos.
+              Un sistema completo: Founder, Coder, Scientist y Human. Cada sala cuenta una parte de la historia.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 items-center">
-            {/* Room 3D Viewer - Contenedor izquierdo */}
-            <div className="lg:col-span-2 flex justify-center items-center h-80 md:h-96 fade-in">
-              <div className="w-full h-full">
-                <Room3DViewer />
-              </div>
-            </div>
-
-            {/* Información del workspace - Contenedor derecho */}
-            <div className="lg:col-span-2 fade-in">
-              <div className="bg-gradient-to-br from-slate-800/30 to-slate-700/20 backdrop-blur-xl border border-slate-500/20 rounded-2xl p-8 shadow-xl">
-                <div className="flex items-start space-x-4 mb-6">
-                  <div className="w-12 h-12 bg-gradient-to-br from-emerald-500 to-cyan-500 rounded-xl flex items-center justify-center shadow-lg">
-                    <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                    </svg>
-                  </div>
-                  <div>
-                    <h3 className="font-serif text-xl font-bold bg-gradient-to-r from-white to-slate-200 bg-clip-text text-transparent mb-2">
-                      Donde la Magia Sucede
-                    </h3>
-                    <p className="text-slate-400 text-sm">Arquitectura para la productividad máxima</p>
-                  </div>
-                </div>
-
-                <div className="space-y-4">
-                  <p className="text-slate-300 leading-relaxed">
-                    Este espacio 3D representa mi filosofía de trabajo: minimalismo funcional, 
-                    herramientas de alta calidad y un ambiente que fomenta el deep work.
-                  </p>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="space-y-3">
-                      <div className="flex items-start space-x-3">
-                        <div className="w-2 h-2 bg-emerald-400 rounded-full mt-2 flex-shrink-0"></div>
-                        <span className="text-slate-400 text-sm">Setup dual monitor</span>
-                      </div>
-                      <div className="flex items-start space-x-3">
-                        <div className="w-2 h-2 bg-cyan-400 rounded-full mt-2 flex-shrink-0"></div>
-                        <span className="text-slate-400 text-sm">Biblioteca técnica</span>
-                      </div>
-                    </div>
-                    <div className="space-y-3">
-                      <div className="flex items-start space-x-3">
-                        <div className="w-2 h-2 bg-emerald-400 rounded-full mt-2 flex-shrink-0"></div>
-                        <span className="text-slate-400 text-sm">Iluminación optimizada</span>
-                      </div>
-                      <div className="flex items-start space-x-3">
-                        <div className="w-2 h-2 bg-cyan-400 rounded-full mt-2 flex-shrink-0"></div>
-                        <span className="text-slate-400 text-sm">Ambiente enfocado</span>
-                      </div>
+          {([
+            {
+              id: 'founder',
+              title: 'Founder Suite',
+              subtitle: 'negocio • estrategia • liderazgo',
+              bullets: ['Tablero GTM + métricas', 'Decisiones y roadmap', 'Visión ejecutiva'],
+            },
+            {
+              id: 'coder',
+              title: 'Coder Bay',
+              subtitle: 'builder • hacker • engineer',
+              bullets: ['Nexus multi‑pantalla', 'Server nexus', 'Prototipos y pipelines'],
+            },
+            {
+              id: 'research',
+              title: 'Research Lab',
+              subtitle: 'ciencia • experimentos • R&D',
+              bullets: ['Laboratorio funcional', 'Notas y trazabilidad', 'Instrumentos + análisis'],
+            },
+            {
+              id: 'human',
+              title: 'Human Studio',
+              subtitle: 'estudio • entrenamiento • calma',
+              bullets: ['Lectura y notas', 'Movilidad + respiración', 'Sistema de crecimiento'],
+            },
+          ] as const).map((s, idx) => {
+            const isReverse = idx % 2 === 1;
+            const hudPortalId = `rooms3d-hud-${s.id}-${idx}`;
+            return (
+              <div key={s.id} className="mb-10">
+                <div className={`grid grid-cols-1 lg:grid-cols-4 gap-8 items-center ${isReverse ? 'lg:[&>*:first-child]:order-2' : ''}`}>
+                  <div className="lg:col-span-2 flex justify-center items-center h-80 md:h-96 fade-in">
+                    <div className="w-full h-full rounded-2xl overflow-hidden border border-slate-500/20 bg-slate-900/10">
+                      <Rooms3DPreview sceneId={s.id} hudPortalTargetId={hudPortalId} hudVariant="side" />
                     </div>
                   </div>
 
-                  <div className="pt-4">
-                    <ThemedButton
-                      href="/cortex"
-                      variant="neural"
-                      size="sm"
-                      icon={<Brain className="h-4 w-4" />}
-                    >
-                      Explorar Brain 3D
-                    </ThemedButton>
+                  <div className="lg:col-span-2 fade-in">
+                    <div className="bg-gradient-to-br from-slate-800/30 to-slate-700/20 backdrop-blur-xl border border-slate-500/20 rounded-2xl p-8 shadow-xl">
+                      <div className="mb-4">
+                        <h3 className="font-serif text-xl font-bold bg-gradient-to-r from-white to-slate-200 bg-clip-text text-transparent">
+                          {s.title}
+                        </h3>
+                        <p className="text-slate-400 text-sm">{s.subtitle}</p>
+                      </div>
+
+                      <ul className="space-y-2 text-slate-300">
+                        {s.bullets.map((b) => (
+                          <li key={b} className="flex items-start gap-3">
+                            <span className="mt-2 h-2 w-2 rounded-full bg-cyan-400/80" />
+                            <span className="text-sm">{b}</span>
+                          </li>
+                        ))}
+                      </ul>
+
+                      {/* HUD del viewer (controles) renderizado aquí para no tapar el 3D */}
+                      <div id={hudPortalId} className="mt-6" />
+
+                      <div className="pt-5 flex flex-wrap gap-3">
+                        <ThemedButton href={`/workspace-3d?scene=${s.id}`} variant="neural" size="sm" icon={<Brain className="h-4 w-4" />}>
+                          Pantalla completa
+                        </ThemedButton>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
+            );
+          })}
         </div>
       </section>
 
