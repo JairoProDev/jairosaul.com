@@ -201,7 +201,7 @@ export default function VisionPage() {
                 </Link>
                 
                 <Link
-                  href="/proyectos"
+                  href="/projects"
                   className="inline-flex items-center px-6 py-3 bg-cortex-700 text-white rounded-lg font-medium hover:bg-cortex-600 transition-colors"
                 >
                   <Eye className="mr-2 h-4 w-4" />

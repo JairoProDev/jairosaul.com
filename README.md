@@ -229,8 +229,8 @@ Brain Digitalis representa más que un sitio web. Es una manifestación de:
 
 ## 📞 Contacto
 
-- **Email**: jairo@jairosaul.com
-- **LinkedIn**: [Jairo Saul Salas Quiñones](https://linkedin.com/in/jairosaul)
+- **Email**: jairoprodev@gmail.com
+- **LinkedIn**: [Jairo Saul Salas Quiñones](https://linkedin.com/in/jairosaulprodev)
 - **Twitter**: [@jairosaul](https://twitter.com/jairosaul)
 
 ---

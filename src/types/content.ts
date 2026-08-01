@@ -7,9 +7,24 @@ export interface BaseContent {
   featured?: boolean;
 }
 
+export type ProjectCategory =
+  | 'startup'
+  | 'product'
+  | 'client'
+  | 'experiment'
+  | 'tool'
+  | 'mobile';
+
+export type ProjectVisibility = 'showcase' | 'archive';
+
+export type ProjectStatus = 'live' | 'wip' | 'archived' | 'concept';
+
 export interface Project extends BaseContent {
   type: 'project';
-  status: 'active' | 'completed' | 'in-development';
+  status: ProjectStatus;
+  category: ProjectCategory;
+  visibility: ProjectVisibility;
+  year: number;
   technologies: string[];
   role: string;
   problem: string;
@@ -17,11 +32,14 @@ export interface Project extends BaseContent {
   results: string[];
   liveUrl?: string;
   githubUrl?: string;
+  /** Preferred cover path; falls back to `image` */
+  coverImage?: string;
   image?: string;
   metrics?: {
     users?: number;
     revenue?: number;
     growth?: string;
+    engagement?: number;
   };
   content: string;
 }

@@ -113,6 +113,14 @@ const nextConfig = {
   
   // Configuración de MDX
   pageExtensions: ['js', 'jsx', 'mdx', 'ts', 'tsx'],
+
+  async redirects() {
+    return [
+      { source: '/proyectos', destination: '/projects', permanent: true },
+      { source: '/proyectos/archive', destination: '/projects/archive', permanent: true },
+      { source: '/proyectos/:slug', destination: '/projects/:slug', permanent: true },
+    ];
+  },
 };
 
 export default nextConfig;

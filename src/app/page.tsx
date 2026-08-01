@@ -1,6 +1,6 @@
 
 import Link from 'next/link';
-import { Code, Lightbulb, BookOpen, MessageCircle, ExternalLink, Brain, Target, Eye, TrendingUp, Zap, Globe } from 'lucide-react';
+import { Code, Lightbulb, BookOpen, MessageCircle, ExternalLink, Brain, Zap, Globe } from 'lucide-react';
 import { Navigation } from '@/components/layout/Navigation';
 import NeuralParticles from '@/components/ui/NeuralParticles';
 import { DNAHelix, Minibrain } from '@/components/ui/NeuralCircuits';
@@ -11,8 +11,11 @@ import ProfileImage from '@/components/ui/ProfileImage';
 import NeuralBackground from '@/components/ui/NeuralBackground';
 import ThemedButton from '@/components/ui/ThemedButton';
 import ThemedCard from '@/components/ui/ThemedCard';
+import { FeaturedProjectsMiniList, FeaturedProjectsSection } from '@/components/projects/FeaturedProjects';
+import { getShowcaseProjects } from '@/lib/projects';
 
 export default function HomePage() {
+  const showcaseCount = getShowcaseProjects().length;
   return (
     <div className="min-h-screen bg-gradient-to-br from-cortex-900 via-cortex-800 to-cortex-900 relative overflow-hidden">
       {/* Neural Background con tema híbrido */}
@@ -125,7 +128,7 @@ export default function HomePage() {
                               Explorar Brain 3D
                             </ThemedButton>
                             <ThemedButton
-                              href="/proyectos"
+                              href="/projects"
                               variant="genetic"
                               size="lg"
                               icon={<Code className="h-5 w-5" />}
@@ -183,26 +186,7 @@ export default function HomePage() {
                   description="Startups y aplicaciones en desarrollo activo"
                   className="fade-in"
                 >
-                  <div className="space-y-1 text-cortex-200">
-                    <div className="flex items-start space-x-2">
-                      <div className="w-1 h-1 bg-acetylcholine-400 rounded-full mt-1.5 flex-shrink-0"></div>
-                      <p className="text-xs">
-                        <span className="text-acetylcholine-400 font-medium">Buscadis</span> - Marketplace
-                      </p>
-                    </div>
-                    <div className="flex items-start space-x-2">
-                      <div className="w-1 h-1 bg-emerald-400 rounded-full mt-1.5 flex-shrink-0"></div>
-                      <p className="text-xs">
-                        <span className="text-emerald-400 font-medium">DiverEdu</span> - Educación
-                      </p>
-                    </div>
-                    <div className="flex items-start space-x-2">
-                      <div className="w-1 h-1 bg-cyber-400 rounded-full mt-1.5 flex-shrink-0"></div>
-                      <p className="text-xs">
-                        <span className="text-cyber-400 font-medium">Uplify</span> - Contenido
-                      </p>
-                    </div>
-                  </div>
+                  <FeaturedProjectsMiniList />
                 </ThemedCard>
 
                 {/* Componente 2: Filosofía y Sistema de Pensamiento */}
@@ -411,14 +395,14 @@ export default function HomePage() {
                 <div>
                   <h3 className="font-serif text-lg font-bold text-white">Proyectos Activos</h3>
                   <div className="flex space-x-2">
-                    <span className="px-2 py-1 bg-green-500/20 text-green-400 text-xs rounded-full">3 Startups</span>
+                    <span className="px-2 py-1 bg-green-500/20 text-green-400 text-xs rounded-full">{showcaseCount} en vitrina</span>
                   </div>
                 </div>
               </div>
               <p className="text-cortex-300 text-sm mb-4">
                 Marketplace, educación y contenido científico en desarrollo activo
               </p>
-              <Link href="/proyectos" className="text-acetylcholine-400 text-sm hover:text-acetylcholine-300 flex items-center">
+              <Link href="/projects" className="text-acetylcholine-400 text-sm hover:text-acetylcholine-300 flex items-center">
                 Ver proyectos <ExternalLink className="w-3 h-3 ml-1" />
               </Link>
             </div>
@@ -468,484 +452,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Mis Creaciones - Proyectos */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-8 fade-in">
-            <h2 className="font-serif text-2xl md:text-3xl font-bold text-white mb-4">
-              Mis Proyectos y Creaciones
-            </h2>
-            <p className="text-base md:text-lg text-cortex-200 max-w-3xl mx-auto">
-              Un ecosistema de proyectos tecnológicos, educativos y de contenido científico 
-              diseñados para transformar la forma en que aprendemos, trabajamos y crecemos.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {/* Buscadis */}
-            <ThemedCard
-              variant="neural"
-              icon={<svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-              </svg>}
-              title="Buscadis"
-              description="Marketplace de avisos clasificados que conecta oportunidades en Latinoamérica"
-              className="fade-in"
-            >
-              <div className="flex space-x-2 mb-3">
-                <span className="px-2 py-1 bg-green-500/20 text-green-400 text-xs rounded-full">Activo</span>
-                <span className="px-2 py-1 bg-acetylcholine-500/20 text-acetylcholine-400 text-xs rounded-full">Marketplace</span>
-              </div>
-              <Link href="/proyectos/buscadis" className="text-acetylcholine-400 text-sm hover:text-acetylcholine-300 flex items-center">
-                Ver proyecto <ExternalLink className="w-3 h-3 ml-1" />
-              </Link>
-            </ThemedCard>
-
-            {/* Uplify */}
-            <ThemedCard
-              variant="genetic"
-              icon={<svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-              </svg>}
-              title="Uplify"
-              description="Sistema operativo para la superación humana y desarrollo personal"
-              className="fade-in"
-            >
-              <div className="flex space-x-2 mb-3">
-                <span className="px-2 py-1 bg-yellow-500/20 text-yellow-400 text-xs rounded-full">Desarrollo</span>
-                <span className="px-2 py-1 bg-emerald-500/20 text-emerald-400 text-xs rounded-full">Productividad</span>
-              </div>
-              <Link href="/proyectos/uplify" className="text-emerald-400 text-sm hover:text-emerald-300 flex items-center">
-                Ver proyecto <ExternalLink className="w-3 h-3 ml-1" />
-              </Link>
-            </ThemedCard>
-
-            {/* DiverEdu */}
-            <ThemedCard
-              variant="robotic"
-              icon={<svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-              </svg>}
-              title="DiverEdu"
-              description="YouTube de la educación - Plataforma de contenido educativo diverso"
-              className="fade-in"
-            >
-              <div className="flex space-x-2 mb-3">
-                <span className="px-2 py-1 bg-blue-500/20 text-blue-400 text-xs rounded-full">Planificación</span>
-                <span className="px-2 py-1 bg-cyber-500/20 text-cyber-400 text-xs rounded-full">Educación</span>
-              </div>
-              <Link href="/proyectos/diveredu" className="text-cyber-400 text-sm hover:text-cyber-300 flex items-center">
-                Ver proyecto <ExternalLink className="w-3 h-3 ml-1" />
-              </Link>
-            </ThemedCard>
-          </div>
-
-          <div className="text-center mt-12 fade-in">
-            <ThemedButton
-              href="/proyectos"
-              variant="hybrid"
-              size="lg"
-              icon={<Code className="h-4 w-4" />}
-            >
-              Ver todos los proyectos
-            </ThemedButton>
-          </div>
-        </div>
-      </section>
-
-      {/* Mi Laboratorio de Ideas */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-8 fade-in">
-            <h2 className="font-serif text-2xl md:text-3xl font-bold text-glutamate-500 mb-4">
-              Mi Sistema de Pensamiento
-            </h2>
-            <p className="text-base md:text-lg text-cortex-300 max-w-3xl mx-auto">
-              Dos vertientes de conocimiento: la construcción de imperios tecnológicos 
-              y el diseño del súper-humano. De la trinchera a la cumbre, documentando cada aprendizaje.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
-            {/* Jairoprodev - Más amplio */}
-            <div className="lg:col-span-3 bg-cortex-800/30 backdrop-blur-sm border border-cortex-700 rounded-xl p-6 fade-in">
-              <div className="flex items-start space-x-4">
-                <div className="flex-shrink-0">
-                  <div className="w-12 h-12 bg-acetylcholine-500 rounded-lg flex items-center justify-center">
-                    <Code className="h-6 w-6 text-white" />
-                  </div>
-                </div>
-                <div className="flex-1">
-                  <h3 className="font-serif text-xl font-bold text-white mb-2">
-                    JairoProDev - El Constructor
-                </h3>
-                  <p className="text-cortex-300 text-sm mb-4">
-                    Desde la trinchera del emprendedor: estrategias, arquitectura de sistemas y la guerra contra la mediocridad.
-                  </p>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    <div className="flex items-center space-x-2">
-                      <div className="w-2 h-2 bg-acetylcholine-400 rounded-full"></div>
-                      <span className="text-xs text-cortex-400">Estrategias de Startups</span>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <div className="w-2 h-2 bg-acetylcholine-400 rounded-full"></div>
-                      <span className="text-xs text-cortex-400">Arquitectura Escalable</span>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <div className="w-2 h-2 bg-acetylcholine-400 rounded-full"></div>
-                      <span className="text-xs text-cortex-400">Fundador Técnico</span>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <div className="w-2 h-2 bg-acetylcholine-400 rounded-full"></div>
-                      <span className="text-xs text-cortex-400">Levantamiento de Capital</span>
-                    </div>
-                  </div>
-              </div>
-              </div>
-            </div>
-
-            {/* Jairogrowhack - Más compacto */}
-            <div className="lg:col-span-2 bg-cortex-800/30 backdrop-blur-sm border border-cortex-700 rounded-xl p-6 fade-in">
-              <div className="flex items-start space-x-3">
-                <div className="flex-shrink-0">
-                  <div className="w-10 h-10 bg-emerald-500 rounded-lg flex items-center justify-center">
-                    <Lightbulb className="h-5 w-5 text-white" />
-                  </div>
-                </div>
-                <div className="flex-1">
-                  <h3 className="font-serif text-lg font-bold text-white mb-2">
-                    JairoGrowHack
-                </h3>
-                  <p className="text-cortex-300 text-xs mb-3">
-                    El laboratorio de reconstrucción personal
-              </p>
-              <div className="space-y-2">
-                    <div className="flex items-center space-x-2">
-                      <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full"></div>
-                      <span className="text-xs text-cortex-400">Plan de +100 Días</span>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full"></div>
-                      <span className="text-xs text-cortex-400">Hábitos del 1%</span>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full"></div>
-                      <span className="text-xs text-cortex-400">Filosofía Antifragil</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="text-center mt-8 fade-in">
-            <Link 
-              href="/ideas"
-              className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-serotonin-500 to-neural-500 text-white rounded-xl font-medium hover:from-serotonin-600 hover:to-neural-600 transition-all duration-300 shadow-lg"
-            >
-              Explorar todas las ideas
-              <Lightbulb className="ml-2 h-4 w-4" />
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* Ecosistema Completo de Proyectos */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-slate-900/20 to-transparent">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12 fade-in">
-            <h2 className="font-serif text-3xl md:text-4xl font-bold bg-gradient-to-br from-white to-slate-300 bg-clip-text text-transparent mb-4">
-              Ecosistema Completo
-            </h2>
-            <p className="text-lg text-slate-300 max-w-3xl mx-auto">
-              Un universo interconectado de proyectos que abarcan desde marketplaces hasta desarrollo personal
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {/* Buscadis */}
-            <div className="group bg-gradient-to-br from-slate-800/30 to-slate-700/20 backdrop-blur-xl border border-slate-500/20 rounded-2xl p-6 hover:border-acetylcholine-500/50 transition-all duration-300 hover:scale-105 shadow-xl">
-              <div className="flex items-center space-x-3 mb-4">
-                <div className="w-12 h-12 bg-gradient-to-br from-acetylcholine-500 to-acetylcholine-600 rounded-xl flex items-center justify-center shadow-lg">
-                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                  </svg>
-                </div>
-                <div>
-                  <h3 className="font-serif text-lg font-bold text-white">Buscadis</h3>
-                  <div className="flex space-x-2">
-                    <span className="px-2 py-1 bg-green-500/20 text-green-400 text-xs rounded-full border border-green-500/30">Activo</span>
-                  </div>
-                </div>
-              </div>
-              <p className="text-slate-300 text-sm mb-4 leading-relaxed">
-                Marketplace de avisos clasificados que conecta oportunidades en LATAM
-              </p>
-              <div className="flex items-center justify-between">
-                <span className="text-xs text-slate-400">Marketplace</span>
-                <Link href="/proyectos/buscadis" className="text-acetylcholine-400 hover:text-acetylcholine-300 transition-colors">
-                  <ExternalLink className="w-4 h-4" />
-                </Link>
-              </div>
-            </div>
-
-            {/* Uplify */}
-            <div className="group bg-gradient-to-br from-slate-800/30 to-slate-700/20 backdrop-blur-xl border border-slate-500/20 rounded-2xl p-6 hover:border-emerald-500/50 transition-all duration-300 hover:scale-105 shadow-xl">
-              <div className="flex items-center space-x-3 mb-4">
-                <div className="w-12 h-12 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl flex items-center justify-center shadow-lg">
-                  <TrendingUp className="w-6 h-6 text-white" />
-                </div>
-                <div>
-                  <h3 className="font-serif text-lg font-bold text-white">Uplify</h3>
-                  <div className="flex space-x-2">
-                    <span className="px-2 py-1 bg-yellow-500/20 text-yellow-400 text-xs rounded-full border border-yellow-500/30">MVP</span>
-                  </div>
-                </div>
-              </div>
-              <p className="text-slate-300 text-sm mb-4 leading-relaxed">
-                Sistema operativo para la superación humana y máximo rendimiento
-              </p>
-              <div className="flex items-center justify-between">
-                <span className="text-xs text-slate-400">Productividad</span>
-                <Link href="/proyectos/uplify" className="text-emerald-400 hover:text-emerald-300 transition-colors">
-                  <ExternalLink className="w-4 h-4" />
-                </Link>
-              </div>
-            </div>
-
-            {/* DiverEdu */}
-            <div className="group bg-gradient-to-br from-slate-800/30 to-slate-700/20 backdrop-blur-xl border border-slate-500/20 rounded-2xl p-6 hover:border-cyber-500/50 transition-all duration-300 hover:scale-105 shadow-xl">
-              <div className="flex items-center space-x-3 mb-4">
-                <div className="w-12 h-12 bg-gradient-to-br from-cyber-500 to-cyber-600 rounded-xl flex items-center justify-center shadow-lg">
-                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                  </svg>
-                </div>
-                <div>
-                  <h3 className="font-serif text-lg font-bold text-white">DiverEdu</h3>
-                  <div className="flex space-x-2">
-                    <span className="px-2 py-1 bg-blue-500/20 text-blue-400 text-xs rounded-full border border-blue-500/30">Concepto</span>
-                  </div>
-                </div>
-              </div>
-              <p className="text-slate-300 text-sm mb-4 leading-relaxed">
-                YouTube de la educación - Contenido educativo diverso y accesible
-              </p>
-              <div className="flex items-center justify-between">
-                <span className="text-xs text-slate-400">Educación</span>
-                <Link href="/proyectos/diveredu" className="text-cyber-400 hover:text-cyber-300 transition-colors">
-                  <ExternalLink className="w-4 h-4" />
-                </Link>
-              </div>
-            </div>
-
-            {/* JourNews */}
-            <div className="group bg-gradient-to-br from-slate-800/30 to-slate-700/20 backdrop-blur-xl border border-slate-500/20 rounded-2xl p-6 hover:border-neural-500/50 transition-all duration-300 hover:scale-105 shadow-xl">
-              <div className="flex items-center space-x-3 mb-4">
-                <div className="w-12 h-12 bg-gradient-to-br from-neural-500 to-neural-600 rounded-xl flex items-center justify-center shadow-lg">
-                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
-                  </svg>
-                </div>
-                <div>
-                  <h3 className="font-serif text-lg font-bold text-white">JourNews</h3>
-                  <div className="flex space-x-2">
-                    <span className="px-2 py-1 bg-purple-500/20 text-purple-400 text-xs rounded-full border border-purple-500/30">Visión</span>
-                  </div>
-                </div>
-              </div>
-              <p className="text-slate-300 text-sm mb-4 leading-relaxed">
-                TikTok de noticias - Información rápida, verificada y engaging
-              </p>
-              <div className="flex items-center justify-between">
-                <span className="text-xs text-slate-400">Media</span>
-                <Link href="/proyectos" className="text-neural-400 hover:text-neural-300 transition-colors">
-                  <ExternalLink className="w-4 h-4" />
-                </Link>
-              </div>
-            </div>
-
-            {/* PlayBook */}
-            <div className="group bg-gradient-to-br from-slate-800/30 to-slate-700/20 backdrop-blur-xl border border-slate-500/20 rounded-2xl p-6 hover:border-dopamine-500/50 transition-all duration-300 hover:scale-105 shadow-xl">
-              <div className="flex items-center space-x-3 mb-4">
-                <div className="w-12 h-12 bg-gradient-to-br from-dopamine-500 to-dopamine-600 rounded-xl flex items-center justify-center shadow-lg">
-                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
-                  </svg>
-                </div>
-                <div>
-                  <h3 className="font-serif text-lg font-bold text-white">PlayBook</h3>
-                  <div className="flex space-x-2">
-                    <span className="px-2 py-1 bg-orange-500/20 text-orange-400 text-xs rounded-full border border-orange-500/30">Idea</span>
-                  </div>
-                </div>
-              </div>
-              <p className="text-slate-300 text-sm mb-4 leading-relaxed">
-                Spotify de los libros - Audiolibros y contenido literario premium
-              </p>
-              <div className="flex items-center justify-between">
-                <span className="text-xs text-slate-400">Content</span>
-                <Link href="/proyectos" className="text-dopamine-400 hover:text-dopamine-300 transition-colors">
-                  <ExternalLink className="w-4 h-4" />
-                </Link>
-              </div>
-            </div>
-
-            {/* Publicadis */}
-            <div className="group bg-gradient-to-br from-slate-800/30 to-slate-700/20 backdrop-blur-xl border border-slate-500/20 rounded-2xl p-6 hover:border-serotonin-500/50 transition-all duration-300 hover:scale-105 shadow-xl">
-              <div className="flex items-center space-x-3 mb-4">
-                <div className="w-12 h-12 bg-gradient-to-br from-serotonin-500 to-serotonin-600 rounded-xl flex items-center justify-center shadow-lg">
-                  <Target className="w-6 h-6 text-white" />
-                </div>
-                <div>
-                  <h3 className="font-serif text-lg font-bold text-white">Publicadis</h3>
-                  <div className="flex space-x-2">
-                    <span className="px-2 py-1 bg-green-500/20 text-green-400 text-xs rounded-full border border-green-500/30">Beta</span>
-                  </div>
-                </div>
-              </div>
-              <p className="text-slate-300 text-sm mb-4 leading-relaxed">
-                SaaS de publicidad multiplataforma para maximizar alcance
-              </p>
-              <div className="flex items-center justify-between">
-                <span className="text-xs text-slate-400">Marketing</span>
-                <Link href="/proyectos" className="text-serotonin-400 hover:text-serotonin-300 transition-colors">
-                  <ExternalLink className="w-4 h-4" />
-                </Link>
-              </div>
-            </div>
-
-            {/* Noticiadis */}
-            <div className="group bg-gradient-to-br from-slate-800/30 to-slate-700/20 backdrop-blur-xl border border-slate-500/20 rounded-2xl p-6 hover:border-genetic-500/50 transition-all duration-300 hover:scale-105 shadow-xl">
-              <div className="flex items-center space-x-3 mb-4">
-                <div className="w-12 h-12 bg-gradient-to-br from-genetic-500 to-genetic-600 rounded-xl flex items-center justify-center shadow-lg">
-                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-                  </svg>
-                </div>
-                <div>
-                  <h3 className="font-serif text-lg font-bold text-white">Noticiadis</h3>
-                  <div className="flex space-x-2">
-                    <span className="px-2 py-1 bg-yellow-500/20 text-yellow-400 text-xs rounded-full border border-yellow-500/30">Dev</span>
-                  </div>
-                </div>
-              </div>
-              <p className="text-slate-300 text-sm mb-4 leading-relaxed">
-                Plataforma de noticias locales y contenido informativo
-              </p>
-              <div className="flex items-center justify-between">
-                <span className="text-xs text-slate-400">News</span>
-                <Link href="/proyectos" className="text-genetic-400 hover:text-genetic-300 transition-colors">
-                  <ExternalLink className="w-4 h-4" />
-                </Link>
-              </div>
-            </div>
-
-            {/* Future Project Slot */}
-            <div className="group bg-gradient-to-br from-slate-800/10 to-slate-700/5 backdrop-blur-xl border border-slate-500/10 border-dashed rounded-2xl p-6 hover:border-slate-400/30 transition-all duration-300 opacity-50 hover:opacity-70">
-              <div className="flex items-center space-x-3 mb-4">
-                <div className="w-12 h-12 bg-gradient-to-br from-slate-600 to-slate-700 rounded-xl flex items-center justify-center">
-                  <svg className="w-6 h-6 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                  </svg>
-                </div>
-                <div>
-                  <h3 className="font-serif text-lg font-bold text-slate-400">Próximo Proyecto</h3>
-                </div>
-              </div>
-              <p className="text-slate-500 text-sm mb-4">
-                La próxima solución disruptiva está en construcción...
-              </p>
-              <div className="flex items-center justify-between">
-                <span className="text-xs text-slate-500">Innovación</span>
-                <Eye className="w-4 h-4 text-slate-500" />
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Filosofías y Mentalidades Core */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-transparent via-slate-900/30 to-transparent">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16 fade-in">
-            <h2 className="font-serif text-4xl md:text-5xl font-bold bg-gradient-to-br from-white to-slate-300 bg-clip-text text-transparent mb-6">
-              Filosofías que Guían mi Existencia
-            </h2>
-            <p className="text-xl text-slate-300 max-w-4xl mx-auto leading-relaxed">
-              Principios destilados desde la trinchera de la construcción y la reconstrucción personal
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
-            {/* Antifragilidad */}
-            <div className="bg-gradient-to-br from-slate-800/40 to-slate-700/20 backdrop-blur-xl border border-slate-500/30 rounded-2xl p-8 shadow-2xl fade-in">
-              <div className="flex items-start space-x-4 mb-6">
-                <div className="w-16 h-16 bg-gradient-to-br from-acetylcholine-500 to-emerald-500 rounded-2xl flex items-center justify-center shadow-lg">
-                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                  </svg>
-                </div>
-                <div>
-                  <h3 className="font-serif text-2xl font-bold bg-gradient-to-r from-white to-slate-200 bg-clip-text text-transparent mb-2">
-                    Antifragilidad
-                  </h3>
-                  <p className="text-slate-400 text-sm">Nassim Taleb aplicado a la vida diaria</p>
-                </div>
-              </div>
-              <div className="space-y-4">
-                <p className="text-slate-300 leading-relaxed">
-                  No busco solo resistir los golpes, los uso como combustible. Cada crisis es información, 
-                  cada fracaso es educación acelerada. Los obstáculos no están en el camino, son el camino.
-                </p>
-                <div className="space-y-3">
-                  <div className="flex items-start space-x-3">
-                    <div className="w-2 h-2 bg-acetylcholine-400 rounded-full mt-2 flex-shrink-0"></div>
-                    <span className="text-slate-400 text-sm">Convertir volatilidad en oportunidad</span>
-                  </div>
-                  <div className="flex items-start space-x-3">
-                    <div className="w-2 h-2 bg-emerald-400 rounded-full mt-2 flex-shrink-0"></div>
-                    <span className="text-slate-400 text-sm">Fracasar rápido para aprender rápido</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Estoicismo Práctico */}
-            <div className="bg-gradient-to-br from-slate-800/40 to-slate-700/20 backdrop-blur-xl border border-slate-500/30 rounded-2xl p-8 shadow-2xl fade-in">
-              <div className="flex items-start space-x-4 mb-6">
-                <div className="w-16 h-16 bg-gradient-to-br from-emerald-500 to-cyber-500 rounded-2xl flex items-center justify-center shadow-lg">
-                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-                  </svg>
-                </div>
-                <div>
-                  <h3 className="font-serif text-2xl font-bold bg-gradient-to-r from-white to-slate-200 bg-clip-text text-transparent mb-2">
-                    Estoicismo Práctico
-                  </h3>
-                  <p className="text-slate-400 text-sm">Marco Aurelio para emprendedores</p>
-                </div>
-              </div>
-              <div className="space-y-4">
-                <p className="text-slate-300 leading-relaxed">
-                  Controlo lo que puedo controlar, acepto lo que no puedo, y tengo la sabiduría 
-                  para distinguir entre ambos. Mi energía va solo hacia lo que está bajo mi influencia.
-                </p>
-                <div className="space-y-3">
-                  <div className="flex items-start space-x-3">
-                    <div className="w-2 h-2 bg-emerald-400 rounded-full mt-2 flex-shrink-0"></div>
-                    <span className="text-slate-400 text-sm">Memento mori: la vida es finita, actúa ahora</span>
-                  </div>
-                  <div className="flex items-start space-x-3">
-                    <div className="w-2 h-2 bg-cyber-400 rounded-full mt-2 flex-shrink-0"></div>
-                    <span className="text-slate-400 text-sm">Amor fati: amar el proceso, no solo el resultado</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <FeaturedProjectsSection />
 
       {/* Call to Action Final Premium */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-slate-900/50 to-transparent">

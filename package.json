@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "capture:projects": "node scripts/capture-project-screenshots.mjs",
+    "capture:projects:placeholders": "node scripts/capture-project-screenshots.mjs --placeholders-only"
   },
   "dependencies": {
     "@mdx-js/loader": "^3.1.0",
@@ -35,6 +37,7 @@
     "cssnano": "^7.1.0",
     "eslint": "^9",
     "eslint-config-next": "15.4.8",
+    "playwright": "^1.62.1",
     "postcss": "^8.5.6",
     "postcss-preset-env": "^10.2.4",
     "tailwindcss": "^3.4.17",

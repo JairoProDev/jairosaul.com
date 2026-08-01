@@ -8,7 +8,7 @@ import type { OrbitControls as OrbitControlsImpl } from 'three-stdlib';
 import DNAHelix from './DNAHelix';
 
 const LOBES = [
-  { key: 'frontal', name: 'Lóbulo Frontal', desc: 'Proyectos y Creaciones', color: '#4f46e5', href: '/proyectos', position: new THREE.Vector3(0.95, 0.2, 0.25) },
+  { key: 'frontal', name: 'Lóbulo Frontal', desc: 'Proyectos y Creaciones', color: '#4f46e5', href: '/projects', position: new THREE.Vector3(0.95, 0.2, 0.25) },
   { key: 'temporal', name: 'Lóbulo Temporal', desc: 'Ideas y Pensamientos', color: '#10b981', href: '/ideas', position: new THREE.Vector3(-0.7, -0.05, 0.65) },
   { key: 'parietal', name: 'Lóbulo Parietal', desc: 'El Manifiesto', color: '#f59e0b', href: '/manifiesto', position: new THREE.Vector3(0.2, 0.85, -0.2) },
   { key: 'occipital', name: 'Lóbulo Occipital', desc: 'Visión y Futuro', color: '#a78bfa', href: '/vision', position: new THREE.Vector3(-0.25, -0.7, -0.55) },

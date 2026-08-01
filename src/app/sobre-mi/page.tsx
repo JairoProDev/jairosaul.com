@@ -31,7 +31,7 @@ const personalProjects = [
     description: "Professional Development",
     icon: "🎯",
     color: "acetylcholine",
-    href: "/proyectos"
+    href: "/projects"
   },
   {
     name: "Grow-Hack",
@@ -75,37 +75,37 @@ const startups = [
     name: "Buscadis",
     description: "Marketplace de avisos clasificados",
     status: "active",
-    href: "/proyectos/buscadis"
+    href: "/projects/buscadis"
   },
   {
     name: "Publicadis",
     description: "Saas de publicidad multiplataforma",
     status: "active",
-    href: "/proyectos/publicadis"
+    href: "/projects/publicadis"
   },
   {
     name: "DiverEdu",
     description: "YouTube de la educación",
     status: "planning",
-    href: "/proyectos"
+    href: "/projects"
   },
   {
     name: "JourNews",
     description: "TikTok de noticias",
     status: "planning",
-    href: "/proyectos"
+    href: "/projects"
   },
   {
     name: "PlayBook",
     description: "Spotify de los libros",
     status: "planning",
-    href: "/proyectos"
+    href: "/projects"
   },
   {
     name: "Uplify",
     description: "ClickUp del desarrollo personal",
     status: "planning",
-    href: "/proyectos"
+    href: "/projects"
   }
 ];
 
@@ -266,7 +266,7 @@ export default function SobreMiPage() {
               </p>
               <div className="mt-6 flex space-x-4">
                 <Link 
-                  href="/proyectos"
+                  href="/projects"
                   className="px-4 py-2 bg-acetylcholine-500 hover:bg-acetylcholine-600 text-white rounded-lg transition-colors font-medium"
                 >
                   Ver Proyectos

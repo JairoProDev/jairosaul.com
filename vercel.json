@@ -96,19 +96,19 @@
       "permanent": true
     },
     {
-      "source": "/proyectos/buscadis",
-      "destination": "/proyectos",
-      "permanent": false
+      "source": "/proyectos",
+      "destination": "/projects",
+      "permanent": true
     },
     {
-      "source": "/proyectos/publicadis",
-      "destination": "/proyectos",
-      "permanent": false
+      "source": "/proyectos/archive",
+      "destination": "/projects/archive",
+      "permanent": true
     },
     {
-      "source": "/proyectos/diveredu",
-      "destination": "/proyectos",
-      "permanent": false
+      "source": "/proyectos/:slug",
+      "destination": "/projects/:slug",
+      "permanent": true
     }
   ]
 }

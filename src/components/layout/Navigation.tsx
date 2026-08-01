@@ -45,7 +45,7 @@ export function Navigation() {
               const getIcon = () => {
                 switch (item.href) {
                   case '/sobre-mi': return <User className="h-4 w-4" />;
-                  case '/proyectos': return <Code className="h-4 w-4" />;
+                  case '/projects': return <Code className="h-4 w-4" />;
                   case '/ideas': return <Lightbulb className="h-4 w-4" />;
                   case '/vision': return <Eye className="h-4 w-4" />;
                   case '/cortex': return <Brain className="h-4 w-4" />;
