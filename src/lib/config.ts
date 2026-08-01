@@ -125,6 +125,7 @@ export const siteConfig: SiteConfig = {
       'uplify',
       'noticiadis',
       'ed-tech',
+      'cristalimag',
     ],
   },
   ideas: {

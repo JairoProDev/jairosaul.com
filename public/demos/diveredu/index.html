@@ -1,52 +1,40 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>DiverEdu · Live Demo · JairoSaul</title>
+<title>DiverEdu — Aprendizaje verificable</title>
 <style>
-  :root { color-scheme: dark; }
-  * { box-sizing: border-box; }
-  body { margin:0; font-family: Georgia, "Times New Roman", serif; background:
-    radial-gradient(1200px 600px at 10% 0%, #1d4ed855, transparent),
-    linear-gradient(145deg, #0f172a, #020617); color:#e2e8f0; min-height:100vh; }
-  .wrap { max-width: 980px; margin: 0 auto; padding: 48px 24px 80px; }
-  .brand { letter-spacing:.18em; text-transform:uppercase; font-size:12px; color:#93c5fd; font-family: system-ui, sans-serif; }
-  h1 { font-size: clamp(2.2rem, 5vw, 3.6rem); margin: 12px 0 10px; color:#f8fafc; }
-  .lead { font-size: 1.15rem; line-height:1.6; color:#cbd5e1; max-width: 42rem; font-family: system-ui, sans-serif; }
-  .meta { display:flex; flex-wrap:wrap; gap:8px; margin:20px 0; font-family: system-ui, sans-serif; }
-  .pill { background:#0f172acc; border:1px solid #334155; padding:6px 10px; border-radius:999px; font-size:12px; color:#93c5fd; }
-  .status { border-color:#22c55e66; color:#86efac; }
-  .cover { margin:28px 0; border-radius:18px; overflow:hidden; border:1px solid #334155; aspect-ratio:16/9; background:#020617; }
-  .cover img { width:100%; height:100%; object-fit:cover; display:block; }
-  .actions { display:flex; flex-wrap:wrap; gap:12px; margin-top:24px; font-family: system-ui, sans-serif; }
-  .btn { display:inline-flex; align-items:center; padding:12px 18px; border-radius:12px; text-decoration:none; border:1px solid #475569; color:#e2e8f0; background:#0f172a; }
-  .btn.primary { background:#2563eb; border-color:#2563eb; color:white; }
-  .panel { margin-top:36px; padding:22px; border:1px solid #334155; border-radius:16px; background:#0f172a99; font-family: system-ui, sans-serif; }
-  .panel h2 { margin:0 0 10px; font-family: Georgia, serif; }
-  .panel p { margin:0; color:#94a3b8; line-height:1.55; }
+  :root { --bg:#07111f; --panel:#0d1b2e; --accent:#38bdf8; --text:#e2e8f0; --muted:#94a3b8; }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:Georgia,serif; background:radial-gradient(900px 500px at 80% -10%, #0ea5e955, transparent), var(--bg); color:var(--text); }
+  .wrap { max-width:980px; margin:0 auto; padding:40px 20px 80px; }
+  .brand { font-family:system-ui,sans-serif; letter-spacing:.16em; text-transform:uppercase; font-size:12px; color:var(--accent); }
+  h1 { font-size:clamp(2.4rem,6vw,4rem); margin:12px 0; }
+  .lead { font-family:system-ui,sans-serif; font-size:1.15rem; color:var(--muted); max-width:40rem; line-height:1.6; }
+  .actions { display:flex; flex-wrap:wrap; gap:12px; margin:28px 0; font-family:system-ui,sans-serif; }
+  a.btn { text-decoration:none; padding:12px 18px; border-radius:12px; border:1px solid #334155; color:var(--text); }
+  a.btn.primary { background:var(--accent); color:#082f49; border-color:var(--accent); font-weight:700; }
+  .grid { display:grid; gap:16px; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); margin-top:36px; font-family:system-ui,sans-serif; }
+  .card { background:var(--panel); border:1px solid #1e293b; border-radius:16px; padding:18px; }
+  .card h3 { margin:0 0 8px; font-family:Georgia,serif; }
+  .card p { margin:0; color:var(--muted); line-height:1.5; font-size:.95rem; }
 </style>
 </head>
 <body>
   <div class="wrap">
-    <div class="brand">JairoSaul · Live</div>
-    <h1>DiverEdu</h1>
-    <p class="lead">Línea ed-tech de verificación y aprendizaje (Diveredu / ed-tech). De landings tempranas a monorepo de producto.</p>
-    <div class="meta">
-      <span class="pill status">wip</span>
-      <span class="pill">startup</span>
-      <span class="pill">Fundador Técnico</span>
-      <span class="pill">Next.js</span><span class="pill">TypeScript</span><span class="pill">Turborepo</span>
-    </div>
-    <div class="cover"><img src="/images/projects/diveredu.webp" alt="DiverEdu"/></div>
+    <div class="brand">DiverEdu · Ed-Tech</div>
+    <h1>Aprendizaje que se puede verificar.</h1>
+    <p class="lead">Línea de producto ed-tech: de landings tempranas a un monorepo orientado a demostrar que el aprendizaje ocurrió de verdad — no solo que hubo consumo de contenido.</p>
     <div class="actions">
-      <a class="btn primary" href="https://landing-template-diver-edu.vercel.app" target="_blank" rel="noopener">Abrir producto original</a>
-      <a class="btn" href="/projects/diveredu">Ver case study</a>
-      <a class="btn" href="/projects">Todos los projects</a>
+      <a class="btn primary" href="/projects/diveredu">Ver case study</a>
+      <a class="btn" href="/projects/ed-tech">Ver monorepo ed-tech</a>
+      <a class="btn" href="https://github.com/JairoProDev/ed-tech" target="_blank" rel="noopener">GitHub</a>
     </div>
-    <div class="panel">
-      <h2>Demo en jairosaul.com</h2>
-      <p>Esta pieza está publicada bajo tu dominio como experiencia live del portfolio. Si el producto tiene URL externa activa, úsala desde el botón principal; si no, este espacio es la versión accesible y compartible.</p>
+    <div class="grid">
+      <div class="card"><h3>Verificación</h3><p>Evidencia de dominio, no solo progreso aparente.</p></div>
+      <div class="card"><h3>Contenido diverso</h3><p>Formatos que mantienen engagement sin perder rigor.</p></div>
+      <div class="card"><h3>Stack moderno</h3><p>Next.js + Turborepo para iterar producto y docs juntos.</p></div>
     </div>
   </div>
 </body>
