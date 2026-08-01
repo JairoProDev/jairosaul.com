@@ -120,17 +120,13 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
           </div>
 
           <div className="mb-10 flex flex-wrap gap-3 fade-in">
-            {project.liveUrl && (
-              <a
-                href={project.liveUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-lg bg-acetylcholine-500 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-acetylcholine-600"
-              >
-                <ExternalLink className="h-4 w-4" />
-                Ver en vivo
-              </a>
-            )}
+            <Link
+              href={`/live/${slug}`}
+              className="inline-flex items-center gap-2 rounded-lg bg-acetylcholine-500 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-acetylcholine-600"
+            >
+              <ExternalLink className="h-4 w-4" />
+              Ver en vivo
+            </Link>
             {project.githubUrl && (
               <a
                 href={project.githubUrl}

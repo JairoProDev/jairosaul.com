@@ -199,19 +199,14 @@ export function ProjectsExplorer({
                   </div>
                 </div>
               </Link>
-              {(project.liveUrl || project.githubUrl) && (
-                <div className="flex gap-3 border-t border-cortex-700 px-5 py-3">
-                  {project.liveUrl && (
-                    <a
-                      href={project.liveUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 text-sm text-acetylcholine-400 hover:text-acetylcholine-300"
-                    >
-                      <ExternalLink className="h-3.5 w-3.5" />
-                      Live
-                    </a>
-                  )}
+              <div className="flex gap-3 border-t border-cortex-700 px-5 py-3">
+                  <Link
+                    href={`/live/${project.slug}`}
+                    className="inline-flex items-center gap-1 text-sm text-acetylcholine-400 hover:text-acetylcholine-300"
+                  >
+                    <ExternalLink className="h-3.5 w-3.5" />
+                    Live
+                  </Link>
                   {project.githubUrl && (
                     <a
                       href={project.githubUrl}
@@ -224,7 +219,6 @@ export function ProjectsExplorer({
                     </a>
                   )}
                 </div>
-              )}
             </article>
           ))}
         </div>

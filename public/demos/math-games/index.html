@@ -1,0 +1,1251 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#1a0a2e">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>¡Encaja! 2 — Puzzle Infinito</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg1: #1a0a2e; --bg2: #2d1b4e; --gold: #ffd54f; --cyan: #4dd0e1;
+            --safe-b: env(safe-area-inset-bottom, 0px); --safe-t: env(safe-area-inset-top, 0px);
+        }
+        * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; user-select:none; }
+        html, body { height:100%; overflow:hidden; font-family:'Nunito',sans-serif; background:var(--bg1); color:#fff; touch-action:none; }
+        #app { height:100%; display:flex; flex-direction:column; background:linear-gradient(160deg,var(--bg1) 0%,var(--bg2) 50%,#1a1040 100%); transition:background .6s; }
+        .screen { display:none; flex:1; flex-direction:column; }
+        .screen.active { display:flex; }
+
+        #home { align-items:center; justify-content:center; padding:24px; text-align:center; position:relative; overflow-y:auto; }
+        .logo-shape { width:88px; height:88px; margin:0 auto 16px; background:linear-gradient(135deg,var(--cyan),#26c6da);
+            clip-path:polygon(50% 0%,100% 38%,82% 100%,18% 100%,0% 38%); display:flex; align-items:center; justify-content:center;
+            font-size:36px; filter:drop-shadow(0 8px 24px rgba(77,208,225,.4)); animation:logo-float 3s ease-in-out infinite; }
+        @keyframes logo-float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+        .game-title { font-size:clamp(2.2rem,10vw,3.2rem); font-weight:900; line-height:1; margin-bottom:4px; }
+        .game-title span { color:var(--gold); }
+        .v4-badge { display:inline-block; background:rgba(255,213,79,.2); color:var(--gold); font-size:.65rem; font-weight:900;
+            padding:3px 8px; border-radius:999px; margin-left:6px; vertical-align:middle; }
+        .tagline { color:rgba(255,255,255,.45); font-size:.85rem; margin-bottom:20px; }
+        .btn-play { width:min(280px,85vw); padding:18px 36px; border:none; border-radius:999px;
+            background:linear-gradient(135deg,#ff6b9d,#ff4081); color:#fff; font-family:inherit; font-size:1.35rem; font-weight:900;
+            box-shadow:0 8px 32px rgba(255,64,129,.45); cursor:pointer; transition:transform .1s; margin-bottom:10px; }
+        .btn-play:active { transform:scale(.94); }
+        .btn-secondary { width:min(280px,85vw); padding:12px; border:1px solid rgba(255,213,79,.3); border-radius:999px;
+            background:rgba(255,213,79,.08); color:var(--gold); font-family:inherit; font-size:.9rem; font-weight:800; cursor:pointer; }
+        .btn-secondary:active { transform:scale(.96); }
+        .home-stats { display:flex; gap:16px; margin-top:20px; font-size:.75rem; color:rgba(255,255,255,.5); flex-wrap:wrap; justify-content:center; }
+        .home-stats strong { color:var(--gold); font-size:1rem; display:block; }
+        .wave-map { display:flex; gap:6px; margin-top:16px; align-items:center; justify-content:center; }
+        .wave-dot { width:10px; height:10px; border-radius:50%; background:rgba(255,255,255,.15); }
+        .wave-dot.done { background:var(--cyan); }
+        .wave-dot.boss { background:var(--gold); width:14px; height:14px; box-shadow:0 0 8px rgba(255,213,79,.5); }
+        .wave-map-label { font-size:.7rem; color:rgba(255,255,255,.4); margin-top:6px; }
+
+        #hud { display:flex; align-items:flex-start; justify-content:space-between; padding:calc(8px + var(--safe-t)) 12px 4px; flex-shrink:0; gap:8px; }
+        .hud-left { display:flex; flex-direction:column; gap:4px; min-width:0; }
+        .hud-pill { background:rgba(255,255,255,.08); border-radius:999px; padding:5px 12px; font-size:.75rem; font-weight:800; display:inline-block; }
+        .hud-pill.gold { color:var(--gold); }
+        .hud-pill.fire { color:#ff8a65; }
+        .hud-pill.combo { color:#ce93d8; display:none; }
+        .hud-zone { font-size:.65rem; color:rgba(255,255,255,.45); font-weight:800; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:140px; }
+        .hud-center { text-align:center; flex-shrink:0; }
+        .hud-level { font-size:1rem; font-weight:900; }
+        .hud-boss-next { font-size:.6rem; color:rgba(255,213,79,.6); margin-top:2px; }
+        .hud-right { display:flex; flex-direction:column; align-items:flex-end; gap:4px; }
+
+        #game-area { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:0 12px; min-height:0; }
+        #board-wrap { width:min(92vw,420px); aspect-ratio:1; position:relative; border-radius:24px; overflow:hidden;
+            box-shadow:0 16px 48px rgba(0,0,0,.5), inset 0 0 0 2px rgba(255,255,255,.06); transition:transform .3s; }
+        #board-wrap.shake { animation:shake .4s ease-in-out; }
+        @keyframes shake { 0%,100%{transform:translateX(0)} 20%{transform:translateX(-8px)} 40%{transform:translateX(8px)} 60%{transform:translateX(-5px)} 80%{transform:translateX(5px)} }
+        #board-wrap.pop-in { animation:board-pop .45s cubic-bezier(.34,1.56,.64,1); }
+        @keyframes board-pop { 0%{transform:scale(.85);opacity:.5} 100%{transform:scale(1);opacity:1} }
+        #board { width:100%; height:100%; display:block; }
+
+        #timer-wrap { width:min(92vw,420px); margin-top:8px; display:none; }
+        #timer-wrap.active { display:block; }
+        #timer-bar-bg { height:8px; background:rgba(255,255,255,.08); border-radius:999px; overflow:hidden; }
+        #timer-bar { height:100%; width:100%; background:linear-gradient(90deg,#66bb6a,#aed581); border-radius:999px; transition:width .1s linear, background .3s; }
+        #timer-bar.warn { background:linear-gradient(90deg,#ffa726,#ff7043); }
+        #timer-bar.danger { background:linear-gradient(90deg,#ef5350,#e53935); animation:timer-pulse .5s infinite; }
+        @keyframes timer-pulse { 0%,100%{opacity:1} 50%{opacity:.7} }
+        #move-limit { font-size:.7rem; color:rgba(255,255,255,.4); text-align:center; margin-top:4px; display:none; }
+
+        #controls { flex-shrink:0; padding:10px 16px calc(14px + var(--safe-b)); display:flex; flex-direction:column; align-items:center; gap:10px; }
+        #dpad { display:grid; grid-template-columns:repeat(3,52px); grid-template-rows:repeat(3,52px); gap:5px; }
+        .dpad-btn { width:52px; height:52px; border:none; border-radius:14px; background:rgba(255,255,255,.1); color:#fff; font-size:1.2rem;
+            display:flex; align-items:center; justify-content:center; cursor:pointer; }
+        .dpad-btn:active { transform:scale(.88); background:rgba(255,255,255,.2); }
+        .dpad-btn.empty { visibility:hidden; }
+        .dpad-btn.primary { background:linear-gradient(135deg,rgba(77,208,225,.3),rgba(38,198,218,.2)); border:1px solid rgba(77,208,225,.3); }
+        #action-row { display:flex; gap:10px; width:min(92vw,420px); }
+        .action-btn { flex:1; padding:12px; border:none; border-radius:16px; font-family:inherit; font-size:.8rem; font-weight:800;
+            cursor:pointer; display:flex; flex-direction:column; align-items:center; gap:3px; }
+        .action-btn:active { transform:scale(.92); }
+        .action-btn:disabled { opacity:.25; pointer-events:none; }
+        .action-btn .icon { font-size:1.5rem; }
+        #btn-flip { background:linear-gradient(135deg,rgba(255,107,157,.25),rgba(255,64,129,.15)); border:1px solid rgba(255,107,157,.3); color:#ff8fab; }
+        #btn-rotate { background:linear-gradient(135deg,rgba(186,104,200,.25),rgba(156,39,176,.15)); border:1px solid rgba(186,104,200,.3); color:#ce93d8; }
+
+        #game-hint { position:fixed; top:45%; left:50%; transform:translate(-50%,-50%); background:rgba(0,0,0,.8); backdrop-filter:blur(12px);
+            padding:14px 22px; border-radius:14px; font-size:.95rem; font-weight:800; pointer-events:none; opacity:0; transition:opacity .3s; z-index:20; text-align:center; max-width:90vw; }
+        #game-hint.show { opacity:1; }
+
+        #level-flash { position:fixed; inset:0; z-index:30; display:none; align-items:center; justify-content:center; pointer-events:none; }
+        #level-flash.show { display:flex; }
+        #level-flash .text { font-size:clamp(1.8rem,8vw,2.8rem); font-weight:900; color:var(--gold); text-shadow:0 4px 24px rgba(255,213,79,.5); animation:pop .5s cubic-bezier(.34,1.56,.64,1); }
+        @keyframes pop { 0%{transform:scale(0);opacity:0} 100%{transform:scale(1);opacity:1} }
+
+        #complete-overlay, #fail-overlay, #boss-overlay, #insight-overlay, #world-unlock {
+            position:fixed; inset:0; z-index:50; display:none; align-items:center; justify-content:center; padding:20px;
+            background:rgba(0,0,0,.75); backdrop-filter:blur(6px); pointer-events:none;
+        }
+        #complete-overlay.show, #fail-overlay.show, #boss-overlay.show, #insight-overlay.show, #world-unlock.show {
+            display:flex; pointer-events:auto;
+        }
+        .modal-card { background:linear-gradient(160deg,#2d1b4e,#1a0a2e); border:1px solid rgba(255,255,255,.1); border-radius:24px;
+            padding:24px; max-width:360px; width:100%; text-align:center; animation:slide-up .35s cubic-bezier(.16,1,.3,1); }
+        @keyframes slide-up { from{transform:translateY(30px);opacity:0} to{transform:translateY(0);opacity:1} }
+        .modal-card h2 { font-size:1.5rem; font-weight:900; margin-bottom:8px; }
+        .modal-card p { color:rgba(255,255,255,.6); font-size:.9rem; margin-bottom:16px; line-height:1.4; }
+        .modal-stats { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-bottom:20px; }
+        .modal-stat { background:rgba(0,0,0,.3); border-radius:12px; padding:10px 6px; }
+        .modal-stat .val { font-size:1.2rem; font-weight:900; color:var(--gold); }
+        .modal-stat .lbl { font-size:.65rem; color:rgba(255,255,255,.4); margin-top:2px; }
+        .btn-modal { width:100%; padding:16px; border:none; border-radius:14px; font-family:inherit; font-weight:900; font-size:1rem; cursor:pointer; }
+        .btn-next { background:linear-gradient(135deg,#ff6b9d,#ff4081); color:#fff; box-shadow:0 6px 20px rgba(255,64,129,.4); }
+        .btn-next:active { transform:scale(.97); }
+        .btn-retry { background:rgba(255,255,255,.1); color:#fff; margin-top:10px; }
+        .auto-hint { font-size:.7rem; color:rgba(255,255,255,.35); margin-top:10px; }
+
+        #insight-card { text-align:left; }
+        #insight-card .badge { display:inline-block; background:rgba(255,213,79,.15); color:var(--gold); font-size:.7rem; font-weight:800; padding:4px 10px; border-radius:999px; margin-bottom:10px; }
+        .insight-btns { display:flex; gap:8px; margin-top:16px; }
+        .insight-btns button { flex:1; padding:12px; border:none; border-radius:12px; font-family:inherit; font-weight:800; font-size:.85rem; cursor:pointer; }
+        .btn-got-it { background:var(--gold); color:#1a0a2e; }
+        .btn-skip-insight { background:rgba(255,255,255,.08); color:rgba(255,255,255,.6); }
+
+        #boss-overlay .modal-card { border-color:rgba(255,213,79,.3); }
+        #boss-overlay .boss-emoji { font-size:3.5rem; margin-bottom:8px; }
+
+        #swipe-hint { position:absolute; bottom:10px; left:50%; transform:translateX(-50%); font-size:.7rem; color:rgba(255,255,255,.35); font-weight:700; animation:pulse-hint 2s infinite; pointer-events:none; }
+        @keyframes pulse-hint { 0%,100%{opacity:.35} 50%{opacity:.85} }
+
+        @media (min-width:500px) { #app { max-width:440px; margin:0 auto; box-shadow:0 0 80px rgba(0,0,0,.5); } }
+    </style>
+</head>
+<body>
+<div id="app">
+    <div id="home" class="screen active">
+        <div class="logo-shape">✦</div>
+        <h1 class="game-title">¡<span>Encaja</span>!<span class="v4-badge">v4</span></h1>
+        <p class="tagline">Encaja la pieza. Esquiva la sombra. Sube sin límite.</p>
+        <button class="btn-play" id="btn-start">JUGAR</button>
+        <button class="btn-secondary" id="btn-daily">Desafío diario</button>
+        <div class="wave-map" id="wave-map"></div>
+        <p class="wave-map-label" id="wave-map-label"></p>
+        <div class="home-stats">
+            <div>Nivel<strong id="home-level">1</strong></div>
+            <div>Racha<strong id="home-streak">0</strong></div>
+            <div>Puntos<strong id="home-score">0</strong></div>
+        </div>
+    </div>
+
+    <div id="game" class="screen">
+        <div id="hud">
+            <div class="hud-left">
+                <span class="hud-pill gold">★ <span id="hud-score">0</span></span>
+                <span class="hud-pill combo" id="hud-combo-wrap">×<span id="hud-combo">2</span></span>
+                <span class="hud-zone" id="hud-zone">Valle Sagrado</span>
+            </div>
+            <div class="hud-center">
+                <div class="hud-level">Nv. <span id="hud-level">1</span></div>
+                <div class="hud-boss-next" id="hud-boss-next"></div>
+            </div>
+            <div class="hud-right">
+                <span class="hud-pill fire" id="hud-streak-wrap" style="display:none">🔥 <span id="hud-streak">0</span></span>
+            </div>
+        </div>
+        <div id="game-area">
+            <div id="board-wrap">
+                <canvas id="board"></canvas>
+                <div id="swipe-hint">desliza para mover</div>
+            </div>
+            <div id="timer-wrap">
+                <div id="timer-bar-bg"><div id="timer-bar"></div></div>
+            </div>
+            <div id="move-limit"></div>
+        </div>
+        <div id="controls">
+            <div id="dpad">
+                <div class="dpad-btn empty"></div>
+                <button class="dpad-btn primary" data-dir="0,1">▲</button>
+                <div class="dpad-btn empty"></div>
+                <button class="dpad-btn primary" data-dir="-1,0">◀</button>
+                <div class="dpad-btn empty"></div>
+                <button class="dpad-btn primary" data-dir="1,0">▶</button>
+                <div class="dpad-btn empty"></div>
+                <button class="dpad-btn primary" data-dir="0,-1">▼</button>
+                <div class="dpad-btn empty"></div>
+            </div>
+            <div id="action-row">
+                <button class="action-btn" id="btn-flip" disabled><span class="icon">🪞</span><span id="flip-label">Voltear ↕</span></button>
+                <button class="action-btn" id="btn-rotate" disabled><span class="icon">🔄</span> Girar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="game-hint"></div>
+    <div id="level-flash"><div class="text" id="flash-text">¡PERFECTO!</div></div>
+
+    <div id="complete-overlay">
+        <div class="modal-card">
+            <h2 id="complete-title">¡Nivel completado!</h2>
+            <div class="modal-stats">
+                <div class="modal-stat"><div class="val" id="complete-points">0</div><div class="lbl">Puntos</div></div>
+                <div class="modal-stat"><div class="val" id="complete-moves">0</div><div class="lbl">Movimientos</div></div>
+                <div class="modal-stat"><div class="val" id="complete-time">0s</div><div class="lbl">Tiempo</div></div>
+            </div>
+            <button class="btn-modal btn-next" id="btn-next-level">Siguiente →</button>
+            <p class="auto-hint" id="auto-advance-hint">Auto en 3s...</p>
+        </div>
+    </div>
+
+    <div id="fail-overlay">
+        <div class="modal-card">
+            <h2 id="fail-title">¡Ups!</h2>
+            <p id="fail-msg">Se acabó el tiempo. Intenta de nuevo.</p>
+            <button class="btn-modal btn-next" id="btn-retry">Reintentar</button>
+        </div>
+    </div>
+
+    <div id="boss-overlay">
+        <div class="modal-card">
+            <div class="boss-emoji" id="boss-emoji">⚔️</div>
+            <h2 id="boss-title">NIVEL JEFE</h2>
+            <p id="boss-desc"></p>
+            <button class="btn-modal btn-next" id="btn-boss-start">¡A jugar!</button>
+        </div>
+    </div>
+
+    <div id="insight-overlay">
+        <div class="modal-card" id="insight-card">
+            <span class="badge">Lo que acabas de hacer</span>
+            <h3 id="insight-title"></h3>
+            <p id="insight-body"></p>
+            <div class="insight-btns">
+                <button class="btn-skip-insight" id="btn-hide-insights">No mostrar más</button>
+                <button class="btn-got-it" id="btn-got-it">¡Genial!</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="world-unlock">
+        <div class="modal-card">
+            <div class="boss-emoji" id="world-emoji">🪞</div>
+            <h2 id="world-title">¡Nuevo poder!</h2>
+            <p id="world-desc"></p>
+            <button class="btn-modal btn-next" id="btn-world-ok">¡Vamos!</button>
+        </div>
+    </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════
+//  ¡ENCAJA! v4 — Puzzle infinito adictivo
+// ═══════════════════════════════════════════════════
+
+const SAVE_KEY = 'encaja-v4';
+const GRID = 9;
+const UNLOCK_FLIP = 8;
+const UNLOCK_ROTATE = 18;
+const CHASER_FROM = 5;
+const TIMER_FROM = 5;
+const OBSTACLES_FROM = 15;
+
+const SHAPES = [
+    { pts: [[0,2],[2,0],[0,-2],[-2,0]], color: '#4dd0e1', name: 'Rombo' },
+    { pts: [[-1,2],[1,2],[1,0],[2,0],[2,-1],[1,-1],[1,-2],[-1,-2],[-1,-1],[-2,-1],[-2,1],[-1,1]], color: '#4dd0e1', name: 'Chacana' },
+    { pts: [[0,0],[1,0],[1,1],[0,1]], color: '#26c6da', name: 'Cuadrado' },
+    { pts: [[0,3],[1,1],[0,-1],[-1,1]], color: '#4dd0e1', name: 'Diamante' },
+    { pts: [[0,2],[2,1],[1,-1],[-1,-1],[-2,1]], color: '#4dd0e1', name: 'Casa' },
+    { pts: [[0,1],[1,0],[0,-1],[-1,0],[0,2],[0,-2]], color: '#80deea', name: 'Inti', unlockBoss: 10 },
+    { pts: [[0,0],[2,0],[2,1],[1,2],[0,1],[-1,2],[-2,1],[-2,0],[-2,-1],[-1,-2],[0,-1],[1,-2],[2,-1]], color: '#80cbc4', name: 'Amaru', unlockBoss: 20 },
+    { pts: [[-1,1],[0,2],[1,1],[1,0],[0,-1],[-1,0]], color: '#4db6ac', name: 'Llama', unlockBoss: 30 },
+];
+
+const ZONES = [
+    { name: 'Valle Sagrado', bg1: '#1a0a2e', bg2: '#2d1b4e', grid: 'rgba(255,255,255,.04)' },
+    { name: 'Cielo Nocturno', bg1: '#0d1b3e', bg2: '#1a237e', grid: 'rgba(147,197,253,.06)' },
+    { name: 'Laguna Esmeralda', bg1: '#0a2e2a', bg2: '#1b4e3d', grid: 'rgba(129,199,132,.06)' },
+    { name: 'Volcanes', bg1: '#2e0a0a', bg2: '#4e1b1b', grid: 'rgba(255,138,101,.06)' },
+    { name: 'Nubes Altas', bg1: '#1a1a3e', bg2: '#2d2d5e', grid: 'rgba(206,147,216,.06)' },
+];
+
+const BOSSES = {
+    10: { name: 'Guardián del Telar', emoji: '🛡️', maxMoves: 6, desc: 'Encaja en 6 movimientos o menos.' },
+    20: { name: 'Espejo Roto', emoji: '🪞', timeLimit: 12, desc: '12 segundos. La pieza está al revés — usa Voltear.' },
+    25: { name: 'Rocas del Telar', emoji: '🪨', obstacles: 3, desc: 'Hay rocas en el camino. Planifica tu ruta.' },
+    30: { name: 'Amaru Giratorio', emoji: '🐍', timeLimit: 10, fastChaser: true, desc: '10 segundos y sombra rápida. Gira y mueve.' },
+};
+
+const INSIGHTS = {
+    translate: { title: 'Te moviste por el tablero', body: 'Eso es <strong>traslación</strong>: mover sin girar ni voltear. Cada paso suma o resta en X o Y.', after: 3 },
+    reflect: { title: 'Volteaste como un espejo', body: 'Eso es <strong>reflexión</strong> (simetría axial). Esquivar la sombra también usa traslación — ¡piensa en pasos!', after: 2 },
+    rotate: { title: 'Giraste la pieza', body: 'Eso es <strong>rotación</strong> alrededor del centro. +90° = un cuarto de vuelta, como en Tetris.', after: 2 },
+};
+
+const UNLOCKS = [
+    { level: 8, emoji: '🪞', title: '¡Voltea!', desc: 'Algunas piezas están al revés. Toca Voltear.' },
+    { level: 18, emoji: '🔄', title: '¡Gira!', desc: 'Ahora puedes rotar la pieza 90°.' },
+];
+
+let S = {
+    level: 1, score: 0, streak: 0, bestStreak: 0, comboMult: 1,
+    player: [], target: [], chaser: [], chaserTrail: null,
+    shapeIdx: 0, blocked: [],
+    moves: 0, chaserMoves: 0, startTime: 0,
+    timeLeft: 0, timeMax: 0,
+    canFlip: false, canRotate: false,
+    hasChaser: false, hasTimer: false, hasObstacles: false,
+    bossRules: null, solutionOps: [],
+    mechanicUses: { translate: 0, reflect: 0, rotate: 0 },
+    insightsShown: { translate: false, reflect: false, rotate: false },
+    hideInsights: false, animating: false, paused: false,
+    flipAxis: 'Y', dailyMode: false, dailySeed: 0,
+    bossRecords: {}, shapesUnlocked: [0,1,2,3,4],
+    daily: { date: '', completed: false },
+    boardSize: 0, cellSize: 0, offsetX: 0, offsetY: 0,
+    zonePalette: ZONES[0],
+};
+
+let canvas, ctx, audioCtx, levelTimer = null, autoAdvanceTimer = null, insightTimeout = null, winModalTimeout = null, rafId = null;
+let lastTick = 0, urgencyTick = 0, particles = [];
+let winSequenceId = 0;
+
+function closeAllOverlays() {
+    ['complete-overlay', 'fail-overlay', 'boss-overlay', 'insight-overlay', 'world-unlock'].forEach(id => {
+        document.getElementById(id).classList.remove('show');
+    });
+}
+
+function clearAllTimers() {
+    stopLevelTimer();
+    if (autoAdvanceTimer) { clearInterval(autoAdvanceTimer); autoAdvanceTimer = null; }
+    if (insightTimeout) { clearTimeout(insightTimeout); insightTimeout = null; }
+    if (winModalTimeout) { clearTimeout(winModalTimeout); winModalTimeout = null; }
+}
+
+function resumeGameplay() {
+    S.animating = false;
+    S.paused = false;
+}
+
+// ─── Seeded RNG ───
+function makeRng(seed) {
+    let s = seed >>> 0;
+    return () => { s = (s * 1664525 + 1013904223) >>> 0; return s / 4294967296; };
+}
+
+function levelSeed(level, dailyOffset = 0) {
+    return (level * 7919 + dailyOffset) >>> 0;
+}
+
+// ─── Geometry ───
+function clone(pts) { return pts.map(p => [...p]); }
+function translate(pts, dx, dy) { return pts.map(([x,y]) => [x+dx, y+dy]); }
+function reflect(pts, axis) {
+    return pts.map(([x,y]) => axis === 'X' ? [x,-y] : axis === 'Y' ? [-x,y] : [-x,-y]);
+}
+function rotate(pts, deg) {
+    return pts.map(([x,y]) => {
+        if (deg === 90) return [-y,x];
+        if (deg === -90) return [y,-x];
+        if (deg === 180) return [-x,-y];
+        return [x,y];
+    });
+}
+function applyOp(pts, op) {
+    if (op.type === 'translate') return translate(pts, op.dx, op.dy);
+    if (op.type === 'reflect') return reflect(pts, op.axis);
+    if (op.type === 'rotate') return rotate(pts, op.deg);
+    return pts;
+}
+function shapesMatch(a, b) {
+    if (a.length !== b.length) return false;
+    const sa = a.map(p => p.join(',')).sort();
+    const sb = b.map(p => p.join(',')).sort();
+    return sa.every((v,i) => v === sb[i]);
+}
+function matchPercent(a, b) {
+    if (!a?.length || !b?.length) return 0;
+    let m = 0;
+    a.forEach(p => { if (b.some(t => t[0]===p[0] && t[1]===p[1])) m++; });
+    return Math.round(m / a.length * 100);
+}
+function centroid(pts) {
+    const n = pts.length;
+    return [pts.reduce((s,p)=>s+p[0],0)/n, pts.reduce((s,p)=>s+p[1],0)/n];
+}
+function shapeOverlapsBlocked(pts, blocked) {
+    return pts.some(p => blocked.some(b => b[0]===p[0] && b[1]===p[1]));
+}
+
+// ─── Audio ───
+function initAudio() {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+}
+function sfx(freq, dur, type='sine', vol=0.12) {
+    if (!audioCtx) return;
+    const o = audioCtx.createOscillator(), g = audioCtx.createGain();
+    o.type = type; o.frequency.value = freq;
+    g.gain.setValueAtTime(vol, audioCtx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + dur);
+    o.connect(g); g.connect(audioCtx.destination);
+    o.start(); o.stop(audioCtx.currentTime + dur);
+}
+function sfxMove() { sfx(320, 0.06, 'triangle', 0.08); }
+function sfxFlip() { sfx(440, 0.08); setTimeout(() => sfx(550, 0.08), 60); }
+function sfxRotate() { sfx(380, 0.05); setTimeout(() => sfx(500, 0.05), 50); }
+function sfxWin() { [523,659,784,1047].forEach((f,i) => setTimeout(() => sfx(f,0.15,'sine',0.14), i*80)); }
+function sfxFail() { sfx(180, 0.25, 'sawtooth', 0.08); }
+function sfxUrgent() { sfx(880, 0.04, 'square', 0.06); }
+function sfxBoss() { [392,494,587].forEach((f,i) => setTimeout(() => sfx(f,0.2,'sine',0.12), i*100)); }
+
+// ─── Save ───
+function loadSave() {
+    try {
+        const d = JSON.parse(localStorage.getItem(SAVE_KEY));
+        if (!d) return;
+        S.level = d.level || 1;
+        S.score = d.score || 0;
+        S.bestStreak = d.bestStreak || 0;
+        S.hideInsights = d.hideInsights || false;
+        S.insightsShown = d.insightsShown || S.insightsShown;
+        S.bossRecords = d.bossRecords || {};
+        S.shapesUnlocked = (d.shapesUnlocked && d.shapesUnlocked.length) ? d.shapesUnlocked : [0,1,2,3,4];
+        S.daily = d.daily || { date: '', completed: false };
+    } catch(e) {}
+}
+function saveGame() {
+    localStorage.setItem(SAVE_KEY, JSON.stringify({
+        level: S.level, score: S.score, bestStreak: S.bestStreak,
+        hideInsights: S.hideInsights, insightsShown: S.insightsShown,
+        bossRecords: S.bossRecords, shapesUnlocked: S.shapesUnlocked, daily: S.daily
+    }));
+}
+
+function getWave(level) { return Math.floor((level - 1) / 5); }
+function getZone(level) { return ZONES[getWave(level) % ZONES.length]; }
+function nextBossLevel(level) {
+    return Math.ceil(level / 10) * 10 || 10;
+}
+function isBossLevel(level) { return level > 0 && level % 10 === 0; }
+function getBossConfig(level) {
+    if (BOSSES[level]) return { ...BOSSES[level], level };
+    if (level >= 40 && level % 10 === 0) {
+        const tier = Math.floor(level / 10);
+        return {
+            name: `Guardián ${tier}`, emoji: '⚡', level,
+            maxMoves: Math.max(4, 8 - Math.floor(tier / 5)),
+            timeLimit: Math.max(8, 14 - Math.floor(tier / 3)),
+            fastChaser: true, obstacles: tier >= 5 ? 2 : 0,
+            desc: `Jefe infinito — combina todo lo aprendido (tier ${tier}).`
+        };
+    }
+    return null;
+}
+
+// ─── Level Generator (solvable) ───
+function pickShapeIndex(rng, level) {
+    const unlocked = S.shapesUnlocked.filter(i => SHAPES[i] !== undefined);
+    if (!unlocked.length) return 0;
+    if (S.dailyMode) return unlocked[Math.floor(rng() * unlocked.length)];
+    return unlocked[(level - 1) % unlocked.length];
+}
+
+function buildSolutionOps(rng, level) {
+    const ops = [];
+    const wave = getWave(level);
+
+    if (level <= 3) {
+        const dirs = [[1,0],[-1,0],[0,1]];
+        const [dx, dy] = dirs[level - 1];
+        ops.push({ type: 'translate', dx, dy });
+        return ops;
+    }
+
+    const maxD = Math.min(1 + wave, 4);
+    let dx = Math.floor(rng() * (maxD * 2 + 1)) - maxD;
+    let dy = Math.floor(rng() * (maxD * 2 + 1)) - maxD;
+    if (dx === 0 && dy === 0) dx = rng() > 0.5 ? 1 : -1;
+    ops.push({ type: 'translate', dx, dy });
+
+    if (level >= UNLOCK_FLIP && rng() > 0.35) {
+        ops.push({ type: 'reflect', axis: rng() > 0.5 ? 'Y' : 'X' });
+    }
+    if (level >= UNLOCK_ROTATE && rng() > 0.4) {
+        const degs = [90, -90, 180];
+        ops.push({ type: 'rotate', deg: degs[Math.floor(rng() * degs.length)] });
+    }
+    if (level >= 30 && rng() > 0.5) {
+        ops.push({ type: 'translate', dx: rng() > 0.5 ? 1 : -1, dy: rng() > 0.5 ? 1 : -1 });
+    }
+    if (level >= 35 && rng() > 0.6) {
+        ops.push({ type: 'rotate', deg: 90 });
+    }
+
+    return ops;
+}
+
+function generateObstacles(rng, count, playerPts, targetPts) {
+    const blocked = [];
+    let tries = 0;
+    while (blocked.length < count && tries < 50) {
+        tries++;
+        const x = Math.floor(rng() * 7) - 3;
+        const y = Math.floor(rng() * 7) - 3;
+        if (x === 0 && y === 0) continue;
+        const cell = [x, y];
+        if (blocked.some(b => b[0]===x && b[1]===y)) continue;
+        if (playerPts.some(p => p[0]===x && p[1]===y)) continue;
+        if (targetPts.some(p => p[0]===x && p[1]===y)) continue;
+        blocked.push(cell);
+    }
+    return blocked;
+}
+
+function spawnChaser(rng, playerPts) {
+    const dirs = [[-3,0],[3,0],[0,3],[0,-3],[-2,2],[2,-2]];
+    const [dx, dy] = dirs[Math.floor(rng() * dirs.length)];
+    const [cx, cy] = centroid(playerPts);
+    return translate(clone(playerPts), Math.round(-dx + (rng()>0.5?1:-1)), Math.round(-dy + (rng()>0.5?1:-1)));
+}
+
+function generateLevel(skipBossIntro = false) {
+    clearAllTimers();
+    const level = S.level;
+    const seed = S.dailyMode ? S.dailySeed : levelSeed(level);
+    const rng = makeRng(seed);
+
+    S.bossRules = getBossConfig(level);
+    S.shapeIdx = pickShapeIndex(rng, level);
+    const base = clone(SHAPES[S.shapeIdx].pts);
+    S.solutionOps = buildSolutionOps(rng, level);
+
+    if (S.bossRules) {
+        if (S.bossRules.maxMoves) { /* enforced in checkWin */ }
+        if (S.bossRules.timeLimit) { /* set below */ }
+        if (S.bossRules.obstacles) {
+            S.hasObstacles = true;
+        }
+    }
+
+    let target = clone(base);
+    S.solutionOps.forEach(op => { target = applyOp(target, op); });
+
+    S.player = clone(base);
+    S.target = target;
+    S.moves = 0;
+    S.chaserMoves = 0;
+    S.flipAxis = 'Y';
+    S.startTime = Date.now();
+    S.blocked = [];
+    S.chaser = [];
+    S.chaserTrail = null;
+    S.paused = false;
+
+    S.canFlip = level >= UNLOCK_FLIP;
+    S.canRotate = level >= UNLOCK_ROTATE;
+    S.hasChaser = level >= CHASER_FROM;
+    S.hasTimer = level >= TIMER_FROM;
+    S.hasObstacles = level >= OBSTACLES_FROM || (S.bossRules && S.bossRules.obstacles);
+
+    if (S.hasChaser) {
+        S.chaser = spawnChaser(rng, S.player);
+    }
+    if (S.bossRules && S.bossRules.fastChaser) {
+        S.hasChaser = true;
+        S.chaser = spawnChaser(rng, S.player);
+        if (S.chaser.length) S.chaser = translate(S.chaser, 1, 0);
+    }
+
+    if (S.hasObstacles) {
+        const obsCount = S.bossRules?.obstacles || Math.min(1 + Math.floor(getWave(level) / 2), 3);
+        S.blocked = generateObstacles(rng, obsCount, S.player, S.target);
+    }
+
+    const wave = getWave(level);
+    S.timeMax = S.bossRules?.timeLimit || Math.max(8, 25 - wave * 2);
+    if (level < TIMER_FROM) S.timeMax = 0;
+    S.timeLeft = S.timeMax;
+
+    S.zonePalette = getZone(level);
+    applyZoneTheme();
+    updateControls();
+    updateHUD();
+    updateMoveLimitUI();
+
+    document.getElementById('timer-wrap').classList.toggle('active', S.hasTimer && S.timeMax > 0);
+    if (S.hasTimer && S.timeMax > 0) {
+        updateTimerBar();
+        startLevelTimer();
+    }
+
+    animateBoardEntry();
+    renderBoard();
+
+    if (S.bossRules && !skipBossIntro && !S.dailyMode) {
+        showBossIntro();
+        return;
+    }
+    resumeGameplay();
+    checkWorldUnlock();
+    showGameHint();
+}
+
+function animateBoardEntry() {
+    const wrap = document.getElementById('board-wrap');
+    wrap.classList.remove('pop-in');
+    void wrap.offsetWidth;
+    wrap.classList.add('pop-in');
+}
+
+// ─── Timer ───
+function startLevelTimer() {
+    stopLevelTimer();
+    lastTick = Date.now();
+    levelTimer = setInterval(() => {
+        if (S.paused || S.animating) return;
+        const now = Date.now();
+        const dt = (now - lastTick) / 1000;
+        lastTick = now;
+        S.timeLeft -= dt;
+        if (S.timeLeft <= 0) {
+            S.timeLeft = 0;
+            updateTimerBar();
+            triggerFail('time');
+            return;
+        }
+        updateTimerBar();
+        if (S.timeLeft <= 3 && now - urgencyTick > 400) {
+            urgencyTick = now;
+            sfxUrgent();
+        }
+    }, 50);
+}
+
+function stopLevelTimer() {
+    if (levelTimer) { clearInterval(levelTimer); levelTimer = null; }
+}
+
+function updateTimerBar() {
+    const bar = document.getElementById('timer-bar');
+    const pct = S.timeMax > 0 ? (S.timeLeft / S.timeMax) * 100 : 100;
+    bar.style.width = pct + '%';
+    bar.classList.remove('warn', 'danger');
+    if (pct <= 25) bar.classList.add('danger');
+    else if (pct <= 50) bar.classList.add('warn');
+}
+
+// ─── Chaser ───
+function chaserInterval() {
+    if (S.level >= 15 || (S.bossRules && S.bossRules.fastChaser)) return 1;
+    return 2;
+}
+
+function tickChaser() {
+    if (!S.hasChaser || !S.chaser.length) return;
+    S.chaserMoves++;
+    if (S.chaserMoves % chaserInterval() !== 0) return;
+
+    S.chaserTrail = clone(S.chaser);
+    const [px, py] = centroid(S.player);
+    const [cx, cy] = centroid(S.chaser);
+    let dx = 0, dy = 0;
+    if (Math.abs(px - cx) >= Math.abs(py - cy)) dx = px > cx ? 1 : px < cx ? -1 : 0;
+    else dy = py > cy ? 1 : py < cy ? -1 : 0;
+    if (dx === 0 && dy === 0) dx = 1;
+
+    const next = translate(S.chaser, dx, dy);
+    if (!shapeOverlapsBlocked(next, S.blocked)) S.chaser = next;
+
+    if (shapesCollide(S.player, S.chaser)) triggerFail('chaser');
+}
+
+function shapesCollide(a, b) {
+    return a.some(p => b.some(c => c[0]===p[0] && c[1]===p[1]));
+}
+
+// ─── Actions ───
+function afterPlayerAction() {
+    tickChaser();
+    if (S.bossRules?.maxMoves && S.moves > S.bossRules.maxMoves) {
+        triggerFail('moves');
+        return;
+    }
+    checkWin();
+}
+
+function move(dx, dy) {
+    if (S.animating || S.paused) return;
+    const next = translate(S.player, dx, dy);
+    if (shapeOverlapsBlocked(next, S.blocked)) {
+        sfxFail();
+        shakeBoard();
+        return;
+    }
+    S.player = next;
+    S.moves++;
+    S.mechanicUses.translate++;
+    sfxMove();
+    if (navigator.vibrate) navigator.vibrate(10);
+    document.getElementById('swipe-hint').style.display = 'none';
+    afterPlayerAction();
+    checkInsight('translate');
+    updateMoveLimitUI();
+}
+
+function doFlip() {
+    if (!S.canFlip || S.animating || S.paused) return;
+    S.player = reflect(S.player, S.flipAxis);
+    S.flipAxis = S.flipAxis === 'Y' ? 'X' : 'Y';
+    document.getElementById('flip-label').textContent = S.flipAxis === 'X' ? 'Voltear ↔' : 'Voltear ↕';
+    S.moves++;
+    S.mechanicUses.reflect++;
+    sfxFlip();
+    if (navigator.vibrate) navigator.vibrate(20);
+    afterPlayerAction();
+    checkInsight('reflect');
+    updateMoveLimitUI();
+}
+
+function doRotate() {
+    if (!S.canRotate || S.animating || S.paused) return;
+    S.player = rotate(S.player, 90);
+    S.moves++;
+    S.mechanicUses.rotate++;
+    sfxRotate();
+    if (navigator.vibrate) navigator.vibrate(15);
+    afterPlayerAction();
+    checkInsight('rotate');
+    updateMoveLimitUI();
+}
+
+function updateMoveLimitUI() {
+    const el = document.getElementById('move-limit');
+    const max = S.bossRules?.maxMoves;
+    if (max) {
+        el.style.display = 'block';
+        const left = max - S.moves;
+        el.textContent = left >= 0 ? `${left} movimientos restantes` : '¡Demasiados movimientos!';
+        el.style.color = left <= 1 ? '#ef5350' : 'rgba(255,255,255,.4)';
+    } else el.style.display = 'none';
+}
+
+// ─── Win / Fail ───
+function checkWin() {
+    if (S.animating || S.paused) return;
+    if (!S.player?.length || !S.target?.length) return;
+    if (!shapesMatch(S.player, S.target)) return;
+    if (S.bossRules?.maxMoves && S.moves > S.bossRules.maxMoves) return;
+
+    S.animating = true;
+    S.paused = true;
+    clearAllTimers();
+    const seq = ++winSequenceId;
+    const completedLevel = S.level;
+    sfxWin();
+    if (navigator.vibrate) navigator.vibrate([30, 20, 50]);
+
+    const elapsed = (Date.now() - S.startTime) / 1000;
+    let points = 100;
+    if (S.timeMax > 0) points += Math.round(S.timeLeft * 8);
+    points += Math.max(0, (6 - S.moves) * 15);
+    if (S.streak >= 3) { S.comboMult = 2; points *= 2; }
+    else S.comboMult = 1;
+    if (S.bossRules) points += 500;
+    S.score += points;
+    S.streak++;
+    if (S.streak > S.bestStreak) S.bestStreak = S.streak;
+
+    if (S.bossRules) {
+        const key = S.bossRules.level || S.level;
+        if (!S.bossRecords[key] || elapsed < S.bossRecords[key]) S.bossRecords[key] = Math.round(elapsed * 10) / 10;
+        unlockShapeForBoss(key);
+        if (S.level === 10 || S.level === 20 || S.level === 30) sfxBoss();
+    }
+
+    if (S.dailyMode) {
+        S.daily.completed = true;
+        S.daily.date = todayStr();
+        saveGame();
+    }
+
+    const [cx, cy] = gridToPx(0, 0);
+    spawnParticles(cx, cy, '#ffd54f');
+    spawnParticles(cx, cy, '#4dd0e1');
+
+    const flash = document.getElementById('level-flash');
+    const texts = ['¡BIEN!', '¡GENIAL!', '¡PERFECTO!', '🔥 RACHA'];
+    document.getElementById('flash-text').textContent = S.streak >= 3 ? texts[3] : texts[Math.min(S.moves, 2)];
+    flash.classList.add('show');
+    setTimeout(() => flash.classList.remove('show'), 600);
+
+    winModalTimeout = setTimeout(() => {
+        winModalTimeout = null;
+        if (seq !== winSequenceId) return;
+        showCompleteModal(points, elapsed, completedLevel);
+    }, 400);
+}
+
+function unlockShapeForBoss(bossLevel) {
+    SHAPES.forEach((sh, i) => {
+        if (sh.unlockBoss === bossLevel && !S.shapesUnlocked.includes(i)) {
+            S.shapesUnlocked.push(i);
+        }
+    });
+}
+
+function showCompleteModal(points, elapsed, completedLevel) {
+    document.getElementById('complete-title').textContent = S.bossRules ? '¡Jefe derrotado!' : `¡Nivel ${completedLevel}!`;
+    document.getElementById('complete-points').textContent = points;
+    document.getElementById('complete-moves').textContent = S.moves;
+    document.getElementById('complete-time').textContent = Math.round(elapsed) + 's';
+    document.getElementById('complete-overlay').classList.add('show');
+    S.paused = true;
+    S.animating = true;
+
+    let countdown = 3;
+    const hint = document.getElementById('auto-advance-hint');
+    hint.textContent = `Auto en ${countdown}s...`;
+    if (autoAdvanceTimer) clearInterval(autoAdvanceTimer);
+    autoAdvanceTimer = setInterval(() => {
+        countdown--;
+        if (countdown <= 0) {
+            clearInterval(autoAdvanceTimer);
+            autoAdvanceTimer = null;
+            goToNextLevel();
+            return;
+        }
+        hint.textContent = `Auto en ${countdown}s...`;
+    }, 1000);
+}
+
+function goToNextLevel() {
+    winSequenceId++;
+    clearAllTimers();
+    closeAllOverlays();
+
+    if (S.dailyMode) {
+        S.dailyMode = false;
+        resumeGameplay();
+        showScreen('home');
+        updateHome();
+        return;
+    }
+
+    S.level++;
+    saveGame();
+    particles = [];
+    resumeGameplay();
+
+    generateLevel();
+    updateHome();
+    requestAnimationFrame(() => {
+        resizeBoard();
+        renderBoard();
+    });
+}
+
+function advanceLevel() {
+    goToNextLevel();
+}
+
+function triggerFail(reason) {
+    if (document.getElementById('complete-overlay').classList.contains('show')) return;
+    clearAllTimers();
+    winSequenceId++;
+    S.animating = true;
+    S.paused = true;
+    S.streak = 0;
+    S.comboMult = 1;
+    sfxFail();
+    shakeBoard();
+    if (navigator.vibrate) navigator.vibrate(80);
+
+    document.getElementById('fail-title').textContent =
+        reason === 'chaser' ? '¡Te atrapó la sombra!' :
+        reason === 'moves' ? '¡Demasiados movimientos!' : '¡Se acabó el tiempo!';
+    document.getElementById('fail-msg').textContent =
+        reason === 'chaser' ? 'La sombra te alcanzó. Muévete más inteligente.' :
+        reason === 'moves' ? 'En este jefe debes ser más eficiente. ¡Reintenta!' :
+        'Mismo nivel, nueva oportunidad. ¡Tú puedes!';
+    document.getElementById('fail-overlay').classList.add('show');
+}
+
+function retryLevel() {
+    clearAllTimers();
+    winSequenceId++;
+    closeAllOverlays();
+    resumeGameplay();
+    generateLevel(true);
+    resizeBoard();
+    renderBoard();
+}
+
+// ─── Modals ───
+function showBossIntro() {
+    S.paused = true;
+    S.animating = false;
+    stopLevelTimer();
+    const b = S.bossRules;
+    document.getElementById('boss-emoji').textContent = b.emoji;
+    document.getElementById('boss-title').textContent = `Nivel ${S.level} — ${b.name}`;
+    document.getElementById('boss-desc').textContent = b.desc;
+    document.getElementById('boss-overlay').classList.add('show');
+}
+
+function startBossLevel() {
+    document.getElementById('boss-overlay').classList.remove('show');
+    resumeGameplay();
+    if (S.hasTimer && S.timeMax > 0) startLevelTimer();
+    renderBoard();
+    checkWorldUnlock();
+    showGameHint();
+}
+
+let pendingUnlock = null;
+function checkWorldUnlock() {
+    const u = UNLOCKS.find(x => x.level === S.level);
+    if (u && S.level === u.level) {
+        pendingUnlock = u;
+        document.getElementById('world-emoji').textContent = u.emoji;
+        document.getElementById('world-title').textContent = u.title;
+        document.getElementById('world-desc').textContent = u.desc;
+        S.paused = true;
+        stopLevelTimer();
+        setTimeout(() => document.getElementById('world-unlock').classList.add('show'), 300);
+    }
+}
+
+function showGameHint() {
+    const hint = document.getElementById('game-hint');
+    let msg = '';
+    if (S.level === 1) msg = 'Desliza o usa las flechas';
+    else if (S.level === CHASER_FROM) msg = '¡Cuidado! Algo te persigue';
+    else if (S.level === UNLOCK_FLIP) msg = 'La sombra está al revés — Voltear';
+    else if (S.level === UNLOCK_ROTATE) msg = 'Gira la pieza para encajar';
+    else if (S.level === OBSTACLES_FROM) msg = 'Hay rocas — no puedes pasar';
+    if (!msg) return;
+    hint.textContent = msg;
+    hint.classList.add('show');
+    setTimeout(() => hint.classList.remove('show'), 2800);
+}
+
+function checkInsight(type) {
+    if (S.hideInsights || S.insightsShown[type] || S.animating || S.paused) return;
+    if (S.mechanicUses[type] >= INSIGHTS[type].after) {
+        S.insightsShown[type] = true;
+        saveGame();
+        if (insightTimeout) clearTimeout(insightTimeout);
+        insightTimeout = setTimeout(() => {
+            insightTimeout = null;
+            if (S.animating || S.paused) return;
+            document.getElementById('insight-title').textContent = INSIGHTS[type].title;
+            document.getElementById('insight-body').innerHTML = INSIGHTS[type].body;
+            document.getElementById('insight-overlay').classList.add('show');
+            S.paused = true;
+            stopLevelTimer();
+        }, 500);
+    }
+}
+
+// ─── Render ───
+function resizeBoard() {
+    canvas = document.getElementById('board');
+    const wrap = document.getElementById('board-wrap');
+    if (!canvas || !wrap) return;
+    const size = wrap.clientWidth || wrap.offsetWidth;
+    if (size <= 0) return;
+    const dpr = Math.min(devicePixelRatio || 1, 2);
+    canvas.width = Math.floor(size * dpr);
+    canvas.height = Math.floor(size * dpr);
+    canvas.style.width = size + 'px';
+    canvas.style.height = size + 'px';
+    ctx = canvas.getContext('2d');
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    S.boardSize = size;
+    S.cellSize = size / (GRID + 2);
+    S.offsetX = size / 2;
+    S.offsetY = size / 2;
+}
+
+function gridToPx(x, y) {
+    return [S.offsetX + x * S.cellSize, S.offsetY - y * S.cellSize];
+}
+
+function drawPolygon(pts, fill, stroke, dashed=false) {
+    if (!pts?.length) return;
+    ctx.beginPath();
+    const [sx, sy] = gridToPx(pts[0][0], pts[0][1]);
+    ctx.moveTo(sx, sy);
+    for (let i = 1; i < pts.length; i++) {
+        const [px, py] = gridToPx(pts[i][0], pts[i][1]);
+        ctx.lineTo(px, py);
+    }
+    ctx.closePath();
+    if (fill) { ctx.fillStyle = fill; ctx.fill(); }
+    if (stroke) {
+        ctx.strokeStyle = stroke;
+        ctx.lineWidth = 2.5;
+        ctx.setLineDash(dashed ? [6, 4] : []);
+        ctx.stroke();
+        ctx.setLineDash([]);
+    }
+}
+
+function spawnParticles(x, y, color) {
+    for (let i = 0; i < 24; i++) {
+        particles.push({ x, y, vx: (Math.random()-0.5)*9, vy: (Math.random()-0.5)*9, life: 1, color, size: 3 + Math.random()*5 });
+    }
+}
+
+function shakeBoard() {
+    const w = document.getElementById('board-wrap');
+    w.classList.remove('shake');
+    void w.offsetWidth;
+    w.classList.add('shake');
+}
+
+function applyZoneTheme() {
+    const z = S.zonePalette;
+    document.getElementById('app').style.background = `linear-gradient(160deg, ${z.bg1} 0%, ${z.bg2} 50%, ${z.bg1} 100%)`;
+    document.getElementById('hud-zone').textContent = z.name;
+}
+
+function renderBoard() {
+    if (!ctx || S.boardSize <= 0) return;
+    const s = S.boardSize;
+    const player = S.player || [];
+    const target = S.target || [];
+
+    ctx.clearRect(0, 0, s, s);
+    const z = S.zonePalette || ZONES[0];
+    const grad = ctx.createRadialGradient(s/2, s/2, 0, s/2, s/2, s*0.75);
+    grad.addColorStop(0, z.bg2);
+    grad.addColorStop(1, z.bg1);
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, s, s);
+
+    ctx.strokeStyle = z.grid;
+    ctx.lineWidth = 1;
+    for (let i = -4; i <= 4; i++) {
+        const [vx] = gridToPx(i, 0), [, hy] = gridToPx(0, i);
+        ctx.beginPath(); ctx.moveTo(vx, 0); ctx.lineTo(vx, s); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(0, hy); ctx.lineTo(s, hy); ctx.stroke();
+    }
+
+    if (S.level >= 12) {
+        const [cx, cy] = gridToPx(0, 0);
+        ctx.strokeStyle = 'rgba(255,255,255,.06)';
+        ctx.lineWidth = 1.5;
+        ctx.beginPath(); ctx.moveTo(0, cy); ctx.lineTo(s, cy); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(cx, 0); ctx.lineTo(cx, s); ctx.stroke();
+    }
+
+    (S.blocked || []).forEach(([bx, by]) => {
+        const [px, py] = gridToPx(bx, by);
+        const hs = S.cellSize * 0.42;
+        ctx.fillStyle = 'rgba(60,40,30,.85)';
+        ctx.fillRect(px - hs, py - hs, hs*2, hs*2);
+        ctx.strokeStyle = 'rgba(255,255,255,.15)';
+        ctx.strokeRect(px - hs, py - hs, hs*2, hs*2);
+    });
+
+    const pct = matchPercent(player, target);
+    drawPolygon(target, `rgba(255,213,79,${0.12 + pct/500})`, '#ffd54f', true);
+
+    if (S.chaserTrail?.length) drawPolygon(S.chaserTrail, 'rgba(239,83,80,0.12)', 'rgba(239,83,80,0.3)');
+    if (S.hasChaser && S.chaser?.length) drawPolygon(S.chaser, 'rgba(239,83,80,0.35)', '#ef5350');
+
+    const shape = SHAPES[S.shapeIdx] || SHAPES[0];
+    drawPolygon(player, shape.color + '99', shape.color);
+
+    if (pct >= 75 && pct < 100 && player.length) {
+        const [cx, cy] = gridToPx(...centroid(player));
+        ctx.fillStyle = 'rgba(255,213,79,0.12)';
+        ctx.beginPath(); ctx.arc(cx, cy, S.cellSize*1.4, 0, Math.PI*2); ctx.fill();
+    }
+
+    particles = particles.filter(p => p.life > 0);
+    particles.forEach(p => {
+        p.x += p.vx; p.y += p.vy; p.vy += 0.12; p.life -= 0.028;
+        ctx.globalAlpha = p.life;
+        ctx.fillStyle = p.color;
+        ctx.beginPath(); ctx.arc(p.x, p.y, p.size * p.life, 0, Math.PI*2); ctx.fill();
+    });
+    ctx.globalAlpha = 1;
+}
+
+function drawFrame() {
+    try { renderBoard(); } catch (e) { /* keep loop alive */ }
+    rafId = requestAnimationFrame(drawFrame);
+}
+
+// ─── UI ───
+function updateHUD() {
+    document.getElementById('hud-score').textContent = S.score;
+    document.getElementById('hud-level').textContent = S.level;
+    const sw = document.getElementById('hud-streak-wrap');
+    if (S.streak >= 2) { sw.style.display = ''; document.getElementById('hud-streak').textContent = S.streak; }
+    else sw.style.display = 'none';
+    const cw = document.getElementById('hud-combo-wrap');
+    if (S.comboMult > 1) { cw.style.display = 'inline-block'; document.getElementById('hud-combo').textContent = S.comboMult; }
+    else cw.style.display = 'none';
+    const nb = nextBossLevel(S.level);
+    const dist = nb - S.level;
+    document.getElementById('hud-boss-next').textContent = dist > 0 && dist <= 5 ? `Jefe en ${dist}` : '';
+}
+
+function updateControls() {
+    document.getElementById('btn-flip').disabled = !S.canFlip;
+    document.getElementById('btn-rotate').disabled = !S.canRotate;
+}
+
+function todayStr() {
+    const d = new Date();
+    return `${d.getFullYear()}${String(d.getMonth()+1).padStart(2,'0')}${String(d.getDate()).padStart(2,'0')}`;
+}
+
+function dailySeedFromDate() {
+    return parseInt(todayStr(), 10);
+}
+
+function updateHome() {
+    document.getElementById('home-level').textContent = S.level;
+    document.getElementById('home-streak').textContent = S.bestStreak;
+    document.getElementById('home-score').textContent = S.score;
+
+    const map = document.getElementById('wave-map');
+    map.innerHTML = '';
+    const prog = ((S.level - 1) % 10) + 1;
+    for (let i = 1; i <= 10; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'wave-dot' + (i < prog ? ' done' : '') + (i === 10 ? ' boss' : '');
+        map.appendChild(dot);
+    }
+    const nb = nextBossLevel(S.level);
+    document.getElementById('wave-map-label').textContent = `Próximo jefe: nivel ${nb}`;
+
+    const dailyBtn = document.getElementById('btn-daily');
+    if (S.daily.date === todayStr() && S.daily.completed) {
+        dailyBtn.textContent = '✓ Diario completado';
+        dailyBtn.disabled = true;
+    } else {
+        dailyBtn.textContent = 'Desafío diario';
+        dailyBtn.disabled = false;
+    }
+}
+
+function showScreen(id) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+}
+
+function startGame(daily = false) {
+    initAudio();
+    if (audioCtx?.state === 'suspended') audioCtx.resume();
+    winSequenceId++;
+    clearAllTimers();
+    closeAllOverlays();
+    S.dailyMode = daily;
+    if (daily) {
+        S.dailySeed = dailySeedFromDate();
+        S.level = 15 + (S.dailySeed % 20);
+    }
+    showScreen('game');
+    resumeGameplay();
+    generateLevel();
+    requestAnimationFrame(() => {
+        resizeBoard();
+        renderBoard();
+    });
+}
+
+function bindControls() {
+    document.querySelectorAll('.dpad-btn[data-dir]').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const [dx, dy] = btn.dataset.dir.split(',').map(Number);
+            move(dx, dy);
+        });
+    });
+    document.getElementById('btn-flip').addEventListener('click', doFlip);
+    document.getElementById('btn-rotate').addEventListener('click', doRotate);
+    document.getElementById('btn-start').addEventListener('click', () => startGame(false));
+    document.getElementById('btn-daily').addEventListener('click', () => startGame(true));
+    document.getElementById('btn-next-level').addEventListener('click', advanceLevel);
+    document.getElementById('btn-retry').addEventListener('click', retryLevel);
+    document.getElementById('btn-boss-start').addEventListener('click', startBossLevel);
+    document.getElementById('btn-got-it').addEventListener('click', () => {
+        document.getElementById('insight-overlay').classList.remove('show');
+        resumeGameplay();
+        if (S.hasTimer && S.timeMax > 0) startLevelTimer();
+    });
+    document.getElementById('btn-hide-insights').addEventListener('click', () => {
+        S.hideInsights = true;
+        saveGame();
+        document.getElementById('insight-overlay').classList.remove('show');
+        resumeGameplay();
+        if (S.hasTimer && S.timeMax > 0) startLevelTimer();
+    });
+    document.getElementById('btn-world-ok').addEventListener('click', () => {
+        document.getElementById('world-unlock').classList.remove('show');
+        resumeGameplay();
+        if (S.hasTimer && S.timeMax > 0) startLevelTimer();
+        pendingUnlock = null;
+    });
+
+    let touchStart = null;
+    const board = document.getElementById('board-wrap');
+    board.addEventListener('touchstart', e => {
+        touchStart = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+    }, { passive: true });
+    board.addEventListener('touchend', e => {
+        if (!touchStart) return;
+        const dx = e.changedTouches[0].clientX - touchStart.x;
+        const dy = e.changedTouches[0].clientY - touchStart.y;
+        if (Math.abs(dx) < 30 && Math.abs(dy) < 30) { touchStart = null; return; }
+        if (Math.abs(dx) > Math.abs(dy)) move(dx > 0 ? 1 : -1, 0);
+        else move(0, dy < 0 ? 1 : -1);
+        touchStart = null;
+    }, { passive: true });
+
+    document.addEventListener('keydown', e => {
+        if (!document.getElementById('game').classList.contains('active') || S.paused) return;
+        const map = { ArrowUp:'0,1', ArrowDown:'0,-1', ArrowLeft:'-1,0', ArrowRight:'1,0' };
+        if (map[e.key]) {
+            e.preventDefault();
+            const [dx, dy] = map[e.key].split(',').map(Number);
+            move(dx, dy);
+        }
+        if (e.key === 'f' || e.key === 'F') doFlip();
+        if (e.key === 'r' || e.key === 'R') doRotate();
+    });
+
+    window.addEventListener('resize', () => {
+        if (document.getElementById('game').classList.contains('active')) resizeBoard();
+    });
+}
+
+loadSave();
+updateHome();
+bindControls();
+drawFrame();
+</script>
+</body>
+</html>

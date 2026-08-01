@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0C4A6E"/>
+      <stop offset="100%" style="stop-color:#0369A1"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect x="60" y="48" width="220" height="40" rx="20" fill="#0EA5E9"/>
+  <text x="170" y="74" font-family="system-ui,sans-serif" font-size="18" font-weight="700" fill="#fff" text-anchor="middle">3 MESES · S/. 350</text>
+  <text x="80" y="168" font-family="Georgia,serif" font-size="64" font-weight="bold" fill="#ffffff">Tu página web</text>
+  <text x="80" y="248" font-family="Georgia,serif" font-size="64" font-weight="bold" fill="#F59E0B">profesional.</text>
+  <text x="80" y="330" font-family="system-ui,sans-serif" font-size="34" fill="rgba(255,255,255,0.92)">Catálogo virtual + publicidad en Cusco</text>
+  <text x="80" y="390" font-family="system-ui,sans-serif" font-size="28" fill="rgba(255,255,255,0.75)">Diseño personalizado · fotos nivel estudio · nosotros lo hacemos</text>
+  <text x="80" y="500" font-family="system-ui,sans-serif" font-size="42" font-weight="700" fill="#10B981">Programa ADIS · 90 días</text>
+  <text x="80" y="560" font-family="system-ui,sans-serif" font-size="22" fill="rgba(255,255,255,0.55)">adis.lat · 10 cupos limitados · Quival y Agril Sur ya confían</text>
+</svg>

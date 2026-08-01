@@ -1,0 +1,1642 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>ADIS — 3 planes para tu negocio · desde S/. 30</title>
+<meta name="description" content="Plan Básico S/. 30 · Plan Potente S/. 300 · Plan Premium S/. 3,000. Página web, catálogo virtual y publicidad en Buscadis. Elige tu plan en adis.lat.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://adis.lat">
+<meta property="og:title" content="3 planes para tu negocio · desde S/. 30">
+<meta property="og:description" content="Básico S/. 30 · Potente S/. 300 ⭐ · Premium S/. 3,000. Página web, catálogo y publicidad en Buscadis — nosotros lo hacemos por ti.">
+<meta property="og:image" content="https://adis.lat/assets/og-image-v2.jpg">
+<meta property="og:image:width" content="1024">
+<meta property="og:image:height" content="682">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:alt" content="3 planes ADIS — Básico S/. 30 · Potente S/. 300 · Premium S/. 3,000 · adis.lat">
+<meta name="twitter:image" content="https://adis.lat/assets/og-image-v2.jpg">
+<meta property="og:locale" content="es_PE">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect fill='%230EA5E9' width='32' height='32' rx='6'/%3E%3Ctext x='16' y='22' font-family='sans-serif' font-size='14' font-weight='bold' fill='white' text-anchor='middle'%3EAD%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,700;9..144,800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<style>
+/* ===== RESET & BASE ===== */
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html,body{width:100%;height:100%;overflow:hidden;font-family:'DM Sans',sans-serif;}
+
+/* ===== COLOR SYSTEM (no purple) ===== */
+:root{
+  --ink:#0D1117;
+  --ink2:#1C2128;
+  --teal:#0EA5E9;
+  --teal-d:#0369A1;
+  --teal-l:rgba(14,165,233,.12);
+  --gold:#F59E0B;
+  --gold-l:rgba(245,158,11,.12);
+  --green:#10B981;
+  --green-l:rgba(16,185,129,.12);
+  --red:#EF4444;
+  --white:#FFFFFF;
+  --off:#F8FAFC;
+  --gray:#F1F5F9;
+  --dim:#64748B;
+  --line:#E2E8F0;
+  --line2:#CBD5E1;
+  --countdown-h:52px;
+  --nav-h:48px;
+  --top-safe:calc(var(--countdown-h) + var(--nav-h) + 16px);
+  --urgency-h:32px;
+  --sticky-h:50px;
+  --bottom-safe:calc(var(--urgency-h) + var(--sticky-h) + 24px);
+}
+
+/* ===== SLIDES ENGINE ===== */
+#deck{
+  width:100vw;
+  height:100vh;
+  height:100dvh;
+  overflow-y:scroll;
+  scroll-snap-type:y mandatory;
+  -webkit-overflow-scrolling:touch;
+  scrollbar-width:none;
+}
+#deck::-webkit-scrollbar{display:none;}
+.slide{
+  width:100vw;
+  height:100vh;
+  height:100dvh;
+  scroll-snap-align:start;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  padding:var(--top-safe) 20px var(--bottom-safe);
+  position:relative;
+  overflow:hidden;
+}
+.slide.slide-hero{
+  padding-bottom:calc(var(--urgency-h) + 16px);
+}
+.slide.light{background:var(--white);}
+.slide.off{background:var(--off);}
+.slide.dark{background:var(--ink);}
+.slide.dark2{background:var(--ink2);}
+.slide.teal{background:linear-gradient(155deg,#0C4A6E,#0369A1);}
+.slide.gold{background:linear-gradient(155deg,#78350F,#B45309);}
+
+/* ===== NAV DOTS ===== */
+#dots{
+  position:fixed;
+  right:14px;
+  top:50%;
+  transform:translateY(-50%);
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  z-index:100;
+}
+.dot{
+  width:6px;height:6px;border-radius:50%;
+  background:rgba(0,0,0,.2);
+  cursor:pointer;transition:all .3s;
+}
+.dot.active{height:18px;border-radius:3px;background:var(--teal);}
+.slide.dark .dot,.slide.dark2 .dot,.slide.teal .dot,.slide.gold .dot{background:rgba(255,255,255,.3);}
+
+/* ===== PROGRESS BAR ===== */
+#progress{
+  position:fixed;top:0;left:0;height:3px;
+  background:var(--teal);width:0%;
+  transition:width .3s ease;z-index:200;
+}
+
+/* ===== STICKY NAV ===== */
+#nav{
+  position:fixed;top:var(--countdown-h);left:0;right:0;
+  height:var(--nav-h);
+  padding:0 20px;
+  display:flex;align-items:center;justify-content:space-between;
+  z-index:150;
+  background:rgba(255,255,255,.92);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(0,0,0,.06);
+  transition:background .3s,border .3s;
+}
+#nav.dark{background:rgba(13,17,23,.92);border-bottom:1px solid rgba(255,255,255,.08);}
+.nav-logo{font-family:'Fraunces',serif;font-size:22px;font-weight:700;letter-spacing:-.5px;}
+.nav-logo .a{color:var(--teal);}
+.nav-logo .d{color:var(--ink);}.nav-logo .d.w{color:var(--white);}
+.nav-cta{
+  background:var(--teal);color:var(--white);
+  padding:8px 16px;border-radius:20px;
+  font-size:13px;font-weight:600;text-decoration:none;
+  white-space:nowrap;
+}
+.nav-cta.is-hidden{display:none;}
+
+/* ===== SLIDE DOWN HINT ===== */
+#hint{
+  position:fixed;
+  bottom:calc(var(--urgency-h) + var(--sticky-h) + 28px);
+  left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+  z-index:100;opacity:1;transition:opacity .5s;
+}
+#hint.hide{opacity:0;pointer-events:none;}
+.hint-text{font-size:11px;color:var(--dim);letter-spacing:.06em;text-transform:uppercase;}
+.hint-arrow{width:28px;height:28px;border:1.5px solid var(--line2);border-radius:50%;display:flex;align-items:center;justify-content:center;animation:bounce 1.5s infinite;}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
+
+/* ===== BADGE ===== */
+.badge{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:5px 12px;border-radius:99px;
+  font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;
+  margin-bottom:16px;
+}
+.badge-teal{background:var(--teal-l);color:var(--teal);}
+.badge-gold{background:var(--gold-l);color:var(--gold);}
+.badge-green{background:var(--green-l);color:var(--green);}
+.badge-white{background:rgba(255,255,255,.15);color:var(--white);}
+
+/* ===== TYPOGRAPHY ===== */
+.hero-num{font-family:'Fraunces',serif;font-size:clamp(64px,18vw,110px);font-weight:800;line-height:.9;letter-spacing:-4px;}
+.hero-h{font-family:'Fraunces',serif;font-size:clamp(30px,8vw,50px);font-weight:700;line-height:1.1;letter-spacing:-.5px;}
+.hero-sub{font-size:clamp(15px,4vw,18px);color:var(--dim);line-height:1.6;max-width:440px;}
+.section-h{font-family:'Fraunces',serif;font-size:clamp(26px,7vw,42px);font-weight:700;line-height:1.1;letter-spacing:-.5px;text-align:center;}
+.section-sub{font-size:14px;color:var(--dim);text-align:center;max-width:340px;line-height:1.6;}
+.white-text{color:var(--white)!important;}
+.dimw{color:rgba(255,255,255,.65)!important;}
+
+/* ===== CTA BUTTONS ===== */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:16px 28px;border-radius:12px;
+  font-size:16px;font-weight:600;text-decoration:none;
+  cursor:pointer;border:none;transition:all .2s;
+  font-family:'DM Sans',sans-serif;
+}
+.btn-teal{background:var(--teal);color:var(--white);width:100%;max-width:340px;}
+.btn-teal:hover{background:var(--teal-d);}
+.btn-white{background:var(--white);color:var(--ink);width:100%;max-width:340px;}
+.btn-wa{background:#25D366;color:var(--white);width:100%;max-width:340px;}
+.btn-outline{background:transparent;color:var(--white);border:1.5px solid rgba(255,255,255,.3);width:100%;max-width:340px;font-size:14px;padding:12px 24px;}
+
+/* ===== PAIN ITEMS ===== */
+.pain-grid{display:flex;flex-direction:column;gap:10px;width:100%;max-width:400px;}
+.pain-item{
+  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);
+  border-radius:12px;padding:14px 16px;
+  display:flex;align-items:flex-start;gap:12px;
+}
+.pain-icon{font-size:20px;flex-shrink:0;}
+.pain-text h4{font-size:14px;font-weight:600;color:var(--white);margin-bottom:2px;}
+.pain-text p{font-size:12px;color:rgba(255,255,255,.55);line-height:1.4;}
+
+/* ===== VALUE STACK ===== */
+.value-table{width:100%;max-width:420px;}
+.vt-row{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:9px 0;border-bottom:1px solid rgba(255,255,255,.08);
+  font-size:13px;
+}
+.vt-row:last-child{border-bottom:none;padding-top:14px;}
+.vt-name{color:rgba(255,255,255,.75);flex:1;}
+.vt-price{color:var(--gold);font-weight:600;font-family:'Fraunces',serif;font-size:15px;white-space:nowrap;}
+.vt-total{font-family:'Fraunces',serif;font-size:28px;font-weight:700;color:var(--white);}
+
+/* ===== DELIVERABLES SLIDER ===== */
+.del-container{width:100%;max-width:480px;overflow:hidden;}
+.del-track{display:flex;transition:transform .35s cubic-bezier(.4,0,.2,1);}
+.del-card{
+  min-width:100%;padding:0 4px;
+}
+.del-inner{
+  background:var(--white);border-radius:16px;
+  padding:24px;
+  border-top:4px solid var(--teal);
+}
+.del-inner.b{border-top-color:var(--green);}
+.del-num{font-size:11px;font-weight:600;color:var(--dim);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;}
+.del-title{font-family:'Fraunces',serif;font-size:20px;font-weight:700;color:var(--ink);margin-bottom:8px;line-height:1.2;}
+.del-desc{font-size:13px;color:var(--dim);line-height:1.6;margin-bottom:14px;}
+.del-tags{display:flex;flex-wrap:wrap;gap:6px;}
+.del-tag{font-size:11px;padding:4px 10px;border-radius:99px;background:var(--gray);color:var(--dim);font-weight:500;}
+.del-value{font-size:12px;color:var(--dim);margin-top:12px;display:flex;align-items:center;gap:4px;}
+.del-value-num{font-weight:700;color:var(--ink);font-size:14px;text-decoration:line-through;}
+
+/* Slider nav */
+.del-nav{display:flex;justify-content:space-between;align-items:center;margin-top:14px;width:100%;max-width:480px;}
+.del-arrow{
+  width:38px;height:38px;border-radius:50%;border:1.5px solid var(--line2);
+  background:var(--white);cursor:pointer;font-size:16px;
+  display:flex;align-items:center;justify-content:center;
+  transition:all .2s;flex-shrink:0;
+}
+.del-arrow:hover{background:var(--teal);color:var(--white);border-color:var(--teal);}
+.del-counter{font-size:13px;color:var(--dim);font-weight:500;}
+.del-dots{display:flex;gap:5px;align-items:center;}
+.del-dot{width:5px;height:5px;border-radius:50%;background:var(--line2);transition:all .25s;}
+.del-dot.on{width:16px;border-radius:3px;background:var(--teal);}
+
+/* ===== CREDENCIALES ===== */
+.cred-row{display:flex;flex-direction:column;gap:10px;width:100%;max-width:380px;}
+.cred-item{
+  background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);
+  border-radius:10px;padding:12px 16px;
+  display:flex;align-items:center;gap:12px;
+}
+.cred-icon{font-size:22px;flex-shrink:0;}
+.cred-text h4{font-size:14px;font-weight:600;color:var(--white);}
+.cred-text p{font-size:12px;color:rgba(255,255,255,.5);}
+
+/* ===== TEAM ===== */
+.team-row{display:flex;gap:12px;width:100%;max-width:380px;}
+.team-card{flex:1;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:18px 14px;text-align:center;}
+.team-av{width:56px;height:56px;border-radius:50%;margin:0 auto 10px;display:flex;align-items:center;justify-content:center;font-family:'Fraunces',serif;font-size:22px;font-weight:700;}
+.av-teal{background:rgba(14,165,233,.2);color:var(--teal);}
+.av-gold{background:rgba(245,158,11,.2);color:var(--gold);}
+.team-card h4{font-size:15px;font-weight:600;color:var(--white);margin-bottom:2px;}
+.team-card p{font-size:11px;color:rgba(255,255,255,.5);line-height:1.4;}
+
+/* ===== GUARANTEE ===== */
+.guar-box{
+  background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.25);
+  border-radius:16px;padding:24px;width:100%;max-width:380px;text-align:center;
+}
+.guar-box h3{font-family:'Fraunces',serif;font-size:22px;font-weight:700;color:var(--white);margin-bottom:8px;}
+.guar-box p{font-size:13px;color:rgba(255,255,255,.65);line-height:1.6;}
+
+/* ===== PAYMENT SLIDE ===== */
+.pay-methods{display:flex;flex-direction:column;gap:10px;width:100%;max-width:360px;}
+.pay-method{
+  background:var(--off);border:1px solid var(--line);
+  border-radius:12px;padding:16px 18px;
+  display:flex;align-items:center;gap:14px;
+}
+.pay-icon{font-size:28px;flex-shrink:0;}
+.pay-info h4{font-size:15px;font-weight:600;color:var(--ink);}
+.pay-info p{font-size:13px;color:var(--teal);font-weight:600;letter-spacing:.02em;}
+.pay-info small{font-size:11px;color:var(--dim);}
+
+/* ===== URGENCY STRIP ===== */
+.urgency{
+  background:var(--gold);color:var(--ink);
+  padding:6px 16px;text-align:center;
+  font-size:12px;font-weight:600;line-height:1.25;
+  position:fixed;bottom:0;left:0;right:0;z-index:200;
+  height:var(--urgency-h);
+  display:flex;align-items:center;justify-content:center;
+}
+
+/* ===== SCROLL INDICATOR OVERLAY ===== */
+.slide-num{
+  position:absolute;
+  bottom:12px;left:20px;
+  font-size:10px;color:var(--dim);font-weight:500;letter-spacing:.04em;
+  z-index:2;pointer-events:none;opacity:.55;
+}
+.slide.dark .slide-num,.slide.teal .slide-num,.slide.dark2 .slide-num,.slide.gold .slide-num{
+  color:rgba(255,255,255,.3);
+}
+
+/* ===== OVERLAP HIGHLIGHTS ===== */
+.hl-teal{color:var(--teal);}
+.hl-gold{color:var(--gold);}
+.hl-green{color:var(--green);}
+
+/* ===== COMPARISON ===== */
+.comp-table{width:100%;max-width:380px;}
+.comp-row{
+  display:grid;grid-template-columns:1fr 1fr 1fr;
+  gap:0;
+  border-bottom:1px solid rgba(255,255,255,.08);
+  padding:10px 0;font-size:13px;
+}
+.comp-row:first-child{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:rgba(255,255,255,.4);padding-bottom:14px;border-bottom:1px solid rgba(255,255,255,.15);}
+.comp-row:last-child{border-bottom:none;}
+.comp-row .col-mid{text-align:center;color:var(--green);font-weight:600;}
+.comp-row .col-r{text-align:right;color:rgba(255,255,255,.4);}
+.comp-row .col-l{color:rgba(255,255,255,.65);}
+.comp-check{color:var(--green);}
+.comp-x{color:rgba(255,255,255,.2);}
+
+/* ===== BEFORE/AFTER ===== */
+.ba-wrap{display:flex;gap:10px;width:100%;max-width:380px;}
+.ba-box{flex:1;border-radius:12px;padding:16px 14px;}
+.ba-before{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.2);}
+.ba-after{background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.2);}
+.ba-label{font-size:10px;text-transform:uppercase;letter-spacing:.08em;font-weight:700;margin-bottom:10px;}
+.ba-before .ba-label{color:rgba(239,68,68,.8);}
+.ba-after .ba-label{color:var(--green);}
+.ba-item{font-size:12px;color:rgba(255,255,255,.65);padding:4px 0;display:flex;align-items:center;gap:6px;border-bottom:1px solid rgba(255,255,255,.06);}
+.ba-item:last-child{border-bottom:none;}
+.ba-icon{font-size:13px;flex-shrink:0;}
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.slide.active .anim{animation:fadeUp .5s ease both;}
+.slide.active .anim-1{animation-delay:.1s;}
+.slide.active .anim-2{animation-delay:.2s;}
+.slide.active .anim-3{animation-delay:.3s;}
+.slide.active .anim-4{animation-delay:.4s;}
+.slide.active .anim-5{animation-delay:.5s;}
+
+/* ===== STATS ===== */
+.stats-row{display:flex;gap:12px;width:100%;max-width:380px;}
+.stat{flex:1;text-align:center;}
+.stat-n{font-family:'Fraunces',serif;font-size:32px;font-weight:800;color:var(--teal);line-height:1;}
+.stat-l{font-size:11px;color:rgba(255,255,255,.5);margin-top:4px;line-height:1.3;}
+
+/* ===== CONTENT CONTAINER ===== */
+.content{display:flex;flex-direction:column;align-items:center;gap:14px;width:100%;max-width:480px;}
+.content.left{align-items:flex-start;}
+.slide-hero .content{gap:0;}
+.slide-hero .badge{margin-bottom:0;}
+.slide-hero .hero-h{font-size:clamp(22px,6.2vw,40px);line-height:1.12;}
+.hero-pain{
+  width:100%;max-width:360px;
+  font-size:clamp(13px,3.6vw,16px);font-weight:600;color:var(--ink);
+  background:rgba(239,68,68,.06);
+  border:1px solid rgba(239,68,68,.15);
+  border-left:3px solid var(--red);
+  border-radius:10px;padding:10px 12px;
+  text-align:left;line-height:1.4;margin:0;
+}
+.hero-pain em{font-style:normal;color:var(--red);font-weight:600;}
+
+.slide-hero .btn{padding:14px 22px;font-size:15px;}
+.slide-hero .btn-invest-sub{display:none;}
+
+.hero-layout{
+  height:100%;
+  max-height:calc(100dvh - var(--top-safe) - var(--urgency-h) - 12px);
+  justify-content:space-between;
+  padding:2px 0 4px;
+}
+.hero-block{
+  width:100%;
+  display:flex;flex-direction:column;align-items:center;
+  gap:clamp(6px,1.4vh,10px);
+}
+.hero-block-head{gap:clamp(8px,1.8vh,14px);}
+.hero-block-cta{gap:10px;padding-top:4px;}
+
+.hero-perks{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:clamp(6px,1.2vh,10px);
+  width:100%;max-width:360px;
+}
+.hero-perk{
+  display:flex;align-items:center;gap:8px;
+  background:var(--off);border:1px solid var(--line);
+  border-radius:11px;padding:10px 10px;
+  text-align:left;font-size:12px;font-weight:500;
+  color:var(--ink);line-height:1.25;
+}
+.hero-perk-ico{
+  font-size:18px;line-height:1;flex-shrink:0;
+  width:26px;text-align:center;
+}
+
+.hero-offer{
+  display:flex;flex-direction:column;align-items:center;
+  gap:6px;width:100%;
+}
+.hero-offer-tag{
+  font-size:12px;color:var(--dim);line-height:1.35;text-align:center;
+}
+.hero-offer-tag strong{color:var(--teal);font-weight:600;}
+
+.hero-stats{
+  display:flex;gap:clamp(6px,1.2vh,10px);
+  width:100%;max-width:360px;
+}
+.hero-stat{
+  flex:1;text-align:center;
+  background:var(--teal-l);border:1px solid rgba(14,165,233,.2);
+  border-radius:11px;padding:clamp(8px,1.5vh,12px) 6px;
+}
+.hero-stat-ico{font-size:16px;line-height:1;margin-bottom:4px;}
+.hero-stat-n{
+  font-family:'Fraunces',serif;font-size:clamp(16px,4vw,20px);
+  font-weight:800;color:var(--teal);line-height:1;
+}
+.hero-stat-l{font-size:9px;color:var(--dim);margin-top:3px;line-height:1.2;}
+
+.hero-cta-wrap{width:100%;max-width:340px;display:flex;flex-direction:column;gap:8px;align-items:center;}
+
+/* ===== BIG PRICE ===== */
+.price-big{
+  display:flex;flex-direction:column;align-items:center;gap:0;
+}
+.price-was{font-size:14px;color:rgba(255,255,255,.4);text-decoration:line-through;margin-bottom:0;}
+.price-now{font-family:'Fraunces',serif;font-size:72px;font-weight:800;color:var(--white);line-height:1;}
+.price-period{font-size:13px;color:rgba(255,255,255,.5);margin-top:2px;}
+.price-save{font-size:14px;color:var(--green);font-weight:600;display:flex;align-items:center;gap:5px;margin-top:4px;}
+
+/* ===== STICKY CTA BAR ===== */
+#sticky-cta{
+  position:fixed;bottom:var(--urgency-h);left:0;right:0;
+  padding:6px 12px;z-index:190;
+  display:flex;gap:8px;max-width:480px;margin:0 auto;
+  transition:transform .25s ease,opacity .25s ease;
+}
+#sticky-cta.is-hidden{
+  transform:translateY(110%);
+  opacity:0;pointer-events:none;
+}
+.sticky-btn{
+  flex:1;display:flex;align-items:center;justify-content:center;gap:6px;
+  padding:10px 10px;border-radius:12px;
+  font-size:13px;font-weight:600;text-decoration:none;
+  font-family:'DM Sans',sans-serif;border:none;cursor:pointer;
+}
+.sticky-yape{background:#7B2D8E;color:var(--white);flex:1.2;}
+.sticky-wa{background:#25D366;color:var(--white);}
+
+/* ===== TRUST SLIDE ===== */
+.trust-icon{font-size:48px;line-height:1;}
+.trust-list{width:100%;max-width:380px;display:flex;flex-direction:column;gap:8px;}
+.trust-item{
+  display:flex;align-items:flex-start;gap:10px;
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);
+  border-radius:10px;padding:12px 14px;
+  font-size:13px;color:rgba(255,255,255,.85);line-height:1.45;
+}
+.trust-item span:first-child{flex-shrink:0;}
+
+/* ===== POST-PAY STEPS ===== */
+.steps-pay{width:100%;max-width:360px;display:flex;flex-direction:column;gap:8px;}
+.step-pay{
+  display:flex;align-items:flex-start;gap:12px;
+  background:var(--off);border:1px solid var(--line);
+  border-radius:12px;padding:14px 16px;text-align:left;
+}
+.step-num{
+  width:28px;height:28px;border-radius:50%;background:var(--teal);color:var(--white);
+  font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.step-pay h4{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:2px;}
+.step-pay p{font-size:12px;color:var(--dim);line-height:1.4;}
+
+/* ===== BACKUP CONTACTS ===== */
+.backup-box{
+  width:100%;max-width:360px;background:var(--gray);border-radius:12px;
+  padding:14px 16px;font-size:12px;color:var(--dim);line-height:1.5;text-align:center;
+}
+.backup-box a{color:var(--teal);font-weight:600;text-decoration:none;}
+
+/* ===== TEAM PHOTOS ===== */
+.team-av img{width:100%;height:100%;border-radius:50%;object-fit:cover;}
+.team-av.has-img{background:transparent;overflow:hidden;}
+
+/* ===== GUARANTEE LIST ===== */
+.guar-list{width:100%;max-width:340px;text-align:left;margin-top:8px;list-style:none;padding:0;}
+.guar-list li{font-size:12px;color:rgba(255,255,255,.7);padding:4px 0 4px 18px;position:relative;line-height:1.4;}
+.guar-list li::before{content:'✓';position:absolute;left:0;color:var(--green);font-weight:700;}
+
+/* ===== COUNTDOWN ===== */
+#countdown-bar{
+  position:fixed;top:0;left:0;right:0;z-index:160;
+  min-height:var(--countdown-h);
+  background:linear-gradient(90deg,#7F1D1D,#DC2626);
+  color:var(--white);
+  display:flex;align-items:center;justify-content:center;
+}
+.countdown-inner{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:2px;width:100%;padding:5px 10px 6px;
+  text-align:center;
+}
+.countdown-msg{
+  font-size:10px;font-weight:600;line-height:1.25;letter-spacing:.02em;
+  max-width:100%;
+}
+.countdown-msg strong{font-weight:800;}
+#countdown-bar .cd-time{
+  font-family:'Fraunces',serif;font-size:15px;font-weight:800;
+  letter-spacing:.03em;line-height:1;white-space:nowrap;
+}
+
+/* ===== CORE OFFER / CASES ===== */
+.offer-grid{width:100%;max-width:400px;display:flex;flex-direction:column;gap:10px;}
+.offer-main{
+  background:linear-gradient(135deg,rgba(14,165,233,.15),rgba(16,185,129,.12));
+  border:2px solid var(--teal);border-radius:14px;padding:16px;text-align:left;
+}
+.offer-main h3{font-family:'Fraunces',serif;font-size:18px;font-weight:700;color:var(--ink);margin-bottom:6px;}
+.offer-main p{font-size:12px;color:var(--dim);line-height:1.5;}
+.offer-bonus{font-size:12px;color:var(--dim);padding:10px 14px;background:var(--gray);border-radius:10px;line-height:1.5;}
+.case-card{
+  width:100%;max-width:400px;background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.12);border-radius:14px;overflow:hidden;
+}
+.case-img{width:100%;height:140px;object-fit:cover;object-position:top;display:block;background:var(--ink2);}
+.case-body{padding:12px 14px;}
+.case-body h4{font-size:14px;font-weight:700;color:var(--white);margin-bottom:4px;}
+.case-body p{font-size:12px;color:rgba(255,255,255,.6);line-height:1.45;}
+.case-tag{display:inline-block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:3px 8px;border-radius:99px;background:rgba(16,185,129,.2);color:var(--green);margin-bottom:6px;}
+.traction-row{display:flex;gap:8px;width:100%;max-width:400px;}
+.traction-stat{flex:1;text-align:center;background:rgba(255,255,255,.08);border-radius:10px;padding:12px 8px;}
+.traction-stat .n{font-family:'Fraunces',serif;font-size:24px;font-weight:800;color:var(--gold);line-height:1;}
+.traction-stat .l{font-size:10px;color:rgba(255,255,255,.55);margin-top:4px;line-height:1.3;}
+
+/* ===== FAQ ===== */
+.faq-list{width:100%;max-width:400px;display:flex;flex-direction:column;gap:10px;}
+.faq-item{
+  background:var(--white);border:1px solid var(--line);border-radius:12px;
+  padding:14px 16px;text-align:left;
+}
+.faq-item h4{font-size:14px;font-weight:700;color:var(--ink);margin-bottom:6px;line-height:1.3;}
+.faq-item p{font-size:12px;color:var(--dim);line-height:1.55;}
+
+/* ===== INVESTMENT CTA ===== */
+.btn-invest{
+  background:linear-gradient(135deg,#059669,#10B981);color:var(--white);
+  box-shadow:0 4px 20px rgba(16,185,129,.35);
+}
+.btn-invest-sub{font-size:11px;color:var(--dim);text-align:center;max-width:320px;line-height:1.4;}
+.invest-box{
+  width:100%;max-width:360px;background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.25);
+  border-radius:12px;padding:14px;font-size:12px;color:var(--dim);line-height:1.5;text-align:center;
+}
+.invest-box strong{color:var(--green);}
+
+/* ===== PRICING PLANS ===== */
+.plans-grid{width:100%;max-width:400px;display:flex;flex-direction:column;gap:10px;}
+.plan-card{
+  background:var(--white);border:2px solid var(--line);border-radius:14px;
+  padding:14px 16px;text-align:left;cursor:pointer;transition:border-color .2s,box-shadow .2s;
+}
+.plan-card.on-dark{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.15);}
+.plan-card.featured{border-color:var(--teal);box-shadow:0 4px 20px rgba(14,165,233,.25);}
+.plan-card.selected{border-color:var(--green);background:var(--green-l);}
+.plan-card-head{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:4px;}
+.plan-card-name{font-family:'Fraunces',serif;font-size:17px;font-weight:700;color:var(--ink);line-height:1.2;}
+.plan-card.on-dark .plan-card-name{color:var(--white);}
+.plan-card-tag{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:3px 8px;border-radius:99px;background:var(--gold-l);color:var(--gold);white-space:nowrap;}
+.plan-card-tag.star{background:var(--teal);color:var(--white);}
+.plan-price{font-family:'Fraunces',serif;font-size:26px;font-weight:800;color:var(--teal);line-height:1;margin:6px 0 4px;}
+.plan-card.on-dark .plan-price{color:var(--gold);}
+.plan-subtitle{font-size:12px;color:var(--dim);margin-bottom:8px;}
+.plan-card.on-dark .plan-subtitle{color:rgba(255,255,255,.55);}
+.plan-features{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:5px;}
+.plan-features li{font-size:12px;color:var(--dim);padding-left:16px;position:relative;line-height:1.4;}
+.plan-card.on-dark .plan-features li{color:rgba(255,255,255,.75);}
+.plan-features li::before{content:'✓';position:absolute;left:0;color:var(--green);font-weight:700;}
+.plan-card.compact .plan-features li:nth-child(n+4){display:none;}
+.plan-card-btn{
+  display:block;width:100%;margin-top:10px;padding:10px;border-radius:10px;
+  border:1px solid var(--line);background:var(--off);font-size:13px;font-weight:600;
+  color:var(--ink);cursor:pointer;text-align:center;
+}
+.plan-card.featured .plan-card-btn{background:var(--teal);color:var(--white);border-color:var(--teal);}
+.plan-card.selected .plan-card-btn{background:var(--green);color:var(--white);border-color:var(--green);}
+.plan-card.on-dark .plan-card-btn{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.2);color:var(--white);}
+.plan-card.on-dark.featured .plan-card-btn{background:var(--teal);border-color:var(--teal);}
+.plan-compare{width:100%;max-width:400px;border-collapse:collapse;font-size:11px;}
+.plan-compare th,.plan-compare td{padding:8px 6px;text-align:center;border-bottom:1px solid var(--line);}
+.plan-compare th:first-child,.plan-compare td:first-child{text-align:left;font-weight:600;color:var(--ink);}
+.plan-compare .yes{color:var(--green);font-weight:700;}
+.plan-compare .no{color:var(--dim);}
+
+/* ===== SCROLLABLE SLIDE (solo slides con mucho contenido, no el hero) ===== */
+.slide.scroll-y{
+  justify-content:flex-start;
+  overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
+  overscroll-behavior-y:none;
+  align-items:center;
+}
+.slide.scroll-y .content{padding-bottom:12px;min-height:min-content;}
+
+/* ===== PORTFOLIO ===== */
+.port-scroll{
+  display:flex;gap:10px;overflow-x:auto;width:100%;max-width:420px;
+  padding:4px 2px 12px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;
+}
+.port-scroll::-webkit-scrollbar{height:4px;}
+.port-scroll::-webkit-scrollbar-thumb{background:var(--line2);border-radius:99px;}
+.port-card{
+  flex:0 0 148px;scroll-snap-align:start;background:var(--white);
+  border:1px solid var(--line);border-radius:12px;overflow:hidden;
+  cursor:pointer;text-decoration:none;color:inherit;transition:transform .2s,box-shadow .2s;
+  font:inherit;text-align:left;padding:0;appearance:none;-webkit-appearance:none;
+}
+.port-card:active{transform:scale(.97);}
+.port-card.on-dark{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.15);}
+.port-thumb{width:100%;height:88px;object-fit:cover;object-position:top;display:block;background:var(--gray);}
+.port-thumb-placeholder{
+  width:100%;height:88px;display:flex;align-items:center;justify-content:center;
+  font-family:'Fraunces',serif;font-size:22px;font-weight:800;color:var(--white);
+}
+.port-body{padding:10px 10px 12px;}
+.port-body h4{font-size:12px;font-weight:700;color:var(--ink);line-height:1.25;margin-bottom:3px;}
+.port-card.on-dark .port-body h4{color:var(--white);}
+.port-body p{font-size:10px;color:var(--dim);line-height:1.35;}
+.port-card.on-dark .port-body p{color:rgba(255,255,255,.55);}
+.port-tag{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--teal);margin-bottom:4px;display:block;}
+.eco-pills{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;max-width:400px;}
+.eco-pill{
+  font-size:11px;font-weight:600;padding:6px 12px;border-radius:99px;
+  background:rgba(255,255,255,.12);color:var(--white);border:1px solid rgba(255,255,255,.2);
+  text-decoration:none;
+}
+.social-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;max-width:400px;}
+.social-card{
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);
+  border-radius:12px;padding:10px;text-align:left;overflow:hidden;
+}
+.social-card img{width:100%;height:72px;object-fit:cover;border-radius:8px;margin-bottom:8px;display:block;}
+.social-card h4{font-size:12px;font-weight:700;color:var(--white);margin-bottom:2px;}
+.social-card p{font-size:10px;color:rgba(255,255,255,.55);line-height:1.35;}
+.social-stat{font-family:'Fraunces',serif;font-size:18px;font-weight:800;color:var(--gold);}
+
+/* ===== PREVIEW MODAL ===== */
+#previewModal{
+  position:fixed;inset:0;z-index:500;background:rgba(0,0,0,.85);
+  display:none;flex-direction:column;
+  padding:var(--top-safe) 12px var(--bottom-safe);
+}
+#previewModal.open{display:flex;}
+.preview-head{
+  display:flex;align-items:center;justify-content:space-between;
+  color:var(--white);margin-bottom:8px;max-width:480px;width:100%;margin-left:auto;margin-right:auto;
+}
+.preview-head h3{font-size:14px;font-weight:600;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.preview-close{background:rgba(255,255,255,.15);border:none;color:var(--white);width:36px;height:36px;border-radius:50%;font-size:18px;cursor:pointer;flex-shrink:0;margin-left:8px;}
+.preview-frame-wrap{
+  flex:1;max-width:480px;width:100%;margin:0 auto;background:var(--white);
+  border-radius:12px;overflow:hidden;display:flex;flex-direction:column;min-height:0;
+}
+#previewFrame{flex:1;width:100%;border:none;min-height:50vh;}
+.preview-open{
+  display:block;text-align:center;padding:12px;background:var(--ink);color:var(--white);
+  font-size:13px;font-weight:600;text-decoration:none;
+}
+.preview-fallback{
+  font-size:12px;color:var(--dim);text-align:center;padding:8px 12px;background:var(--gray);
+}
+.hero-trust{
+  display:flex;flex-wrap:wrap;gap:6px 10px;justify-content:center;
+  font-size:11px;color:var(--dim);max-width:340px;margin-top:4px;
+}
+.hero-trust span{white-space:nowrap;}
+.hero-trust strong{color:var(--teal);}
+.hero-price{
+  display:flex;align-items:center;justify-content:center;
+  flex-wrap:nowrap;gap:clamp(6px,2vw,10px);
+  white-space:nowrap;width:100%;max-width:360px;
+}
+.hero-price-was{
+  font-family:'Fraunces',serif;
+  text-decoration:line-through;color:var(--dim);
+  font-weight:400;font-size:clamp(16px,4.5vw,26px);flex-shrink:0;
+}
+.hero-price-badge{
+  background:linear-gradient(90deg,#ef4444,#fbbf24);
+  color:var(--white);padding:2px 7px;border-radius:6px;
+  font-size:clamp(11px,3vw,14px);font-weight:700;flex-shrink:0;
+}
+.hero-price-now{
+  font-family:'Fraunces',serif;
+  font-size:clamp(28px,8vw,40px);font-weight:800;
+  color:var(--ink);line-height:1;flex-shrink:0;
+}
+.hero-wa-link{font-size:13px;margin-top:4px;}
+.hero-wa-link a{color:var(--dim);font-weight:500;text-decoration:none;border-bottom:1px solid var(--line2);}
+.hero-wa-link a:active{color:var(--teal);}
+.bonus-today{
+  width:100%;max-width:360px;
+  background:linear-gradient(135deg,rgba(239,68,68,.12),rgba(245,158,11,.15));
+  border:2px solid rgba(239,68,68,.35);
+  border-radius:14px;padding:12px 14px;text-align:center;
+  margin-bottom:0;flex-shrink:0;
+}
+.bonus-today.bonus-compact{padding:10px 14px;margin-bottom:2px;}
+.bonus-today.bonus-compact .bonus-sub,
+.bonus-today.bonus-compact .bonus-cd{display:none;}
+.bonus-today.bonus-compact strong{font-size:14px;}
+.bonus-today .bonus-tag{
+  display:inline-block;font-size:10px;font-weight:800;
+  text-transform:uppercase;letter-spacing:.06em;
+  background:var(--red);color:var(--white);
+  padding:3px 10px;border-radius:99px;margin-bottom:6px;
+}
+.bonus-today strong{display:block;font-size:15px;font-weight:700;color:var(--ink);line-height:1.3;}
+.bonus-today .bonus-sub{font-size:11px;color:var(--dim);margin-top:4px;line-height:1.4;}
+.bonus-today .bonus-cd{font-family:'Fraunces',serif;font-size:14px;font-weight:800;color:var(--red);margin-top:6px;}
+.cred-mini{font-size:11px;color:rgba(255,255,255,.6);line-height:1.5;max-width:380px;text-align:center;}
+@media (max-height:680px){
+  .hero-perk{font-size:11px;padding:8px;}
+  .hero-perk-ico{font-size:16px;width:22px;}
+  .hero-stat-l{font-size:8px;}
+  .hero-block-head .hero-h{font-size:clamp(20px,5.8vw,34px);}
+}
+@media (max-width:480px){
+  .slide-num{display:none;}
+  #dots{right:10px;gap:5px;}
+}
+@media (max-width:380px){
+  :root{--nav-h:44px;--sticky-h:46px;}
+  .nav-cta{font-size:11px;padding:7px 12px;}
+  .countdown-msg{font-size:9px;}
+  #countdown-bar .cd-time{font-size:14px;}
+  .urgency{font-size:11px;padding:4px 10px;}
+}
+@media (max-width:340px){
+  .hero-perks{grid-template-columns:1fr;}
+}
+@media (min-width:520px){
+  .countdown-inner{flex-direction:row;flex-wrap:wrap;justify-content:center;gap:6px;padding:6px 14px;}
+  .countdown-msg{font-size:11px;}
+}
+</style>
+</head>
+<body>
+
+<!-- PROGRESS -->
+<div id="progress"></div>
+
+<!-- COUNTDOWN -->
+<div id="countdown-bar" hidden>
+  <div class="countdown-inner">
+    <span class="countdown-msg">
+      <span id="countdownMainText">⚡ <span id="spotsNavInline">10</span> cupos limitados · Programa 3 meses ADIS</span>
+    </span>
+    <span class="cd-time" id="countdown" hidden>--:--:--</span>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-logo"><span class="a">AD</span><span class="d" id="navD">IS</span></div>
+  <a href="#pagar" class="nav-cta" id="navPayBtn">Ver planes →</a>
+</nav>
+
+<!-- NAV DOTS -->
+<div id="dots"></div>
+
+<!-- STICKY CTA -->
+<div id="sticky-cta">
+  <a href="#pagar" class="sticky-btn sticky-yape" id="stickyYape">💜 Plan Potente · S/. 300</a>
+  <a href="#" class="sticky-btn sticky-wa" id="stickyWa" target="_blank">WhatsApp</a>
+</div>
+
+<!-- URGENCY STRIP -->
+<div class="urgency" id="urgencyStrip">⚡ 3 planes · desde S/. 30 · ADIS Cusco</div>
+
+<!-- ============================== SLIDES ============================== -->
+<div id="deck">
+
+<!-- SLIDE 1: HERO HOOK -->
+<div class="slide light slide-hero" data-theme="light">
+  <div class="content hero-layout" style="align-items:center;text-align:center;">
+
+    <div class="hero-block anim anim-1">
+      <div class="badge badge-gold">3 planes · Elige el tuyo</div>
+    </div>
+
+    <div class="hero-block hero-block-head anim anim-2">
+      <h1 class="hero-h" style="text-align:center;">
+        Tu negocio en internet,<br>con el <span class="hl-teal">plan que necesitas</span>
+      </h1>
+      <p class="hero-pain">Desde S/. 30 para aparecer en Buscadis — hasta tu página web completa con publicidad por S/. 300.</p>
+    </div>
+
+    <div class="hero-block anim anim-3">
+      <div class="hero-perks">
+        <div class="hero-perk"><span class="hero-perk-ico">🏪</span><span>Básico S/. 30 — perfil en marketplace</span></div>
+        <div class="hero-perk"><span class="hero-perk-ico">🌐</span><span>Potente S/. 300 — página web + catálogo ⭐</span></div>
+        <div class="hero-perk"><span class="hero-perk-ico">🚀</span><span>Premium S/. 3,000 — crecimiento total</span></div>
+        <div class="hero-perk"><span class="hero-perk-ico">📣</span><span>Publicidad en Buscadis y nuestras redes</span></div>
+      </div>
+    </div>
+
+    <div class="hero-block anim anim-4">
+      <div class="hero-offer">
+        <div class="hero-price">
+          <span class="hero-price-was">S/. 3,000</span>
+          <span class="hero-price-badge">⭐</span>
+          <span class="hero-price-now">S/. 300</span>
+        </div>
+        <p class="hero-offer-tag"><strong>Plan Potente</strong> · Motor de Ventas · el más elegido</p>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="hero-stat-ico">🌐</div>
+          <div class="hero-stat-n">14+</div>
+          <div class="hero-stat-l">páginas vivas</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-ico">🏪</div>
+          <div class="hero-stat-n">500+</div>
+          <div class="hero-stat-l">negocios</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-ico">📣</div>
+          <div class="hero-stat-n">~2K</div>
+          <div class="hero-stat-l">Noticiadis</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-block hero-block-cta anim anim-5">
+      <div class="hero-cta-wrap">
+        <a href="#planes" class="btn btn-invest" id="heroPayBtn">Ver los 3 planes →</a>
+        <p class="btn-invest-sub">Empieza con S/. 30 en Buscadis o elige el Plan Potente con página web, catálogo y publicidad.</p>
+        <p class="hero-wa-link"><a href="#" id="heroWaBtn" target="_blank">💬 ¿Tienes dudas? Escríbenos por WhatsApp</a></p>
+      </div>
+    </div>
+
+  </div>
+  <div class="slide-num">01 / 14</div>
+</div>
+
+<!-- SLIDE 2: POR QUÉ ADIS -->
+<div class="slide gold" data-theme="dark">
+  <div class="content">
+    <div class="trust-icon anim anim-1">🏔️</div>
+    <div class="badge badge-white anim anim-1">Hecho en Cusco, para tu negocio</div>
+    <h2 class="section-h white-text anim anim-2">Por qué ADIS:<br>ya lo hicimos antes.</h2>
+    <p class="section-sub dimw anim anim-3" style="max-width:360px;">Jairo y Shantall llevan años acompañando negocios en Cusco con presencia digital. No empezamos ayer — y tu negocio puede ser el siguiente.</p>
+    <div class="trust-list anim anim-4">
+      <div class="trust-item"><span>✓</span><span><strong style="color:var(--white);">Quival </strong>Distribuidora de ferreterías — 510 productos</span></div>
+      <div class="trust-item"><span>✓</span><span><strong style="color:var(--white);">Agril Sur</strong> : página, catálogo y línea de bebidas artesanales digital</span></div>
+      <div class="trust-item"><span>✓</span><span><strong style="color:var(--white);">Villa Chaco</strong> Chocolates : página, catálogo y publicidad</span></div>
+      <div class="trust-item"><span>✓</span><span><strong style="color:var(--white);">500+ negocios</strong> en Buscadis + <strong style="color:var(--white);">14+ páginas</strong> vivas</span></div>
+      <div class="trust-item"><span>✓</span><span>Contacto ADIS <strong style="color:var(--white);">937 054 328</strong> + respaldo Jairo y Shantall</span></div>
+    </div>
+    <a href="#planes" class="btn btn-white anim anim-5" id="trustPayBtn">Ver los 3 planes →</a>
+  </div>
+  <div class="slide-num">02 / 14</div>
+</div>
+
+<!-- SLIDE 3: LOS 3 PLANES -->
+<div id="planes" class="slide off scroll-y" data-theme="light">
+  <div class="content">
+    <div class="badge badge-teal anim anim-1">Elige tu plan</div>
+    <h2 class="section-h anim anim-2">3 planes para<br><span class="hl-teal">cada etapa de tu negocio.</span></h2>
+    <p class="section-sub anim anim-3">Empieza barato con presencia en Buscadis — o elige el Plan Potente con página web, catálogo y publicidad hechos por nosotros.</p>
+    <div class="plans-grid anim anim-4">
+      <div class="plan-card compact" data-plan-select="basico" onclick="selectPlan('basico')">
+        <div class="plan-card-head">
+          <div class="plan-card-name">Plan Básico</div>
+          <span class="plan-card-tag">Presencia Inicial</span>
+        </div>
+        <div class="plan-price">S/. 30</div>
+        <div class="plan-subtitle">Aparece en Buscadis y administra tu perfil tú misma</div>
+        <ul class="plan-features">
+          <li>Perfil exclusivo en el marketplace Buscadis</li>
+          <li>Panel privado para cambiar datos, horarios y teléfono</li>
+          <li>Sube tus productos, fotos y precios por tu cuenta</li>
+        </ul>
+        <span class="plan-card-btn">Elegir Básico</span>
+      </div>
+      <div class="plan-card featured selected" data-plan-select="potente" onclick="selectPlan('potente')">
+        <div class="plan-card-head">
+          <div class="plan-card-name">Plan Potente ⭐</div>
+          <span class="plan-card-tag star">Predilecto</span>
+        </div>
+        <div class="plan-price">S/. 300</div>
+        <div class="plan-subtitle">Motor de Ventas — nosotros lo hacemos por ti</div>
+        <ul class="plan-features">
+          <li>Todo lo del Plan Básico</li>
+          <li>Página web profesional con el nombre de tu marca</li>
+          <li>Catálogo virtual ordenado y atractivo</li>
+          <li>Mejora de fotos a nivel profesional</li>
+          <li>Primera campaña publicitaria en redes</li>
+          <li>Anuncios destacados en Buscadis</li>
+        </ul>
+        <span class="plan-card-btn">Elegir Potente ⭐</span>
+      </div>
+      <div class="plan-card compact" data-plan-select="premium" onclick="selectPlan('premium')">
+        <div class="plan-card-head">
+          <div class="plan-card-name">Plan Premium</div>
+          <span class="plan-card-tag">Crecimiento Total</span>
+        </div>
+        <div class="plan-price">S/. 3,000</div>
+        <div class="plan-subtitle">Para negocios que quieren escalar sin límites</div>
+        <ul class="plan-features">
+          <li>Todo lo del Plan Potente</li>
+          <li>Manejo completo de Facebook, Instagram y TikTok</li>
+          <li>Fotos y videos profesionales en tu local</li>
+          <li>Renovación de logo y colores de marca</li>
+          <li>Tienda online con pagos automáticos 24/7</li>
+          <li>Asistente inteligente con IA (Adis)</li>
+          <li>Asesoría de negocios mensual</li>
+        </ul>
+        <span class="plan-card-btn">Elegir Premium</span>
+      </div>
+    </div>
+    <a href="#pagar" class="btn btn-invest anim anim-5" id="corePayBtn">Reservar mi plan →</a>
+  </div>
+  <div class="slide-num">03 / 14</div>
+</div>
+
+<!-- SLIDE 4: EL PROBLEMA -->
+<div class="slide dark" data-theme="dark">
+  <div class="content">
+    <div class="badge badge-white anim anim-1">El problema real</div>
+    <h2 class="section-h white-text anim anim-2">Cada día sin esto<br>es dinero que se va.</h2>
+    <div class="pain-grid anim anim-3">
+      <div class="pain-item">
+        <div class="pain-icon">🌐</div>
+        <div class="pain-text"><h4>Sin página web profesional</h4><p>Tu competencia tiene su vitrina online. Tú dependes de redes improvisadas o de que te recomienden.</p></div>
+      </div>
+      <div class="pain-item">
+        <div class="pain-icon">🛒</div>
+        <div class="pain-text"><h4>Sin catálogo que venda por ti</h4><p>Mandas fotos sueltas, precios en texto, productos desordenados. El cliente se pierde y no compra.</p></div>
+      </div>
+      <div class="pain-item">
+        <div class="pain-icon">📸</div>
+        <div class="pain-text"><h4>Fotos que no convencen</h4><p>Tu producto es bueno pero la foto lo hace ver barato. El cliente duda y no compra.</p></div>
+      </div>
+      <div class="pain-item">
+        <div class="pain-icon">🗓️</div>
+        <div class="pain-text"><h4>Redes sin estrategia</h4><p>Publicas cuando recuerdas. El algoritmo ya te relegó y tu alcance muere cada semana.</p></div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-num">04 / 14</div>
+</div>
+
+<!-- SLIDE 5: BEFORE / AFTER -->
+<div class="slide dark2" data-theme="dark">
+  <div class="content">
+    <div class="badge badge-teal anim anim-1">La transformación</div>
+    <h2 class="section-h white-text anim anim-2">Tu negocio hoy vs.<br><span class="hl-green">en 30 días.</span></h2>
+    <div class="ba-wrap anim anim-3">
+      <div class="ba-box ba-before">
+        <div class="ba-label">Hoy</div>
+        <div class="ba-item"><span class="ba-icon">✗</span>Sin página web</div>
+        <div class="ba-item"><span class="ba-icon">✗</span>Sin catálogo online</div>
+        <div class="ba-item"><span class="ba-icon">✗</span>Fotos de celular</div>
+        <div class="ba-item"><span class="ba-icon">✗</span>Sin publicidad real</div>
+        <div class="ba-item"><span class="ba-icon">✗</span>Redes improvisadas</div>
+        <div class="ba-item"><span class="ba-icon">✗</span>Invisible en internet</div>
+      </div>
+      <div class="ba-box ba-after">
+        <div class="ba-label">Día 30</div>
+        <div class="ba-item"><span class="ba-icon">✓</span>Página web profesional</div>
+        <div class="ba-item"><span class="ba-icon">✓</span>Catálogo virtual interactivo</div>
+        <div class="ba-item"><span class="ba-icon">✓</span>Fotos nivel estudio</div>
+        <div class="ba-item"><span class="ba-icon">✓</span>Publicidad en Buscadis</div>
+        <div class="ba-item"><span class="ba-icon">✓</span>30 posts listos</div>
+        <div class="ba-item"><span class="ba-icon">✓</span>Presencia en Google</div>
+      </div>
+    </div>
+    <p class="anim anim-4" style="font-size:13px;color:rgba(255,255,255,.5);text-align:center;max-width:320px;">Nosotros hacemos lo digital. Tú sigues atendiendo tu negocio y ves los resultados.</p>
+  </div>
+  <div class="slide-num">05 / 14</div>
+</div>
+
+<!-- SLIDE 6: QUIÉNES SOMOS -->
+<div class="slide teal" data-theme="dark">
+  <div class="content">
+    <div class="badge badge-white anim anim-1">Quiénes somos</div>
+    <h2 class="section-h white-text anim anim-2">Dos expertos de Cusco.<br>Un solo objetivo:<br><span style="opacity:.8;">hacer crecer tu negocio.</span></h2>
+    <div class="team-row anim anim-3">
+      <div class="team-card">
+        <div class="team-av av-teal has-img"><img src="assets/jairo.png" alt="Jairo" width="56" height="56"></div>
+        <h4>Jairo</h4>
+        <p>Programador · 5 años · Buscadis, Vectorify, Candidatazo y +12 productos digitales</p>
+      </div>
+      <div class="team-card">
+        <div class="team-av av-gold has-img"><img src="assets/shantall.png" alt="Shantall" width="56" height="56"></div>
+        <h4>Shantall</h4>
+        <p>Comunicadora UNSAAC · ex prensa Inkavisión & Exitosa · Biblioteca Municipal Cusco</p>
+      </div>
+    </div>
+    <div class="cred-row anim anim-4">
+      <div class="cred-item">
+        <div class="cred-icon">🏆</div>
+        <div class="cred-text"><h4>1° Hackathon Paqarina Wasi</h4><p>Mejor proyecto tecnológico · Cusco</p></div>
+      </div>
+      <div class="cred-item">
+        <div class="cred-icon">🚀</div>
+        <div class="cred-text"><h4>2× Incubación + aceleración IDEALAB</h4><p>Programa de startups · Cusco</p></div>
+      </div>
+      <div class="cred-item">
+        <div class="cred-icon">✅</div>
+        <div class="cred-text"><h4>Acreditados Startup Perú 13G</h4><p>Aprobados en concurso nacional de innovación</p></div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-num">06 / 14</div>
+</div>
+
+<!-- SLIDE 7: ECOSISTEMA ADIS -->
+<div class="slide dark2" data-theme="dark">
+  <div class="content">
+    <div class="badge badge-teal anim anim-1">No somos nuevos</div>
+    <h2 class="section-h white-text anim anim-2">El ecosistema ADIS<br><span class="hl-teal">ya existe y funciona.</span></h2>
+    <div class="traction-row anim anim-3">
+      <div class="traction-stat"><div class="n">500+</div><div class="l">Emprendedores<br>publicados</div></div>
+      <div class="traction-stat"><div class="n">2K</div><div class="l">Seguidores<br>Noticiadis</div></div>
+      <div class="traction-stat"><div class="n">13K</div><div class="l">Biblioteca<br>Municipal</div></div>
+    </div>
+    <div class="eco-pills anim anim-4">
+      <a href="https://buscadis.com" target="_blank" rel="noopener" class="eco-pill">🔍 buscadis.com</a>
+      <a href="https://publicadis.com" target="_blank" rel="noopener" class="eco-pill">📢 publicadis.com</a>
+      <a href="https://adis.lat" class="eco-pill">⚡ adis.lat</a>
+    </div>
+    <p class="cred-mini anim anim-5">Marketplace + publicidad + páginas. Paqarina · IDEALAB · Startup Perú 13G. Tu negocio entra a una red que ya mueve Cusco.</p>
+    <a href="#pagar" class="btn btn-invest anim anim-5" id="ecoPayBtn">Quiero entrar al ecosistema →</a>
+  </div>
+  <div class="slide-num">07 / 14</div>
+</div>
+
+<!-- SLIDE 8: PORTAFOLIO WEB -->
+<div class="slide light scroll-y" data-theme="light">
+  <div class="content">
+    <div class="badge badge-teal anim anim-1">Portafolio real</div>
+    <h2 class="section-h anim anim-2" style="font-size:clamp(24px,6vw,36px);">Páginas que ya<br><span class="hl-teal">desarrollamos.</span></h2>
+    <div class="port-scroll anim anim-4" id="portRow1"></div>
+    <div class="port-scroll anim anim-5" id="portRow2"></div>
+    <p style="font-size:11px;color:var(--dim);text-align:center;margin-top:4px;">+ muchos casos más en Cusco y LATAM</p>
+    <a href="#pagar" class="btn btn-invest anim anim-5" id="portPayBtn" style="margin-top:8px;">Quiero una página como estas →</a>
+  </div>
+  <div class="slide-num">08 / 14</div>
+</div>
+
+<!-- SLIDE 9: REDES Y MEDIOS -->
+<div class="slide dark scroll-y" data-theme="dark">
+  <div class="content">
+    <div class="badge badge-white anim anim-1">Redes + medios</div>
+    <h2 class="section-h white-text anim anim-2">Tu negocio en manos<br>de quien ya sabe comunicar.</h2>
+    <div class="social-grid anim anim-3">
+      <div class="social-card">
+        <img src="assets/noticiadis.png" alt="Noticiadis Cusco Hoy">
+        <div class="social-stat">~2,000</div>
+        <h4>Noticiadis Cusco Hoy</h4>
+        <p>Canal propio de noticias locales · post promocional incluido para ti</p>
+      </div>
+      <div class="social-card">
+        <img src="assets/buscadis-tiktok.png" alt="Buscadis TikTok">
+        <div class="social-stat">864+</div>
+        <h4>Buscadis · TikTok</h4>
+        <p>Avisos clasificados · empleos · inmuebles · vehículos en Cusco</p>
+      </div>
+      <div class="social-card">
+        <img src="assets/publicadis-fb.png" alt="Publicadis">
+        <div class="social-stat">62+</div>
+        <h4>Publicadis</h4>
+        <p>Publicidad para emprendedores · diseño + difusión multicanal</p>
+      </div>
+      <div class="social-card">
+        <img src="assets/shantall-bmc.png" alt="Shantall · Biblioteca Municipal Cusco">
+        <div class="social-stat">13K+</div>
+        <h4>Shantall · Medios</h4>
+        <p>Inkavisión · Exitosa Noticias · Radio · TV · Biblioteca Municipal · Valley Camp</p>
+      </div>
+    </div>
+    <p class="cred-mini anim anim-4">No te enseñamos desde un PDF. Ya movimos cientos de negocios, un canal de noticias y perfiles con miles de seguidores.</p>
+  </div>
+  <div class="slide-num">09 / 14</div>
+</div>
+
+<!-- SLIDE 10: PLAN POTENTE DESTACADO -->
+<div class="slide teal" data-theme="dark">
+  <div class="content">
+    <div class="badge badge-white anim anim-1">⭐ Plan Predilecto</div>
+    <h2 class="section-h white-text anim anim-2">Plan Potente · S/. 300<br><span style="opacity:.85;">Motor de Ventas</span></h2>
+    <p class="section-sub dimw anim anim-3" style="max-width:360px;">Lo que la mayoría elige: nosotros diseñamos tu página web, ordenamos tu catálogo, mejoramos tus fotos y te hacemos publicidad. Tú sigues con tu negocio.</p>
+    <div class="trust-list anim anim-4">
+      <div class="trust-item"><span>🌐</span><span><strong style="color:var(--white);">Página web profesional</strong> — diseñada con el nombre de tu marca para generar confianza</span></div>
+      <div class="trust-item"><span>🛍️</span><span><strong style="color:var(--white);">Catálogo virtual</strong> — productos ordenados para que elijan fácil lo que quieren comprar</span></div>
+      <div class="trust-item"><span>📸</span><span><strong style="color:var(--white);">Mejora de fotos</strong> — editamos tus imágenes para que se vean nítidas y profesionales</span></div>
+      <div class="trust-item"><span>📣</span><span><strong style="color:var(--white);">Publicidad en redes</strong> — primera campaña configurada para atraer clientes</span></div>
+      <div class="trust-item"><span>🏪</span><span><strong style="color:var(--white);">Anuncios en Buscadis</strong> — apareces en los primeros lugares del marketplace</span></div>
+      <div class="trust-item"><span>✅</span><span>Incluye todo el <strong style="color:var(--green);">Plan Básico</strong> (perfil autogestionable en Buscadis)</span></div>
+    </div>
+    <a href="#pagar" class="btn btn-white anim anim-5" id="potentePayBtn">Elegir Plan Potente →</a>
+  </div>
+  <div class="slide-num">10 / 14</div>
+</div>
+
+<!-- SLIDE 11: COMPARATIVA DE PLANES -->
+<div class="slide off scroll-y" data-theme="light">
+  <div class="content">
+    <div class="badge badge-teal anim anim-1">Compara y elige</div>
+    <h2 class="section-h anim anim-2">¿Qué plan<br><span class="hl-teal">va contigo?</span></h2>
+    <table class="plan-compare anim anim-3">
+      <thead>
+        <tr><th></th><th>Básico<br>S/. 30</th><th>Potente ⭐<br>S/. 300</th><th>Premium<br>S/. 3,000</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Perfil en Buscadis</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+        <tr><td>Panel autogestionable</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+        <tr><td>Página web profesional</td><td class="no">—</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+        <tr><td>Catálogo diseñado por ADIS</td><td class="no">—</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+        <tr><td>Mejora de fotos</td><td class="no">—</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+        <tr><td>Publicidad en redes</td><td class="no">—</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+        <tr><td>Manejo completo de redes</td><td class="no">—</td><td class="no">—</td><td class="yes">✓</td></tr>
+        <tr><td>Fotos/video en tu local</td><td class="no">—</td><td class="no">—</td><td class="yes">✓</td></tr>
+        <tr><td>Tienda con pagos online</td><td class="no">—</td><td class="no">—</td><td class="yes">✓</td></tr>
+        <tr><td>Asistente IA + asesoría</td><td class="no">—</td><td class="no">—</td><td class="yes">✓</td></tr>
+      </tbody>
+    </table>
+    <p class="anim anim-4" style="font-size:12px;color:var(--dim);text-align:center;max-width:340px;">¿Empiezas? Básico S/. 30. ¿Quieres página web y publicidad? Potente S/. 300. ¿Quieres que lo manejemos todo? Premium S/. 3,000.</p>
+    <a href="#pagar" class="btn btn-invest anim anim-5" id="portPayBtn">Reservar mi plan →</a>
+  </div>
+  <div class="slide-num">11 / 14</div>
+</div>
+
+<!-- SLIDE 12: FAQ -->
+<div class="slide light scroll-y" data-theme="light">
+  <div class="content">
+    <div class="badge badge-teal anim anim-1">Antes de decidir</div>
+    <h2 class="section-h anim anim-2">Las dudas<br>que todas tienen.</h2>
+    <div class="faq-list anim anim-3">
+      <div class="faq-item">
+        <h4>“¿Cuál plan me conviene?”</h4>
+        <p><strong>Básico S/. 30</strong> si quieres aparecer en Buscadis y subir productos tú misma. <strong>Potente S/. 300</strong> si quieres que nosotros hagamos tu página web, catálogo y publicidad. <strong>Premium S/. 3,000</strong> si quieres que manejemos todo — redes, fotos en tu local, tienda online e IA.</p>
+      </div>
+      <div class="faq-item">
+        <h4>“¿Tengo que saber de tecnología?”</h4>
+        <p>No. En el Plan Básico tienes un panel fácil para cambiar datos y subir productos. En Potente y Premium nosotros diseñamos y desarrollamos todo — tú nos mandas fotos de tu celular y sigues atendiendo tu negocio.</p>
+      </div>
+      <div class="faq-item">
+        <h4>“¿S/. 300 no es mucho?”</h4>
+        <p>Quival pagó S/. 250 solo por página y catálogo — sin publicidad ni fotos mejoradas. El Plan Potente incluye todo eso + campaña publicitaria + anuncios en Buscadis por S/. 300.</p>
+      </div>
+      <div class="faq-item">
+        <h4>“¿Por qué confiar en ustedes?”</h4>
+        <p>Llevamos años en Cusco: buscadis.com, publicadis.com, Noticiadis (~2K seguidores), 14+ páginas vivas. Quival tiene 510 productos online. Desliza al portafolio y mira tú misma.</p>
+      </div>
+    </div>
+    <a href="#" class="btn btn-wa anim anim-4" id="faqWaBtn" target="_blank">💬 Otra duda — pregúntanos sin compromiso</a>
+  </div>
+  <div class="slide-num">12 / 14</div>
+</div>
+
+<!-- SLIDE 13: REAL PROOF -->
+<div class="slide gold" data-theme="dark">
+  <div class="content">
+    <div class="badge badge-white anim anim-1">Resultados reales · Cusco</div>
+    <h2 class="section-h white-text anim anim-2">No empezamos ayer.<br>Ya lo hicimos.</h2>
+    <div class="traction-row anim anim-3">
+      <div class="traction-stat"><div class="n">500+</div><div class="l">Emprendedores<br>publicados</div></div>
+      <div class="traction-stat"><div class="n">864</div><div class="l">Likes<br>Buscadis</div></div>
+      <div class="traction-stat"><div class="n">510</div><div class="l">Productos<br>Quival</div></div>
+    </div>
+    <div class="case-card anim anim-4">
+      <img class="case-img" src="assets/quival-catalogo.png" alt="Catálogo Quival en Buscadis">
+      <div class="case-body">
+        <span class="case-tag">Cliente pagante</span>
+        <h4>Quival · Ferretería mayorista</h4>
+        <p>Pagó S/. 250 por página y catálogo. Hoy usa su vitrina con 510 productos todos los días en buscadis.com/quival</p>
+      </div>
+    </div>
+    <div class="case-card anim anim-5">
+      <img class="case-img" src="assets/agrilsur-catalogo.png" alt="Catálogo Agril Sur">
+      <div class="case-body">
+        <span class="case-tag">Proyecto activo</span>
+        <h4>Agril Sur · Destilería ancestral</h4>
+        <p>Página, catálogo y múltiples versiones digitales de su línea de bebidas artesanales andinas.</p>
+      </div>
+    </div>
+    <a href="#" class="btn btn-white anim anim-5" id="proofPortBtn">Ver las 14+ páginas aquí →</a>
+  </div>
+  <div class="slide-num">13 / 14</div>
+</div>
+
+<!-- SLIDE 14: PAYMENT CTA -->
+<div id="pagar" class="slide light scroll-y" data-theme="light">
+  <div class="content">
+    <div class="badge badge-teal anim anim-1">Último paso · elige tu plan</div>
+    <div class="plans-grid anim anim-2" style="margin-bottom:4px;">
+      <div class="plan-card compact" data-plan-select="basico" onclick="selectPlan('basico')">
+        <div class="plan-card-head"><div class="plan-card-name">Básico</div><div class="plan-price" style="font-size:22px;">S/. 30</div></div>
+        <div class="plan-subtitle">Presencia en Buscadis</div>
+      </div>
+      <div class="plan-card featured selected" data-plan-select="potente" onclick="selectPlan('potente')">
+        <div class="plan-card-head"><div class="plan-card-name">Potente ⭐</div><div class="plan-price" style="font-size:22px;">S/. 300</div></div>
+        <div class="plan-subtitle">Página web + catálogo + publicidad</div>
+      </div>
+      <div class="plan-card compact" data-plan-select="premium" onclick="selectPlan('premium')">
+        <div class="plan-card-head"><div class="plan-card-name">Premium</div><div class="plan-price" style="font-size:22px;">S/. 3,000</div></div>
+        <div class="plan-subtitle">Crecimiento total</div>
+      </div>
+    </div>
+    <div class="price-big anim anim-2">
+      <div class="price-now" style="color:var(--ink);" id="payPriceDisplay">S/. 300</div>
+      <div class="price-period" style="color:var(--dim);" id="payPlanLabel">Plan Potente · Motor de Ventas</div>
+    </div>
+    <div class="invest-box anim anim-3">
+      <span id="payPlanDesc">Página web profesional, catálogo virtual, mejora de fotos y publicidad en Buscadis — nosotros lo hacemos por ti.</span>
+    </div>
+    <div class="steps-pay anim anim-3">
+      <div class="step-pay">
+        <div class="step-num">1</div>
+        <div><h4 id="yapeStepTitle">Yapea S/. 300</h4><p id="yapeStepText">990 551 461 · Shantall / ADIS</p></div>
+      </div>
+      <div class="step-pay">
+        <div class="step-num">2</div>
+        <div><h4>Manda captura al WhatsApp ADIS</h4><p>937 054 328 — confirmamos en minutos</p></div>
+      </div>
+      <div class="step-pay">
+        <div class="step-num">3</div>
+        <div><h4>Arrancamos contigo</h4><p>Te escribimos con los primeros pasos de tu plan</p></div>
+      </div>
+    </div>
+    <div class="pay-methods anim anim-3">
+      <div class="pay-method">
+        <div class="pay-icon">💜</div>
+        <div class="pay-info">
+          <h4>Yape (recomendado)</h4>
+          <p id="yapeDisplay">990 551 461 · Shantall / ADIS</p>
+          <small>Toca para copiar número</small>
+        </div>
+      </div>
+      <div class="pay-method">
+        <div class="pay-icon">🔵</div>
+        <div class="pay-info">
+          <h4>Plin</h4>
+          <p id="plinDisplay">990 551 461 · Shantall / ADIS</p>
+          <small>Alternativa si no tienes Yape</small>
+        </div>
+      </div>
+    </div>
+    <div class="backup-box anim anim-4">
+      ¿No te responde el WhatsApp empresa en 1 min?<br>
+      Respaldo: <a href="#" id="backupJairo" target="_blank">Jairo 953 865 163</a> · <a href="#" id="backupShantall" target="_blank">Shantall 990 551 461</a>
+    </div>
+    <div style="width:100%;max-width:360px;display:flex;flex-direction:column;gap:10px;" class="anim anim-4">
+      <a href="#" class="btn btn-invest" id="payConfirmWa" target="_blank">💜 Pagar plan — enviar comprobante →</a>
+      <a href="#" class="btn btn-wa" id="payQuestionWa" style="font-size:14px;padding:12px 24px;" target="_blank">Tengo una duda — hablar por WhatsApp</a>
+    </div>
+    <div class="anim anim-5" style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--dim);text-align:center;flex-wrap:wrap;justify-content:center;">
+      <span>🛡️ Garantía Plan Potente</span>
+      <span>·</span>
+      <span>✓ Todo lo construido es tuyo</span>
+      <span>·</span>
+      <span>3 planes · ADIS Cusco</span>
+    </div>
+  </div>
+  <div class="slide-num">14 / 14</div>
+</div>
+
+</div><!-- /deck -->
+
+<!-- PREVIEW MODAL -->
+<div id="previewModal" role="dialog" aria-modal="true" aria-labelledby="previewTitle">
+  <div class="preview-head">
+    <h3 id="previewTitle">Vista previa</h3>
+    <button type="button" class="preview-close" id="previewClose" aria-label="Cerrar">✕</button>
+  </div>
+  <div class="preview-frame-wrap">
+    <iframe id="previewFrame" title="Vista previa del sitio" sandbox="allow-scripts allow-same-origin allow-popups allow-forms"></iframe>
+    <p id="previewFallback" class="preview-fallback" hidden>Algunos sitios no permiten vista embebida. Ábrelo completo abajo ↓</p>
+    <a href="#" class="preview-open" id="previewOpenLink" target="_blank" rel="noopener">Abrir sitio completo →</a>
+  </div>
+</div>
+
+<script>
+// ===== CONFIG (editar aquí) =====
+const PLANS = {
+  basico: {
+    id: 'basico',
+    name: 'Plan Básico',
+    label: 'Plan Básico · Presencia Inicial',
+    price: 30,
+    desc: 'Perfil en Buscadis, panel autogestionable y carga de productos por tu cuenta.',
+    msg: 'Hola ADIS! Vi adis.lat y quiero el Plan Básico (S/. 30) — perfil en Buscadis. Ya hice el Yape, adjunto comprobante.'
+  },
+  potente: {
+    id: 'potente',
+    name: 'Plan Potente',
+    label: 'Plan Potente · Motor de Ventas',
+    price: 300,
+    featured: true,
+    desc: 'Página web profesional, catálogo virtual, mejora de fotos y publicidad en Buscadis — nosotros lo hacemos por ti.',
+    msg: 'Hola ADIS! Vi adis.lat y quiero el Plan Potente (S/. 300) — página web + catálogo + publicidad. Ya hice el Yape, adjunto comprobante.'
+  },
+  premium: {
+    id: 'premium',
+    name: 'Plan Premium',
+    label: 'Plan Premium · Crecimiento Total',
+    price: 3000,
+    desc: 'Todo lo del Potente + manejo de redes, producción en tu local, tienda con pagos, IA y asesoría mensual.',
+    msg: 'Hola ADIS! Vi adis.lat y quiero el Plan Premium (S/. 3,000). Ya hice el Yape, adjunto comprobante.'
+  }
+};
+
+const ADIS = {
+  WA_EMPRESA: '51937054328',
+  WA_JAIRO: '51953865163',
+  WA_SHANTALL: '51990551461',
+  YAPE: '990 551 461',
+  PLIN: '990 551 461',
+  CUPOS: 10,
+  PLANS_SLIDE: 2,
+  PAY_SLIDE: 13,
+  PORT_SLIDE: 7,
+  DEADLINE: null,
+  BONUS_DEADLINE: null,
+  MSG_DUDA: 'Hola ADIS! Vi adis.lat y tengo una pregunta sobre los planes antes de reservar.'
+};
+
+let selectedPlan = 'potente';
+
+function fmtPrice(n){ return 'S/. ' + n.toLocaleString('es-PE'); }
+
+function selectPlan(id){
+  if(!PLANS[id]) return;
+  selectedPlan = id;
+  const plan = PLANS[id];
+  document.querySelectorAll('[data-plan-select]').forEach(el=>{
+    el.classList.toggle('selected', el.dataset.planSelect === id);
+  });
+  const payPrice = document.getElementById('payPriceDisplay');
+  const payLabel = document.getElementById('payPlanLabel');
+  const payDesc = document.getElementById('payPlanDesc');
+  const yapeTitle = document.getElementById('yapeStepTitle');
+  if(payPrice) payPrice.textContent = fmtPrice(plan.price);
+  if(payLabel) payLabel.textContent = plan.label;
+  if(payDesc) payDesc.textContent = plan.desc;
+  if(yapeTitle) yapeTitle.textContent = 'Yapea ' + fmtPrice(plan.price);
+  const sticky = document.getElementById('stickyYape');
+  if(sticky) sticky.textContent = '💜 ' + plan.name + ' · ' + fmtPrice(plan.price);
+  const payBtn = document.getElementById('payConfirmWa');
+  if(payBtn) payBtn.href = waUrl(ADIS.WA_EMPRESA, plan.msg);
+}
+
+function waUrl(num, text){ return 'https://wa.me/' + num + '?text=' + encodeURIComponent(text); }
+
+function bindPayNav(el, slide){
+  if(!el) return;
+  el.addEventListener('click', e=>{ e.preventDefault(); goToSlide(slide != null ? slide : ADIS.PAY_SLIDE); });
+}
+
+function copyYape(e){
+  const n = ADIS.YAPE.replace(/\s/g,'');
+  if(navigator.clipboard){
+    navigator.clipboard.writeText(n).then(()=>{
+      const t = e.currentTarget.querySelector('small');
+      if(t){ const o=t.textContent; t.textContent='¡Copiado! Pega en Yape'; setTimeout(()=>t.textContent=o, 2000); }
+    });
+  }
+}
+
+function applyConfig(){
+  const waDuda = waUrl(ADIS.WA_EMPRESA, ADIS.MSG_DUDA);
+
+  ['heroWaBtn','stickyWa','faqWaBtn'].forEach(id=>{
+    const el = document.getElementById(id);
+    if(el) el.href = waDuda;
+  });
+  const payBtn = document.getElementById('payConfirmWa');
+  if(payBtn) payBtn.href = waUrl(ADIS.WA_EMPRESA, PLANS[selectedPlan].msg);
+  const q = document.getElementById('payQuestionWa');
+  if(q) q.href = waDuda;
+
+  const bj = document.getElementById('backupJairo');
+  const bs = document.getElementById('backupShantall');
+  if(bj) bj.href = waUrl(ADIS.WA_JAIRO, ADIS.MSG_DUDA);
+  if(bs) bs.href = waUrl(ADIS.WA_SHANTALL, ADIS.MSG_DUDA);
+
+  const yd = document.getElementById('yapeDisplay');
+  const ys = document.getElementById('yapeStepText');
+  const pd = document.getElementById('plinDisplay');
+  const yapeLine = ADIS.YAPE + ' · Jairo / ADIS';
+  const plinLine = ADIS.PLIN + ' · Shantall / ADIS';
+  if(yd) yd.textContent = yapeLine;
+  if(ys) ys.textContent = yapeLine;
+  if(pd) pd.textContent = plinLine;
+
+  document.querySelectorAll('.pay-method').forEach((pm,i)=>{
+    if(i===0) pm.style.cursor='pointer';
+    if(i===0) pm.addEventListener('click', copyYape);
+  });
+
+  bindPayNav(document.getElementById('navPayBtn'), ADIS.PLANS_SLIDE);
+  bindPayNav(document.getElementById('heroPayBtn'), ADIS.PLANS_SLIDE);
+  bindPayNav(document.getElementById('trustPayBtn'), ADIS.PLANS_SLIDE);
+  bindPayNav(document.getElementById('corePayBtn'));
+  bindPayNav(document.getElementById('stickyYape'));
+  bindPayNav(document.getElementById('ecoPayBtn'));
+  bindPayNav(document.getElementById('potentePayBtn'));
+  bindPayNav(document.getElementById('portPayBtn'));
+
+  document.getElementById('proofPortBtn')?.addEventListener('click', e=>{
+    e.preventDefault();
+    goToSlide(ADIS.PORT_SLIDE);
+  });
+}
+
+const PORTFOLIO = [
+  { title: 'Buscadis', url: 'https://buscadis.com', tag: 'Marketplace · Cusco', img: 'assets/buscadis.com.png' },
+  { title: 'PublicAdis', url: 'https://publicadis.com', tag: 'Publicidad digital', img: 'assets/publicadis.com.png' },
+  { title: 'ADIS.lat', url: 'https://adis.lat', tag: 'Esta propuesta', img: 'assets/adis.lat.png' },
+  { title: 'Quival', url: 'https://www.buscadis.com/quival', tag: 'Cliente · 510 productos', img: 'assets/quival-catalogo.png' },
+  { title: 'Agril Sur', url: 'https://www.buscadis.com/agrilsur', tag: 'Destilería · Cusco', img: 'assets/agrilsur-catalogo.png' },
+  { title: 'Agril Sur Web', url: 'https://agrilsur.vercel.app/', tag: 'Landing premium', img: 'assets/agrilsur-buscadis.png' },
+  { title: 'SAP Adventures', url: 'https://sapadventures.org/', tag: 'Turismo · Machu Picchu', img: 'assets/sapadventures.org.png' },
+  { title: 'La Tatuadora', url: 'https://latatuadora.com/', tag: 'Academia · Landing', img: 'assets/latatuadora.com.png' },
+  { title: 'Jairo Saul', url: 'https://jairosaul.com/', tag: 'Portfolio tech', img: 'assets/jairosaul.com.png' },
+  { title: 'Shantall Zarai', url: 'https://shantallzarai.com/', tag: 'Marketing · CMO', img: 'assets/shantall-influencer.png' },
+  { title: 'GlowApplify', url: 'https://gloway.vercel.app/', tag: 'Startup · IA', img: 'assets/glowapplify.png' },
+  { title: 'Candidatazo', url: 'https://candidatazo-elector.vercel.app/', tag: 'Cívica · Elecciones', img: 'assets/candidatazo.png' },
+  { title: 'Vector', url: 'https://vector-livid.vercel.app/', tag: 'Innovación · IA', img: 'assets/vector.png' },
+  { title: 'Vectorify', url: 'https://convectorify.com/', tag: 'SaaS · Negocios', img: 'assets/vectorify.png' }
+];
+
+function portThumb(item){
+  if(item.img) return `<img class="port-thumb" src="${item.img}" alt="${item.title}" loading="lazy">`;
+  const c = item.color || '#0EA5E9';
+  return `<div class="port-thumb-placeholder" style="background:linear-gradient(135deg,${c},${c}99);">${item.letter || item.title[0]}</div>`;
+}
+
+function portCard(item){
+  const el = document.createElement('button');
+  el.type = 'button';
+  el.className = 'port-card';
+  el.innerHTML = `${portThumb(item)}<div class="port-body"><span class="port-tag">${item.tag}</span><h4>${item.title}</h4><p>Toca para ver ↗</p></div>`;
+  el.addEventListener('click', ()=> openPreview(item.url, item.title));
+  return el;
+}
+
+function renderPortfolio(){
+  const r1 = document.getElementById('portRow1');
+  const r2 = document.getElementById('portRow2');
+  if(!r1 || !r2) return;
+  const half = Math.ceil(PORTFOLIO.length / 2);
+  PORTFOLIO.slice(0, half).forEach(item => r1.appendChild(portCard(item)));
+  PORTFOLIO.slice(half).forEach(item => r2.appendChild(portCard(item)));
+}
+
+function openPreview(url, title){
+  const modal = document.getElementById('previewModal');
+  const frame = document.getElementById('previewFrame');
+  const head = document.getElementById('previewTitle');
+  const link = document.getElementById('previewOpenLink');
+  const fb = document.getElementById('previewFallback');
+  const sticky = document.getElementById('sticky-cta');
+  if(!modal || !frame) return;
+  head.textContent = title;
+  link.href = url;
+  fb.hidden = true;
+  frame.hidden = false;
+  frame.src = url;
+  modal.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  sticky?.classList.add('is-hidden');
+  setTimeout(()=>{
+    try{
+      const doc = frame.contentDocument;
+      if(!doc || !doc.body || doc.body.innerHTML === '') fb.hidden = false;
+    }catch(_){ fb.hidden = false; }
+  }, 2500);
+}
+
+function closePreview(){
+  const modal = document.getElementById('previewModal');
+  const frame = document.getElementById('previewFrame');
+  if(modal) modal.classList.remove('open');
+  if(frame) frame.src = 'about:blank';
+  document.body.style.overflow = '';
+  updateUI();
+}
+
+document.getElementById('previewClose')?.addEventListener('click', closePreview);
+document.getElementById('previewModal')?.addEventListener('click', e=>{
+  if(e.target.id === 'previewModal') closePreview();
+});
+document.addEventListener('keydown', e=>{
+  if(e.key === 'Escape') closePreview();
+});
+
+function isBonusActive(){
+  return ADIS.BONUS_DEADLINE && Date.now() <= ADIS.BONUS_DEADLINE.getTime();
+}
+
+function fmtCountdown(ms){
+  if(ms <= 0) return 'CERRADO';
+  const h = Math.floor(ms / 3600000);
+  const m = Math.floor((ms % 3600000) / 60000);
+  const s = Math.floor((ms % 60000) / 1000);
+  return `${h}h ${String(m).padStart(2,'0')}m ${String(s).padStart(2,'0')}s`;
+}
+
+function updateBonusUI(){
+  const active = isBonusActive();
+  document.querySelectorAll('.bonus-only').forEach(el=>{ el.hidden = !active; });
+  document.querySelectorAll('.bonus-gone').forEach(el=>{ el.hidden = active; });
+  const bar = document.getElementById('countdown-bar');
+  const hasDeadline = ADIS.DEADLINE && Date.now() < ADIS.DEADLINE.getTime();
+  if(bar) bar.hidden = !hasDeadline && !active;
+  document.body.classList.toggle('has-countdown', bar && !bar.hidden);
+  const mainText = document.getElementById('countdownMainText');
+  if(mainText){
+    mainText.innerHTML = `3 planes ADIS · desde S/. 30 · Buscadis Cusco`;
+  }
+  syncChromeHeights();
+}
+
+function updateCountdown(){
+  const el = document.getElementById('countdown');
+  const bonusEl = document.getElementById('bonusCountdown');
+  if(ADIS.DEADLINE && el){
+    el.hidden = false;
+    el.textContent = fmtCountdown(ADIS.DEADLINE - Date.now());
+  } else if(el){
+    el.hidden = true;
+  }
+  if(bonusEl && isBonusActive()){
+    bonusEl.textContent = fmtCountdown(ADIS.BONUS_DEADLINE - Date.now());
+  }
+  updateBonusUI();
+}
+
+// ===== STATE =====
+let current = 0;
+const total = 14;
+let lastTheme = 'light';
+
+// ===== DOTS INIT =====
+const dotsEl = document.getElementById('dots');
+for(let i=0;i<total;i++){
+  const d = document.createElement('div');
+  d.className = 'dot' + (i===0?' active':'');
+  d.onclick = ()=>goToSlide(i);
+  dotsEl.appendChild(d);
+}
+
+// ===== SLIDES REF =====
+const deck = document.getElementById('deck');
+const slides = document.querySelectorAll('.slide');
+const progress = document.getElementById('progress');
+const nav = document.getElementById('nav');
+const hint = document.getElementById('hint');
+const navD = document.getElementById('navD');
+
+deck.addEventListener('scroll', () => {
+  const idx = Math.round(deck.scrollTop / window.innerHeight);
+  if(idx !== current){
+    current = idx;
+    updateUI();
+  }
+  if(deck.scrollTop > 50) hint?.classList.add('hide');
+});
+
+function updateUI(){
+  document.querySelectorAll('#dots .dot').forEach((d,i)=>{
+    d.classList.toggle('active', i===current);
+  });
+  progress.style.width = ((current/(total-1))*100)+'%';
+  slides.forEach((s,i)=>{
+    s.classList.toggle('active', i===current);
+  });
+  const theme = slides[current]?.dataset.theme||'light';
+  if(theme !== lastTheme){
+    nav.classList.toggle('dark', theme==='dark');
+    navD.classList.toggle('w', theme==='dark');
+    lastTheme = theme;
+  }
+  const sticky = document.getElementById('sticky-cta');
+  const navPay = document.getElementById('navPayBtn');
+  const onHero = current === 0;
+  const onPaySlide = current === total - 1;
+  sticky?.classList.toggle('is-hidden', onHero || onPaySlide);
+  navPay?.classList.toggle('is-hidden', onHero);
+  hint?.classList.toggle('hide', current !== 0);
+}
+
+function syncChromeHeights(){
+  const cd = document.getElementById('countdown-bar');
+  if(cd) document.documentElement.style.setProperty('--countdown-h', cd.offsetHeight + 'px');
+}
+window.addEventListener('resize', syncChromeHeights);
+if(typeof ResizeObserver !== 'undefined'){
+  const ro = new ResizeObserver(syncChromeHeights);
+  const cdBar = document.getElementById('countdown-bar');
+  if(cdBar) ro.observe(cdBar);
+}
+
+function goToSlide(i){
+  deck.scrollTo({top: i * window.innerHeight, behavior:'smooth'});
+  current = i;
+  updateUI();
+}
+
+document.addEventListener('keydown', e=>{
+  if(e.key==='ArrowDown'||e.key==='PageDown') goToSlide(Math.min(current+1,total-1));
+  if(e.key==='ArrowUp'||e.key==='PageUp') goToSlide(Math.max(current-1,0));
+});
+
+slides[0].classList.add('active');
+renderPortfolio();
+updateBonusUI();
+syncChromeHeights();
+applyConfig();
+selectPlan('potente');
+updateCountdown();
+setInterval(updateCountdown, 1000);
+updateUI();
+</script>
+</body>
+</html>

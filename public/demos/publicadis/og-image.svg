@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0C4A6E"/>
+      <stop offset="100%" style="stop-color:#0369A1"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect x="60" y="48" width="280" height="40" rx="20" fill="#0EA5E9"/>
+  <text x="200" y="74" font-family="system-ui,sans-serif" font-size="18" font-weight="700" fill="#fff" text-anchor="middle">3 PLANES · DESDE S/. 30</text>
+  <text x="80" y="168" font-family="Georgia,serif" font-size="58" font-weight="bold" fill="#ffffff">Tu negocio en internet</text>
+  <text x="80" y="240" font-family="Georgia,serif" font-size="58" font-weight="bold" fill="#F59E0B">con el plan que necesitas.</text>
+  <text x="80" y="320" font-family="system-ui,sans-serif" font-size="30" fill="rgba(255,255,255,0.92)">Básico S/. 30 · Potente S/. 300 P · Premium S/. 3,000</text>
+  <text x="80" y="380" font-family="system-ui,sans-serif" font-size="26" fill="rgba(255,255,255,0.75)">Página web · catálogo · publicidad en Buscadis</text>
+  <text x="80" y="500" font-family="system-ui,sans-serif" font-size="42" font-weight="700" fill="#10B981">Plan Potente · S/. 300</text>
+  <text x="80" y="560" font-family="system-ui,sans-serif" font-size="22" fill="rgba(255,255,255,0.55)">adis.lat · Quival y Agril Sur ya confían</text>
+</svg>

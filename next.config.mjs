@@ -42,6 +42,13 @@ const nextConfig = {
   async headers() {
     return [
       {
+        source: '/demos/:path*',
+        headers: [
+          { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
+          { key: 'Cache-Control', value: 'public, max-age=3600' },
+        ],
+      },
+      {
         source: '/(.*)',
         headers: [
           {
