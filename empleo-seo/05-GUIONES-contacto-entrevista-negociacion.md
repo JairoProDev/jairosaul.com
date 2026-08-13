@@ -26,11 +26,11 @@ Todo el mismo día. No secuencial con días de espera: multicanal simultáneo.
 
 > Buenos días. Mi nombre es Jairo, soy desarrollador web en Cusco.
 >
-> Estuve analizando la parte técnica de sus tres sitios (perugrandtravel.com, viajesmachupicchutours.com y machupicchupacotes.com) y encontré tres cosas concretas que hoy les están costando reservas, sobre todo en el mercado brasileño.
+> Estuve analizando la parte técnica de sus sitios (perugrandtravel.com, viajesmachupicchutours.com, machupicchupacotes.com y viaggiomachupicchu.it) y encontré varias cosas concretas que hoy les están costando reservas.
 >
-> La principal: los tres dominios no tienen etiquetas hreflang. Eso significa que cuando un brasileño busca en Google, el buscador decide por su cuenta cuál de sus tres versiones mostrarle — y muchas veces no muestra la portuguesa.
+> La principal: los cuatro dominios no tienen etiquetas hreflang. Cuando un brasileño o un italiano busca en Google, el buscador decide por su cuenta cuál versión mostrarle — y muchas veces no es la de su idioma.
 >
-> Preparé una auditoría con los hallazgos verificados y un video de 5 minutos explicándolos. Se la envío sin compromiso: [ENLACE]
+> Preparé una auditoría con los hallazgos verificados. Se la envío sin compromiso: https://jairosaul.com/peru-grand-travel
 >
 > Si algo de lo que ahí digo les sirve, con gusto conversamos. Vi que tienen abierta la vacante de Analista SEO Técnico y postulé por Computrabajo, pero preferí mostrar trabajo antes que un CV.
 
@@ -46,23 +46,23 @@ Todo el mismo día. No secuencial con días de espera: multicanal simultáneo.
 
 ## Guion 2 — Correo formal
 
-**Asunto:** `3 hallazgos técnicos en sus 3 sitios (hreflang, precios en Google, reseñas)`
+**Asunto:** `Hallazgos técnicos en sus 4 sitios (hreflang, precios en Google, reseñas)`
 
 *Un asunto que describe contenido, no que pide atención. Nada de "Postulación" ni "Oportunidad".*
 
 > Estimado equipo de Peru Grand Travel / Sr. Ponce:
 >
-> Soy Jairo, desarrollador web radicado en Cusco. Escribo porque, tras analizar técnicamente sus tres dominios, encontré tres problemas concretos y solucionables:
+> Soy Jairo, desarrollador web radicado en Cusco. Escribo porque, tras analizar técnicamente sus cuatro dominios en vivo, encontré problemas concretos y solucionables:
 >
-> **1. Ausencia total de hreflang entre sus tres dominios.** Ninguno de los tres declara sus equivalencias en otros idiomas. Con esto, Google no sabe que las tres versiones de un mismo tour son la misma oferta: las trata como páginas que compiten entre sí y elige por su cuenta qué versión mostrar a cada mercado. Afecta a los ~50-60 tours que existen en los tres catálogos.
+> **1. Ausencia total de hreflang entre inglés, español, portugués e italiano.** Ninguno declara equivalencias en otros idiomas. Google no sabe que las versiones de un mismo tour son la misma oferta: las trata como páginas que compiten entre sí. Afecta a los 31 productos que ya existen en los cuatro catálogos.
 >
-> **2. Sus fichas de tour no declaran la moneda del precio.** El dato estructurado incluye "150" pero no si son dólares. Google exige ese campo para mostrar el precio en el resultado de búsqueda, así que hoy más de 120 fichas están inhabilitadas para ese formato enriquecido. La corrección es de una línea en la plantilla.
+> **2. Sus fichas de tour no declaran la moneda del precio.** El dato estructurado incluye un número ("150", "372") pero no si son dólares, soles, reales o euros. Google exige ese campo para mostrar el precio en el resultado de búsqueda. La corrección es de una línea en la plantilla.
 >
-> **3. Tienen cientos de reseñas reales y ninguna está declarada en datos estructurados.** Las estrellas en el resultado de Google son el mayor multiplicador de clics disponible sin ganar posiciones. Es valor que ya ganaron y que no están cobrando.
+> **3. Tienen cientos de reseñas reales y ninguna está declarada en datos estructurados.** Las estrellas en el resultado de Google suben el clic sin necesidad de ganar posiciones. Es valor que ya ganaron y que no están cobrando.
 >
-> Preparé una auditoría completa con la verificación de cada punto, un plan de 30 días y un prototipo funcional de la solución al punto 1 para su stack (WordPress + Goodlayers). También grabé un video de 5 minutos recorriéndolo:
+> Preparé una auditoría con la verificación de cada punto, el mapa de equivalencias (incluido el sitio italiano) y un prototipo de la solución al punto 1 para su stack (WordPress + Goodlayers):
 >
-> **[ENLACE AL PAQUETE]**
+> **https://jairosaul.com/peru-grand-travel**
 >
 > Se lo envío sin condiciones: si les sirve, úsenlo.
 >
@@ -79,7 +79,7 @@ Todo el mismo día. No secuencial con días de espera: multicanal simultáneo.
 
 ## Guion 3 — LinkedIn a Clever Ponce (mensaje corto, es LinkedIn)
 
-> Sr. Ponce, buenos días. Soy Jairo, desarrollador en Cusco. Analicé la parte técnica de los tres sitios de Peru Grand Travel y encontré tres problemas que están afectando su visibilidad en el mercado brasileño. Le dejo la auditoría y un video de 5 min, sin compromiso: [ENLACE]. Si le resulta útil, conversamos.
+> Sr. Ponce, buenos días. Soy Jairo, desarrollador en Cusco. Analicé la parte técnica de los cuatro sitios de Peru Grand Travel (incluido viaggiomachupicchu.it) y encontré problemas que afectan visibilidad en Brasil e Italia. Le dejo la auditoría, sin compromiso: https://jairosaul.com/peru-grand-travel. Si le resulta útil, conversamos.
 
 ---
 

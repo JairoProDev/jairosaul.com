@@ -19,6 +19,7 @@ import { highlightCode } from '@/lib/highlight-code';
 import {
   AUDIT_DATE_LABEL,
   GITHUB_CODE_URL,
+  MARKET_LABEL,
   PAGE_DESCRIPTION,
   PAGE_TITLE,
   PAGE_URL,
@@ -27,7 +28,10 @@ import {
   domains,
   downloads,
   findings,
+  isHttpUrl,
+  parseCsv,
   secondaryFindings,
+  type CsvTable,
   type Severity,
 } from '@/lib/peru-grand-travel';
 
@@ -104,6 +108,10 @@ export default function PeruGrandTravelPage() {
   const pySource = readFileSync(join(ASSETS, 'auditor_seo.py'), 'utf8');
   const phpPreview = previewSource(phpSource);
   const pyPreview = previewSource(pySource);
+  const equivalencias = parseCsv(
+    readFileSync(join(ASSETS, 'equivalencias-hreflang.csv'), 'utf8'),
+  );
+  const gaps = parseCsv(readFileSync(join(ASSETS, 'gaps-de-catalogo.csv'), 'utf8'));
 
   return (
     <div className="relative min-h-screen bg-cortex-900 text-cortex-100">
@@ -162,8 +170,10 @@ export default function PeruGrandTravelPage() {
             Preparada por {contact.shortName} · {contact.location} · {AUDIT_DATE_LABEL}
           </p>
           <p className="mt-4 max-w-2xl text-base leading-relaxed text-cortex-300">
-            Revisé la parte técnica de los tres sitios y dejé los hallazgos, el
-            mapa de equivalencias y el código para implementarlos.
+            Revisé la parte técnica de los cuatro sitios en vivo — inglés,
+            español, portugués e italiano — y el dominio anterior en español.
+            Aquí están los hallazgos, el mapa de equivalencias y el código para
+            implementarlos.
           </p>
 
           <ul className="mt-6 flex flex-wrap gap-2" aria-label="Dominios analizados">
@@ -251,14 +261,16 @@ export default function PeruGrandTravelPage() {
             Descargas
           </h2>
           <p className="mt-2 text-sm text-cortex-300">
-            El informe completo, el mapa de URLs y el código. Cada archivo se
-            puede abrir en el navegador o descargar.
+            El PDF se abre en el navegador. Los CSV se leen aquí mismo; el
+            botón de descarga es por si quieren llevárselos a Excel.
           </p>
 
           <ul className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2">
             {downloads.map((file) => {
               const size = fileSizeLabel(file.filename);
               const Icon = file.format === 'PDF' ? FileText : FileSpreadsheet;
+              const previewHref =
+                'previewHref' in file ? file.previewHref : undefined;
               return (
                 <li
                   key={file.id}
@@ -277,13 +289,13 @@ export default function PeruGrandTravelPage() {
                       </p>
                       <div className="mt-4 flex flex-wrap gap-2">
                         <a
-                          href={file.href}
-                          target="_blank"
-                          rel="noopener noreferrer"
+                          href={previewHref ?? file.href}
+                          target={previewHref ? undefined : '_blank'}
+                          rel={previewHref ? undefined : 'noopener noreferrer'}
                           className={`inline-flex items-center gap-1.5 rounded-lg bg-acetylcholine-600 px-3 py-2 text-sm font-medium text-white hover:bg-acetylcholine-500 ${focusRing}`}
                         >
                           <ExternalLink className="h-4 w-4" aria-hidden="true" />
-                          Abrir
+                          {previewHref ? 'Ver tabla' : 'Abrir'}
                         </a>
                         <a
                           href={file.href}
@@ -326,6 +338,21 @@ export default function PeruGrandTravelPage() {
               </div>
             </li>
           </ul>
+
+          <CsvPreview
+            id="equivalencias"
+            title="Mapa de equivalencias"
+            caption={`${equivalencias.rows.length} productos. EN, ES, PT e IT. Un enlace abre la ficha; el guion significa que ese mercado no tiene el tour.`}
+            table={equivalencias}
+            urlHeaders={['url_en', 'url_es', 'url_pt_BR', 'url_it']}
+          />
+          <CsvPreview
+            id="gaps"
+            title="Gaps de catálogo"
+            caption={`${gaps.rows.length} huecos. Italia es el mercado con más productos sin publicar.`}
+            table={gaps}
+            urlHeaders={['url_referencia']}
+          />
         </section>
 
         <section className="mt-16 audit-defer" aria-labelledby="detalle-heading">
@@ -434,7 +461,7 @@ export default function PeruGrandTravelPage() {
             Código de implementación
           </h2>
           <p className="mt-2 text-sm text-cortex-300">
-            Escrito para WordPress + Goodlayers, tres instalaciones aparte, y
+            Escrito para WordPress + Goodlayers, cuatro instalaciones aparte, y
             el WAF que bloquea crawlers con user-agent de herramienta.
           </p>
 
@@ -525,6 +552,101 @@ export default function PeruGrandTravelPage() {
         </a>
       </div>
     </div>
+  );
+}
+
+function csvHeaderLabel(header: string) {
+  const labels: Record<string, string> = {
+    producto: 'Producto',
+    url_en: 'EN',
+    url_es: 'ES',
+    url_pt_BR: 'PT',
+    url_it: 'IT',
+    idiomas: 'Idiomas',
+    confianza: 'Confianza',
+    mercado_faltante: 'Falta en',
+    existe_en: 'Existe en',
+    url_referencia: 'Referencia',
+  };
+  return labels[header] ?? header;
+}
+
+function formatCsvCell(header: string, value: string) {
+  if (header === 'mercado_faltante') {
+    return MARKET_LABEL[value] ?? value;
+  }
+  if (header === 'existe_en') {
+    return value
+      .split(',')
+      .map((part) => MARKET_LABEL[part.trim()] ?? part.trim())
+      .join(', ');
+  }
+  if (value === '— NO EXISTE —') return '—';
+  return value;
+}
+
+function CsvPreview({
+  id,
+  title,
+  caption,
+  table,
+  urlHeaders,
+}: {
+  id: string;
+  title: string;
+  caption: string;
+  table: CsvTable;
+  urlHeaders: string[];
+}) {
+  return (
+    <figure
+      id={id}
+      className="audit-defer mt-8 scroll-mt-24 rounded-xl border border-cortex-700 bg-cortex-800"
+    >
+      <figcaption className="border-b border-cortex-700 px-4 py-4 sm:px-5">
+        <h3 className="font-semibold text-white">{title}</h3>
+        <p className="mt-1 text-sm text-cortex-300">{caption}</p>
+      </figcaption>
+      <div className="audit-table-wrap" tabIndex={0}>
+        <table className="audit-table">
+          <thead>
+            <tr>
+              {table.headers.map((header) => (
+                <th key={header} scope="col">
+                  {csvHeaderLabel(header)}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {table.rows.map((row) => (
+              <tr key={row.join('|')}>
+                {table.headers.map((header, i) => {
+                  const raw = row[i] ?? '';
+                  const url = urlHeaders.includes(header) && isHttpUrl(raw);
+                  return (
+                    <td key={header} data-col={header}>
+                      {url ? (
+                        <a
+                          href={raw}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className={`text-acetylcholine-300 underline-offset-2 hover:underline ${focusRing}`}
+                        >
+                          Ver
+                        </a>
+                      ) : (
+                        formatCsvCell(header, raw)
+                      )}
+                    </td>
+                  );
+                })}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </figure>
   );
 }
 

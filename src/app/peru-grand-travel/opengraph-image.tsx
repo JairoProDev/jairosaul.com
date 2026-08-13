@@ -50,7 +50,7 @@ export default function OpenGraphImage() {
               fontFamily: 'sans-serif',
             }}
           >
-            Entregable · jairosaul.com
+            jairosaul.com
           </div>
           <div
             style={{
@@ -99,7 +99,7 @@ export default function OpenGraphImage() {
                 background: '#1e293b',
               }}
             >
-              3 dominios
+              4 dominios
             </div>
             <div
               style={{
@@ -122,7 +122,7 @@ export default function OpenGraphImage() {
                 background: '#1e293b',
               }}
             >
-              EN · ES · PT
+              EN · ES · PT · IT
             </div>
           </div>
           <div
@@ -136,7 +136,7 @@ export default function OpenGraphImage() {
             }}
           >
             <div style={{ color: '#f8fafc' }}>Jairo · Cusco</div>
-            <div>9 de agosto de 2026</div>
+            <div>13 de agosto de 2026</div>
           </div>
         </div>
       </div>

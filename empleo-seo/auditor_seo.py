@@ -3,7 +3,7 @@
 auditor_seo.py — Auditor SEO técnico para redes multidominio.
 
 Diseñado para redes donde cada idioma vive en un dominio distinto
-(Peru Grand Travel: EN, ES y PT en tres instalaciones WordPress).
+(Peru Grand Travel: EN, ES, PT e IT en cuatro instalaciones WordPress).
 
 Qué hace:
   1. Descubre URLs desde sitemap_index.xml de cada dominio.

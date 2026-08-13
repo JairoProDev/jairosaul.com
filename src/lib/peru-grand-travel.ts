@@ -5,15 +5,15 @@
 export const GITHUB_CODE_URL =
   'https://github.com/JairoProDev/jairosaul.com/tree/main/public/peru-grand-travel';
 
-export const AUDIT_DATE_ISO = '2026-08-09';
-export const AUDIT_DATE_LABEL = '9 de agosto de 2026';
+export const AUDIT_DATE_ISO = '2026-08-13';
+export const AUDIT_DATE_LABEL = '13 de agosto de 2026';
 
 export const PAGE_PATH = '/peru-grand-travel';
 export const PAGE_URL = `https://jairosaul.com${PAGE_PATH}`;
 
 export const PAGE_TITLE = 'Auditoría SEO Técnica — Peru Grand Travel';
 export const PAGE_DESCRIPTION =
-  'Análisis de los tres dominios de Peru Grand Travel: hreflang, datos estructurados, reseñas y rendimiento. Hallazgos verificables y propuesta de implementación. Jairo, Cusco.';
+  'Análisis de los cuatro dominios en vivo de Peru Grand Travel (EN, ES, PT, IT): hreflang, datos estructurados, reseñas y rendimiento. Hallazgos verificables y propuesta de implementación. Jairo, Cusco.';
 
 const PHONE_DISPLAY = '+51 953 865 163';
 const WHATSAPP = 'https://wa.me/51953865163';
@@ -40,6 +40,7 @@ export const domains = [
   { host: 'perugrandtravel.com', lang: 'EN', market: 'USA / Europa' },
   { host: 'viajesmachupicchutours.com', lang: 'ES', market: 'LATAM / España' },
   { host: 'machupicchupacotes.com', lang: 'PT', market: 'Brasil' },
+  { host: 'viaggiomachupicchu.it', lang: 'IT', market: 'Italia' },
 ] as const;
 
 export type Severity = 'critica' | 'alta' | 'media';
@@ -58,19 +59,19 @@ export const findings: {
   {
     id: 'hreflang',
     n: '1',
-    title: 'Los tres dominios no tienen hreflang',
+    title: 'Los cuatro dominios no tienen hreflang',
     severity: 'critica',
     severityLabel: 'Crítica',
     impact:
-      'Google decide qué idioma mostrar. Un brasileño puede terminar en la versión en español.',
+      'Google decide qué idioma mostrar. Un italiano o un brasileño puede terminar en la versión en español.',
     effort: 'Esfuerzo medio',
     body: [
-      'Ninguno de los tres dominios declara equivalencias entre idiomas: ni en HTML, ni en cabeceras HTTP, ni en los sitemaps. El selector de idioma solo enlaza home con home.',
-      'Sin hreflang, Google trata las tres versiones de un mismo tour como páginas distintas que compiten entre sí, y elige por su cuenta cuál mostrar en cada mercado.',
-      'Afecta a los 50–60 tours que existen en las tres versiones, sobre una red de unas 570 URLs.',
+      'La red en vivo son cuatro WordPress: inglés, español, portugués e italiano. Ninguno declara equivalencias entre idiomas: ni en HTML, ni en cabeceras HTTP, ni en los sitemaps. El selector de banderas solo enlaza home con home.',
+      'El dominio italiano (viaggiomachupicchu.it) está en el encabezado de los otros sitios — bandera subida en enero de 2026 — y tiene los mismos 33 tours sin hreflang que el resto.',
+      'Sin esas anotaciones, Google trata las versiones de un mismo tour como páginas distintas que compiten entre sí, y elige por su cuenta cuál mostrar en cada mercado. Afecta a los 31 productos que ya existen en los cuatro idiomas, sobre una red de unas 620 URLs.',
     ],
     solution:
-      'El CSV de esta página mapea URL con URL. El plugin PHP inyecta el bloque recíproco en wp_head de las tres instalaciones. WPML y Polylang no aplican: cada idioma vive en un WordPress aparte.',
+      'El CSV de esta página mapea URL con URL, ahora con columna italiana. El plugin PHP inyecta el bloque recíproco en wp_head de las cuatro instalaciones. WPML y Polylang no aplican: cada idioma vive en un WordPress aparte.',
   },
   {
     id: 'price-currency',
@@ -79,15 +80,15 @@ export const findings: {
     severity: 'critica',
     severityLabel: 'Crítica',
     impact:
-      'Más de 120 fichas no pueden mostrar precio en Google. Se corrige en la plantilla.',
+      'Más de 150 fichas no pueden mostrar precio en Google. Se corrige en la plantilla.',
     effort: 'Esfuerzo bajo',
     body: [
-      'En el dominio en inglés, el objeto Offer lleva price: "150" y no dice si son dólares, soles o reales.',
-      'En el dominio en portugués, las fichas emiten Product sin Offer. Los tres sitios no hablan el mismo idioma de datos.',
+      'En inglés e italiano el objeto Offer lleva un número (150, 372) y no dice si son dólares, soles, reales o euros.',
+      'En el dominio en portugués, las fichas emiten Product sin Offer. Los cuatro sitios no hablan el mismo idioma de datos.',
       'Google exige priceCurrency. Sin ese campo, Search Console marca error y la ficha queda fuera del resultado enriquecido de producto.',
     ],
     solution:
-      'Añadir priceCurrency (la moneda real de cotización) en la plantilla de tourmaster, emitir Offer completo también en ES y PT, y revisar priceValidUntil: hoy está fijo en 2027-01-01.',
+      'Añadir priceCurrency (la moneda real de cotización) en la plantilla de tourmaster, emitir Offer completo también en ES y PT, y revisar priceValidUntil: hoy está fijo en 2027-01-01 en EN e IT.',
   },
   {
     id: 'reviews',
@@ -99,7 +100,7 @@ export const findings: {
       'Las estrellas en el resultado suben el clic sin necesidad de ganar posiciones.',
     effort: 'Esfuerzo bajo',
     body: [
-      'Las reseñas de Google y Tripadvisor se ven en el sitio (widgets). En el código no hay aggregateRating ni Review.',
+      'Las reseñas de Google y Tripadvisor se ven en el sitio (widgets). En el código no hay aggregateRating ni Review, tampoco en el dominio italiano.',
       'Las reseñas ya están. Falta declararlas para que el buscador pueda pintar estrellas en los resultados.',
     ],
     solution:
@@ -108,42 +109,43 @@ export const findings: {
   {
     id: 'blog-en',
     n: '4',
-    title: 'El sitio en inglés no tiene blog',
+    title: 'Inglés e italiano casi no tienen blog',
     severity: 'alta',
     severityLabel: 'Alta',
     impact:
-      '0 artículos en EN frente a 101 en ES y 105 en PT. El mercado de mayor ticket no capta búsquedas de investigación.',
+      '0 artículos en EN y 2 en IT, frente a 101 en ES y 105 en PT. Los mercados europeos de mayor ticket no captan búsquedas de investigación.',
     effort: 'Esfuerzo alto',
     body: [
-      'El post-sitemap de perugrandtravel.com está vacío. Español y portugués ya tienen más de cien artículos cada uno.',
-      'Quien reserva desde EE.UU. o Europa investiga durante meses (días en Cusco, Inca Trail vs Salkantay, mal de altura). Ese tráfico hoy se lo llevan los competidores.',
+      'El post-sitemap de perugrandtravel.com está vacío. El italiano tiene dos notas. Español y portugués ya tienen más de cien artículos cada uno.',
+      'Quien reserva desde EE.UU., Europa o Italia investiga durante meses (días en Cusco, Inca Trail vs Salkantay, mal de altura). Ese tráfico hoy se lo llevan los competidores.',
     ],
     solution:
-      'Una página pilar por destino ancla (Machu Picchu, Inca Trail, Sacred Valley, Rainbow Mountain, Cusco) y 8–12 artículos alrededor, con enlace a la ficha de tour. Adaptar la intención de búsqueda; no traducir literal desde ES o PT.',
+      'Una página pilar por destino ancla (Machu Picchu, Inca Trail, Valle Sagrado, Montaña de Colores, Cusco) y 8–12 artículos alrededor, con enlace a la ficha de tour. Adaptar la intención de búsqueda de cada mercado; no traducir literal desde ES o PT.',
   },
   {
     id: 'rendimiento',
     n: '5',
-    title: 'El inglés carga 3,5 veces más lento que el portugués',
+    title: 'El inglés y el italiano cargan varias veces más lento que el portugués',
     severity: 'alta',
     severityLabel: 'Alta',
     impact:
-      'TTFB 1,04 s en EN frente a 0,10 s en PT. El inglés se sirve sin caché de página.',
+      'TTFB 1,04 s en EN y ~1,3 s en IT, frente a 0,10 s en PT. Inglés se sirve sin caché de página.',
     effort: 'Esfuerzo medio',
     body: [
-      'Mismo stack, tres hosts. EN responde cache-control: no-store. ES y PT responden public. El HTML en inglés no se está cacheando.',
-      'Además: 28–31 hojas de estilo, 46–72 scripts, y Google Fonts carga Poppins en 18 variantes más DM Sans con subset devanagari, un alfabeto que no usa ningún cliente de esta empresa.',
+      'Mismo stack, cuatro hosts. EN responde cache-control: no-store. ES y PT responden public. El HTML en inglés no se está cacheando. El italiano tampoco envía una política de caché útil.',
+      'Además: 23–31 hojas de estilo, 35–72 scripts, y Google Fonts carga Poppins en 18 variantes más DM Sans con subset devanagari, un alfabeto que no usa ningún cliente de esta empresa.',
       'En móvil, sobre 4G, eso se nota antes de ver el precio.',
     ],
     solution:
-      'Activar caché de página en EN. Recortar fuentes a los pesos que realmente se usan, preload de la imagen principal de cada plantilla, y diferir CSS y JS que no hacen falta para el primer pintado.',
+      'Activar caché de página en EN e IT. Recortar fuentes a los pesos que realmente se usan, preload de la imagen principal de cada plantilla, y diferir CSS y JS que no hacen falta para el primer pintado.',
   },
 ];
 
 export const secondaryFindings = [
   {
     title: 'robots.txt sin Sitemap en EN y ES',
-    detail: 'Solo el dominio PT declara su sitemap. Se corrige añadiendo una línea.',
+    detail:
+      'PT e IT sí declaran el sitemap (bloque Yoast). EN y ES no. Se corrige añadiendo una línea.',
   },
   {
     title: 'Disallow inválidos en EN',
@@ -169,6 +171,11 @@ export const secondaryFindings = [
     detail:
       'paquetesdeviajesperu.com apunta a viajesmachupicchutours.com página a página, no todo a la home. Es el error más frecuente en migraciones y aquí no está.',
   },
+  {
+    title: 'Italia es el catálogo más corto de la red en vivo',
+    detail:
+      '33 tours frente a 69 en inglés. Al mercado italiano le faltan 40 productos que sí se venden en otro idioma, incluido el Valle Sagrado, Salkantay, Amazonía y los paquetes de lujo.',
+  },
 ];
 
 export const downloads = [
@@ -177,7 +184,7 @@ export const downloads = [
     href: '/peru-grand-travel/auditoria-peru-grand-travel.pdf',
     filename: 'auditoria-peru-grand-travel.pdf',
     title: 'Auditoría completa',
-    format: 'PDF',
+    format: 'PDF' as const,
     hint: 'Informe con hallazgos, verificación y plan de 30 días',
   },
   {
@@ -185,16 +192,18 @@ export const downloads = [
     href: '/peru-grand-travel/equivalencias-hreflang.csv',
     filename: 'equivalencias-hreflang.csv',
     title: 'Mapa de equivalencias',
-    format: 'CSV',
-    hint: '74 productos mapeados EN / ES / PT',
+    format: 'CSV' as const,
+    hint: '74 productos mapeados EN / ES / PT / IT',
+    previewHref: '#equivalencias',
   },
   {
     id: 'gaps',
     href: '/peru-grand-travel/gaps-de-catalogo.csv',
     filename: 'gaps-de-catalogo.csv',
     title: 'Gaps de catálogo',
-    format: 'CSV',
-    hint: 'Tours que no existen en los tres idiomas',
+    format: 'CSV' as const,
+    hint: 'Tours que no existen en los cuatro idiomas',
+    previewHref: '#gaps',
   },
 ] as const;
 
@@ -205,7 +214,7 @@ export const codeFiles = [
     filename: 'hreflang-multidominio.php',
     title: 'hreflang-multidominio.php',
     language: 'php' as const,
-    hint: 'Plugin WordPress para emitir hreflang entre las tres instalaciones',
+    hint: 'Plugin WordPress para emitir hreflang entre las cuatro instalaciones',
   },
   {
     id: 'python',
@@ -216,3 +225,62 @@ export const codeFiles = [
     hint: 'Auditor de sitemaps, TTFB, schema y reciprocidad hreflang',
   },
 ] as const;
+
+export type CsvTable = {
+  headers: string[];
+  rows: string[][];
+};
+
+export function parseCsv(text: string): CsvTable {
+  const src = text.replace(/^\uFEFF/, '');
+  const rows: string[][] = [];
+  let row: string[] = [];
+  let field = '';
+  let inQuotes = false;
+
+  for (let i = 0; i < src.length; i += 1) {
+    const c = src[i];
+    if (inQuotes) {
+      if (c === '"') {
+        if (src[i + 1] === '"') {
+          field += '"';
+          i += 1;
+        } else {
+          inQuotes = false;
+        }
+      } else {
+        field += c;
+      }
+    } else if (c === '"') {
+      inQuotes = true;
+    } else if (c === ',') {
+      row.push(field);
+      field = '';
+    } else if (c === '\n') {
+      row.push(field);
+      if (row.some((cell) => cell.trim() !== '')) rows.push(row);
+      row = [];
+      field = '';
+    } else if (c !== '\r') {
+      field += c;
+    }
+  }
+  if (field.length > 0 || row.length > 0) {
+    row.push(field);
+    if (row.some((cell) => cell.trim() !== '')) rows.push(row);
+  }
+
+  const [headers = [], ...body] = rows;
+  return { headers, rows: body };
+}
+
+export function isHttpUrl(value: string) {
+  return value.startsWith('http://') || value.startsWith('https://');
+}
+
+export const MARKET_LABEL: Record<string, string> = {
+  en: 'Inglés',
+  es: 'Español',
+  'pt-BR': 'Portugués',
+  it: 'Italiano',
+};

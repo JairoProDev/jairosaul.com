@@ -7,6 +7,7 @@ $HREFLANG_MAPA = array(
 		'en' => 'https://www.perugrandtravel.com/',
 		'es' => 'https://www.viajesmachupicchutours.com/',
 		'pt-BR' => 'https://www.machupicchupacotes.com/',
+		'it' => 'https://www.viaggiomachupicchu.it/',
 	),
 	array(
 		'en' => 'https://www.perugrandtravel.com/tour/city-tour-in-cusco/',
@@ -22,36 +23,43 @@ $HREFLANG_MAPA = array(
 		'en' => 'https://www.perugrandtravel.com/tour/andean-wedding-full-day/',
 		'es' => 'https://www.viajesmachupicchutours.com/tour/matrimonio-andino-full-day/',
 		'pt-BR' => 'https://www.machupicchupacotes.com/pacote/casamento-andino-full-day/',
+		'it' => 'https://www.viaggiomachupicchu.it/tour/matrimonio-andino/',
 	),
 	array(
 		'en' => 'https://www.perugrandtravel.com/tour/humantay-lake-full-day/',
 		'es' => 'https://www.viajesmachupicchutours.com/tour/laguna-humantay-full-day/',
 		'pt-BR' => 'https://www.machupicchupacotes.com/pacote/laguna-humantay-1d/',
+		'it' => 'https://www.viaggiomachupicchu.it/tour/laguna-humantay/',
 	),
 	array(
 		'en' => 'https://www.perugrandtravel.com/tour/rainbow-mountain-full-day/',
 		'es' => 'https://www.viajesmachupicchutours.com/tour/vinicunca-montana-de-colores-1-dia/',
 		'pt-BR' => 'https://www.machupicchupacotes.com/pacote/montanha-colorida-1d/',
+		'it' => 'https://www.viaggiomachupicchu.it/tour/montagna-arcobaleno/',
 	),
 	array(
 		'en' => 'https://www.perugrandtravel.com/tour/atv-rainbow-mountain/',
 		'es' => 'https://www.viajesmachupicchutours.com/tour/montana-de-7-colores-en-cuatrimoto/',
 		'pt-BR' => 'https://www.machupicchupacotes.com/pacote/montanha-colorida-quadricilo/',
+		'it' => 'https://www.viaggiomachupicchu.it/tour/montagna-arcobaleno-in-atv/',
 	),
 	array(
 		'en' => 'https://www.perugrandtravel.com/tour/palccoyo-rainbow-mountain-full-day/',
 		'es' => 'https://www.viajesmachupicchutours.com/tour/palccoyo-cordillera-de-arcoiris-1-dia/',
 		'pt-BR' => 'https://www.machupicchupacotes.com/pacote/montanha-palccoyo-1d/',
+		'it' => 'https://www.viaggiomachupicchu.it/tour/montagna-arcobaleno-palccoyo/',
 	),
 	array(
 		'en' => 'https://www.perugrandtravel.com/tour/ausangate-7-lakes-day-trip/',
 		'es' => 'https://www.viajesmachupicchutours.com/tour/caminata-7-lagunas-ausangate/',
 		'pt-BR' => 'https://www.machupicchupacotes.com/pacote/7-lagunas-ausangate/',
+		'it' => 'https://www.viaggiomachupicchu.it/tour/7-lagune-ausangate/',
 	),
 	array(
 		'en' => 'https://www.perugrandtravel.com/tour/qeswachaka-bridge-full-day/',
 		'es' => 'https://www.viajesmachupicchutours.com/tour/qeswachaka-4-lagunas-full-day/',
 		'pt-BR' => 'https://www.machupicchupacotes.com/pacote/qeswachaka-1d/',
+		'it' => 'https://www.viaggiomachupicchu.it/tour/ponte-inca-qeswachaka/',
 	),
 	array(
 		'en' => 'https://www.perugrandtravel.com/tour/maras-moray-and-the-salineras-full-day/',
@@ -62,11 +70,13 @@ $HREFLANG_MAPA = array(
 		'en' => 'https://www.perugrandtravel.com/tour/maras-moray-and-salineras-atv-tour/',
 		'es' => 'https://www.viajesmachupicchutours.com/tour/maras-moray-salineras-quatrimoto/',
 		'pt-BR' => 'https://www.machupicchupacotes.com/pacote/salineras-maras-moray-de-quadriciclo/',
+		'it' => 'https://www.viaggiomachupicchu.it/tour/atv-di-maras-moray/',
 	),
 	array(
 		'en' => 'https://www.perugrandtravel.com/tour/tour-by-bike-maras-moray-and-salineras/',
 		'es' => 'https://www.viajesmachupicchutours.com/tour/bike-maras-moray-salineras/',
 		'pt-BR' => 'https://www.machupicchupacotes.com/pacote/moray-e-salineiras-bike-1d/',
+		'it' => 'https://www.viaggiomachupicchu.it/tour/bicicletta-di-maras-moray/',
 	),
 	array(
 		'en' => 'https://www.perugrandtravel.com/tour/tour-south-valley-cusco/',
@@ -85,6 +95,7 @@ $HREFLANG_MAPA = array(
 		'en' => 'https://www.perugrandtravel.com/tour/machu-picchu-full-day/',
 		'es' => 'https://www.viajesmachupicchutours.com/tour/machu-picchu-1-dia/',
 		'pt-BR' => 'https://www.machupicchupacotes.com/pacote/machu-picchu-full-day/',
+		'it' => 'https://www.viaggiomachupicchu.it/tour/machu-picchu-1-giorno/',
 	),
 	array(
 		'en' => 'https://www.perugrandtravel.com/tour/sacred-valley-of-the-incas-tour/',
@@ -104,21 +115,25 @@ $HREFLANG_MAPA = array(
 		'en' => 'https://www.perugrandtravel.com/tour/classic-inca-trail-4d/',
 		'es' => 'https://www.viajesmachupicchutours.com/tour/camino-inca-clasico-4-dias/',
 		'pt-BR' => 'https://www.machupicchupacotes.com/pacote/trilha-inca-classica-4d/',
+		'it' => 'https://www.viaggiomachupicchu.it/tour/cammino-inca-4-giorni/',
 	),
 	array(
 		'en' => 'https://www.perugrandtravel.com/tour/classic-inca-trail-7-days/',
 		'es' => 'https://www.viajesmachupicchutours.com/tour/camino-inca-7d-traslados/',
 		'pt-BR' => 'https://www.machupicchupacotes.com/pacote/trilha-inca-classica-7d/',
+		'it' => 'https://www.viaggiomachupicchu.it/tour/cammino-inca-7-giorni/',
 	),
 	array(
 		'en' => 'https://www.perugrandtravel.com/tour/short-inca-trail-2d/',
 		'es' => 'https://www.viajesmachupicchutours.com/tour/camino-inca-corto-2-dias/',
 		'pt-BR' => 'https://www.machupicchupacotes.com/pacote/trilha-inca-curta-2d/',
+		'it' => 'https://www.viaggiomachupicchu.it/tour/cammino-inca-2-giorni/',
 	),
 	array(
 		'en' => 'https://www.perugrandtravel.com/tour/sacred-valley-short-inca-trail-3d/',
 		'es' => 'https://www.viajesmachupicchutours.com/tour/camino-inca-corto-valle-sagrado-3-dias/',
 		'pt-BR' => 'https://www.machupicchupacotes.com/pacote/vale-sagrado-trilha-inca-curta-3d/',
+		'it' => 'https://www.viaggiomachupicchu.it/tour/valle-sacro-cammino-inca-3-giorni/',
 	),
 	array(
 		'en' => 'https://www.perugrandtravel.com/tour/inca-jungle-trek-4d/',
@@ -162,35 +177,42 @@ $HREFLANG_MAPA = array(
 		'en' => 'https://www.perugrandtravel.com/tour/machu-picchu-express-3d/',
 		'es' => 'https://www.viajesmachupicchutours.com/tour/cusco-machu-picchu-3-dias/',
 		'pt-BR' => 'https://www.machupicchupacotes.com/pacote/machu-picchu-express-3d/',
+		'it' => 'https://www.viaggiomachupicchu.it/tour/machu-picchu-3-giorni/',
 	),
 	array(
 		'en' => 'https://www.perugrandtravel.com/tour/incredible-machu-picchu-2d/',
 		'es' => 'https://www.viajesmachupicchutours.com/tour/cusco-machu-picchu-2-dias/',
+		'it' => 'https://www.viaggiomachupicchu.it/tour/machu-picchu-2-giorni/',
 	),
 	array(
 		'en' => 'https://www.perugrandtravel.com/tour/machu-picchu-moderate-4d/',
 		'es' => 'https://www.viajesmachupicchutours.com/tour/cusco-machu-picchu-4-dias/',
 		'pt-BR' => 'https://www.machupicchupacotes.com/pacote/machu-picchu-4d/',
+		'it' => 'https://www.viaggiomachupicchu.it/tour/machu-picchu-4-giorni/',
 	),
 	array(
 		'en' => 'https://www.perugrandtravel.com/tour/classic-machu-picchu-5d/',
 		'es' => 'https://www.viajesmachupicchutours.com/tour/machu-picchu-clasico-5d/',
 		'pt-BR' => 'https://www.machupicchupacotes.com/pacote/machu-picchu-classico-5d/',
+		'it' => 'https://www.viaggiomachupicchu.it/tour/machu-picchu-5-giorni/',
 	),
 	array(
 		'en' => 'https://www.perugrandtravel.com/tour/machu-picchu-humantay-lake-6d/',
 		'es' => 'https://www.viajesmachupicchutours.com/tour/machu-picchu-laguna-humantay-6-dias/',
 		'pt-BR' => 'https://www.machupicchupacotes.com/pacote/machu-picchu-laguna-humantay-6d/',
+		'it' => 'https://www.viaggiomachupicchu.it/tour/machu-picchu-laguna-humantay-6-giorni/',
 	),
 	array(
 		'en' => 'https://www.perugrandtravel.com/tour/machu-picchu-experience-picnic-with-llamas-7d/',
 		'es' => 'https://www.viajesmachupicchutours.com/tour/machu-picchu-picnic-con-llamas-7d/',
 		'pt-BR' => 'https://www.machupicchupacotes.com/pacote/machu-picchu-piquenique-com-lhamas-7d/',
+		'it' => 'https://www.viaggiomachupicchu.it/tour/machu-picchu-picnic-con-lama-7-giorni/',
 	),
 	array(
 		'en' => 'https://www.perugrandtravel.com/tour/incredible-experience-machu-picchu-7d/',
 		'es' => 'https://www.viajesmachupicchutours.com/tour/cusco-valle-sagrado-machu-picchu-7-dias/',
 		'pt-BR' => 'https://www.machupicchupacotes.com/pacote/incrivel-experiencia-machu-picchu-7d/',
+		'it' => 'https://www.viaggiomachupicchu.it/tour/incredibile-machu-picchu-7-giorni/',
 	),
 	array(
 		'en' => 'https://www.perugrandtravel.com/tour/machu-picchu-challenge-8d/',
@@ -201,15 +223,18 @@ $HREFLANG_MAPA = array(
 		'en' => 'https://www.perugrandtravel.com/tour/unforgettable-machu-picchu-8d/',
 		'es' => 'https://www.viajesmachupicchutours.com/tour/cusco-machu-picchu-inolvidable-8-dias/',
 		'pt-BR' => 'https://www.machupicchupacotes.com/pacote/machu-picchu-inesquecivel-8d/',
+		'it' => 'https://www.viaggiomachupicchu.it/tour/machu-picchu-indimenticabile-8-giorni/',
 	),
 	array(
 		'en' => 'https://www.perugrandtravel.com/tour/inca-encounters-8d/',
 		'es' => 'https://www.viajesmachupicchutours.com/tour/encuentro-de-los-incas-8-dias/',
 		'pt-BR' => 'https://www.machupicchupacotes.com/pacote/machu-picchu-com-alpacas-8-dias/',
+		'it' => 'https://www.viaggiomachupicchu.it/tour/incontro-degli-incas-8-giorni/',
 	),
 	array(
 		'en' => 'https://www.perugrandtravel.com/tour/machu-picchu-extreme-challenge/',
 		'es' => 'https://www.viajesmachupicchutours.com/tour/desafio-de-los-incas-15-dias/',
+		'it' => 'https://www.viaggiomachupicchu.it/tour/sfida-degli-inca-15-giorni/',
 	),
 	array(
 		'en' => 'https://www.perugrandtravel.com/tour/spectacular-cusco-7-days/',
@@ -220,26 +245,31 @@ $HREFLANG_MAPA = array(
 		'en' => 'https://www.perugrandtravel.com/tour/spectacular-peru-10d/',
 		'es' => 'https://www.viajesmachupicchutours.com/tour/peru-espectacular-10-dias/',
 		'pt-BR' => 'https://www.machupicchupacotes.com/pacote/peru-espetacular-10d/',
+		'it' => 'https://www.viaggiomachupicchu.it/tour/peru-spettacolare-10-giorni/',
 	),
 	array(
 		'en' => 'https://www.perugrandtravel.com/tour/gastronomic-and-historic-peru-10d/',
 		'es' => 'https://www.viajesmachupicchutours.com/tour/peru-historico-gastronomico-10-dias/',
 		'pt-BR' => 'https://www.machupicchupacotes.com/pacote/peru-historico-e-gastronomico-10d/',
+		'it' => 'https://www.viaggiomachupicchu.it/tour/peru-storico-e-gastronomico-10-giorni/',
 	),
 	array(
 		'en' => 'https://www.perugrandtravel.com/tour/origins-of-the-incas-10d/',
 		'es' => 'https://www.viajesmachupicchutours.com/tour/origenes-de-los-incas-10d/',
 		'pt-BR' => 'https://www.machupicchupacotes.com/pacote/peru-mistico-10-dias/',
+		'it' => 'https://www.viaggiomachupicchu.it/tour/origini-degli-incas-10-giorni/',
 	),
 	array(
 		'en' => 'https://www.perugrandtravel.com/tour/fascinating-adventure-challenge-in-the-andes-11-days/',
 		'es' => 'https://www.viajesmachupicchutours.com/tour/fascinante-aventura-y-desafio-en-los-andes-11d/',
 		'pt-BR' => 'https://www.machupicchupacotes.com/pacote/fascinante-aventura-desafio-nos-andes-11d/',
+		'it' => 'https://www.viaggiomachupicchu.it/tour/affascinante-avventura-sfida-sulle-ande-11-giorni/',
 	),
 	array(
 		'en' => 'https://www.perugrandtravel.com/tour/wonderful-peru-12-days/',
 		'es' => 'https://www.viajesmachupicchutours.com/tour/peru-maravilloso-12d/',
 		'pt-BR' => 'https://www.machupicchupacotes.com/pacote/peru-maravilhoso-12d/',
+		'it' => 'https://www.viaggiomachupicchu.it/tour/peru-meraviglioso-12-giorni/',
 	),
 	array(
 		'en' => 'https://www.perugrandtravel.com/tour/wonder-of-peru-coast-andes-and-rainforest-13d/',
@@ -259,11 +289,13 @@ $HREFLANG_MAPA = array(
 		'en' => 'https://www.perugrandtravel.com/tour/colonial-lima-and-sacred-land-of-the-incas-7d/',
 		'es' => 'https://www.viajesmachupicchutours.com/tour/lima-colonial-tierra-sagrada-de-los-incas-7-dias/',
 		'pt-BR' => 'https://www.machupicchupacotes.com/pacote/lima-colonial-e-terra-sagrada-dos-incas-7d/',
+		'it' => 'https://www.viaggiomachupicchu.it/tour/lima-coloniale-e-terra-sacra-degli-inca-7-giorni/',
 	),
 	array(
 		'en' => 'https://www.perugrandtravel.com/tour/colonial-lima-huacachina-and-sacred-land-of-the-incas-9-days/',
 		'es' => 'https://www.viajesmachupicchutours.com/tour/lima-colonial-huacachina-y-tierra-sagrada-de-los-incas-9d/',
 		'pt-BR' => 'https://www.machupicchupacotes.com/pacote/lima-colonial-huacachina-e-terra-sagrada-dos-incas-9d/',
+		'it' => 'https://www.viaggiomachupicchu.it/tour/lima-huacachina-e-terra-sacra-degli-incas-9-giorni/',
 	),
 	array(
 		'en' => 'https://www.perugrandtravel.com/tour/ballestas-huacachina-islands-full-day/',
@@ -290,6 +322,7 @@ $HREFLANG_MAPA = array(
 		'en' => 'https://www.perugrandtravel.com/tour/inti-raymi-full-day/',
 		'es' => 'https://www.viajesmachupicchutours.com/tour/inti-raymi-fiesta-del-sol-full-day/',
 		'pt-BR' => 'https://www.machupicchupacotes.com/pacote/inti-raymi-1d/',
+		'it' => 'https://www.viaggiomachupicchu.it/tour/inti-raymi-1-giorno/',
 	),
 	array(
 		'en' => 'https://www.perugrandtravel.com/tour/cusco-corpus-christi/',
@@ -300,5 +333,9 @@ $HREFLANG_MAPA = array(
 		'en' => 'https://www.perugrandtravel.com/tour/holy-week-in-cusco/',
 		'es' => 'https://www.viajesmachupicchutours.com/tour/semana-santa-en-cusco-6d/',
 		'pt-BR' => 'https://www.machupicchupacotes.com/pacote/semana-santa-cusco-6d/',
+	),
+	array(
+		'pt-BR' => 'https://www.machupicchupacotes.com/pacote/reveillon-machu-picchu/',
+		'it' => 'https://www.viaggiomachupicchu.it/tour/capodanno-machu-picchu/',
 	),
 );

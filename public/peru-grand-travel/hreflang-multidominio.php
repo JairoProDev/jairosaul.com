@@ -13,25 +13,25 @@
  * cuando cada idioma vive en un dominio y una instalación separada. En ese caso
  * hay que declarar las equivalencias manualmente y garantizar reciprocidad.
  *
- * Sin hreflang, tres dominios que publican el mismo tour en tres idiomas compiten
- * entre sí en vez de sumar señales, y Google elige por su cuenta qué versión
- * mostrar a cada mercado.
+ * Sin hreflang, cuatro dominios que publican el mismo tour en distintos idiomas
+ * compiten entre sí en vez de sumar señales, y Google elige por su cuenta qué
+ * versión mostrar a cada mercado.
  *
  * ---------------------------------------------------------------------------
  * INSTALACIÓN
  * ---------------------------------------------------------------------------
  * 1. Copiar este archivo a wp-content/plugins/hreflang-multidominio/ en CADA
- *    instalación de la red y activarlo. (O pegarlo en el functions.php del tema
- *    hijo, aunque como plugin sobrevive a cambios de tema.)
+ *    instalación de la red (EN, ES, PT, IT) y activarlo. (O pegarlo en el
+ *    functions.php del tema hijo, aunque como plugin sobrevive a cambios de tema.)
  * 2. Cargar el mapa $HREFLANG_MAPA desde equivalencias-hreflang.csv
- *    (mismo array en las tres instalaciones).
+ *    (mismo array en las cuatro instalaciones).
  * 3. Verificar con: curl -s URL | grep hreflang
  * 4. Validar reciprocidad con auditor_seo.py y, después, en el informe de
  *    Segmentación internacional de Search Console.
  *
  * REGLAS QUE ESTE CÓDIGO RESPETA (y que son las que casi todos rompen):
  *   - Reciprocidad: si A declara a B, B declara a A. Se logra usando el MISMO
- *     mapa en las tres instalaciones.
+ *     mapa en las cuatro instalaciones.
  *   - Autorreferencia: cada página se declara a sí misma.
  *   - x-default para el tráfico sin idioma coincidente.
  *   - URLs absolutas, canónicas y finales (sin redirecciones intermedias).
@@ -57,12 +57,14 @@ $HREFLANG_MAPA = array(
 		'en'    => 'https://www.perugrandtravel.com/',
 		'es'    => 'https://www.viajesmachupicchutours.com/',
 		'pt-BR' => 'https://www.machupicchupacotes.com/',
+		'it'    => 'https://www.viaggiomachupicchu.it/',
 	),
 
 	array(
-		'en'    => 'https://www.perugrandtravel.com/tour/sacred-valley-of-the-incas-tour/',
-		'es'    => 'https://www.viajesmachupicchutours.com/tour/tour-valle-sagrado-de-los-incas/',
-		'pt-BR' => 'https://www.machupicchupacotes.com/pacote/vale-sagrado-dos-incas/',
+		'en'    => 'https://www.perugrandtravel.com/tour/machu-picchu-full-day/',
+		'es'    => 'https://www.viajesmachupicchutours.com/tour/machu-picchu-1-dia/',
+		'pt-BR' => 'https://www.machupicchupacotes.com/pacote/machu-picchu-full-day/',
+		'it'    => 'https://www.viaggiomachupicchu.it/tour/machu-picchu-1-giorno/',
 	),
 
 	// Un grupo por cada fila del CSV de equivalencias.

@@ -31,17 +31,19 @@ Esto es lo que casi ningún otro postulante va a descubrir. Operan **una red mul
 | `perugrandtravel.com` | Inglés — mercado USA/Europa | Marca madre, ticket más alto |
 | `viajesmachupicchutours.com` | Español — LATAM/España | Mercado hispano |
 | `machupicchupacotes.com` | Portugués — **Brasil** | Su mercado más caliente |
+| `viaggiomachupicchu.it` | Italiano — **Italia** | Cuarto sitio en vivo; bandera en el header desde enero 2026 |
 | `paquetesdeviajesperu.com` | Español (legacy) | **Ya migrado** — 301 hacia el dominio ES |
 
-**Inventario de URLs medido en sus sitemaps (09/08/2026):**
+**Inventario de URLs medido en sus sitemaps:**
 
 | Dominio | Posts (blog) | Pages | Tours | Categorías | Total aprox. |
 |---|---|---|---|---|---|
 | perugrandtravel.com (EN) | **0** | 62 | 69 | 6 | **137** |
 | viajesmachupicchutours.com (ES) | 101 | 37 | 61 | 7 | **206** |
 | machupicchupacotes.com (PT) | 105 | 59 | 54 | 7 | **225** |
+| viaggiomachupicchu.it (IT) | **2** | 11 | 33 | 2 | **48** |
 
-> **Insight de oro #1:** el sitio en inglés — el mercado de mayor ticket promedio del mundo para Machu Picchu — tiene **cero contenido de blog**. Los sitios ES y PT tienen 100+ artículos cada uno. Hay un agujero de captación TOFU completo en el mercado más rentable.
+> **Insight de oro #1:** el sitio en inglés — el mercado de mayor ticket promedio del mundo para Machu Picchu — tiene **cero contenido de blog**. El italiano tiene dos notas. Los sitios ES y PT tienen 100+ artículos cada uno. Hay un agujero de captación en los dos mercados europeos.
 
 ---
 
