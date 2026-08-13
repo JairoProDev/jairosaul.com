@@ -123,5 +123,5 @@ temp/
 .netlify
 
 # Chrome/Lighthouse profiles accidentally created under the repo (WSL path mapping)
-C:\\Users\\
-**/lighthouse.*/
+C:\\Users\\**
+C:*
