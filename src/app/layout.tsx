@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Lora } from "next/font/google";
 import "./globals.css";
-import PlasticityProvider from '@/components/layout/PlasticityProvider';
 import StructuredData from '@/components/seo/StructuredData';
 
 const inter = Inter({
@@ -118,9 +117,7 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
       </head>
       <body className="bg-cortex-900 text-glutamate-500 font-sans antialiased">
-        <PlasticityProvider>
-          {children}
-        </PlasticityProvider>
+        {children}
       </body>
     </html>
   );

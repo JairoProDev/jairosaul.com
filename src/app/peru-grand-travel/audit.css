@@ -1,0 +1,45 @@
+.audit-code {
+  color: #e2e8f0;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.75rem;
+  line-height: 1.65;
+  tab-size: 2;
+}
+
+.audit-code .tok-kw {
+  color: #93c5fd;
+}
+
+.audit-code .tok-string {
+  color: #86efac;
+}
+
+.audit-code .tok-comment {
+  color: #94a3b8;
+  font-style: italic;
+}
+
+.audit-code .tok-num {
+  color: #fdba74;
+}
+
+.audit-code .tok-var {
+  color: #c4b5fd;
+}
+
+.audit-code .tok-meta {
+  color: #67e8f9;
+}
+
+.audit-details > summary {
+  list-style: none;
+}
+
+.audit-details > summary::-webkit-details-marker {
+  display: none;
+}
+
+.audit-defer {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 720px;
+}

@@ -3,6 +3,7 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   experimental: {
     mdxRs: true,
+    optimizePackageImports: ['lucide-react'],
   },
   async redirects() {
     return [

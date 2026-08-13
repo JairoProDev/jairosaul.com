@@ -1,14 +1,9 @@
-# Auditoría SEO Técnica Preliminar — Red de dominios Peru Grand Travel
+# Auditoría SEO Técnica — Red de dominios Peru Grand Travel
 
 **Alcance:** `perugrandtravel.com` (EN) · `viajesmachupicchutours.com` (ES) · `machupicchupacotes.com` (PT) · `paquetesdeviajesperu.com` (legacy)
 **Fecha del crawl:** 09/08/2026
-**Metodología:** rastreo directo por HTTP con user-agent de navegador, análisis de cabeceras, robots.txt, sitemaps XML, `<head>`, datos estructurados JSON-LD y recursos de render.
-**Naturaleza:** diagnóstico preliminar sin acceso a Google Search Console ni Analytics. Los hallazgos son verificables de forma independiente; las estimaciones de impacto están señaladas como tales.
-
----
-
-> ### ⚠️ Antes de leer: esta auditoría es un borrador tuyo, no un documento final
-> **Verifica cada hallazgo tú mismo antes de enviárselo a nadie.** Los sitios cambian; si arreglaron algo ayer y tú lo reportas hoy, pierdes toda la credibilidad de golpe. El comando de verificación está debajo de cada hallazgo. Correlo el mismo día que envíes el documento.
+**Metodología:** rastreo HTTP con user-agent de navegador; análisis de cabeceras, robots.txt, sitemaps XML, `<head>`, JSON-LD y recursos de render.
+**Alcance del diagnóstico:** sin acceso a Google Search Console ni Analytics. Los hallazgos son verificables de forma independiente. Donde hay estimación de impacto, está indicada como tal.
 
 ---
 
@@ -23,7 +18,7 @@ Cinco hallazgos priorizados:
 | 1 | **Cero anotaciones `hreflang`** entre los tres dominios | 🔴 Crítica | Media | Alto — canibalización y mercado equivocado servido |
 | 2 | **`Offer` sin `priceCurrency`** en fichas de tour | 🔴 Crítica | Baja | Alto — bloquea rich results de precio |
 | 3 | **Cero `aggregateRating`/`Review` en schema** pese a cientos de reseñas reales | 🟠 Alta | Baja | Alto — estrellas en SERP = CTR |
-| 4 | **Sitio EN sin blog (0 posts)** vs 100+ en ES y PT | 🟠 Alta | Alta | Alto — mercado de mayor ticket sin captación TOFU |
+| 4 | **Sitio EN sin blog (0 posts)** vs 100+ en ES y PT | 🟠 Alta | Alta | Alto — mercado de mayor ticket sin contenido de captación |
 | 5 | **Carga de render sobrecargada** (28-31 CSS, 46-72 scripts, fuentes completas) | 🟠 Alta | Media | Medio-alto — Core Web Vitals y conversión móvil |
 
 Más siete hallazgos secundarios en el anexo.
@@ -55,10 +50,10 @@ Con ~570 URLs y **alrededor de 50-60 tours que existen en las tres versiones**, 
 Mapa de equivalencias URL a URL entre los tres dominios y emisión de bloques recíprocos completos, incluyendo autorreferencia y `x-default`:
 
 ```html
-<link rel="alternate" hreflang="en" href="https://www.perugrandtravel.com/tour/sacred-valley-tour/" />
-<link rel="alternate" hreflang="es" href="https://www.viajesmachupicchutours.com/tour/valle-sagrado/" />
-<link rel="alternate" hreflang="pt-BR" href="https://www.machupicchupacotes.com/pacote/vale-sagrado/" />
-<link rel="alternate" hreflang="x-default" href="https://www.perugrandtravel.com/tour/sacred-valley-tour/" />
+<link rel="alternate" hreflang="en" href="https://www.perugrandtravel.com/tour/sacred-valley-of-the-incas-tour/" />
+<link rel="alternate" hreflang="es" href="https://www.viajesmachupicchutours.com/tour/tour-valle-sagrado-de-los-incas/" />
+<link rel="alternate" hreflang="pt-BR" href="https://www.machupicchupacotes.com/pacote/vale-sagrado-dos-incas/" />
+<link rel="alternate" hreflang="x-default" href="https://www.perugrandtravel.com/tour/sacred-valley-of-the-incas-tour/" />
 ```
 
 Reglas no negociables: **bidireccionalidad** (si A apunta a B, B debe apuntar a A), **autorreferencia** en cada página, URLs absolutas y canónicas (no las variantes con redirección), y `pt-BR` en vez de `pt` genérico dado que el mercado real es Brasil.
@@ -114,7 +109,7 @@ curl -s -A "Mozilla/5.0" "https://www.perugrandtravel.com/tour/ballestas-huacach
 Nota adicional: el `robots.txt` de EN intenta bloquear esas rutas de widget, pero **con directivas inválidas** (ver anexo A2).
 
 ### Por qué importa
-Las estrellas en el SERP son el mayor multiplicador de CTR disponible sin ganar posiciones. Tienen el activo (reputación real, verificable, abundante) y no lo están declarando de forma legible para máquinas. Es valor ya pagado y no cobrado.
+Las estrellas en el resultado de Google son el factor de clic más barato que existe: no hace falta ganar posiciones. Las reseñas ya están; falta declararlas para que el buscador pueda mostrarlas.
 
 ### Solución propuesta
 Emitir `aggregateRating` dentro del `Product` de cada tour, **alimentado solo por reseñas reales y específicas de ese tour**, más marcado `Review` para reseñas destacadas. Regla de cumplimiento: Google exige que la valoración marcada corresponda a la entidad de la página y sea visible en ella. Nada de puntuaciones globales pegadas en fichas individuales — eso es riesgo de acción manual.
@@ -134,7 +129,7 @@ Complemento: marcado `TravelAgency` (subtipo de `LocalBusiness`) en la home con 
 | machupicchupacotes.com (PT) | 105 |
 
 ### Por qué importa
-El viajero anglófono investiga durante meses antes de reservar (*"how many days in Cusco"*, *"Inca Trail vs Salkantay"*, *"altitude sickness Cusco"*, *"best time to visit Machu Picchu"*). Ese es tráfico TOFU de altísimo volumen y es exactamente donde los competidores grandes de Cusco capturan la demanda y luego la convierten. Sin blog en EN, el sitio solo puede competir por consultas transaccionales de fondo de embudo, que son las más caras y disputadas.
+El viajero anglófono investiga durante meses antes de reservar (*"how many days in Cusco"*, *"Inca Trail vs Salkantay"*, *"altitude sickness Cusco"*, *"best time to visit Machu Picchu"*). Ese es tráfico de investigación de alto volumen, y es exactamente donde los competidores grandes de Cusco capturan la demanda y luego la convierten. Sin blog en EN, el sitio solo puede competir por consultas transaccionales de fondo de embudo, que son las más caras y disputadas.
 
 Además: el sitio EN tampoco tiene sitemap de categorías de blog, así que no hay arquitectura de contenido preparada — hay que construirla desde cero, no solo escribir.
 
@@ -175,7 +170,7 @@ El TTFB de 1,04 s del sitio EN es **3,5× peor que el del sitio PT** con el mism
 
 ## Anexo — Hallazgos secundarios
 
-**A1 · `robots.txt` sin directiva `Sitemap`** en EN y ES. Solo el dominio PT (bloque Yoast) declara su sitemap. Corrección de un minuto.
+**A1 · `robots.txt` sin directiva `Sitemap`** en EN y ES. Solo el dominio PT (bloque Yoast) declara su sitemap. Se corrige añadiendo una línea.
 
 **A2 · Directivas `Disallow` inválidas en el `robots.txt` de EN.** Tres líneas usan URL absoluta:
 ```
@@ -191,13 +186,13 @@ El estándar exige rutas relativas. Estas líneas **no bloquean nada**: la inten
 
 **A6 · WAF devuelve 406 a user-agents no-navegador.** Bloquea herramientas de auditoría legítimas (Screaming Frog con UA por defecto). Conviene verificar en GSC que no esté afectando ocasionalmente a rastreadores de Google, y en todo caso documentar la excepción para el equipo.
 
-**A7 · Migración `paquetesdeviajesperu.com` → `viajesmachupicchutours.com`: bien hecha.** Verifiqué que los 301 son **página a página** (`/full-day-tours-cusco/` → `/full-day-cusco/`), no todos a la home. Esto merece reconocimiento explícito: es el error más común y frecuente en migraciones y aquí lo hicieron bien. Pendiente: confirmar que la propiedad legacy sigue en GSC para monitorear residuales.
+**A7 · Migración `paquetesdeviajesperu.com` → `viajesmachupicchutours.com`: bien hecha.** Verifiqué que los 301 son **página a página** (`/full-day-tours-cusco/` → `/full-day-cusco/`), no todos a la home. Es el error más frecuente en migraciones y aquí no está. Pendiente: confirmar que la propiedad legacy sigue en GSC para monitorear residuales.
 
 ---
 
 ## Qué NO pude evaluar sin accesos
 
-Deliberadamente fuera de alcance por falta de credenciales, y lo digo abiertamente porque un diagnóstico honesto vale más que uno completo e inventado:
+Deliberadamente fuera de alcance por falta de credenciales:
 
 - **Core Web Vitals de campo (CrUX)** — requiere GSC o API con clave. Las cifras arriba son de laboratorio/red, no de usuarios reales.
 - **Cobertura de indexación real** — cuántas de las ~570 URLs están efectivamente indexadas y cuántas caen en "Detectada, actualmente sin indexar".
@@ -220,4 +215,4 @@ Deliberadamente fuera de alcance por falta de credenciales, y lo digo abiertamen
 
 ---
 
-*Documento preparado por Jairo — [correo] · [teléfono] · [enlace al portafolio]*
+*Documento preparado por Jairo Saul Salas Quiñones — Cusco · JairoProDev@gmail.com · +51 953 865 163 · jairosaul.com/peru-grand-travel*
