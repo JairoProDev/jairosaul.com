@@ -74,6 +74,12 @@ export const siteConfig: SiteConfig = {
       icon: 'lightbulb',
     },
     {
+      label: 'SEO',
+      href: '/seo',
+      description: 'SEO técnico para turismo y WordPress multidominio',
+      icon: 'search',
+    },
+    {
       label: 'Recursos',
       href: '/recursos',
       description: 'Herramientas, libros, frameworks y guías curadas',

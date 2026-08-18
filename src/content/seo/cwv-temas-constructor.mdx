@@ -1,0 +1,53 @@
+---
+title: "Core Web Vitals en temas de constructor"
+description: "Goodlayers, Elementor, Divi: 29 CSS, 57 scripts, Lighthouse 90 y CrUX en rojo. FID murió en 2024. INP es el que te come el WhatsApp. Medir cobertura antes de borrar plugins un viernes."
+date: "2026-08-18"
+cluster: "rendimiento"
+tags: ["cwv", "lcp", "inp", "wordpress", "elementor"]
+excerpt: "El argumento no es el ranking. Es la conversión en el celular del viajero con 4G en el aeropuerto. Con constructor, optimizar a ciegas rompe el diseño. Cobertura, etapas, un idioma primero."
+related:
+  - cache-control-nostore-idioma-caro
+  - fuentes-lcp-subset
+  - waf-screaming-frog-406
+---
+
+Lighthouse 95 y Search Console en rojo pueden convivir. El primero es un laboratorio: un CPU, una red, un momento. El segundo es CrUX: el percentil 75 de usuarios reales, 28 días. En turismo, esos usuarios están en un iPhone cansado en Juliaca, o en un Android en São Paulo. El constructor (Goodlayers, Elementor, Divi, WPBakery) no fue diseñado para ese percentil. Fue diseñado para que marketing mueva un bloque.
+
+Core Web Vitals miden percepción: **LCP** (cuándo veo lo grande), **INP** (cuándo responde el toque; reemplazó a FID en marzo 2024), **CLS** (si se me mueve el botón de WhatsApp). Como factor de ranking son un desempate. Como factor de **reserva** son el sitio que no se espera.
+
+Si alguien te habla de FID en 2026, está desactualizado dos años. No lo humilles en público. Cambia a INP y sigue.
+
+## Lo que medí en portadas de constructor
+
+En una red WordPress + Goodlayers + Tourmaster: 23–31 hojas de estilo, 35–72 scripts, HTML de 214–313 KB. Cada CSS en el `<head>` es potencialmente bloqueante. El JS pelea por el hilo principal: INP.
+
+No voy a decir “eliminen 20 archivos”. Voy a decir: abre DevTools → Coverage. Qué porcentaje de ese CSS se usa en home y en ficha. El número suele ser indecente. Ahí hay un plan. A ciegas, el mega menú se rompe y el viernes marketing te odia.
+
+<Callout type="warning" title="Un idioma primero">
+Si el portugués ya cachea y convierte, no empieces el experimento de defer ahí en hora pico. Staging. O el inglés, que ya está lento. Un dominio, una plantilla, medir, luego copiar.
+</Callout>
+
+## LCP: cuatro subpartes, no “comprima las imágenes”
+
+| Subparte | Qué es | Arreglo típico en constructor |
+|---|---|---|
+| TTFB | Primer byte | Caché de página, menos 301, PHP menos gordo |
+| Retraso de carga | Tarda en pedirse el hero | `preload`, `fetchpriority=high`, **sacar lazy del LCP** |
+| Descarga | Peso del hero | WebP/AVIF, tamaño real, no un 4000px |
+| Render | Ya bajó, no se pinta | Fuentes, CSS bloqueante |
+
+El LCP **nunca** lleva `loading="lazy"`. El constructor lo pone porque “todas las imágenes lazy”. El hero es la excepción. `fetchpriority="high"` en esa `<img>`. `rel=preload as="image"` si el poster es CSS background (peor: el LCP como background no se precarga igual de bien; mejor `<img>`).
+
+## INP: el WhatsApp que no abre
+
+INP mide la latencia de interacción, peor ventana. En una ficha de tour el usuario toca el botón de reserva o el click-to-chat. Si 72 scripts están parseando, el toque espera. TBT en laboratorio correlaciona; no es INP.
+
+Arreglos: `defer` / `type=module` en lo no crítico; no cargar el slider de “tours relacionados” hasta viewport; PixelYourSite y el pixel de Meta no tienen que bloquear el primer toque. Por etapas. Un plugin de “optimización total” que combina CSS y rompe Quadmenu es peor que 29 CSS honestos.
+
+## CLS: el botón que se escapa
+
+Fuentes sin `font-display: swap` y sin métricas, banners de cookies, widgets de reseñas que inyectan alto, el click-to-chat que aparece a los 3 s. Reserva espacio (`min-height`, aspect-ratio en imágenes). El widget de Tripadvisor que empuja el CTA es un clásico.
+
+## Cómo reportas, para no prometer magia
+
+Campo, 28 días, percentil 75, **por plantilla** (home vs tour). Un Lighthouse de tu laptop no es el informe del dueño. El dueño entiende: “el inglés tarda un segundo en el primer byte; el portugués, 0,10. Mismo hosting. Es configuración.” Eso es CWV traducido a negocio. El resto de la semana es Coverage y no romper el theme.

@@ -1,0 +1,46 @@
+---
+title: "Search Console para una red de cuatro dominios"
+description: "Cuatro propiedades, cuatro sitemaps, filtros por país, internacionalización, producto. Sin histórico no hay pacto de 90 días. Lo que se mira la semana 1 y lo que no se promete con un export de 16 meses."
+date: "2026-08-18"
+cluster: "negocio"
+tags: ["gsc", "medicion", "internacional", "ga4"]
+excerpt: "Un GSC no es ‘el de la agencia’. Es uno por host. El italiano nuevo puede no existir como propiedad. El inglés, sí, y estar lleno de errores de Offer. La línea base se exporta antes de tocar producción."
+related:
+  - rastreada-vs-detectada-sin-indexar
+  - hreflang-turismo-idioma-equivocado
+  - noventa-dias-seo-que-implementa
+---
+
+Google Search Console vive en el **host**. `www.agencia.com` no incluye `www.agencia.it`. Prefijo vs dominio: elige a sabiendas. Cuatro idiomas, cuatro propiedades (o un dominio-property por cada uno si hay www y apex bien 301). El italiano nacido en 2026 a menudo **no está verificado**. Eso solo ya es el hallazgo de la semana 1.
+
+Sin GSC, una auditoría externa puede decir hreflang=0 y Offer sin moneda. No puede decir cuántas URLs están indexadas, qué país clica, ni si el error de producto son 5 URLs o 120. Por eso el profesional pide acceso de lectura antes de opinar del índice. Por eso el pacto de sueldo a 90 días se escribe sobre capturas de **hoy**.
+
+## Semana 1, el tablero
+
+1. Verificar las cuatro. DNS / meta / archivo HTML. El `.it` a veces no tiene ni Google Analytics: se arma entero.
+2. Exportar Rendimiento: 16 meses o lo que haya, páginas, queries, **países**, dispositivos. Fecha en el nombre del archivo.
+3. Indexación: recuento. Detectada vs rastreada sin indexar (el artículo de esa distinción).
+4. Mejoras / producto / datos estructurados: `priceCurrency`, reseñas.
+5. Internacionalización: si el informe existe, errores de retorno. Si no existe, es que no hay hreflang que informar.
+6. Estadísticas de rastreo: tiempo de respuesta EN vs PT. El TTFB de `curl` debería verse aquí como tendencia.
+7. Core Web Vitals: campo, si hay tráfico suficiente. Sitios chicos ven origen, no URL.
+
+GA4 (o lo que usen) en paralelo: cómo se marca una reserva o un clic a WhatsApp. Sin conversión, el dueño no ve SEO. UTM por dominio de origen.
+
+<Callout type="warning" title="Límites que debes decir">
+La UI muestra 1.000 filas. Hay muestreo. 16 meses, no eternidad. Latencia de días. El informe de internacionalización tarda en poblarse después de desplegar hreflang. No uses GSC como dashboard en tiempo real el día del deploy.
+</Callout>
+
+## Filtros que importan en turismo
+
+- País: Brasil vs Italia vs US vs España. El clic brasileño en URLs `.com` (inglés/español) es la prueba viviente de hreflang roto o ausente.
+- Página: ficha vs post. En EN, si solo hay fichas, el informe es BOFU puro.
+- Query: canibalización — dos URLs turnándose para *sacred valley tour*.
+
+Comparar 28 días vs 28 días, no “este martes vs el lunes”. Estacionalidad de Cusco (junio–agosto) destroza las vanidades de mes contra mes.
+
+## Lo que GSC no es
+
+No es rankings de Ahrefs. No es reservas. No es “salimos primeros”. Es el canal orgánico según Google: impresiones, clics, errores, rastreo. El puente a dinero es GA4 + ops. El puente a implementación es el informe de producto y el de internacionalización.
+
+Cuatro propiedades, un responsable, un export con fecha. Eso es operar una red. Un solo GSC del .com y “el resto ya se verá” es cómo el italiano vive un año sin índice y nadie se entera.

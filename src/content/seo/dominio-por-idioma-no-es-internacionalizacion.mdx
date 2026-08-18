@@ -1,0 +1,78 @@
+---
+title: "Un dominio por idioma no es internacionalización"
+description: "ccTLD, subcarpeta, WordPress aparte: la estructura de URL es una decisión de negocio. El mecanismo que la hace funcionar es otro. Por qué la opción más cara es la que más obliga a ser preciso."
+date: "2026-08-18"
+cluster: "internacionalizacion"
+tags: ["hreflang", "arquitectura", "dominios", "ccTLD"]
+excerpt: "Elegir viaggiomachupicchu.it y machupicchupacotes.com puede ser correcto. Lo incorrecto es creer que el dominio ya le habla a Google en italiano o en portugués."
+related:
+  - hreflang-turismo-idioma-equivocado
+  - wpml-no-sirve-wordpress-aparte
+  - search-console-cuatro-dominios
+---
+
+Hay una confusión cara en las agencias de Cusco que venden a Brasil, España, Italia y Estados Unidos: **confundir la URL con la anotación**. Compran un `.it`, traducen treinta tours, ponen una bandera en el header, y dan el problema por cerrado. Google ve otro sitio. Autoridad en cero. Enlaces internos que no cruzan el océano. Un selector que salta de ficha a portada.
+
+La internacionalización son tres decisiones, en este orden. Si saltas a la 3 sin la 1, construyes un museo de banderas.
+
+## Decisión 1 — ¿Segmentas idioma, país, o ambos?
+
+La mayoría del turismo receptivo en Perú necesita **idioma**, no país. Un mexicano y un madrileño pueden compartir la ficha en español si el producto, el precio de referencia y el WhatsApp son los mismos. Un brasileño no: moneda, visado, tono, temporada escolar distinta. Un italiano tampoco: calendario, ferries mentales de “quanti giorni a Cusco”, y un dominio `.it` que el viajero ya asocia con “esto está pensado para mí”.
+
+Segmentar por país sin necesidad (`es-MX`, `es-ES`, `es-AR`) multiplica fichas, errores de reciprocidad y trabajo de marketing. No lo hagas porque “se ve profesional”. Hazlo si el producto o el precio **cambian de verdad**.
+
+## Decisión 2 — Estructura de URL
+
+| Estructura | Ejemplo | Qué ganas | Qué pagas |
+|---|---|---|---|
+| Subcarpeta | `agencia.com/it/` | Toda la autoridad en un dominio | Un hosting, un WordPress, un certificado |
+| Subdominio | `it.agencia.com` | Separación de servidor | Autoridad a medias |
+| ccTLD | `agencia.it` | Señal geográfica y confianza local | Autoridad desde cero |
+| Dominio distinto por idioma | `viajes….com` + `machupicchu….it` | Marca y keyword en el dominio | **La peor para autoridad.** Hreflang obligatorio |
+| Parámetro | `?lang=it` | Nada | Google lo desaconseja. No |
+
+El consenso técnico, si solo importara el PageRank, es **subcarpeta**. El consenso de un operador que quiere rankear *pacotes Machu Picchu* en Brasil y *tour Machu Picchu* en Italia es otro: el nombre de dominio vende. Por eso existen redes de cuatro WordPress. No es estupidez. Es una apuesta de marca que **solo funciona si cierras el mecanismo**.
+
+<Compare
+  leftTitle="Lo que cree marketing"
+  rightTitle="Lo que ve el índice"
+  left={<p>Cuatro banderas, cuatro marcas, cuatro mercados atendidos. El italiano “ya tiene su sitio”.</p>}
+  right={<p>Cuatro orígenes, cuatro grafos de enlaces, cero grupos. El italiano de 33 URLs compite con el inglés de 137 y con Tripadvisor.</p>}
+/>
+
+## Decisión 3 — El mecanismo
+
+Hreflang, selector contextual, y **no** un `canonical` que apunte todas las versiones a la inglesa. Canonicalizar el portugués hacia el inglés es decirle a Google: “esta página no existe, mira esa”. Matas el mercado principal para “concentrar autoridad”. Es el atajo que más he visto en implementaciones hechas por alguien que leyó medio artículo.
+
+<Callout type="error" title="Canonical no sustituye hreflang">
+Canonical elige la URL preferida entre duplicados del **mismo** documento. Hreflang agrupa traducciones. Si las usas al revés, o las mezclas (“canonical al EN + hreflang al PT”), mandas señales que se pisan. La canónica de la ficha PT es la ficha PT. El hreflang lista a las hermanas.
+</Callout>
+
+## Qué implica operar cuatro WordPress de verdad
+
+No es “multiplicar el theme”. Es:
+
+- Cuatro Yoast, cuatro sitemaps, cuatro robots.txt, cuatro políticas de caché. En el caso público de la red de Cusco, el inglés mandaba `cache-control: no-store` y el portugués respondía en 0,10 s. Mismo stack, distinta config. Eso solo pasa cuando nadie es dueño de la red.
+- Cuatro plantillas de schema. Un dominio emite `Offer` sin moneda; otro no emite `Offer`. El mercado brasileño, el más caliente, era el peor marcado.
+- Gaps de catálogo. Publicar un Grand Deluxe solo en inglés no es “priorizar ticket alto”. Es esconderlo de Brasil.
+- Migraciones. El dominio viejo en español que redirige **página a página** es el único elogio que hay que hacer en voz alta: la mayoría tira 301 masivo a la home y se carga años de URLs.
+
+La arquitectura de dominio-por-idioma **aumenta** el coste de disciplina. Si no hay un mapa de equivalencias, no hay red. Hay franquicias digitales que no se hablan.
+
+## Cómo elegir si estás a tiempo
+
+Si todavía no compraste el `.it`:
+
+1. ¿El equipo puede mantener contenido nativo, no Google Translate? Si no, subcarpeta `/it/` en el dominio más fuerte.
+2. ¿La keyword del dominio es el negocio (`machupicchu`, `incatrail`)? Entonces el ccTLD o el dominio de marca por idioma puede valer el coste de autoridad — **con** hreflang desde el día 1, no “luego”.
+3. ¿Hay flota, licencia, WhatsApp por idioma? Eso es operación. El SEO no inventa un mercado que ops no puede atender. Un italiano de 33 tours contra 69 en inglés está bien si ops solo opera esos 33. Está mal si ops opera 69 y el sitio italiano es un folleto.
+
+Si ya compraste los cuatro, no migres a subcarpeta en un trimestre. La migración de cuatro ccTLD hacia un solo dominio es un proyecto de un año, con mapa de 301, y en temporada alta es una forma creativa de incendiarse. **Cierra el hreflang. Homogeneiza plantillas. Publica el inventario que ya existe.** Eso es internacionalización. El `.it` solo es el letrero.
+
+## Autoridad: la cuenta que nadie hace
+
+Cada dominio nuevo empieza en cero. Los enlaces que el español ganó en 2019 no se mudan al italiano porque hay una bandera. Hreflang **ayuda a consolidar señales de ranking entre versiones** — Google lo ha descrito así, con matices— pero no es un `rel=linkjuice`. El italiano tiene que ganarse su propio grafo: contenido, menciones, fichas de GetYourGuide en italiano, reseñas.
+
+Por eso el sitio nuevo (dos artículos de blog, treinta tours) no se “come” al inglés. Por eso el plan de 90 días no es “rankear Italia”. Es: no servir español a un italiano, anotar lo que ya es equivalente, y no dejar 40 productos invisibles en ese mercado.
+
+La internacionalización es un sistema. El dominio es una pieza. Si te pagan por SEO técnico en una red así, tu trabajo no es rediseñar la bandera. Es que el sistema deje de mentirle al índice.

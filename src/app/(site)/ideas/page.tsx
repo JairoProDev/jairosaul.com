@@ -4,6 +4,14 @@ import { formatDate } from '@/lib/utils';
 import Link from 'next/link';
 import { Code, Lightbulb, Clock, Calendar, Tag } from 'lucide-react';
 import NeuralBackground from '@/components/ui/NeuralBackground';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Ideas',
+  description:
+    'Laboratorio de ideas sobre startups, tecnología y alto rendimiento. El SEO técnico está en /seo.',
+  alternates: { canonical: '/ideas' },
+};
 
 export default function IdeasPage() {
   const allIdeas = getAllIdeas();
@@ -25,8 +33,12 @@ export default function IdeasPage() {
               Mi Laboratorio de Ideas
             </h1>
             <p className="text-xl text-cortex-300 max-w-3xl mx-auto leading-relaxed">
-              Nodos de memoria - Pensamientos, estrategias y aprendizajes sobre startups, 
-              tecnología y alto rendimiento. Mi jardín digital de ideas.
+              Nodos de memoria — startups, tecnología y alto rendimiento. El SEO técnico
+              vive ahora en su propia sección:{' '}
+              <Link href="/seo" className="text-acetylcholine-400 underline underline-offset-2">
+                jairosaul.com/seo
+              </Link>
+              .
             </p>
           </div>
 

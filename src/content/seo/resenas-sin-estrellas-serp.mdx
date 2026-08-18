@@ -1,0 +1,83 @@
+---
+title: "Cuatrocientas reseñas y cero estrellas en el resultado"
+description: "El widget de Tripadvisor se ve. Google no lee widgets. AggregateRating tiene reglas, y pegar el 4.9 de la empresa en cada ficha es el atajo que termina en acción manual."
+date: "2026-08-18"
+cluster: "serp-money"
+tags: ["schema", "reseñas", "tripadvisor", "eat"]
+excerpt: "El trabajo de pedir la reseña ya lo hicieron. Lo que falta es declararla tour por tour, visible en la página, de usuarios reales. El 4.9 global en 69 URLs es spam de datos estructurados."
+related:
+  - precio-google-offer-pricecurrency
+  - schema-turismo-validador
+  - eat-licencia-camino-inca
+---
+
+Las operadoras de Cusco viven de la reputación. Google, Tripadvisor, el guía Walter nombrado en el comentario de un brasileño. En el sitio, un shortcode de Trustindex o un widget de Google Reviews. En el HTML, **cero** `aggregateRating`. En la SERP, título azul. En GetYourGuide, estrellas. Adivina dónde hace clic el viajero que todavía no te conoce.
+
+Las estrellas en el resultado orgánico son el multiplicador de CTR más barato que existe **si ya tienes las reseñas**. No hace falta ganar posiciones. Hace falta ser elegible. Y ser elegible aquí es más delicado que poner la moneda.
+
+## Lo que Google exige, no lo que el plugin promete
+
+Tres condiciones, las tres a la vez:
+
+1. La valoración corresponde a **la entidad de esa página**. La ficha del Salkantay lleva la nota del Salkantay, no la de la agencia.
+2. Está **visible** en la página. Marcar lo que el usuario no puede ver es el patrón de spam más clásico.
+3. Proviene de **usuarios reales**, no de un número escrito a mano en un ACF.
+
+Pegar `4.9 / 1200 reseñas` de Google Business en las 69 fichas de tour cumple cero de las tres. Es exactamente el ejemplo que Google usa cuando habla de spam de datos estructurados. Una acción manual por markup engañoso te saca las estrellas **y** te deja una cicatriz en el sitio entero.
+
+<Callout type="error" title="El atajo que no vas a tomar">
+“Ponemos el AggregateRating de la empresa en todas las fichas este viernes.” No. Si el dueño lo pide, tu valor es decir que no, y explicar el riesgo en una frase: Google ya vio este truco mil veces. Lo correcto tarda más y es la única versión que no incendia el dominio.
+</Callout>
+
+## Cómo se hace bien (y por qué duele)
+
+Necesitas reseñas **por producto**. Fuentes reales:
+
+- GetYourGuide / Viator / Civitatis, si el producto está mapeado 1:1. Muchas APIs no son públicas; a veces el equipo ya exporta CSV.
+- Un sistema interno (el mismo WhatsApp post-tour que pide la reseña puede pedir 1–5 y un texto, guardado por `tour_id`).
+- Tripadvisor: difícil de scrapear, fácil de violar términos. Mejor el dato que ellos te dan como operador o el que ya mostráis con permiso.
+
+Muestras **en la ficha** un bloque “4.8 de 36 viajeros en este tour”. Ese HTML es la verdad. El JSON-LD copia esa verdad.
+
+```json
+{
+  "@type": "Product",
+  "name": "Salkantay Trek 5 days",
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.8",
+    "reviewCount": "36",
+    "bestRating": "5"
+  }
+}
+```
+
+Si no hay 36 reseñas de ese tour, no hay bloque. Una ficha nueva nace sin estrellas. Eso es honesto. Cinco fichas piloto con dato real ganan más que sesenta y nueve con un 4.9 robado a GMB.
+
+## Widgets vs grafo
+
+El widget es un `iframe` o un JS que pinta estrellas para humanos. El crawler de Google **puede** ejecutar JS, pero el rich result de reseñas se alimenta de **marcado explícito**, no de adivinar un iframe de Trustindex. Por eso ves estrellas en la página y ninguna en la SERP. No es un bug de Google. Es que nadie le habló en JSON-LD.
+
+`Review` individual (autor, fecha, texto) es aún más estricto. Si no puedes mostrar el texto en la página, no lo marques. `AggregateRating` solo, bien hecho, ya es el premio.
+
+## Relación con Tripadvisor
+
+Las reseñas de TA construyen confianza **en TA**. El `sameAs` de la entidad `TravelAgency` apunta a la ficha de la agencia. Eso no te pinta estrellas en cada tour. Son capas:
+
+| Capa | Dónde se ve | Qué schema |
+|---|---|---|
+| Reputación de empresa | Knowledge / Maps / TA | `TravelAgency` + `sameAs` + rating **de la empresa** en la página Nosotros / home, si está visible |
+| Reputación de producto | SERP de “salkantay trek 5 days” | `AggregateRating` en la ficha del Salkantay |
+| Marketplace | GYG, Viator | Ellos ya lo tienen. Tu web, no |
+
+Mezclar las tres es cómo nació el atajo del 4.9 global.
+
+## Plan de 30 días, no de un viernes
+
+1. Inventariar qué tours tienen reseñas atribuibles (GYG ID, nombre interno).
+2. Elegir cinco de más volumen.
+3. Pintar el bloque visible. Marcar. Validar.
+4. Esperar GSC (mejoras de reseñas / producto).
+5. Solo entonces escalar.
+
+Métrica: estrellas en SERP en la muestra. No “todas las fichas con schema de review”. El SEO técnico que también implementa se mide por **no** haber ganado una acción manual. Las estrellas son el premio. No incendiar el dominio es el trabajo.

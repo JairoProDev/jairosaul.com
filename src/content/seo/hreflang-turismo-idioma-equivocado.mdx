@@ -1,0 +1,111 @@
+---
+title: "Hreflang en turismo: por qué Google le muestra al brasileño la ficha en español"
+description: "Sin anotación recíproca, una red de dominios por idioma es cuatro sitios compitiendo. Cómo detectarlo en cinco minutos y qué tiene que ser cierto para que el bloque sirva."
+date: "2026-08-18"
+cluster: "internacionalizacion"
+tags: ["hreflang", "turismo", "internacional", "wordpress"]
+excerpt: "Las banderas del header no le dicen nada a Google. El brasileño que busca pacote Machu Picchu puede terminar en español porque nadie declaró equivalencias."
+featured: true
+related:
+  - dominio-por-idioma-no-es-internacionalizacion
+  - wpml-no-sirve-wordpress-aparte
+  - canonical-hreflang-banderas
+---
+
+Un viajero en São Paulo busca *pacote Machu Picchu 4 dias*. Google tiene, en el índice, una ficha en portugués, una en español, una en inglés y a veces una en italiano. **Sin hreflang, no hay grupo.** Hay cuatro URLs parecidas. El sistema elige con señales indirectas: idioma detectado, país del usuario, enlaces, historial. A menudo gana la versión en español, que tiene más enlaces o más años. El brasileño aterriza en un WhatsApp en castellano y una tarifa en dólares. Eso no es “SEO flojo”. Es una arquitectura de mercado sin el mecanismo que la hace funcionar.
+
+<Callout type="warning" title="Las banderas no son hreflang">
+El selector de idioma que enlaza portada con portada es navegación para humanos. Google necesita equivalencias **página a página**, recíprocas, con autorreferencia y un `x-default`. Si el italiano está en el Camino Inca en inglés y toca la bandera, y cae en la home italiana, perdiste la ficha y la anotación.
+</Callout>
+
+## Qué es, en una frase que se puede defender
+
+`hreflang` declara que varias URLs son **el mismo documento en distintos idiomas o regiones**. No es una redirección. No es un `canonical` cruzado. No es un menú. Es una anotación. Google puede ignorarla si el resto de señales la contradicen, pero sin ella ni siquiera tiene la hipótesis correcta.
+
+Se emite de tres formas. Elige una y sé consistente:
+
+| Vía | Dónde vive | Cuándo tiene sentido |
+|---|---|---|
+| HTML | `<link rel="alternate" hreflang="…" href="…">` en el `<head>` | WordPress, la más simple de auditar |
+| Cabecera HTTP | `Link: <url>; rel="alternate"; hreflang="pt-BR"` | PDFs, no-HTML, o un proxy |
+| Sitemap XML | `xhtml:link` por URL | Catálogos enormes; más fácil de generar; más opaco de debuggear |
+
+En turismo con cuatro WordPress, HTML en `wp_head` gana: lo verificas con `curl` en cinco segundos y no dependes de que el sitemap se regenere.
+
+## Cómo se ve el fallo (no lo discutas, mídelo)
+
+```bash
+curl -s -A "Mozilla/5.0" https://www.ejemplo.com/ | grep -c hreflang
+```
+
+Cero en la home. Cero en la ficha. Cero en el sitemap. Cero en cabeceras (`curl -sI`). Eso es el diagnóstico. No hace falta Lighthouse. No hace falta un PDF de 40 páginas.
+
+<StatRow>
+  <Stat value="0" label="anotaciones" hint="si grep -c da esto, no hay red" />
+  <Stat value="4" label="idiomas" hint="EN ES PT IT, un caso real" />
+  <Stat value="31" label="productos en los 4" hint="el resto son gaps de catálogo" />
+  <Stat value="URL" label="unidad" hint="home con home no cuenta" />
+</StatRow>
+
+En una red que auditó en agosto de 2026 —cuatro instalaciones WordPress de una operadora de Cusco, el caso está documentado en [la auditoría pública](/peru-grand-travel)— el conteo fue cero en los cuatro dominios. TreXperience, con **dos** idiomas, ya emitía `en` + `es`. El que tiene la arquitectura más ambiciosa era el que no había cerrado el mecanismo.
+
+## Las tres reglas que, si fallan, el bloque es teatro
+
+**Reciprocidad.** Si A apunta a B, B apunta a A. Un lado solo es ruido. Google lo trata como error en el informe de internacionalización.
+
+**Autorreferencia.** A se incluye a sí misma en su propio bloque. Olvidarlo es el error de copiar y pegar más frecuente.
+
+**x-default.** La URL para quien no encaja en ningún idioma anotado. En turismo hacia USA/Europa, suele ser el inglés. No es “la home del grupo”: es la URL equivalente de **esa** ficha, en el idioma por defecto.
+
+Códigos: idioma ISO 639-1 (`en`, `es`, `it`). Región cuando importa de verdad: `pt-BR` no es `pt-PT`. Un brasileño y un portugués no buscan igual, no pagan en la misma moneda y no leen el mismo registro. Si solo tienes un portugués, `pt-BR` es la señal correcta para el mercado que te llena los buses.
+
+<Callout type="error" title="Lo que no puede apuntar el hreflang">
+Una URL que redirige, que da 404, que está `noindex`, o que no es la canónica. El bloque tiene que apuntar a la URL final, 200, indexable. Si el dominio viejo ya hace 301 al nuevo, el hreflang vive en el nuevo.
+</Callout>
+
+## Por qué duele más en turismo que en un blog
+
+Un tour es un **producto**. Mismo trekking, cuatro fichas, cuatro precios, cuatro WhatsApp. Si Google las trata como competidoras:
+
+1. Se reparte la relevancia. El portugués no hereda lo que el español acumuló.
+2. El usuario recibe el idioma de la versión “ganadora”, no el suyo.
+3. En mobile, el clic equivocado es un abandono. Nadie traduce un itinerario de 4 días con el traductor del Chrome y luego reserva US$600.
+
+Además hay **gaps de catálogo**. Cruzar slugs a mano —74 productos, 31 en los cuatro idiomas, 19 faltantes en portugués, ~40 faltantes en italiano— no es un ejercicio de SEO. Es inventario. El hreflang no inventa una ficha que no existe. Si no hay Valle Sagrado en italiano, no hay `hreflang="it"` que poner. Mentir una equivalencia a la home italiana es peor que no poner nada.
+
+## Implementarlo cuando cada idioma es otro WordPress
+
+WPML y Polylang resuelven idiomas **dentro de una instalación**. Aquí no hay una instalación. Hay cuatro. El mapa tiene que vivir fuera: un JSON o un PHP compartido, el mismo snippet inyectado en las cuatro, de modo que la reciprocidad sea por diseño y no por disciplina de cuatro community managers.
+
+```html
+<link rel="alternate" hreflang="en" href="https://www.agencia.com/tour/machu-picchu-full-day/" />
+<link rel="alternate" hreflang="es" href="https://www.agencia.es/tour/machu-picchu-1-dia/" />
+<link rel="alternate" hreflang="pt-BR" href="https://www.agencia.com.br/pacote/machu-picchu-full-day/" />
+<link rel="alternate" hreflang="it" href="https://www.agencia.it/tour/machu-picchu-1-giorno/" />
+<link rel="alternate" hreflang="x-default" href="https://www.agencia.com/tour/machu-picchu-full-day/" />
+```
+
+Ese bloque, idéntico en las cinco URLs (cuatro idiomas + la misma en cada una), es el producto mínimo. Empieza por homes + diez tours que existan en todos los idiomas. Mide en Search Console → Mejoras internacionales. Luego el catálogo.
+
+<Steps>
+  <Step n={1} title="Mapa antes que código">
+    Una fila por producto: URL EN, ES, PT-BR, IT, o guion si no existe. Sin inventar. El guion significa “no emitas ese hreflang”.
+  </Step>
+  <Step n={2} title="Piloto">
+    Homes y un puñado de fichas estrella. Verifica reciprocidad con un script, no a ojo.
+  </Step>
+  <Step n={3} title="Banderas contextuales">
+    Cuando la equivalencia existe, la bandera va a la ficha hermana, no a la portada. Eso es UX y SEO al mismo tiempo.
+  </Step>
+  <Step n={4} title="Catálogo">
+    El resto. Cada ficha nueva nace con su fila en el mapa. Si marketing publica en un solo idioma, el mapa lleva guion hasta que exista la hermana.
+  </Step>
+</Steps>
+
+## Cómo se ve el éxito (y cómo no)
+
+Éxito: `grep -c hreflang` > 0 en las cuatro homes; el auditor no reporta bloques rotos; GSC deja de listar “no hay etiquetas de retorno”. El tráfico por país **puede** tardar semanas: hay re-rastreo. No prometas que Brasil “sube un 40% en 14 días”.
+
+Fracaso elegante: anunciaste hreflang, pero las banderas siguen mandando al home, el italiano apunta a URLs que 404, y el `x-default` es la portada del grupo para todas las fichas. Eso Google lo ignora, y tienes razón en ignorarlo también.
+
+La frase que quiero que te quede: **un dominio por idioma es una decisión de negocio válida. Sin hreflang, es cuatro sitios peleándose por el mismo viajero.** El artículo siguiente es exactamente eso.

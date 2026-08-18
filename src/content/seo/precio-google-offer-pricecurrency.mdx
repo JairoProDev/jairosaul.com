@@ -1,0 +1,76 @@
+---
+title: "El precio que Google no puede pintar"
+description: "Offer exige price, priceCurrency y availability. Un 150 sin moneda no es un precio: es un número. Por qué Search Console marca error y cómo se corrige en la plantilla de tours, no en 120 fichas a mano."
+date: "2026-08-18"
+cluster: "serp-money"
+tags: ["schema", "json-ld", "offer", "rich-results"]
+excerpt: "El código dice que el tour vale 150. No dice si son dólares, soles o reales. Google no adivina, y la ficha no sale con precio en el resultado."
+featured: true
+related:
+  - schema-turismo-validador
+  - resenas-sin-estrellas-serp
+  - margen-getyourguide-sin-pelea
+---
+
+GetYourGuide pinta el precio. Viator pinta el precio. Google, en el resultado orgánico, **puede** pintar el precio —estrellas, disponibilidad, un número con moneda— si el HTML le da un objeto `Offer` completo. Si le das `"price": "150"` y te olvidas de `priceCurrency`, el informe de fragmentos de producto en Search Console dice exactamente eso: falta el campo. La ficha queda **inelegible**. No es un warning cosmética. Es la puerta cerrada al rich result que más clic da en turismo después de las estrellas.
+
+En una red de cuatro idiomas que medí en agosto de 2026, el inglés y el italiano emitían el número sin moneda. El portugués, mercado principal, ni siquiera emitía `Offer`. Cuatro sitios, tres formas de no decir el precio. El arreglo de mayor retorno por línea de código de toda esa auditoría.
+
+<StatRow>
+  <Stat value="3" label="campos" hint="price, currency, availability" />
+  <Stat value="1" label="línea" hint="si la plantilla es una" />
+  <Stat value="120+" label="fichas" hint="cuando el CPT está mal" />
+  <Stat value="7-14d" label="GSC" hint="para ver el error bajar" />
+</StatRow>
+
+## Qué exige Google, no schema.org en abstracto
+
+schema.org es un vocabulario enorme. Google **usa un subconjunto** y publica requisitos por tipo de resultado enriquecido. Para producto / oferta, el trio mínimo que ves fallar en turismo:
+
+```json
+{
+  "@type": "Offer",
+  "url": "https://www.agencia.com/tour/machu-picchu-full-day/",
+  "price": "150.00",
+  "priceCurrency": "USD",
+  "availability": "https://schema.org/InStock"
+}
+```
+
+`price` es texto de número, no “desde 150”. `priceCurrency` es ISO 4217: `USD`, `PEN`, `BRL`, `EUR`. No `US$`. No `soles`. `availability` va con `https://schema.org/…`. `http://` suele funcionar; no es el incendio. La moneda ausente sí.
+
+<Callout type="warning" title="150 de qué">
+Una operadora que vende a USA, Brasil y Perú en la misma red no puede dejar el número desnudo. Un brasileño que ve 372 en el italiano y 150 en el inglés ya está haciendo tipo de cambio mental. Una máquina no hace ese tipo de cambio. Sin moneda, no hay rich result y no hay consistencia.
+</Callout>
+
+## Dónde se rompe en WordPress de tours
+
+Tourmaster, plugins de booking, Yoast graph, un JSON-LD pegado en el child theme: **una plantilla**. Por eso se corrige una vez, no en 69 posts. El error clásico es editar una ficha “para ver”, confirmar que el test de resultados enriquecidos pasa, y no tocar el PHP que generan las otras 68.
+
+El segundo error es un `priceValidUntil` fijo (`2027-01-01`) en todo el catálogo. Si la tarifa del Rainbow Mountain cambia en marzo, el dato es falso. Google ha sido claro con datos estructurados engañosos. Mejor un campo de vigencia real o no emitir la fecha.
+
+El tercero: `Product` sin `offers` en un idioma. El gráfico de Yoast a veces emite `Product` porque el CPT se llama tour, y el plugin de reservas no inyecta Offer en ese dominio porque el child theme divergió. **Homogeneizar la plantilla del grupo** es el trabajo. Un estándar, cuatro instalaciones.
+
+## Cómo lo detectas esta tarde
+
+```bash
+curl -s -A "Mozilla/5.0" "https://www.agencia.com/tour/una-ficha/" | grep -c priceCurrency
+curl -s -A "Mozilla/5.0" "https://www.agencia.com/tour/una-ficha/" | grep -o '"price":"[^"]*"'
+```
+
+Cero en el primero y un número en el segundo: hallazgo. Abre el JSON-LD en el código fuente, `Ctrl+F` `Offer`. Si no hay `Offer` en el portugués, el mercado que más te llena es el que menos puede pintar precio.
+
+Rich Results Test (la herramienta de Google) confirma elegibilidad. Search Console, informe de mejoras de producto, te dice **cuántas** URLs están afectadas. Sin GSC opinas sobre una ficha; con GSC ves las 120.
+
+## Qué no hagas
+
+- No marques como `Product` un artículo de blog de “qué llevar al Inca Trail”.
+- No pongas el precio más bajo del grupo privado y del shared en el mismo `Offer` sin `UnitPriceSpecification` si no sabes el modelo. Un precio, el que se ve en la página.
+- No inventes `InStock` si el Camino Inca de junio está agotado. `SoldOut` existe. Mentir disponibilidad es el camino corto a acción manual.
+- No copies el JSON-LD de un competidor. Valencia Travel emite `TouristTrip` y `TravelAgency` bien; copiar mal un grafo ajeno te deja `@id` de otro dominio.
+
+## El argumento de negocio, sin vanidad
+
+El rich result de precio no sube posiciones. **Sube el clic** de quien ya te ve. En turismo, el viajero compara seis agencias en la SERP. La que muestra US$150 y 4.8 estrellas gana la mirada antes que la que muestra un título azul. GetYourGuide ya juega con esas dos palancas **dentro** del marketplace. El orgánico propio, sin moneda y sin estrellas, sale a boxear sin guantes.
+
+Una línea en la plantilla. Una semana de GSC. Eso es el quick win que un analista reporta y un implementador sube. El siguiente artículo es el de las estrellas, que es el que más gente hace mal.

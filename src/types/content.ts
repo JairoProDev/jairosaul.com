@@ -53,6 +53,22 @@ export interface Idea extends BaseContent {
   relatedIdeas?: string[];
 }
 
+export type SeoCluster =
+  | 'internacionalizacion'
+  | 'serp-money'
+  | 'rastreo'
+  | 'rendimiento'
+  | 'negocio';
+
+export interface SeoArticle extends BaseContent {
+  type: 'seo';
+  cluster: SeoCluster;
+  readingTime: number;
+  excerpt: string;
+  content: string;
+  related?: string[];
+}
+
 export interface Manifesto {
   title: string;
   sections: {

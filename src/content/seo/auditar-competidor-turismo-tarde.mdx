@@ -1,0 +1,61 @@
+---
+title: "Cómo auditar un competidor de turismo en una tarde"
+description: "Portada, hreflang, schema, TTFB, peso, robots, sitemap. User-agent de navegador. No CrUX ajeno, no RocketReach. Una matriz de cinco agencias que se puede defender en una reunión sin inventar facturación."
+date: "2026-08-18"
+cluster: "negocio"
+tags: ["auditoria", "competencia", "benchmark", "metodologia"]
+excerpt: "Valencia ya emite TravelAgency. TreXperience ya declara hreflang. Alpaca pesa 516 KB. Nadie tiene el combo. La tarde no es para espiar: es para convertir una recomendación técnica en urgencia de mercado."
+related:
+  - waf-screaming-frog-406
+  - schema-turismo-validador
+  - hreflang-turismo-idioma-equivocado
+---
+
+Una auditoría de competidores que se puede decir en voz alta no usa empleados, no usa facturación de agregadores, no usa “según un lead de LinkedIn”. Usa HTTP. En una tarde, cinco portadas y un sitemap cada una, sale una matriz que cambia la reunión: *no están mal en abstracto; X ya hizo esta pieza*.
+
+## El protocolo (laboratorio, no campo)
+
+```bash
+curl -sI -A "Mozilla/5.0" -H "Accept: text/html" https://www.competidor.com/ \
+  | grep -iE '^(HTTP|cache-control|x-cache|server)'
+
+curl -s -A "Mozilla/5.0" https://www.competidor.com/ | grep -c hreflang
+
+curl -s -A "Mozilla/5.0" https://www.competidor.com/ | grep -oE '"@type":"[^"]+"' | sort | uniq
+```
+
+TTFB: `time_starttransfer`. Peso: tamaño del HTML, no el “full page” de un waterfally de 40 segundos el primer día. hreflang: conteo. Schema: tipos. robots.txt y `Sitemap:`. Un sitemap de posts: ¿cuántos? El inglés de un competidor con blog vs el tuyo en cero es el hallazgo de contenido.
+
+WAF 406: cambia el UA. Si Frog default “cae”, no está caído.
+
+<Callout type="error" title="Lo que no llevas a la sala">
+Estimaciones de RocketReach, número de empleados de un scrape, sueldos. Si el dueño dice “eso es falso”, perdiste el resto de la auditoría. Solo afirmas lo que un curl o una lista oficial pueden repetir.
+</Callout>
+
+## La matriz que importa
+
+| Sitio | TTFB | Peso HTML | hreflang | Schema notable |
+|---|---|---|---|---|
+| Valencia Travel | 0,86 s | 179 KB | 0 | TravelAgency, TouristTrip, AggregateRating |
+| TreXperience | 0,73 s | 255 KB | en+es | mínimo |
+| Alpaca Expeditions | 1,35 s | 516 KB | 0 | Organization |
+| Un francotirador de Inca Trail | 0,87 s | 60 KB | 0 | mínimo |
+| La red de 4 idiomas | EN 1,04 s / PT 0,10 s | 215–313 KB | **0** | Organization genérico |
+
+Lecturas, no vanidad:
+
+- Valencia es el techo de **entidad**. Copiar eso es plantilla, no rediseño.
+- TreXperience resolvió hreflang con **menos** idiomas. La red más ambiciosa, si no anota, pierde más.
+- Alpaca gana por marca y TA, no por HTML. No copies 516 KB.
+- 60 KB y una keyword: otro juego. Tú eres catálogo.
+- Nadie tiene el combo. Eso es la ventana.
+
+## Qué no cabe en una tarde
+
+Catálogo entero, backlinks, CrUX de ellos (no es tuyo), conversión. Dilo. La semana 1 del puesto, con el mismo script, 100 URLs por dominio. La tarde es portada + 1 ficha de tour + robots + sitemap. Suficiente para urgencia. Insuficiente para un whitepaper. El profesional se detiene donde se acaba la evidencia.
+
+## Cómo se cita, para no parecer vendedor de miedo
+
+> Valencia Travel ya emite TravelAgency con dirección y valoración. TreXperience ya declara hreflang entre dos idiomas. No es que ustedes estén mal en el vacío: es que el mercado local ya resolvió piezas, y ustedes tienen cuatro dominios.
+
+Nombres, piezas, respeto. El sector es un pueblo. El PDF que humilla a Alpaca circula. El que mide y propone, también, pero te deja trabajar en Cusco el año que viene.

@@ -1,0 +1,58 @@
+---
+title: "Fuentes, LCP y el subset que nadie pidió"
+description: "Poppins 100–900 con itálicas, DM Sans, y el subset devanagari — hindi y sánscrito — en una agencia de Cusco. Tres o cuatro pesos, font-display: swap, preconnect o autoalojar. De los arreglos más baratos con efecto en LCP y CLS."
+date: "2026-08-18"
+cluster: "rendimiento"
+tags: ["fuentes", "lcp", "cls", "fonts"]
+excerpt: "Ningún cliente de esa empresa lee devanagari. Google Fonts igual lo descarga. El LCP de texto espera a la fuente. El layout salta cuando llega. Es un archivo de configuración, no un rediseño."
+related:
+  - cwv-temas-constructor
+  - cache-control-nostore-idioma-caro
+  - schema-turismo-validador
+---
+
+Las fuentes web son el arreglo que más gente pospone porque “se ven bien”. También son de los más baratos: no tocan el constructor, no tocan Tourmaster, no discuten con marketing el color del botón.
+
+En un `traveltour` de Goodlayers medí Poppins en **dieciocho variantes** (100 a 900, normal e italic) más DM Sans, con subset `devanagari`. Devanagari es el alfabeto del hindi y el sánscrito. El viajero de esa red lee latín: inglés, español, portugués, italiano. El subset sobra. Los pesos 100, 200 y 900 italic también, si el CSS no los usa.
+
+## Cómo se come el LCP y el CLS
+
+Si el LCP es **texto** (un H1 de portada), el navegador puede retrasar el pintado hasta tener la fuente, o pintar un fallback y luego saltar: CLS. `font-display: swap` pinta ya, cambia después. Sin `size-adjust` / métricas, el salto se nota. Autoalojar + `unicode-range` + solo los glifos latinos reduce peso.
+
+`preconnect` a `fonts.googleapis.com` y `fonts.gstatic.com` si sigues en Google Fonts. Mejor: **autoalojar** woff2 de 3–4 archivos. Un request menos a un tercero; RGPD y cuelgue de Google Fonts en algunos países europeos son el bonus, no el argumento principal. El argumento es KB y control.
+
+```html
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+```
+
+Y en CSS, si aún es Google Fonts, la URL de familia no debería pedir `100..900`. Debería pedir `400;600;700` — los que el `font-weight` del theme usa de verdad. Coverage otra vez: qué pesos se aplican en home y ficha.
+
+<Steps>
+  <Step n={1} title="Inventario">
+    DevTools → Network → Font. Cuántos archivos, cuántos KB, qué family.
+  </Step>
+  <Step n={2} title="Uso">
+    Busca en el CSS `font-weight: 100` y amigos. Si no hay, no se pide.
+  </Step>
+  <Step n={3} title="Subset">
+    Latín + latín extendido (tildes, ñ, ã, à). Cero cirílico, cero devanagari, cero vietnamita “por si acaso” salvo que vendas ese mercado.
+  </Step>
+  <Step n={4} title="Display">
+    `font-display: swap`. Reserva métrica si puedes (`size-adjust` en `@font-face`).
+  </Step>
+  <Step n={5} title="Hospedaje">
+    woff2 en tu CDN / wp-content. Quita el CSS bloqueante de fonts.googleapis que el theme mete en `wp_head`.
+  </Step>
+</Steps>
+
+## El preload del LCP vs la fuente
+
+Si el LCP es imagen, prioriza la imagen (`fetchpriority`, preload). La fuente sigue importando para CLS del H1 que está debajo. Si el LCP es el H1, la fuente **es** el LCP: preload de ese woff2, no de los 18.
+
+No precargues las 18. Precargar de más pelea con el hero. Precarga lo que gana la carrera del primer viewport.
+
+## Cómo se lo dices a diseño
+
+> No cambio Poppins. Cambio cuántos Poppins. El look se queda. Bajan 100–200 KB y deja de saltar el título. Si quieren un peso extra para un flyer, se añade ese archivo, no la familia entera otra vez.
+
+Diseño oye “no tocamos la marca”. Sistemas oye “un `@font-face`”. El dueño oye “más rápido”. El subset hindi desaparece en silencio, que es como deben desaparecer los accidentes de un theme comprado en 2019.

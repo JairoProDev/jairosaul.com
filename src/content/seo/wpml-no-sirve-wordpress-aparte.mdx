@@ -1,0 +1,93 @@
+---
+title: "WPML no sirve cuando cada idioma es otro WordPress"
+description: "Polylang y WPML gestionan traducciones dentro de una instalación. Cuatro sitios, cuatro bases de datos, un mapa compartido. El prototipo es un snippet idéntico, no un plugin de más."
+date: "2026-08-18"
+cluster: "internacionalizacion"
+tags: ["wordpress", "wpml", "hreflang", "php"]
+excerpt: "Instalar WPML en perugrandtravel.com no habla con viaggiomachupicchu.it. Son dos MySQL. El hreflang tiene que nacer de un mapa que las cuatro instalaciones leen igual."
+related:
+  - hreflang-turismo-idioma-equivocado
+  - dominio-por-idioma-no-es-internacionalizacion
+  - noventa-dias-seo-que-implementa
+---
+
+La pregunta de entrevista que separa a quien configuró Yoast de quien va a implementar de verdad:
+
+> ¿Cómo harías hreflang en tres o cuatro WordPress independientes, mismo dueño, mismo catálogo, distinto dominio?
+
+La respuesta incorrecta, y la más común: “con WPML”. WPML es un producto serio **para un sitio con idiomas dentro**. Crea traducciones, las enlaza, emite hreflang. Todo eso vive en **una** base de datos. El día que el italiano es `viaggiomachupicchu.it` —otro hosting, otro `wp_posts`, otro child theme que se desincronizó— WPML en el inglés no sabe que el italiano existe.
+
+Polylang, TranslatePress, Weglot: misma familia de problema. Weglot encima mete una capa de traducción automática y otro vendor. No es el arreglo de una red ya partida.
+
+## El diseño que sí encaja
+
+Necesitas tres piezas, y ninguna es “un plugin premium de SEO”:
+
+1. **Un mapa de equivalencias** URL ↔ URL, versionado, el mismo archivo en las cuatro instalaciones (o servido desde un sitio interno). JSON o PHP. Una fila por producto. Guion si no hay hermana.
+2. **Un emisor** que, dada la URL actual, imprime el bloque recíproco completo: todos los idiomas existentes + autorreferencia + `x-default`.
+3. **Un gancho** `wp_head` con prioridad conocida, que no pelee con Yoast. Si Yoast también emite hreflang (suele, si le das idiomas que no tienes), **apaga el de Yoast**. Dos bloques distintos es peor que cero.
+
+```php
+add_action('wp_head', 'pgt_emit_hreflang', 1);
+
+function pgt_emit_hreflang() {
+    $current = home_url(add_query_arg([], $GLOBALS['wp']->request));
+    $block = pgt_hreflang_block_for($current);
+    if (!$block) {
+        return;
+    }
+    echo $block;
+}
+```
+
+El detalle de `home_url` y permalinks con o sin slash final importa: el mapa tiene que usar **exactamente** la URL canónica. Si el mapa dice `/tour/x/` y WordPress sirve `/tour/x`, Google ve dos mundos. Elige barra final, 301 la otra, y el mapa sigue esa ley.
+
+<Callout type="warning" title="No generes el bloque a mano en cada ficha">
+Un campo ACF “hreflang IT” editado por marketing es cómo se rompe la reciprocidad el martes a las 18:00. El mapa es código. Marketing pide “publica esta ficha en italiano”; sistemas añade la fila; el emisor hace el resto.
+</Callout>
+
+## Por qué el mapa no puede vivir en la cabeza de nadie
+
+En un catálogo de 70 tours, las equivalencias no son traducción literal del slug. *Machu Picchu Full Day* vs *Machu Picchu 1 día* vs *Machu Picchu 1 giorno* vs *pacote Machu Picchu full day*. Cruzar sitemaps, no títulos. Los títulos mienten; los slugs, menos.
+
+Gaps: si el lujo solo existe en inglés, el emisor **no** inventa un `hreflang="pt-BR"` a la home brasileña. Eso le dice a Google que el Grand Deluxe *es* la portada en portugués. Es una mentira de producto. El brasileño que aterriza en la home no compra el Belmond.
+
+El mapa es también el backlog de marketing: cada guion es una ficha que ops ya opera y el mercado no puede comprar.
+
+## Dónde se rompe en Goodlayers / Tourmaster
+
+Temas de constructor y plugins de tours generan URLs en un CPT (`tour`, `pacote`). El emisor tiene que reconocer el CPT y el slug, no solo páginas. Si filtrás `is_page()` y te olvidas de `is_singular('tour')`, el hreflang vive en el blog y muere en el dinero.
+
+Yoast a veces emite `hreflang` de “idioma del sitio” apuntando a sí mismo. Eso no es una red. Un único `hreflang="en"` autorreferente no agrupa nada. Quítalo o el informe de GSC se vuelve ruido.
+
+Sitemaps: puedes **además** emitir en XML. No es obligatorio si el HTML es completo. Si haces las dos, que el mapa sea la misma fuente. HTML dice A, sitemap dice B: otra señal pisada.
+
+## Cómo lo pruebas sin Search Console el día 0
+
+```bash
+curl -s -A "Mozilla/5.0" "https://www.agencia.com/tour/machu-picchu-full-day/" \
+  | grep -oE 'hreflang="[^"]+" href="[^"]+"'
+```
+
+Pega la URL italiana que salió. Abre esa URL. El bloque tiene que listar **las mismas** cuatro (o N) URLs, incluido el inglés. Si el italiano no lista al inglés, no hay reciprocidad. Un script de 40 líneas ahorra una tarde de clics. El auditor en Python existe precisamente para eso: no para un informe bonito, para no desplegar un mapa cojo.
+
+<Steps>
+  <Step n={1} title="Apaga el hreflang de Yoast en las cuatro">
+    Un emisor. Si no, debugueas fantasmas.
+  </Step>
+  <Step n={2} title="Despliega el mismo archivo de mapa">
+    Git, o un include copiado. La deriva de “en el italiano no actualizaron el PHP” es el fallo del mes 2.
+  </Step>
+  <Step n={3} title="Piloto de 10 grupos">
+    Homes + tours que existen en todos los idiomas. Reciprocidad 100% o no sigues.
+  </Step>
+  <Step n={4} title="Gancho en CPT de tours">
+    Verifica una ficha, no solo la home. La home miente de lo fácil que es.
+  </Step>
+</Steps>
+
+## Qué le dices al equipo de sistemas
+
+No: “instalen WPML”. Sí: “el child theme ya tiene un `functions.php`; esto es un include más, idéntico en las cuatro, y un array. No toca el constructor. No toca Tourmaster. Si el permalink cambia, se cambia la fila.”
+
+Eso es implementable un martes. WPML en cuatro sitios es un proyecto de vendor, licencias, y un modelo de datos que no coincide con la realidad. El SEO técnico que también escribe PHP no discute plugins. Trae el snippet y el mapa. El resto es disciplina de deploy.

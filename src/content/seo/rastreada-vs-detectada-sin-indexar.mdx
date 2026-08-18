@@ -1,0 +1,61 @@
+---
+title: "Rastreada sin indexar vs detectada sin indexar"
+description: "La distinción que más SEO técnico falla en Search Console. Una es juicio de calidad. La otra es rastreo o prioridad. Tratarlas igual es optimizar el objeto equivocado durante meses."
+date: "2026-08-18"
+cluster: "rastreo"
+tags: ["gsc", "indexacion", "calidad", "canonical"]
+excerpt: "Descubierta / detectada sin indexar: Google no la leyó. Rastreada sin indexar: la leyó y no la quiso. Reenviar el sitemap no arregla la segunda. Reescribir el contenido no arregla la primera."
+related:
+  - crawl-budget-200-urls
+  - canonical-hreflang-banderas
+  - search-console-cuatro-dominios
+---
+
+Search Console no es un tribunal moral. Es un informe con nombres que la interfaz traduce, y la traducción ha cambiado. Lo que importa es el **hecho**:
+
+- **Detectada / descubierta, actualmente sin indexar:** Google **conoce** la URL (sitemap, enlace) y **aún no la ha rastreado** — o no le asignó prioridad. No hay juicio de calidad porque no leyó el documento.
+- **Rastreada, actualmente sin indexar:** Google **descargó** el documento y **decidió no guardarlo**. Eso es calidad, duplicado, o “no aporta”.
+
+Confundirlas es el error de diagnóstico más caro del SEO técnico, porque el remedio es el opuesto.
+
+<StatRow>
+  <Stat value="No leyó" label="Detectada" hint="arquitectura, prioridad, budget" />
+  <Stat value="Leyó y no" label="Rastreada" hint="calidad, duplicado, thin" />
+  <Stat value="Sitemap" label="no basta" hint="en ninguno de los dos" />
+  <Stat value="GSC" label="la fuente" hint="sin acceso, no lo afirmes" />
+</StatRow>
+
+## Si está detectada sin rastrear
+
+Causas habituales: la URL está a cinco clics, solo vive en el sitemap, el sitio es lento, hay un millón de URLs más jugosas, o acabas de publicar. En un sitio de 200 URLs, “detectada” masiva suele ser: sitemap sucio (redirects, 404), o un italiano recién nacido que todavía no tiene enlaces internos desde el inglés.
+
+Qué hacer: enlazado interno desde páginas que sí se rastrean (fichas relacionadas, pilares, menú con cabeza). Bajar profundidad. No “inspeccionar URL” 80 veces como si fuera un botón de indexar. La inspección pide un recrawl; no crea demanda.
+
+Qué no hacer: reescribir el texto. Aún no lo han leído.
+
+## Si está rastreada sin indexar
+
+Googlebot ya tiene el HTML. No le gustó lo suficiente, o vio un duplicado, o el contenido es un clon del ES traducido con el 70% de overlap. En turismo, el clon EN↔ES de la misma ficha **debe** existir: son idiomas. Ahí el hreflang evita que las trate como spam duplicado. Sin hreflang, “rastreada sin indexar” en el italiano corto (dos posts, 33 tours calcados) puede ser “ya tengo esto en inglés”.
+
+Otras causas: páginas de categoría vacías, “thank you”, buscadores internos 200, fichas de tours que ya no se operan con tres párrafos y una foto.
+
+Qué hacer: consolidar, mejorar, `noindex` a conciencia, o 301. Qué no hacer: “aumentar el crawl budget” ni comprar enlaces para una URL que Google ya leyó y rechazó.
+
+<Callout type="warning" title="El sitemap no es un talismán">
+Reenviar el sitemap es el botón de ansiedad. En detectada, a veces acelera el descubrimiento. En rastreada sin indexar, es ruido. El informe no se limpia a palos.
+</Callout>
+
+## Estados vecinos que no son errores
+
+- **Página alternativa con canonical correcta.** Bien. No toques.
+- **Duplicada: Google eligió otra canónica.** Tus señales se pelean. Alinea canonical, enlaces, sitemap, hreflang.
+- **Excluida por noindex.** Si lo pediste, está bien. Si no lo pediste, un plugin lo pidió por ti (Yoast en archivos, paginación, CPT mal configurado).
+- **Bloqueada por robots.txt.** No pudo leer; si querías desindexar, fallaste (no ve el noindex).
+
+## Cómo lo operas en cuatro dominios
+
+El inglés con 0 posts y 69 tours debería estar casi todo indexado: son BOFU, contenido de producto. Si GSC EN muestra decenas “rastreada sin indexar”, hay duplicados o thin (tours clone). El italiano con 48 URLs puede tener más “detectada”: sitio nuevo, poco PageRank interno.
+
+Sin acceso a GSC no se afirma cuál de los dos es. Se dice: *“con la propiedad verificada, esta distinción es lo primero que miro; dicta si enlazo o si reescribo.”* Esa frase, en una entrevista, vale más que un discurso sobre BERT.
+
+La indexación es decisión de Google. Tú emites señales. El informe te dice **en qué fase se cayó la flecha**. Trabaja la fase. El resto es teatro de “solicitar indexación”.

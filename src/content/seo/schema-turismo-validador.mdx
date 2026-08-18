@@ -1,0 +1,92 @@
+---
+title: "Schema de turismo que sí pasa el validador"
+description: "TravelAgency, TouristTrip, Offer, BreadcrumbList. El tipo más específico, JSON-LD, un grafo con @id. Lo que Valencia Travel ya emite y la mayoría de Cusco sigue omitiendo."
+date: "2026-08-18"
+cluster: "serp-money"
+tags: ["schema", "travelagency", "touristtrip", "json-ld"]
+excerpt: "Organization genérico es una entidad sin oficio. TravelAgency tiene dirección, teléfono y sameAs. TouristTrip describe el producto que vendes. El validador no es el premio; el informe de GSC sí."
+related:
+  - precio-google-offer-pricecurrency
+  - resenas-sin-estrellas-serp
+  - eat-licencia-camino-inca
+---
+
+schema.org es un árbol. `Thing` en la raíz, y luego oficios. `Organization` es correcto y flojo. `LocalBusiness` ya admite dirección y horario. `TravelAgency` es el tipo que le dice a Google **qué clase de negocio** eres. En un benchmark de portadas de Cusco (agosto 2026), Valencia Travel emitía `TravelAgency`, `TouristTrip`, `AggregateRating`, `PostalAddress`, `ContactPoint`. La red de cuatro dominios que contrasté emitía `Organization`, `WebPage`, `BreadcrumbList`. Misma ciudad, distinta entidad.
+
+No es un capricho semántico. Es la diferencia entre aparecer como una empresa con teléfono y estrellas, o como “una web más”.
+
+## Vocabulario vs sintaxis
+
+El vocabulario es schema.org. La sintaxis, hoy, es **JSON-LD**: un `<script type="application/ld+json">` desacoplado del diseño. Microdatos (`itemprop`) mueren el día que el diseñador mueve un `div`. JSON-LD se inyecta desde el child theme o desde Yoast y sobrevive al constructor.
+
+```json
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "TravelAgency",
+      "@id": "https://www.agencia.com/#org",
+      "name": "Agencia Ejemplo",
+      "url": "https://www.agencia.com/",
+      "telephone": "+51-84-000000",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Calle Real 123",
+        "addressLocality": "Cusco",
+        "addressCountry": "PE"
+      },
+      "sameAs": [
+        "https://www.tripadvisor.com/...",
+        "https://www.instagram.com/..."
+      ]
+    }
+  ]
+}
+```
+
+`@id` es lo que convierte copias en un grafo. La ficha de tour **referencia** `https://www.agencia.com/#org` en `brand` o `provider`, no pega otra vez el teléfono. Yoast ya piensa en `@graph`. El trabajo es que el tipo no se quede en `Organization` y que `sameAs` no esté vacío.
+
+## El producto no es un `Product` genérico del todo
+
+Google entiende `Product` + `Offer` para precio. En turismo hay un tipo más honesto para el itinerario: `TouristTrip` (itinerario, proveedor, itinerario por día si te atreves). Valencia ya lo usa. No es obligatorio para el rich result de producto. Es mejor entidad.
+
+Una ficha seria:
+
+- `TouristTrip` o `Product` (o ambos en `@type` array, si sabes el grafo).
+- `Offer` con moneda y disponibilidad.
+- `provider` → `@id` de la agencia.
+- `image`, `name`, `description` alineados con lo visible.
+- Breadcrumbs en JSON-LD **y** en HTML. Uno solo de los dos es teatro.
+
+`FAQPage` solo si las preguntas están visibles. `Event` solo si hay una fecha de salida concreta, no “todos los días”. Marcar el Camino Inca como `Event` eterno es mentir el calendario.
+
+## Tres validadores, tres verdades
+
+| Herramienta | Qué te dice | Qué no |
+|---|---|---|
+| [Validador schema.org](https://validator.schema.org/) | Si el JSON es parseable y los tipos existen | Si Google te va a pintar algo |
+| [Rich Results Test](https://search.google.com/test/rich-results) | Si **Google** te considera elegible para un resultado enriquecido | Cuántas URLs del sitio están mal |
+| GSC → mejoras | El recuento real, con latencia | El detalle de una URL (para eso, Inspección) |
+
+Pasar schema.org y fallar Rich Results es el caso `Offer` sin moneda: el vocabulario te acepta, Google no. Trabaja contra Rich Results y contra GSC, no contra un plugin que pone un visto verde.
+
+## Errores de turismo que el validador no grita lo bastante
+
+- `TouristAttraction` en la ficha de **tu** tour a Machu Picchu. Machu Picchu es la atracción. Tú eres el operador. La atracción puede referenciarse; no te hagas pasar por el santuario.
+- Dirección de un coworking o de un domicilio SUNAT distinto de la oficina que atiende. `PostalAddress` es lo que Maps va a intentar conciliar.
+- `sameAs` a un Facebook de otra marca del grupo sin aclarar. Un grafo, una entidad, o entidades distintas con relación `parentOrganization`.
+- Precio “desde” en `Offer.price` mientras la página muestra un rango. El número marcado = el número visible.
+
+<Callout type="info" title="Licencia como dato, no como poema">
+Si eres operador autorizado del Camino Inca, eso es E-E-A-T verificable. Una página con el número y el enlace a la lista oficial, enlazada desde las fichas de trek, vale más que un `award` inventado. El schema de organización puede apuntar a esa URL. El artículo de la licencia desarrolla esto.
+</Callout>
+
+## Orden de implementación
+
+1. `TravelAgency` en las cuatro homes, con dirección y `sameAs`.
+2. `Offer` + moneda en la plantilla de tour (el artículo del precio).
+3. Breadcrumbs coherentes.
+4. `TouristTrip` cuando el grafo de Offer esté limpio, no antes.
+5. Reseñas por tour, al final, bien hechas.
+
+El validador en verde el viernes no es el KPI. El KPI es GSC sin errores de producto a 14 días, y una entidad que un humano y una máquina pueden reconocer como la misma agencia en Instagram, Tripadvisor y el `.it`.

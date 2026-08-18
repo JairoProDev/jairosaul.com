@@ -1,0 +1,82 @@
+---
+title: "Canonical, hreflang y la bandera del header"
+description: "Tres mecanismos que la gente trata como si fueran el mismo. Uno elige duplicados, otro agrupa traducciones, el tercero es un menú. Mezclarlos es la forma más elegante de no internacionar nada."
+date: "2026-08-18"
+cluster: "internacionalizacion"
+tags: ["canonical", "hreflang", "ux", "indexacion"]
+excerpt: "El selector de banderas puede estar 'bien' para el usuario y ser inútil para Google. El canonical puede estar 'bien' y matar el portugués. No son palancas intercambiables."
+related:
+  - hreflang-turismo-idioma-equivocado
+  - rastreada-vs-detectada-sin-indexar
+  - dominio-por-idioma-no-es-internacionalizacion
+---
+
+En casi cada reunión con una agencia que tiene banderas en el header aparece la misma frase:
+
+> “Pero si el usuario puede cambiar el idioma…”
+
+Sí. El usuario. Googlebot no hace clic en la bandera italiana. Recorre `<a href>`. Si esa bandera apunta a la **home** del `.it` desde la ficha del Camino Inca en inglés, el crawler acaba de recibir una señal de que esas dos URLs están relacionadas como portada, no como el mismo trek. Y el humano italiano que estaba a un paso de reservar vuelve a la página de inicio a buscar el producto otra vez. Muchos no lo hacen.
+
+Tres herramientas. Tres trabajos. Si las usas como sinónimos, el índice recibe un poema contradictorio.
+
+## 1. `rel=canonical` — elige entre duplicados
+
+Declara la versión preferida cuando **el mismo contenido** (o casi) vive en varias URLs: con y sin `www`, con parámetros UTM, con una copia `/tour/x/` y `/tour/x-2/` que el CMS duplicó.
+
+Es una **señal, no una orden**. Si el resto del sitio (enlaces internos, sitemap, hreflang, título) apunta a otra URL, Google puede elegir esa otra como canónica. Por eso “poner canonical y ya” no arregla un duplicado si el menú sigue enlazando las dos.
+
+En un caso real en español, dos slugs del mismo bike tour convivían en el sitemap. La corrección no es hreflang. Es: GSC, cuál rankea, 301 a esa, menú y sitemap alineados. Hreflang no fusiona duplicados del mismo idioma.
+
+<Callout type="error" title="Canonical cruzado entre idiomas">
+Apuntar `machupicchupacotes.com/pacote/...` al `.com` inglés para “juntar fuerza” le dice al índice que la URL brasileña no es una página. Brasil es, en más de una operadora, el mercado que más WhatsApp mueve. No se canonicaliza hacia el inglés. Se anota con hreflang y se deja vivir.
+</Callout>
+
+## 2. `hreflang` — agrupa traducciones
+
+Mismo producto, distinto idioma. URLs distintas, contenido distinto (tiene que serlo: traducir mal y dejar el precio en USD en la ficha PT es contenido distinto *y* peor). El grupo existe para que Google **elija según el usuario**, no para que “gane la más fuerte”.
+
+No sustituye canonical. Una ficha PT tiene canonical a sí misma y hreflang a EN/ES/IT.
+
+No se pone hreflang a una URL que canónicamente declara otra. Primero la canónica coherente, después el grupo.
+
+## 3. La bandera — navegación
+
+HTML, visible, humano. Su único deber SEO es **no mentir el grafo interno**:
+
+- Si existe ficha hermana → `href` a esa ficha.
+- Si no existe → o no se muestra esa bandera, o se va a una categoría honesta (“tours en italiano”), no a fingir que la home es el producto.
+- `hreflang` en el `<head>` **además**. El clic humano no reemplaza la anotación.
+
+<Compare
+  leftTitle="Bandera decorativa"
+  rightTitle="Bandera de red"
+  left={<p>Tres imágenes. Las tres van a tres homes. El usuario en medio de una ficha pierde contexto. Google no ve equivalencia de producto.</p>}
+  right={<p>La bandera es un enlace contextual a la URL del mapa. El head emite el mismo grupo. UX y anotación dicen lo mismo.</p>}
+/>
+
+## Señales que se pisan: la lista corta
+
+| Si haces esto | Google puede entender |
+|---|---|
+| Canonical PT → EN, más hreflang PT | “¿Esta página existe o no?” |
+| Hreflang a una URL que 301 | “El grupo incluye un fantasma” |
+| Sitemap con las dos duplicadas ES, más canonical a una | “El sitemap discute al head” |
+| Bandera a home, hreflang a ficha | El humano y el bot hacen caminos distintos |
+| `noindex` en el italiano “porque aún está corto” y hreflang hacia él | El grupo incluye una URL que pediste no indexar |
+
+La higiene es aburrida y es el trabajo: **una historia**. Sitemap, canonical, hreflang, menú, banderas, 301 del dominio viejo. Si el dominio legacy redirige bien página a página, no lo metas en el hreflang. El grupo vive en las URLs 200.
+
+## Cómo lo auditas en una hora
+
+1. Home EN: ¿canonical a sí misma? ¿hreflang? ¿href de cada bandera?
+2. Ficha de tour EN: lo mismo. Compara el `href` de la bandera IT con el `hreflang="it"`. Tienen que ser **la misma** URL, o una de las dos está mal.
+3. Esa URL IT: ¿200? ¿canonical propia? ¿bloque recíproco?
+4. Sitemap: ¿aparece la duplicada que ya 301-easte?
+
+No hace falta un crawler de 10.000 URLs para descubrir que las banderas mienten. Hace falta abrir dos fichas. El crawler entra después, para ver cuántas mienten.
+
+## La frase para el dueño que no quiere oír “etiquetas”
+
+> El selector es para el cliente que ya está en el sitio. Hreflang es para el cliente que todavía está en Google. Canonical es para no tener dos fichas peleándose en español. Si las tres cuentan la misma historia, el brasileño ve portugués, el duplicado muere, y el que ya estaba en la ficha no salta a la portada. Si cada una cuenta la suya, Google elige, y suele elegir mal para el mercado que más les importa.
+
+Eso es arquitectura. El resto es el plugin de banderas que vino con el theme.

@@ -49,19 +49,21 @@ El de la empresa: **20603059302**. Empieza en 20 = persona jurídica. Empieza en
 
 **Por qué le importa a un SEO:** los CIIU declarados te dicen **qué dice la empresa que hace**, oficialmente. Los de Peru Grand Travel Group S.A.C. incluyen:
 
-| Actividad declarada | Lectura |
-|---|---|
-| Agencias de viajes y guías turísticos | El negocio principal |
+
+| Actividad declarada                                 | Lectura                                                                                                                           |
+| --------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| Agencias de viajes y guías turísticos               | El negocio principal                                                                                                              |
 | Otros tipos de transporte regular por vía terrestre | **Tienen transporte propio.** Eso significa buses, no subcontratación total. Es un activo real y un coste fijo que hay que llenar |
-| Actividades inmobiliarias | Diversificación. Señal de que hay capital |
+| Actividades inmobiliarias                           | Diversificación. Señal de que hay capital                                                                                         |
+
 
 Ese segundo punto es un insight comercial: **una empresa con flota propia tiene urgencia de ocupación**. Cada asiento vacío es pérdida. Eso hace que el argumento de "más reservas directas" pegue más fuerte que en una agencia que solo revende.
 
 ## RNP — Registro Nacional de Proveedores
 
-**Qué es:** <cite index="20-1">la base de datos oficial que reúne a las personas naturales o jurídicas habilitadas para participar en procesos de contratación pública en Perú</cite>. <cite index="17-1">Sin estar inscrito, una empresa no puede contratar con el Estado peruano</cite>.
+**Qué es:** la base de datos oficial que reúne a las personas naturales o jurídicas habilitadas para participar en procesos de contratación pública en Perú. Sin estar inscrito, una empresa no puede contratar con el Estado peruano.
 
-Históricamente lo administraba el **OSCE** (Organismo Supervisor de las Contrataciones del Estado); <cite index="20-1">con la Ley N.º 32069 pasó al OECE (Organismo Especializado para las Contrataciones Públicas Eficientes)</cite>.
+Históricamente lo administraba el **OSCE** (Organismo Supervisor de las Contrataciones del Estado); con la Ley N.º 32069 pasó al OECE (Organismo Especializado para las Contrataciones Públicas Eficientes).
 
 **Qué te dice sobre la empresa:** estar en el RNP es señal de **formalidad y ambición institucional**. Una agencia informal no se molesta en inscribirse. Significa que pueden (y probablemente quieren) vender servicios de viaje a entidades públicas: viajes oficiales, eventos, delegaciones.
 
@@ -74,7 +76,7 @@ Históricamente lo administraba el **OSCE** (Organismo Supervisor de las Contrat
 
 Las agencias de viajes deben estar **registradas y clasificadas** ante la autoridad regional. Hay categorías (minorista, mayorista, operador de turismo). Un **operador de turismo** es el que organiza y ejecuta el servicio; una minorista solo revende. Peru Grand Travel opera, no solo revende.
 
-## SERNANP y la lista de operadores autorizados del Camino Inca
+## SERNANP (Servicio Nacional de Áreas Naturales Protegidas por el Estado) y la lista de operadores autorizados del Camino Inca
 
 **Qué es:** el Camino Inca no lo puede vender cualquiera. Es una ruta dentro del **Santuario Histórico de Machu Picchu**, un área natural protegida. El acceso está limitado por ley a un número de personas por día (unos 500 contando porteadores y guías, lo que deja alrededor de 200 turistas diarios).
 
@@ -98,6 +100,8 @@ Las agencias de viajes deben estar **registradas y clasificadas** ante la autori
 
 ---
 
+
+
 # PARTE 2 — SOBRE INVESTIGAR PERSONAS
 
 Aquí voy a ser directo contigo, porque te importa el resultado.
@@ -118,16 +122,20 @@ Aquí voy a ser directo contigo, porque te importa el resultado.
 
 ---
 
+
+
 # PARTE 3 — LOS PUESTOS QUE ESTÁN CONTRATANDO
 
 Tienen varias vacantes abiertas a la vez con bandas muy distintas (de S/1.120 con comisiones hasta S/3.500). Qué significa cada tramo en una agencia de viajes:
 
-| Banda | Puesto típico | Qué hace |
-|---|---|---|
-| S/1.100–1.500 + comisiones | **Asesor / ejecutivo de ventas** | Atiende WhatsApp e Instagram, cotiza, cierra reservas. Es el motor de ingresos |
-| S/2.000 | Counter, reservas, operaciones | Coordina proveedores, trenes, entradas, hoteles, guías |
-| S/2.500–3.000 | Community manager, diseñador, contenido, jefe de operaciones | Marca y ejecución |
-| **S/3.500** | **Analista SEO Técnico** ← tu puesto | El mejor pagado que publican |
+
+| Banda                      | Puesto típico                                                | Qué hace                                                                       |
+| -------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------------------------ |
+| S/1.100–1.500 + comisiones | **Asesor / ejecutivo de ventas**                             | Atiende WhatsApp e Instagram, cotiza, cierra reservas. Es el motor de ingresos |
+| S/2.000                    | Counter, reservas, operaciones                               | Coordina proveedores, trenes, entradas, hoteles, guías                         |
+| S/2.500–3.000              | Community manager, diseñador, contenido, jefe de operaciones | Marca y ejecución                                                              |
+| **S/3.500**                | **Analista SEO Técnico** ← tu puesto                         | El mejor pagado que publican                                                   |
+
 
 **Tres lecturas estratégicas:**
 
@@ -136,6 +144,8 @@ Tienen varias vacantes abiertas a la vez con bandas muy distintas (de S/1.120 co
 3. **Contratan vendedores en volumen.** Eso te da un argumento potente: más tráfico orgánico cualificado = más conversaciones para ese equipo de ventas = mejor rendimiento de la inversión que ya están haciendo en personas. **Tu trabajo alimenta el trabajo de ellos.** Dilo así.
 
 ---
+
+
 
 # PARTE 4 — POR QUÉ IMPORTAN EL BLOG, EL NÚMERO DE URLs Y LAS CATEGORÍAS
 
@@ -155,23 +165,30 @@ Añadir 100 URLs vacías **baja la calidad media** y puede empeorar el conjunto 
 
 **En la red de PGT:**
 
-| Dominio | Total URLs | Posts | Lectura |
-|---|---|---|---|
-| EN | 137 | **0** | Solo puede competir por consultas transaccionales |
-| ES | 206 | 101 | Cobertura de embudo completa |
-| PT | 225 | 105 | Cobertura de embudo completa |
+
+| Dominio | Total URLs | Posts | Lectura                                           |
+| ------- | ---------- | ----- | ------------------------------------------------- |
+| EN      | 137        | **0** | Solo puede competir por consultas transaccionales |
+| ES      | 206        | 101   | Cobertura de embudo completa                      |
+| PT      | 225        | 105   | Cobertura de embudo completa                      |
+
+
+
 
 ## El embudo, que es lo que hay debajo
 
-| Fase | Qué busca el usuario | Qué página lo captura |
-|---|---|---|
-| **TOFU** (arriba) | "how many days in Cusco", "altitude sickness Machu Picchu" | Artículo de blog |
-| **MOFU** (medio) | "Inca Trail vs Salkantay", "best time to visit" | Comparativas, guías |
-| **BOFU** (abajo) | "Inca Trail 4 days price", "book Machu Picchu tour" | Ficha de tour |
+
+| Fase              | Qué busca el usuario                                       | Qué página lo captura |
+| ----------------- | ---------------------------------------------------------- | --------------------- |
+| **TOFU** (arriba) | "how many days in Cusco", "altitude sickness Machu Picchu" | Artículo de blog      |
+| **MOFU** (medio)  | "Inca Trail vs Salkantay", "best time to visit"            | Comparativas, guías   |
+| **BOFU** (abajo)  | "Inca Trail 4 days price", "book Machu Picchu tour"        | Ficha de tour         |
+
 
 **BOFU** = *bottom of funnel*: el que ya quiere comprar. Es el tráfico más valioso **y el más caro y disputado**: todas las agencias del mundo pelean por esas cinco consultas.
 
 **TOFU** es donde se gana la partida a largo plazo, porque:
+
 - Hay **mucho más volumen** (por cada persona que busca "book Inca Trail" hay decenas que buscan "how hard is the Inca Trail")
 - Hay **mucha menos competencia**
 - El viajero internacional investiga **2 a 6 meses antes** de reservar. Quien lo acompaña en la investigación es quien tiene la relación cuando llega la decisión
@@ -191,3 +208,4 @@ Una categoría (o taxonomía) agrupa contenido: "Trekking", "Full Day", "Paquete
 ## El argumento de negocio, en una frase
 
 > *"Tienen 69 productos en inglés y cero contenido que capture al viajero que todavía no sabe qué comprar. En español y portugués sí lo tienen, con más de cien artículos cada uno. Están vendiendo solo a quien ya decidió, en el mercado que paga más por reserva."*
+

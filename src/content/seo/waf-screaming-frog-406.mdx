@@ -1,0 +1,62 @@
+---
+title: "El WAF que hace que Screaming Frog declare el sitio caído"
+description: "406 Not Acceptable a user-agents que no parecen navegador. El auditor amateur reporta downtime. Googlebot suele pasar. Cómo rastrear de verdad y qué vigilar para que el firewall no se coma un crawler que sí importa."
+date: "2026-08-18"
+cluster: "rastreo"
+tags: ["waf", "screaming-frog", "rastreo", "user-agent"]
+excerpt: "Con el UA por defecto, el WAF responde 406. Con Mozilla/5.0, el HTML sale. Quien audite sin cambiar el user-agent va a decir que el sitio no responde. Tú ya sabes que sí."
+related:
+  - robots-txt-que-se-dispara
+  - crawl-budget-200-urls
+  - auditar-competidor-turismo-tarde
+---
+
+Hay un rito en SEO freelance: abrir Screaming Frog, pegar el dominio, pulsar Start, y a los diez segundos declarar que “el sitio no carga”. En más de una agencia de Cusco el servidor no está caído. El **WAF** (Web Application Firewall) está haciendo su trabajo: si el `User-Agent` parece un scraper, responde `406 Not Acceptable` o un challenge. Frog, por defecto, no parece Chrome.
+
+Eso no es un hallazgo de downtime. Es un hallazgo de **cómo se audita**. Y es, de paso, una pregunta de entrevista que vale el puesto: *¿cómo auditarías un sitio cuyo WAF devuelve 406 al crawler?*
+
+La respuesta: cambias el user-agent a uno de navegador, mandas `Accept: text/html`, y vuelves a pedir. Si entonces sale 200 y un HTML de 200 KB, el sitio vive. El informe de “caído” era ignorancia del laboratorio.
+
+```bash
+curl -sI -A "Screaming Frog SEO Spider/20.0" https://www.agencia.com/
+# a menudo: HTTP/2 406
+
+curl -sI -A "Mozilla/5.0" -H "Accept: text/html" https://www.agencia.com/
+# HTTP/2 200
+```
+
+<Callout type="success" title="Esto te distingue">
+Cualquier “experto” que entregue un PDF de Screaming Frog en config default sobre un WAF estricto está midiendo el firewall, no el sitio. Documenta el 406, documenta el 200 con UA de navegador, y sigue. No le digas al dueño que su web está caída. Le acaba de atender Paloma por WhatsApp.
+</Callout>
+
+## Qué es el WAF en esta película
+
+Un proxy (Cloudflare, ModSecurity, un plugin “anti-bot”, el panel del hosting) inspecciona la petición. Reglas típicas: UA vacío, UA de herramientas, falta de `Accept`, rate limit, datacenter IP. Googlebot **debería** estar en una lista permitida; no siempre lo está si alguien copió reglas agresivas.
+
+Google publica rangos de IP y un método para verificar Googlebot (DNS inverso). Si GSC muestra picos de 4xx o “anomalía en el rastreo”, **entonces** el WAF es un problema de indexación, no solo de Frog. Hasta que no lo veas en GSC, no asumas que Google está bloqueado. Asumir eso es el error simétrico al de “el sitio está caído”.
+
+## Cómo configuras el laboratorio
+
+- Screaming Frog: *Configuration → User-Agent → Chrome*. Headers `Accept`.
+- Modo lista si solo quieres el catálogo del sitemap.
+- Respeta `Crawl-delay` de cortesía aunque Google lo ignore: no martilles 80 hilos contra un VPS de Cusco en temporada.
+- Guarda la config. El próximo junior no debería volver al 406.
+
+El auditor en Python que escribí para una red de tours hace lo mismo: UA de navegador por defecto. Sin eso, el script miente.
+
+## Qué vigilar en producción
+
+| Señal | Qué puede ser | Acción |
+|---|---|---|
+| GSC: 403/406/429 en estadísticas de rastreo | WAF o rate limit a Googlebot | Allowlist, verificar IPs, bajar sensibilidad |
+| Frog 406, Chrome 200 | Regla anti-scraper | Documentar. No “arreglar” abriendo el WAF al mundo |
+| 406 a `Googlebot` en un curl | Alguien bloqueó mal | Urgente. Inspección de URL en GSC |
+| Challenge JS (Cloudflare) | El HTML inicial no es el contenido | Render en Frog; ver HTML renderizado vs original |
+
+No apagues el WAF para que un crawler de 99 dólares se sienta cómodo. Apágalo (o ajústalo) si **Google** no puede rastrear. El resto de herramientas se adaptan al sitio, no al revés.
+
+## La frase para sistemas
+
+> El firewall está haciendo su trabajo con scrapers. Necesito una excepción documentada para Googlebot y un UA de Chrome para las auditorías internas. No necesito que el sitio sea rastreable por cualquier script de Internet.
+
+Eso es adulto. “Desactiven Cloudflare” no lo es. El SEO técnico que ha tocado un 406 no pelea con seguridad: pacta una vía de medición.

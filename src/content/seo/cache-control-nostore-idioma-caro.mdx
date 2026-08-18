@@ -1,0 +1,54 @@
+---
+title: "cache-control: no-store en el idioma que más debería convertir"
+description: "Mismo stack, mismo hosting: portugués en 0,10 s de TTFB, inglés en 1,04 s. La cabecera no-store, no-cache, must-revalidate obliga a PHP en cada visita. Es el arreglo de mejor retorno por hora, y está en el mercado de mayor ticket."
+date: "2026-08-18"
+cluster: "rendimiento"
+tags: ["cache", "ttfb", "wordpress", "headers"]
+excerpt: "no-store significa: no guardes esta respuesta en ningún sitio. Cada turista estadounidense ejecuta WordPress desde cero. El brasileño, no. No es infraestructura. Es un plugin o una cookie."
+related:
+  - cwv-temas-constructor
+  - fuentes-lcp-subset
+  - crawl-budget-200-urls
+---
+
+El TTFB es la primera subparte del LCP. No se recupera después con un WebP. Si el primer byte tarda un segundo, el hero ya sale perdiendo.
+
+Cabeceras reales, mismo grupo de agencias, mismo tipo de stack WordPress:
+
+| Dominio | `cache-control` (resumen) | TTFB de portada |
+|---|---|---|
+| Portugués | `public, max-age=0` (al menos revalidable / CDN-friendly) | **0,10 s** |
+| Español | similar a PT | 0,29 s |
+| Inglés | `no-store, no-cache, must-revalidate` | **1,04 s** |
+
+`no-store`: no guardes esto en ninguna caché, de nadie. `no-cache`: revalida siempre. `must-revalidate`: si expiró, no uses copia. En conjunto: **cada visita anónima ejecuta PHP y MySQL**. El inglés es el mercado de mayor ticket promedio para Machu Picchu y, en esa red, el único sin blog. Lento y sin embudo. Doble multa.
+
+<Callout type="info" title="No es el servidor">
+Si fuera el VPS, el portugués también estaría en 1 s. La diferencia entre 0,10 y 1,04 con el mismo software de tours es configuración: plugin de caché apagado, una cookie que bypasea, “Disable cache for logged in” aplicado a todo el mundo por un testigo de sesión, o un `DONOTCACHEPAGE` en el theme del EN. Diagnóstico, no mito de hosting.
+</Callout>
+
+## Cómo se ve en cinco minutos
+
+```bash
+curl -sI -A "Mozilla/5.0" https://www.agencia.com/ | grep -i cache-control
+curl -sI -A "Mozilla/5.0" https://www.agencia-pt.com/ | grep -i cache-control
+```
+
+Luego dos `curl -s -o /dev/null -w "%{time_starttransfer}\n"`. No es CrUX. Es laboratorio. Basta para priorizar. CrUX confirmará en 28 días.
+
+Cookies: si `Set-Cookie` de sesión sale en visitas anónimas, muchas cachés de página se rinden. PixelYourSite, plugins de moneda, un selector de idioma mal hecho: cualquiera puede ensuciar. Compara cookies del EN vs PT.
+
+## Qué toca sistemas (y qué mides tú)
+
+1. ¿Hay plugin de caché en PT y no en EN? Instala / enciende el mismo.
+2. ¿Hay `define('WP_CACHE', false)` en el `wp-config` del inglés?
+3. ¿El page cache excluye `/tour/` por un falso positivo de “carrito”?
+4. ¿Cloudflare / CDN en un idioma sí y en otro no?
+
+Después: visita logged-out, `cache-control` público o `s-maxage`, HTML que huele a HIT (algunos plugins añaden `x-cache`). TTFB de portada y de una ficha en el orden del PT. No prometas Lighthouse 100. Promete **dejar de ser 10× más lento que el hermano**.
+
+## Por qué esto es SEO
+
+Google rastrea menos un origen lento. El LCP de campo se come el TTFB. El viajero americano compara seis pestañas. La que tarda, pierde. GetYourGuide, mientras tanto, está instantáneo. Cada milisegundo que el inglés regala es comisión que el marketplace no pide: se la queda porque la web propia se siente rota.
+
+El arreglo no es un proyecto de tres meses. Es el ticket de mayor retorno por hora del diagnóstico. Si el puesto incluye implementar, esto es la semana 2, con sistemas, medido antes y después, en el informe de una página. El dueño entiende segundos. No le hables de `must-revalidate`. Háblale de un segundo que el brasileño no paga y el estadounidense sí.

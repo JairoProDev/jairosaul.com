@@ -1,0 +1,71 @@
+---
+title: "robots.txt que se dispara solo"
+description: "RFC 9309: las rutas son relativas. Una URL absoluta en Disallow no bloquea nada. La doble barra tampoco. La paginación en Disallow no desindexa. El archivo más corto del sitio es el que más errores silenciosos acumula."
+date: "2026-08-18"
+cluster: "rastreo"
+tags: ["robots.txt", "rastreo", "indexacion"]
+excerpt: "Disallow con https://…, Disallow: //wp-includes/, Disallow: */page/*. Tres líneas que parecen política y no hacen lo que el autor creía. Sitemap: faltaba en dos de tres idiomas."
+related:
+  - waf-screaming-frog-406
+  - rastreada-vs-detectada-sin-indexar
+  - crawl-budget-200-urls
+---
+
+`robots.txt` es un archivo de texto en la raíz del host, RFC 9309, servido en `200` y `text/plain`. Un host, un archivo: `www` y apex son dos. No indexa. No desindexa. **Solo pide no rastrear** (y Google, en general, obedece para el rastreo; las URLs bloqueadas pueden seguir apareciendo si hay enlaces, sin snippet útil).
+
+La gente lo usa como interruptor mágico. El archivo se llena de líneas que **no coinciden con ninguna URL**, y el autor se va a casa creyendo que tapa Google Reviews, `wp-includes` y la paginación.
+
+Tres errores que encontré en producción, en la misma red, el mismo día:
+
+```
+Disallow: https://www.agencia.com/tptscode/shortcode-google-reviews/
+Disallow: //wp-includes/
+Disallow: */page/*
+```
+
+## 1. URL absoluta en Disallow
+
+El protocolo pide **rutas relativas** que empiezan en `/`. `Disallow: https://www.agencia.com/…` no es una ruta. **No bloquea nada.** La intención de ocultar un shortcode de reseñas está fallando en silencio. Correcto:
+
+```
+Disallow: /tptscode/
+```
+
+(Y pregunta si de verdad quieres que Google no rastree eso. Si el shortcode es la única vía a las reseñas, estás escondiendo contenido. Si es basura de plugin, ok.)
+
+## 2. Doble barra
+
+`Disallow: //wp-includes/` no coincide con `https://www.agencia.com/wp-includes/`. El path es `/wp-includes/`. Una barra de más y la regla es un adorno. Correcto: `Disallow: /wp-includes/`. WordPress además suele permitir `admin-ajax.php`; si un idioma lo Allow y el otro no, el render diverge. Homogeneiza.
+
+## 3. Paginación por Disallow
+
+`Disallow: */page/*` corta rutas de rastreo hacia archivos profundos. **No saca esas URLs del índice.** Bloquear ≠ desindexar. Si el objetivo era no indexar `/page/2/`, la herramienta es `noindex` (meta o cabecera) **dejando rastrear**, o `rel=canonical` al archivo principal, según el caso. robots.txt aquí es la llave equivocada: Google no ve el `noindex` si no puede entrar.
+
+<Callout type="error" title="El clásico que todavía circula">
+Meter `noindex` en robots.txt. Google dejó de honrarlo. Si lo lees en un blog de 2016, el blog tiene diez años. Meta robots o `X-Robots-Tag`.
+</Callout>
+
+## Reglas que sí importan
+
+- Gana la regla **más específica** (más larga), no el orden. Empate: `Allow`.
+- Un grupo `User-agent: Googlebot` hace que Googlebot **ignore** el grupo `*`. Añadir un grupo específico y olvidar copiar las reglas es un suicidio silencioso.
+- `Crawl-delay` no lo usa Google.
+- Límite ~500 KiB; el resto se ignora.
+- `Sitemap:` es higiene. En aquella red, solo el portugués lo declaraba. EN y ES no. Un minuto. Los sitemaps también se envían en GSC; las dos vías.
+
+```
+User-agent: *
+Disallow: /wp-admin/
+Allow: /wp-admin/admin-ajax.php
+Disallow: /wp-includes/
+
+Sitemap: https://www.agencia.com/sitemap_index.xml
+```
+
+## Cómo se testea
+
+Tester de robots.txt en GSC: pegas una URL, te dice si está permitida. `curl` el archivo y léelo como RFC, no como poesía. Cada `Disallow` tiene que ser una ruta que **existe**. Si no existe, la línea es ruido.
+
+Cuando heredas un WordPress con Yoast, el archivo es una mezcla de Yoast + alguien que pegó reglas de un foro. Tu trabajo de semana 1 es leerlo en los cuatro dominios. Van a diferir. Eso, en una “red”, es el síntoma: nadie es dueño del rastreo.
+
+La paginación, los shortcodes y `wp-includes` se merecen una decisión. No se merecen tres líneas que no hacen lo que dicen. El archivo más corto del sitio no tiene derecho a ser el más mentiroso.
