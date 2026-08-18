@@ -191,7 +191,7 @@ export default function CommandPalette({ isOpen, onClose, onOpenSystemPanel }: C
   const getIconForHref = (href: string) => {
     if (href.startsWith('/projects')) return <Code className="h-4 w-4" />;
     if (href.startsWith('/ideas')) return <Lightbulb className="h-4 w-4" />;
-    if (href.startsWith('/seo') || href === '/peru-grand-travel') return <Search className="h-4 w-4" />;
+    if (href.startsWith('/seo')) return <Search className="h-4 w-4" />;
     if (href.startsWith('/industrias')) return <MapPin className="h-4 w-4" />;
     if (href === '/vision') return <Eye className="h-4 w-4" />;
     if (href === '/manifiesto') return <BookOpen className="h-4 w-4" />;

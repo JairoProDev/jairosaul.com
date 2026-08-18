@@ -1,10 +1,10 @@
 ---
 title: "cache-control: no-store en el idioma que más debería convertir"
-description: "Mismo stack, mismo hosting: portugués en 0,10 s de TTFB, inglés en 1,04 s. La cabecera no-store, no-cache, must-revalidate obliga a PHP en cada visita. Es el arreglo de mejor retorno por hora, y está en el mercado de mayor ticket."
+description: "Mismo stack, mismo hosting: un idioma en décimas de segundo, otro cerca de un segundo. no-store obliga a PHP en cada visita. Suele ser el idioma de mayor ticket."
 date: "2026-08-18"
 cluster: "rendimiento"
 tags: ["cache", "ttfb", "wordpress", "headers"]
-excerpt: "no-store significa: no guardes esta respuesta en ningún sitio. Cada turista estadounidense ejecuta WordPress desde cero. El brasileño, no. No es infraestructura. Es un plugin o una cookie."
+excerpt: "no-store significa: no guardes esta respuesta en ningún sitio. Cada visita anónima ejecuta WordPress desde cero. El otro idioma, no. Casi nunca es el VPS. Es un plugin o una cookie."
 related:
   - cwv-temas-constructor
   - fuentes-lcp-subset
@@ -13,15 +13,15 @@ related:
 
 El TTFB es la primera subparte del LCP. No se recupera después con un WebP. Si el primer byte tarda un segundo, el hero ya sale perdiendo.
 
-Cabeceras reales, mismo grupo de agencias, mismo tipo de stack WordPress:
+Cabeceras reales, mismo tipo de stack WordPress, idiomas distintos:
 
-| Dominio | `cache-control` (resumen) | TTFB de portada |
+| Idioma | `cache-control` (resumen) | TTFB de portada |
 |---|---|---|
-| Portugués | `public, max-age=0` (al menos revalidable / CDN-friendly) | **0,10 s** |
-| Español | similar a PT | 0,29 s |
-| Inglés | `no-store, no-cache, must-revalidate` | **1,04 s** |
+| Portugués | `public` / revalidable | décimas de segundo |
+| Español | similar | también rápido |
+| Inglés | `no-store, no-cache, must-revalidate` | cerca de 1 s |
 
-`no-store`: no guardes esto en ninguna caché, de nadie. `no-cache`: revalida siempre. `must-revalidate`: si expiró, no uses copia. En conjunto: **cada visita anónima ejecuta PHP y MySQL**. El inglés es el mercado de mayor ticket promedio para Machu Picchu y, en esa red, el único sin blog. Lento y sin embudo. Doble multa.
+`no-store`: no guardes esto en ninguna caché, de nadie. `no-cache`: revalida siempre. `must-revalidate`: si expiró, no uses copia. En conjunto: **cada visita anónima ejecuta PHP y MySQL**. Si el inglés es el mercado de mayor ticket y además no tiene blog, es lento y sin embudo. Doble multa.
 
 <Callout type="info" title="No es el servidor">
 Si fuera el VPS, el portugués también estaría en 1 s. La diferencia entre 0,10 y 1,04 con el mismo software de tours es configuración: plugin de caché apagado, una cookie que bypasea, “Disable cache for logged in” aplicado a todo el mundo por un testigo de sesión, o un `DONOTCACHEPAGE` en el theme del EN. Diagnóstico, no mito de hosting.
@@ -51,4 +51,4 @@ Después: visita logged-out, `cache-control` público o `s-maxage`, HTML que hue
 
 Google rastrea menos un origen lento. El LCP de campo se come el TTFB. El viajero americano compara seis pestañas. La que tarda, pierde. GetYourGuide, mientras tanto, está instantáneo. Cada milisegundo que el inglés regala es comisión que el marketplace no pide: se la queda porque la web propia se siente rota.
 
-El arreglo no es un proyecto de tres meses. Es el ticket de mayor retorno por hora del diagnóstico. Si el puesto incluye implementar, esto es la semana 2, con sistemas, medido antes y después, en el informe de una página. El dueño entiende segundos. No le hables de `must-revalidate`. Háblale de un segundo que el brasileño no paga y el estadounidense sí.
+El arreglo no es un proyecto de tres meses. Es el ticket de mayor retorno por hora del diagnóstico. Con sistemas, medido antes y después, en un informe de una página. El dueño entiende segundos. No le hables de `must-revalidate`. Háblale de un segundo que un mercado no paga y el otro sí.

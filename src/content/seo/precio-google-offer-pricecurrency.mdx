@@ -14,7 +14,7 @@ related:
 
 GetYourGuide y Viator pintan el precio en el resultado. Google también puede, si el HTML trae un `Offer` completo: número, moneda y disponibilidad. Si solo mandas `"price": "150"`, Search Console marca el error: falta `priceCurrency`. La ficha queda fuera del rich result. No es un warning cosmético.
 
-En agosto medí cuatro idiomas. EN e IT mandaban el número sin moneda. PT, en al menos una ficha de Valle Sagrado, ni siquiera mandaba `Offer`. Se corrige en la plantilla de Tourmaster, no recorriendo 150 URLs a mano.
+En agosto medí cuatro idiomas en una red de turismo. EN e IT mandaban el número sin moneda. PT, en al menos una ficha, ni siquiera mandaba `Offer`. Se corrige en la plantilla de tours, no recorriendo 150 URLs a mano.
 
 <StatRow>
   <Stat value="3" label="campos" hint="price, currency, availability" />
@@ -45,7 +45,7 @@ Una operadora que vende a USA, Brasil y Perú en la misma red no puede dejar el 
 
 ## Dónde se rompe en WordPress de tours
 
-Tourmaster, plugins de booking, Yoast graph, un JSON-LD pegado en el child theme: **una plantilla**. Por eso se corrige una vez, no en 69 posts. El error clásico es editar una ficha “para ver”, confirmar que el test de resultados enriquecidos pasa, y no tocar el PHP que generan las otras 68.
+Tourmaster, plugins de booking, Yoast graph, un JSON-LD pegado en el child theme: **una plantilla**. Por eso se corrige una vez, no ficha por ficha. El error clásico es editar una URL “para ver”, confirmar que el test de resultados enriquecidos pasa, y no tocar el PHP que generan las demás.
 
 El segundo error es un `priceValidUntil` fijo (`2027-01-01`) en todo el catálogo. Si la tarifa del Rainbow Mountain cambia en marzo, el dato es falso. Google ha sido claro con datos estructurados engañosos. Mejor un campo de vigencia real o no emitir la fecha.
 

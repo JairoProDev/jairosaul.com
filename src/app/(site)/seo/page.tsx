@@ -62,17 +62,10 @@ export default function SeoHubPage() {
             Notas de SEO técnico
           </h1>
           <p className="mt-6 max-w-3xl text-lg leading-relaxed text-cortex-300">
-            Cómo rastreo un WordPress de turismo con user-agent de navegador,
-            cómo armo el mapa entre idiomas y dónde se toca el PHP. Agosto de
-            2026. Hay una revisión de cuatro sitios de una operadora de Cusco
-            en{' '}
-            <Link
-              href="/peru-grand-travel"
-              className="text-acetylcholine-400 underline underline-offset-2"
-            >
-              /peru-grand-travel
-            </Link>
-            . Mercados y producto, en{' '}
+            Notas de SEO técnico: rastreo, hreflang, schema, WAF y WordPress
+            con más de un idioma. El recorte es turismo porque vivo en Cusco,
+            no porque esté escribiendo el manual de una agencia en concreto.
+            Mercado y producto, en{' '}
             <Link
               href="/industrias/turismo"
               className="text-acetylcholine-400 underline underline-offset-2"

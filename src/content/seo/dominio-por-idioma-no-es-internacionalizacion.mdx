@@ -4,7 +4,7 @@ description: "ccTLD, subcarpeta, WordPress aparte: la estructura de URL es una d
 date: "2026-08-18"
 cluster: "internacionalizacion"
 tags: ["hreflang", "arquitectura", "dominios", "ccTLD"]
-excerpt: "Elegir viaggiomachupicchu.it y machupicchupacotes.com puede ser correcto. Lo incorrecto es creer que el dominio ya le habla a Google en italiano o en portugués."
+excerpt: "Elegir agencia.it y agencia.com.br puede ser correcto. Lo incorrecto es creer que el dominio ya le habla a Google en italiano o en portugués."
 related:
   - hreflang-turismo-idioma-equivocado
   - wpml-no-sirve-wordpress-aparte
@@ -37,7 +37,7 @@ El consenso técnico, si solo importara el PageRank, es **subcarpeta**. El conse
   leftTitle="Lo que cree marketing"
   rightTitle="Lo que ve el índice"
   left={<p>Cuatro banderas, cuatro marcas, cuatro mercados atendidos. El italiano “ya tiene su sitio”.</p>}
-  right={<p>Cuatro orígenes, cuatro grafos de enlaces, cero grupos. El italiano de 33 URLs compite con el inglés de 137 y con Tripadvisor.</p>}
+  right={<p>Cuatro orígenes, cuatro grafos de enlaces, cero grupos. El italiano de pocas URLs compite con el inglés y con Tripadvisor.</p>}
 />
 
 ## Decisión 3: el mecanismo
@@ -52,10 +52,10 @@ Canonical elige la URL preferida entre duplicados del **mismo** documento. Hrefl
 
 Operar cuatro WordPress implica, entre otras cosas:
 
-- Cuatro Yoast, cuatro sitemaps, cuatro robots.txt, cuatro políticas de caché. En el caso público de la red de Cusco, el inglés mandaba `cache-control: no-store` y el portugués respondía en 0,10 s. Mismo stack, distinta config. Eso solo pasa cuando nadie es dueño de la red.
-- Cuatro plantillas de schema. Un dominio emite `Offer` sin moneda; otro no emite `Offer`. El mercado brasileño, el más caliente, era el peor marcado.
-- Gaps de catálogo. Publicar un Grand Deluxe solo en inglés no es “priorizar ticket alto”. Es esconderlo de Brasil.
-- Migraciones. El dominio viejo en español que redirige **página a página** es el único elogio que hay que hacer en voz alta: la mayoría tira 301 masivo a la home y se carga años de URLs.
+- Cuatro Yoast, cuatro sitemaps, cuatro robots.txt, cuatro políticas de caché. He visto el inglés mandar `cache-control: no-store` y el portugués responder en décimas de segundo. Mismo stack, distinta config. Eso pasa cuando nadie es dueño de la red.
+- Cuatro plantillas de schema. Un dominio emite `Offer` sin moneda; otro no emite `Offer`. El mercado brasileño, a veces el más caliente, sale el peor marcado.
+- Gaps de catálogo. Publicar el paquete de lujo solo en inglés no es “priorizar ticket alto”. Es esconderlo de Brasil.
+- Migraciones. El dominio viejo que redirige página a página es el único elogio que hay que hacer en voz alta: la mayoría tira 301 masivo a la home y se carga años de URLs.
 
 La arquitectura de dominio-por-idioma **aumenta** el coste de disciplina. Si no hay un mapa de equivalencias, no hay red. Hay franquicias digitales que no se hablan.
 
@@ -65,7 +65,7 @@ Si todavía no compraste el `.it`:
 
 1. ¿El equipo puede mantener contenido nativo, no Google Translate? Si no, subcarpeta `/it/` en el dominio más fuerte.
 2. ¿La keyword del dominio es el negocio (`machupicchu`, `incatrail`)? Entonces el ccTLD o el dominio de marca por idioma puede valer el coste de autoridad. **con** hreflang desde el día 1, no “luego”.
-3. ¿Hay flota, licencia, WhatsApp por idioma? Eso es operación. El SEO no inventa un mercado que ops no puede atender. Un italiano de 33 tours contra 69 en inglés está bien si ops solo opera esos 33. Está mal si ops opera 69 y el sitio italiano es un folleto.
+3. ¿Hay flota, licencia, WhatsApp por idioma? Eso es operación. El SEO no inventa un mercado que ops no puede atender. Un italiano con un tercio del catálogo está bien si ops solo opera esos tours. Está mal si ops vende el resto y el sitio italiano es un folleto.
 
 Si ya compraste los cuatro, no migres a subcarpeta en un trimestre. La migración de cuatro ccTLD hacia un solo dominio es un proyecto de un año, con mapa de 301, y en temporada alta es una forma creativa de incendiarse. **Cierra el hreflang. Homogeneiza plantillas. Publica el inventario que ya existe.** Eso es internacionalización. El `.it` solo es el letrero.
 
@@ -73,6 +73,6 @@ Si ya compraste los cuatro, no migres a subcarpeta en un trimestre. La migració
 
 Cada dominio nuevo empieza en cero. Los enlaces que el español ganó en 2019 no se mudan al italiano porque hay una bandera. Hreflang **ayuda a consolidar señales de ranking entre versiones**. Google lo ha descrito así, con matices,  pero no es un `rel=linkjuice`. El italiano tiene que ganarse su propio grafo: contenido, menciones, fichas de GetYourGuide en italiano, reseñas.
 
-Por eso el sitio nuevo (dos artículos de blog, treinta tours) no se “come” al inglés. Por eso el plan de 90 días no es “rankear Italia”. Es: no servir español a un italiano, anotar lo que ya es equivalente, y no dejar 40 productos invisibles en ese mercado.
+Por eso el sitio nuevo (dos artículos de blog, un catálogo corto) no se “come” al inglés. Por eso un plan de 90 días no es “rankear Italia”. Es: no servir español a un italiano, anotar lo que ya es equivalente, y no dejar producto invisible en ese mercado.
 
-La internacionalización es un sistema. El dominio es una pieza. Si te pagan por SEO técnico en una red así, tu trabajo no es rediseñar la bandera. Es que el sistema deje de mentirle al índice.
+La internacionalización es un sistema. El dominio es una pieza. En una red así, el trabajo no es rediseñar la bandera. Es que el sistema deje de mentirle al índice.

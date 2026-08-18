@@ -106,11 +106,6 @@ export const siteConfig: SiteConfig = {
           href: '/recursos',
           description: 'Herramientas, libros y guías',
         },
-        {
-          label: 'Revisión de 4 sitios',
-          href: '/peru-grand-travel',
-          description: 'Auditoría EN, ES, PT, IT',
-        },
       ],
     },
     {

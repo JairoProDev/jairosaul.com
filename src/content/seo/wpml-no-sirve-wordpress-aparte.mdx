@@ -4,14 +4,14 @@ description: "Polylang y WPML gestionan traducciones dentro de una instalación.
 date: "2026-08-18"
 cluster: "internacionalizacion"
 tags: ["wordpress", "wpml", "hreflang", "php"]
-excerpt: "Instalar WPML en perugrandtravel.com no habla con viaggiomachupicchu.it. Son dos MySQL. El hreflang tiene que nacer de un mapa que las cuatro instalaciones leen igual."
+excerpt: "Instalar WPML en agencia.com no habla con agencia.it. Son dos MySQL. El hreflang tiene que nacer de un mapa que las instalaciones leen igual."
 related:
   - hreflang-turismo-idioma-equivocado
   - dominio-por-idioma-no-es-internacionalizacion
   - noventa-dias-seo-que-implementa
 ---
 
-WPML está bien cuando los idiomas viven en el mismo WordPress. Aquí no. `perugrandtravel.com` y `viaggiomachupicchu.it` son dos instalaciones, dos MySQL, a veces otro child theme. Instalar WPML en el inglés no le dice nada al italiano: otro hosting, otro `wp_posts`.
+WPML está bien cuando los idiomas viven en el mismo WordPress. Aquí no. `agencia.com` y `agencia.it` son dos instalaciones, dos MySQL, a veces otro child theme. Instalar WPML en el inglés no le dice nada al italiano: otro hosting, otro `wp_posts`.
 
 Polylang, TranslatePress y Weglot caen en lo mismo. Weglot además mete otro vendor y traducción automática. Con cuatro sitios ya partidos, el mapa tiene que vivir fuera.
 
@@ -46,7 +46,7 @@ Un campo ACF “hreflang IT” editado por marketing es cómo se rompe la recipr
 
 En un catálogo de 70 tours, las equivalencias no son traducción literal del slug. *Machu Picchu Full Day* vs *Machu Picchu 1 día* vs *Machu Picchu 1 giorno* vs *pacote Machu Picchu full day*. Cruzar sitemaps, no títulos. Los títulos mienten; los slugs, menos.
 
-Gaps: si el lujo solo existe en inglés, el emisor **no** inventa un `hreflang="pt-BR"` a la home brasileña. Eso le dice a Google que el Grand Deluxe *es* la portada en portugués. Es una mentira de producto. El brasileño que aterriza en la home no compra el Belmond.
+Gaps: si el lujo solo existe en inglés, el emisor **no** inventa un `hreflang="pt-BR"` a la home brasileña. Eso le dice a Google que el paquete caro *es* la portada en portugués. Es una mentira de producto. El brasileño que aterriza en la home no compra el hotel de lujo.
 
 El mapa es también el backlog de marketing: cada guion es una ficha que ops ya opera y el mercado no puede comprar.
 

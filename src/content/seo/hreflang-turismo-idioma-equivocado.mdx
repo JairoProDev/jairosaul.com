@@ -30,7 +30,7 @@ Se emite de tres formas. Elige una y sé consistente:
 | Cabecera HTTP | `Link: <url>; rel="alternate"; hreflang="pt-BR"` | PDFs, no-HTML, o un proxy |
 | Sitemap XML | `xhtml:link` por URL | Catálogos enormes; más fácil de generar; más opaco de debuggear |
 
-En turismo con cuatro WordPress, HTML en `wp_head` gana: lo verificas con `curl` en cinco segundos y no dependes de que el sitemap se regenere.
+En turismo con varios WordPress, HTML en `wp_head` gana: lo verificas con `curl` en cinco segundos y no dependes de que el sitemap se regenere.
 
 ## Cómo se mide
 
@@ -42,12 +42,12 @@ Cero en la home, en la ficha, en el sitemap y en cabeceras (`curl -sI`). Con eso
 
 <StatRow>
   <Stat value="0" label="anotaciones" hint="si grep -c da esto, no hay red" />
-  <Stat value="4" label="idiomas" hint="EN ES PT IT, un caso real" />
-  <Stat value="31" label="productos en los 4" hint="el resto son gaps de catálogo" />
-  <Stat value="URL" label="unidad" hint="home con home no cuenta" />
+  <Stat value="4" label="idiomas" hint="EN ES PT IT, típico en Cusco" />
+  <Stat value="URL" label="unidad" hint="el resto son gaps de catálogo" />
+  <Stat value="home≠ficha" label="error" hint="bandera a la portada no cuenta" />
 </StatRow>
 
-En agosto de 2026 lo medí en cuatro WordPress de una operadora de Cusco. El caso está en [la revisión pública](/peru-grand-travel). El conteo fue cero en los cuatro dominios. TreXperience, con dos idiomas, ya emitía `en` + `es`. El que tiene la arquitectura más ambiciosa era el que no había cerrado el mecanismo.
+En agencias de Cusco con un dominio por idioma el patrón se repite: `grep hreflang` da 0 en todas las homes, y un competidor con solo dos idiomas (por ejemplo TreXperience) ya emite `en` + `es`. Más dominios, más que perder si Google elige el idioma solo.
 
 ## Las tres reglas que, si fallan, el bloque es teatro
 
@@ -71,7 +71,7 @@ Un tour es un **producto**. Mismo trekking, cuatro fichas, cuatro precios, cuatr
 2. El usuario recibe el idioma de la versión “ganadora”, no el suyo.
 3. En mobile, el clic equivocado es un abandono. Nadie traduce un itinerario de 4 días con el traductor del Chrome y luego reserva US$600.
 
-Además hay huecos de catálogo. Crucé slugs a mano: 74 productos, 31 en los cuatro idiomas, 19 faltantes en portugués, unos 40 en italiano. El hreflang no inventa una ficha que no existe. Si no hay Valle Sagrado en italiano, no hay `hreflang="it"` que poner. Apuntar a la home italiana es peor que no poner nada.
+Además hay huecos de catálogo. El hreflang no inventa una ficha que no existe. Si no hay Valle Sagrado en italiano, no hay `hreflang="it"` que poner. Apuntar a la home italiana es peor que no poner nada.
 
 ## Implementarlo cuando cada idioma es otro WordPress
 
