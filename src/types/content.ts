@@ -69,6 +69,20 @@ export interface SeoArticle extends BaseContent {
   related?: string[];
 }
 
+export type IndustryId = 'turismo';
+
+export type TurismoCluster = 'mercados' | 'producto' | 'canales' | 'demanda';
+
+export interface IndustryArticle extends BaseContent {
+  type: 'industry';
+  industry: IndustryId;
+  cluster: TurismoCluster;
+  readingTime: number;
+  excerpt: string;
+  content: string;
+  related?: string[];
+}
+
 export interface Manifesto {
   title: string;
   sections: {
