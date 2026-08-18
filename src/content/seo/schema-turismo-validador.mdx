@@ -11,9 +11,7 @@ related:
   - eat-licencia-camino-inca
 ---
 
-schema.org es un árbol. `Thing` en la raíz, y luego oficios. `Organization` es correcto y flojo. `LocalBusiness` ya admite dirección y horario. `TravelAgency` es el tipo que le dice a Google **qué clase de negocio** eres. En un benchmark de portadas de Cusco (agosto 2026), Valencia Travel emitía `TravelAgency`, `TouristTrip`, `AggregateRating`, `PostalAddress`, `ContactPoint`. La red de cuatro dominios que contrasté emitía `Organization`, `WebPage`, `BreadcrumbList`. Misma ciudad, distinta entidad.
-
-No es un capricho semántico. Es la diferencia entre aparecer como una empresa con teléfono y estrellas, o como “una web más”.
+schema.org es un árbol. `Thing` en la raíz, y luego oficios. `Organization` es correcto y flojo. `LocalBusiness` ya admite dirección y horario. `TravelAgency` es el tipo que le dice a Google **qué clase de negocio** eres. En un benchmark de portadas de Cusco (agosto 2026), Valencia Travel emitía `TravelAgency`, `TouristTrip`, `AggregateRating`, `PostalAddress`, `ContactPoint`. La red de cuatro dominios que contrasté emitía `Organization`, `WebPage`, `BreadcrumbList`. Misma ciudad, distinta entidad. El validador no es el premio; el informe de GSC sí.
 
 ## Vocabulario vs sintaxis
 
@@ -77,7 +75,7 @@ Pasar schema.org y fallar Rich Results es el caso `Offer` sin moneda: el vocabul
 - `sameAs` a un Facebook de otra marca del grupo sin aclarar. Un grafo, una entidad, o entidades distintas con relación `parentOrganization`.
 - Precio “desde” en `Offer.price` mientras la página muestra un rango. El número marcado = el número visible.
 
-<Callout type="info" title="Licencia como dato, no como poema">
+<Callout type="info" title="La licencia es un dato">
 Si eres operador autorizado del Camino Inca, eso es E-E-A-T verificable. Una página con el número y el enlace a la lista oficial, enlazada desde las fichas de trek, vale más que un `award` inventado. El schema de organización puede apuntar a esa URL. El artículo de la licencia desarrolla esto.
 </Callout>
 

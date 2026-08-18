@@ -11,13 +11,9 @@ related:
   - noventa-dias-seo-que-implementa
 ---
 
-La pregunta de entrevista que separa a quien configuró Yoast de quien va a implementar de verdad:
+WPML está bien cuando los idiomas viven en el mismo WordPress. Aquí no. `perugrandtravel.com` y `viaggiomachupicchu.it` son dos instalaciones, dos MySQL, a veces otro child theme. Instalar WPML en el inglés no le dice nada al italiano: otro hosting, otro `wp_posts`.
 
-> ¿Cómo harías hreflang en tres o cuatro WordPress independientes, mismo dueño, mismo catálogo, distinto dominio?
-
-La respuesta incorrecta, y la más común: “con WPML”. WPML es un producto serio **para un sitio con idiomas dentro**. Crea traducciones, las enlaza, emite hreflang. Todo eso vive en **una** base de datos. El día que el italiano es `viaggiomachupicchu.it` , otro hosting, otro `wp_posts`, otro child theme que se desincronizó,  WPML en el inglés no sabe que el italiano existe.
-
-Polylang, TranslatePress, Weglot: misma familia de problema. Weglot encima mete una capa de traducción automática y otro vendor. No es el arreglo de una red ya partida.
+Polylang, TranslatePress y Weglot caen en lo mismo. Weglot además mete otro vendor y traducción automática. Con cuatro sitios ya partidos, el mapa tiene que vivir fuera.
 
 ## El diseño que sí encaja
 

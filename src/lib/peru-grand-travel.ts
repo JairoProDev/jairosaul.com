@@ -13,7 +13,7 @@ export const PAGE_URL = `https://jairosaul.com${PAGE_PATH}`;
 
 export const PAGE_TITLE = 'Auditoría técnica: Peru Grand Travel (EN, ES, PT, IT)';
 export const PAGE_DESCRIPTION =
-  'Revisión de los cuatro sitios en vivo: hreflang, precios en Google, reseñas, blog e inglés lento. Mapa URL a URL, plugin PHP y auditor en Python. Jairo, Cusco.';
+  'Revisión de los cuatro sitios en vivo: hreflang, precios en Google, reseñas, blog e inglés lento. Mapa URL a URL, plugin PHP y auditor en Python.';
 
 const PHONE_DISPLAY = '+51 953 865 163';
 const WHATSAPP = 'https://wa.me/51953865163';

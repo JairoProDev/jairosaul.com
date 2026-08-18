@@ -12,15 +12,15 @@ related:
   - canonical-hreflang-banderas
 ---
 
-Un viajero en São Paulo busca *pacote Machu Picchu 4 dias*. Google tiene, en el índice, una ficha en portugués, una en español, una en inglés y a veces una en italiano. **Sin hreflang, no hay grupo.** Hay cuatro URLs parecidas. El sistema elige con señales indirectas: idioma detectado, país del usuario, enlaces, historial. A menudo gana la versión en español, que tiene más enlaces o más años. El brasileño aterriza en un WhatsApp en castellano y una tarifa en dólares. Eso no es “SEO flojo”. Es una arquitectura de mercado sin el mecanismo que la hace funcionar.
+Si alguien en São Paulo busca *pacote Machu Picchu 4 dias*, Google ya tiene la ficha en portugués, la de español, la de inglés y a veces la de italiano. Sin hreflang no hay grupo. Hay cuatro URLs parecidas y elige con lo que tiene a mano: idioma, país, enlaces. Casi siempre gana el español, que suele tener más años o más links. El brasileño llega a un WhatsApp en castellano y a una tarifa en dólares.
 
 <Callout type="warning" title="Las banderas no son hreflang">
-El selector de idioma que enlaza portada con portada es navegación para humanos. Google necesita equivalencias **página a página**, recíprocas, con autorreferencia y un `x-default`. Si el italiano está en el Camino Inca en inglés y toca la bandera, y cae en la home italiana, perdiste la ficha y la anotación.
+El selector de idioma que enlaza portada con portada es para humanos. Google necesita equivalencias página a página, recíprocas, con autorreferencia y un `x-default`. Si el italiano está en el Camino Inca en inglés, toca la bandera y cae en la home italiana, perdiste la ficha.
 </Callout>
 
-## Qué es, en una frase que se puede defender
+## Qué hace hreflang
 
-`hreflang` declara que varias URLs son **el mismo documento en distintos idiomas o regiones**. No es una redirección. No es un `canonical` cruzado. No es un menú. Es una anotación. Google puede ignorarla si el resto de señales la contradicen, pero sin ella ni siquiera tiene la hipótesis correcta.
+`hreflang` declara que varias URLs son el mismo documento en distintos idiomas o regiones. No redirige. Tampoco sustituye al canonical ni al menú: es una anotación. Google puede ignorarla si el resto de señales la contradicen, pero sin ella ni siquiera tiene la hipótesis correcta.
 
 Se emite de tres formas. Elige una y sé consistente:
 
@@ -32,13 +32,13 @@ Se emite de tres formas. Elige una y sé consistente:
 
 En turismo con cuatro WordPress, HTML en `wp_head` gana: lo verificas con `curl` en cinco segundos y no dependes de que el sitemap se regenere.
 
-## Cómo se ve el fallo (no lo discutas, mídelo)
+## Cómo se mide
 
 ```bash
 curl -s -A "Mozilla/5.0" https://www.ejemplo.com/ | grep -c hreflang
 ```
 
-Cero en la home. Cero en la ficha. Cero en el sitemap. Cero en cabeceras (`curl -sI`). Eso es el diagnóstico. No hace falta Lighthouse. No hace falta un PDF de 40 páginas.
+Cero en la home, en la ficha, en el sitemap y en cabeceras (`curl -sI`). Con eso alcanza. Lighthouse no lo va a marcar.
 
 <StatRow>
   <Stat value="0" label="anotaciones" hint="si grep -c da esto, no hay red" />
@@ -47,7 +47,7 @@ Cero en la home. Cero en la ficha. Cero en el sitemap. Cero en cabeceras (`curl 
   <Stat value="URL" label="unidad" hint="home con home no cuenta" />
 </StatRow>
 
-En una red que auditó en agosto de 2026 , cuatro instalaciones WordPress de una operadora de Cusco, el caso está documentado en [la auditoría pública](/peru-grand-travel),  el conteo fue cero en los cuatro dominios. TreXperience, con **dos** idiomas, ya emitía `en` + `es`. El que tiene la arquitectura más ambiciosa era el que no había cerrado el mecanismo.
+En agosto de 2026 lo medí en cuatro WordPress de una operadora de Cusco. El caso está en [la revisión pública](/peru-grand-travel). El conteo fue cero en los cuatro dominios. TreXperience, con dos idiomas, ya emitía `en` + `es`. El que tiene la arquitectura más ambiciosa era el que no había cerrado el mecanismo.
 
 ## Las tres reglas que, si fallan, el bloque es teatro
 
@@ -71,7 +71,7 @@ Un tour es un **producto**. Mismo trekking, cuatro fichas, cuatro precios, cuatr
 2. El usuario recibe el idioma de la versión “ganadora”, no el suyo.
 3. En mobile, el clic equivocado es un abandono. Nadie traduce un itinerario de 4 días con el traductor del Chrome y luego reserva US$600.
 
-Además hay **gaps de catálogo**. Cruzar slugs a mano , 74 productos, 31 en los cuatro idiomas, 19 faltantes en portugués, ~40 faltantes en italiano,  no es un ejercicio de SEO. Es inventario. El hreflang no inventa una ficha que no existe. Si no hay Valle Sagrado en italiano, no hay `hreflang="it"` que poner. Mentir una equivalencia a la home italiana es peor que no poner nada.
+Además hay huecos de catálogo. Crucé slugs a mano: 74 productos, 31 en los cuatro idiomas, 19 faltantes en portugués, unos 40 en italiano. El hreflang no inventa una ficha que no existe. Si no hay Valle Sagrado en italiano, no hay `hreflang="it"` que poner. Apuntar a la home italiana es peor que no poner nada.
 
 ## Implementarlo cuando cada idioma es otro WordPress
 
@@ -102,10 +102,10 @@ Ese bloque, idéntico en las cinco URLs (cuatro idiomas + la misma en cada una),
   </Step>
 </Steps>
 
-## Cómo se ve el éxito (y cómo no)
+## Cómo se ve cuando funciona
 
-Éxito: `grep -c hreflang` > 0 en las cuatro homes; el auditor no reporta bloques rotos; GSC deja de listar “no hay etiquetas de retorno”. El tráfico por país **puede** tardar semanas: hay re-rastreo. No prometas que Brasil “sube un 40% en 14 días”.
+`grep -c hreflang` mayor que 0 en las cuatro homes. El auditor no reporta bloques rotos. GSC deja de listar “no hay etiquetas de retorno”. El tráfico por país puede tardar semanas: hay re-rastreo. No prometo que Brasil sube un 40% en 14 días.
 
-Fracaso elegante: anunciaste hreflang, pero las banderas siguen mandando al home, el italiano apunta a URLs que 404, y el `x-default` es la portada del grupo para todas las fichas. Eso Google lo ignora, y tienes razón en ignorarlo también.
+Lo que sí he visto fallar: anunciaron hreflang, las banderas siguen mandando al home, el italiano apunta a URLs que 404, y el `x-default` es la portada del grupo para todas las fichas. Google se lo salta.
 
-La frase que quiero que te quede: **un dominio por idioma es una decisión de negocio válida. Sin hreflang, es cuatro sitios peleándose por el mismo viajero.** El artículo siguiente es exactamente eso.
+Un dominio por idioma es una decisión de negocio válida. Sin hreflang, son cuatro sitios peleándose por el mismo viajero.

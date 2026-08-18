@@ -12,9 +12,9 @@ related:
   - margen-getyourguide-sin-pelea
 ---
 
-GetYourGuide pinta el precio. Viator pinta el precio. Google, en el resultado orgánico, **puede** pintar el precio , estrellas, disponibilidad, un número con moneda,  si el HTML le da un objeto `Offer` completo. Si le das `"price": "150"` y te olvidas de `priceCurrency`, el informe de fragmentos de producto en Search Console dice exactamente eso: falta el campo. La ficha queda **inelegible**. No es un warning cosmética. Es la puerta cerrada al rich result que más clic da en turismo después de las estrellas.
+GetYourGuide y Viator pintan el precio en el resultado. Google también puede, si el HTML trae un `Offer` completo: número, moneda y disponibilidad. Si solo mandas `"price": "150"`, Search Console marca el error: falta `priceCurrency`. La ficha queda fuera del rich result. No es un warning cosmético.
 
-En una red de cuatro idiomas que medí en agosto de 2026, el inglés y el italiano emitían el número sin moneda. El portugués, mercado principal, ni siquiera emitía `Offer`. Cuatro sitios, tres formas de no decir el precio. El arreglo de mayor retorno por línea de código de toda esa auditoría.
+En agosto medí cuatro idiomas. EN e IT mandaban el número sin moneda. PT, en al menos una ficha de Valle Sagrado, ni siquiera mandaba `Offer`. Se corrige en la plantilla de Tourmaster, no recorriendo 150 URLs a mano.
 
 <StatRow>
   <Stat value="3" label="campos" hint="price, currency, availability" />

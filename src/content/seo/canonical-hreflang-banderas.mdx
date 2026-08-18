@@ -1,6 +1,6 @@
 ---
 title: "Canonical, hreflang y la bandera del header"
-description: "Tres mecanismos que la gente trata como si fueran el mismo. Uno elige duplicados, otro agrupa traducciones, el tercero es un menú. Mezclarlos es la forma más elegante de no internacionar nada."
+description: "Canonical elige duplicados, hreflang agrupa traducciones, la bandera es un menú. Mezclarlos deja el índice con señales que no coinciden."
 date: "2026-08-18"
 cluster: "internacionalizacion"
 tags: ["canonical", "hreflang", "ux", "indexacion"]
@@ -15,9 +15,9 @@ En casi cada reunión con una agencia que tiene banderas en el header aparece la
 
 > “Pero si el usuario puede cambiar el idioma…”
 
-Sí. El usuario. Googlebot no hace clic en la bandera italiana. Recorre `<a href>`. Si esa bandera apunta a la **home** del `.it` desde la ficha del Camino Inca en inglés, el crawler acaba de recibir una señal de que esas dos URLs están relacionadas como portada, no como el mismo trek. Y el humano italiano que estaba a un paso de reservar vuelve a la página de inicio a buscar el producto otra vez. Muchos no lo hacen.
+Sí. El usuario. Googlebot no hace clic en la bandera italiana. Recorre `<a href>`. Si esa bandera apunta a la home del `.it` desde la ficha del Camino Inca en inglés, el crawler recibe una señal de que esas dos URLs están relacionadas como portada, no como el mismo trek. Y el italiano que estaba a un paso de reservar vuelve a inicio a buscar el producto. Muchos no lo hacen.
 
-Tres herramientas. Tres trabajos. Si las usas como sinónimos, el índice recibe un poema contradictorio.
+Canonical, hreflang y la bandera hacen tres trabajos distintos. Si las usas como sinónimos, el índice recibe señales que no coinciden.
 
 ## 1. Canonical elige entre duplicados
 
@@ -75,8 +75,8 @@ La higiene es aburrida y es el trabajo: **una historia**. Sitemap, canonical, hr
 
 No hace falta un crawler de 10.000 URLs para descubrir que las banderas mienten. Hace falta abrir dos fichas. El crawler entra después, para ver cuántas mienten.
 
-## La frase para el dueño que no quiere oír “etiquetas”
+## Cómo se relacionan las tres
 
-> El selector es para el cliente que ya está en el sitio. Hreflang es para el cliente que todavía está en Google. Canonical es para no tener dos fichas peleándose en español. Si las tres cuentan la misma historia, el brasileño ve portugués, el duplicado muere, y el que ya estaba en la ficha no salta a la portada. Si cada una cuenta la suya, Google elige, y suele elegir mal para el mercado que más les importa.
+> El selector es para el cliente que ya está en el sitio. Hreflang es para el que todavía está en Google. Canonical es para no tener dos fichas peleándose en español. Si las tres cuentan la misma historia, el brasileño ve portugués, el duplicado muere, y el que ya estaba en la ficha no salta a la portada. Si cada una cuenta la suya, Google elige, y suele elegir mal para el mercado que más les importa.
 
-Eso es arquitectura. El resto es el plugin de banderas que vino con el theme.
+El plugin de banderas que vino con el theme no hace ese trabajo.

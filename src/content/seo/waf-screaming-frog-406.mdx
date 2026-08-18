@@ -11,11 +11,9 @@ related:
   - auditar-competidor-turismo-tarde
 ---
 
-Hay un rito en SEO freelance: abrir Screaming Frog, pegar el dominio, pulsar Start, y a los diez segundos declarar que “el sitio no carga”. En más de una agencia de Cusco el servidor no está caído. El **WAF** (Web Application Firewall) está haciendo su trabajo: si el `User-Agent` parece un scraper, responde `406 Not Acceptable` o un challenge. Frog, por defecto, no parece Chrome.
+Screaming Frog, user-agent por defecto, Start. A los diez segundos: “el sitio no carga”. En más de una agencia de Cusco el servidor está bien. El WAF responde `406 Not Acceptable` si el user-agent parece scraper. Frog, de fábrica, parece scraper.
 
-Eso no es un hallazgo de downtime. Es un hallazgo de **cómo se audita**. Y es, de paso, una pregunta de entrevista que vale el puesto: *¿cómo auditarías un sitio cuyo WAF devuelve 406 al crawler?*
-
-La respuesta: cambias el user-agent a uno de navegador, mandas `Accept: text/html`, y vuelves a pedir. Si entonces sale 200 y un HTML de 200 KB, el sitio vive. El informe de “caído” era ignorancia del laboratorio.
+Cambio el UA a Chrome, mando `Accept: text/html`, y sale 200. El 406 hay que anotarlo. No es downtime.
 
 ```bash
 curl -sI -A "Screaming Frog SEO Spider/20.0" https://www.agencia.com/
@@ -25,8 +23,8 @@ curl -sI -A "Mozilla/5.0" -H "Accept: text/html" https://www.agencia.com/
 # HTTP/2 200
 ```
 
-<Callout type="success" title="Esto te distingue">
-Cualquier “experto” que entregue un PDF de Screaming Frog en config default sobre un WAF estricto está midiendo el firewall, no el sitio. Documenta el 406, documenta el 200 con UA de navegador, y sigue. No le digas al dueño que su web está caída. Le acaba de atender Paloma por WhatsApp.
+<Callout type="info" title="Qué documentar">
+El 406 con UA de herramienta y el 200 con UA de navegador. Si alguien entrega un PDF de Frog en config default sobre un WAF estricto, midió el firewall, no el sitio. No le digas al dueño que la web está caída: el WhatsApp de reservas sigue contestando.
 </Callout>
 
 ## Qué es el WAF en esta película
@@ -55,8 +53,8 @@ El auditor en Python que escribí para una red de tours hace lo mismo: UA de nav
 
 No apagues el WAF para que un crawler de 99 dólares se sienta cómodo. Apágalo (o ajústalo) si **Google** no puede rastrear. El resto de herramientas se adaptan al sitio, no al revés.
 
-## La frase para sistemas
+## Qué pedirle a sistemas
 
 > El firewall está haciendo su trabajo con scrapers. Necesito una excepción documentada para Googlebot y un UA de Chrome para las auditorías internas. No necesito que el sitio sea rastreable por cualquier script de Internet.
 
-Eso es adulto. “Desactiven Cloudflare” no lo es. El SEO técnico que ha tocado un 406 no pelea con seguridad: pacta una vía de medición.
+No pido que desactiven Cloudflare. Pido una vía de medición.
