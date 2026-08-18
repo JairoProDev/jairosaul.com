@@ -1,147 +1,357 @@
 'use client';
 
-import { useState } from 'react';
+import { useCallback, useEffect, useId, useRef, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Brain, Menu, X, Command, Settings, User, Code, Lightbulb, Eye, BookOpen, MessageCircle, Search, MapPin } from 'lucide-react';
+import { Brain, ChevronDown, Command, Menu, Settings, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { siteConfig } from '@/lib/config';
 import { usePlasticity } from './PlasticityProvider';
+import type { NavLink, NavNode } from '@/types/content';
+
+function isItemActive(pathname: string, href: string) {
+  if (pathname === href) return true;
+  if (href === '/projects') {
+    return pathname.startsWith('/projects/') && !pathname.startsWith('/projects/archive');
+  }
+  return pathname.startsWith(`${href}/`);
+}
+
+function isNodeActive(pathname: string, node: NavNode) {
+  if (node.href && isItemActive(pathname, node.href)) return true;
+  return (node.children ?? []).some((child) => isItemActive(pathname, child.href));
+}
+
+const focusRing =
+  'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-acetylcholine-400';
 
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
+  const [openMenu, setOpenMenu] = useState<string | null>(null);
   const pathname = usePathname();
   const { openCommandPalette, openSystemPanel } = usePlasticity();
+  const navRef = useRef<HTMLElement>(null);
 
-  const isActive = (href: string) => {
-    if (href === '/') {
-      return pathname === '/';
-    }
-    return pathname.startsWith(href);
-  };
+  useEffect(() => {
+    setIsOpen(false);
+    setOpenMenu(null);
+  }, [pathname]);
+
+  useEffect(() => {
+    if (!openMenu && !isOpen) return;
+
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setOpenMenu(null);
+        setIsOpen(false);
+      }
+    };
+    const onPointer = (event: PointerEvent) => {
+      if (!navRef.current?.contains(event.target as Node)) {
+        setOpenMenu(null);
+      }
+    };
+
+    document.addEventListener('keydown', onKey);
+    document.addEventListener('pointerdown', onPointer);
+    return () => {
+      document.removeEventListener('keydown', onKey);
+      document.removeEventListener('pointerdown', onPointer);
+    };
+  }, [openMenu, isOpen]);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-cortex-900/80 backdrop-blur-md border-b border-cortex-700">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
-          {/* Logo */}
-          <Link 
-            href="/" 
-            className="flex items-center space-x-2 group"
-            onClick={() => setIsOpen(false)}
-          >
-            <div className="relative hover:scale-110 transition-transform duration-200">
-              <Brain className="h-8 w-8 text-acetylcholine-500" />
-              <div className="absolute inset-0 rounded-full bg-acetylcholine-500/20 animate-pulse" />
-            </div>
-            <span className="font-serif text-xl font-semibold text-glutamate-500">
-              JairoSaulProDev
-            </span>
-          </Link>
+    <nav
+      ref={navRef}
+      className="fixed inset-x-0 top-0 z-50 border-b border-cortex-700 bg-cortex-900/90 backdrop-blur-md"
+    >
+      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
+        <Link
+          href="/"
+          className={cn('flex shrink-0 items-center gap-2 rounded-lg', focusRing)}
+          onClick={() => setIsOpen(false)}
+        >
+          <Brain className="h-7 w-7 text-acetylcholine-500" aria-hidden="true" />
+          <span className="font-serif text-lg font-semibold text-glutamate-500">
+            JairoSaul
+          </span>
+        </Link>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-3 lg:space-x-5">
-            {siteConfig.navigation.map((item) => {
-              const getIcon = () => {
-                switch (item.href) {
-                  case '/sobre-mi': return <User className="h-4 w-4" />;
-                  case '/projects': return <Code className="h-4 w-4" />;
-                  case '/ideas': return <Lightbulb className="h-4 w-4" />;
-                  case '/seo': return <Search className="h-4 w-4" />;
-                  case '/industrias/turismo': return <MapPin className="h-4 w-4" />;
-                  case '/vision': return <Eye className="h-4 w-4" />;
-                  case '/cortex': return <Brain className="h-4 w-4" />;
-                  case '/manifiesto': return <BookOpen className="h-4 w-4" />;
-                  case '/contacto': return <MessageCircle className="h-4 w-4" />;
-                  default: return null;
-                }
-              };
-
-              return (
+        <ul className="hidden items-center gap-1 md:flex">
+          {siteConfig.navigation.map((node) => (
+            <li key={node.label}>
+              {node.children?.length ? (
+                <NavDropdown
+                  node={node}
+                  pathname={pathname}
+                  open={openMenu === node.label}
+                  onOpen={() => setOpenMenu(node.label)}
+                  onClose={() => setOpenMenu(null)}
+                />
+              ) : (
                 <Link
-                  key={item.href}
-                  href={item.href}
+                  href={node.href ?? '/'}
                   className={cn(
-                    "relative inline-flex items-center space-x-2 px-3 py-2 text-sm font-medium transition-colors duration-200 rounded-lg",
-                    isActive(item.href)
-                      ? "text-acetylcholine-500 bg-acetylcholine-500/10"
-                      : "text-cortex-300 hover:text-glutamate-500 hover:bg-cortex-700"
+                    'inline-flex whitespace-nowrap rounded-lg px-3 py-2 text-sm font-medium',
+                    focusRing,
+                    node.href && isNodeActive(pathname, node)
+                      ? 'bg-acetylcholine-500/10 text-acetylcholine-400'
+                      : 'text-cortex-200 hover:bg-cortex-800 hover:text-white',
                   )}
                 >
-                  {getIcon()}
-                  <span>{item.label}</span>
-                  {isActive(item.href) && (
-                    <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-acetylcholine-500 rounded-full" />
-                  )}
+                  {node.label}
                 </Link>
-              );
-            })}
-          </div>
+              )}
+            </li>
+          ))}
+        </ul>
 
-          {/* Accesos Rápidos */}
-          <div className="hidden md:flex items-center space-x-2">
-            <button
-              onClick={openCommandPalette}
-              className="p-2 text-cortex-400 hover:text-acetylcholine-500 hover:bg-cortex-700 rounded-lg transition-colors"
-              title="Paleta de Comandos (⌘K)"
-            >
-              <Command className="h-5 w-5" />
-            </button>
-            <button
-              onClick={openSystemPanel}
-              className="p-2 text-cortex-400 hover:text-dopamine-500 hover:bg-cortex-700 rounded-lg transition-colors"
-              title="Panel del Sistema (⌘,)"
-            >
-              <Settings className="h-5 w-5" />
-            </button>
-          </div>
-
-          {/* Mobile menu button */}
+        <div className="hidden items-center gap-1 md:flex">
           <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden p-2 rounded-lg text-cortex-300 hover:text-glutamate-500 hover:bg-cortex-800 transition-colors"
-          >
-            {isOpen ? (
-              <X className="h-6 w-6" />
-            ) : (
-              <Menu className="h-6 w-6" />
+            type="button"
+            onClick={openCommandPalette}
+            className={cn(
+              'rounded-lg p-2 text-cortex-400 hover:bg-cortex-800 hover:text-acetylcholine-400',
+              focusRing,
             )}
+            title="Buscar (⌘K)"
+          >
+            <Command className="h-5 w-5" />
+          </button>
+          <button
+            type="button"
+            onClick={openSystemPanel}
+            className={cn(
+              'rounded-lg p-2 text-cortex-400 hover:bg-cortex-800 hover:text-dopamine-400',
+              focusRing,
+            )}
+            title="Panel del sistema"
+          >
+            <Settings className="h-5 w-5" />
           </button>
         </div>
 
-        {/* Mobile Navigation */}
-        {isOpen && (
-          <div className="md:hidden border-t border-cortex-700">
-            <div className="py-4 space-y-2">
-              {siteConfig.navigation.map((item, index) => (
-                <div
-                  key={`mobile-nav-${item.href}`}
-                  className="fade-in"
-                  style={{ animationDelay: `${index * 100}ms` }}
-                >
-                  <Link
-                    href={item.href}
-                    onClick={() => setIsOpen(false)}
-                    className={cn(
-                      "block px-4 py-3 text-base font-medium rounded-lg transition-colors duration-200",
-                      isActive(item.href)
-                        ? "text-acetylcholine-500 bg-acetylcholine-500/10"
-                        : "text-cortex-300 hover:text-glutamate-500 hover:bg-cortex-800"
-                    )}
-                  >
-                    {item.label}
-                    {item.description && (
-                      <p className="text-sm text-cortex-400 mt-1">
-                        {item.description}
-                      </p>
-                    )}
-                  </Link>
-                </div>
-              ))}
+        <button
+          type="button"
+          onClick={() => setIsOpen((value) => !value)}
+          className={cn(
+            'rounded-lg p-2 text-cortex-200 hover:bg-cortex-800 md:hidden',
+            focusRing,
+          )}
+          aria-expanded={isOpen}
+          aria-controls="menu-movil"
+        >
+          {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          <span className="sr-only">{isOpen ? 'Cerrar menú' : 'Abrir menú'}</span>
+        </button>
+      </div>
+
+      {isOpen ? (
+        <div
+          id="menu-movil"
+          className="max-h-[calc(100dvh-4rem)] overflow-y-auto border-t border-cortex-700 bg-cortex-900 md:hidden"
+        >
+          <div className="space-y-5 px-4 py-5">
+            {siteConfig.navigation.map((node) => (
+              <div key={`mobile-${node.label}`}>
+                {node.children?.length ? (
+                  <>
+                    <p className="px-2 text-xs font-semibold uppercase tracking-wider text-cortex-500">
+                      {node.label}
+                    </p>
+                    <ul className="mt-2 space-y-1">
+                      {node.children.map((child) => (
+                        <li key={child.href}>
+                          <MobileLink
+                            item={child}
+                            pathname={pathname}
+                            onNavigate={() => setIsOpen(false)}
+                          />
+                        </li>
+                      ))}
+                    </ul>
+                  </>
+                ) : (
+                  <MobileLink
+                    item={{
+                      label: node.label,
+                      href: node.href ?? '/',
+                      description: node.description,
+                    }}
+                    pathname={pathname}
+                    onNavigate={() => setIsOpen(false)}
+                  />
+                )}
+              </div>
+            ))}
+            <div className="flex gap-2 border-t border-cortex-800 pt-4">
+              <button
+                type="button"
+                onClick={() => {
+                  setIsOpen(false);
+                  openCommandPalette();
+                }}
+                className={cn(
+                  'flex flex-1 items-center justify-center gap-2 rounded-lg border border-cortex-700 px-3 py-2 text-sm text-cortex-200',
+                  focusRing,
+                )}
+              >
+                <Command className="h-4 w-4" />
+                Buscar
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setIsOpen(false);
+                  openSystemPanel();
+                }}
+                className={cn(
+                  'flex flex-1 items-center justify-center gap-2 rounded-lg border border-cortex-700 px-3 py-2 text-sm text-cortex-200',
+                  focusRing,
+                )}
+              >
+                <Settings className="h-4 w-4" />
+                Sistema
+              </button>
             </div>
           </div>
-        )}
-      </div>
+        </div>
+      ) : null}
     </nav>
+  );
+}
+
+function MobileLink({
+  item,
+  pathname,
+  onNavigate,
+}: {
+  item: NavLink;
+  pathname: string;
+  onNavigate: () => void;
+}) {
+  const active = isItemActive(pathname, item.href);
+  return (
+    <Link
+      href={item.href}
+      onClick={onNavigate}
+      className={cn(
+        'block rounded-lg px-3 py-2',
+        focusRing,
+        active
+          ? 'bg-acetylcholine-500/10 text-acetylcholine-400'
+          : 'text-cortex-100 hover:bg-cortex-800',
+      )}
+    >
+      <span className="text-sm font-medium">{item.label}</span>
+      {item.description ? (
+        <span className="mt-0.5 block text-xs text-cortex-400">{item.description}</span>
+      ) : null}
+    </Link>
+  );
+}
+
+function NavDropdown({
+  node,
+  pathname,
+  open,
+  onOpen,
+  onClose,
+}: {
+  node: NavNode;
+  pathname: string;
+  open: boolean;
+  onOpen: () => void;
+  onClose: () => void;
+}) {
+  const menuId = useId();
+  const closeTimer = useRef<number | null>(null);
+  const active = isNodeActive(pathname, node);
+
+  const cancelClose = useCallback(() => {
+    if (closeTimer.current) {
+      window.clearTimeout(closeTimer.current);
+      closeTimer.current = null;
+    }
+  }, []);
+
+  const scheduleClose = useCallback(() => {
+    cancelClose();
+    closeTimer.current = window.setTimeout(onClose, 160);
+  }, [cancelClose, onClose]);
+
+  useEffect(() => {
+    return () => cancelClose();
+  }, [cancelClose]);
+
+  const triggerClass = cn(
+    'inline-flex items-center gap-1 whitespace-nowrap rounded-lg px-3 py-2 text-sm font-medium',
+    focusRing,
+    active || open
+      ? 'bg-acetylcholine-500/10 text-acetylcholine-400'
+      : 'text-cortex-200 hover:bg-cortex-800 hover:text-white',
+  );
+
+  return (
+    <div
+      className="relative"
+      onMouseEnter={() => {
+        cancelClose();
+        onOpen();
+      }}
+      onMouseLeave={scheduleClose}
+    >
+      <button
+        type="button"
+        className={triggerClass}
+        aria-expanded={open}
+        aria-haspopup="menu"
+        aria-controls={menuId}
+        onClick={() => (open ? onClose() : onOpen())}
+      >
+        {node.label}
+        <ChevronDown
+          className={cn('h-3.5 w-3.5 transition-transform', open && 'rotate-180')}
+          aria-hidden="true"
+        />
+      </button>
+
+      {open ? (
+        <div
+          id={menuId}
+          role="menu"
+          className="absolute left-0 top-full z-50 min-w-64 pt-2"
+          onMouseEnter={cancelClose}
+        >
+          <ul className="rounded-xl border border-cortex-700 bg-cortex-900 p-2 shadow-xl shadow-black/40">
+            {node.children?.map((child) => {
+              const childActive = isItemActive(pathname, child.href);
+              return (
+                <li key={child.href}>
+                  <Link
+                    href={child.href}
+                    role="menuitem"
+                    className={cn(
+                      'block rounded-lg px-3 py-2',
+                      focusRing,
+                      childActive
+                        ? 'bg-acetylcholine-500/10 text-acetylcholine-400'
+                        : 'text-cortex-100 hover:bg-cortex-800',
+                    )}
+                  >
+                    <span className="block text-sm font-medium">{child.label}</span>
+                    {child.description ? (
+                      <span className="mt-0.5 block text-xs leading-snug text-cortex-400">
+                        {child.description}
+                      </span>
+                    ) : null}
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      ) : null}
+    </div>
   );
 }

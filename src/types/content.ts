@@ -92,6 +92,19 @@ export interface Manifesto {
   }[];
 }
 
+export interface NavLink {
+  label: string;
+  href: string;
+  description?: string;
+}
+
+export interface NavNode {
+  label: string;
+  href?: string;
+  description?: string;
+  children?: NavLink[];
+}
+
 export interface NavigationItem {
   label: string;
   href: string;
@@ -118,7 +131,7 @@ export interface SiteConfig {
     birthday?: string;
   };
   social: SocialLink[];
-  navigation: NavigationItem[];
+  navigation: NavNode[];
   projects: {
     featured: string[];
     all: string[];

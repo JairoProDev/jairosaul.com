@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { plasticityEngine } from '@/lib/plasticity';
-import { siteConfig } from '@/lib/config';
+import { flattenNav } from '@/lib/config';
 import { 
   Search, 
   X, 
@@ -47,11 +47,11 @@ export default function CommandPalette({ isOpen, onClose, onOpenSystemPanel }: C
     const stats = plasticityEngine.getUsageStats();
     const behavior = plasticityEngine.analyzeBehavior();
 
-    const navigationCommands: CommandItem[] = siteConfig.navigation.map((item) => ({
+    const navigationCommands: CommandItem[] = flattenNav().map((item) => ({
       id: `nav-${item.href}`,
       title: item.label,
       description: item.description || '',
-      icon: getIconForNavigation(item.icon || 'brain'),
+      icon: getIconForHref(item.href),
       action: () => router.push(item.href),
       category: 'navigation' as const,
     }));
@@ -188,17 +188,15 @@ export default function CommandPalette({ isOpen, onClose, onOpenSystemPanel }: C
 
 
 
-  const getIconForNavigation = (iconName: string) => {
-    switch (iconName) {
-      case 'brain': return <Brain className="h-4 w-4" />;
-      case 'code': return <Code className="h-4 w-4" />;
-      case 'lightbulb': return <Lightbulb className="h-4 w-4" />;
-      case 'book-open': return <BookOpen className="h-4 w-4" />;
-      case 'message-circle': return <MessageCircle className="h-4 w-4" />;
-      case 'map-pin': return <MapPin className="h-4 w-4" />;
-      case 'search': return <Search className="h-4 w-4" />;
-      default: return <Brain className="h-4 w-4" />;
-    }
+  const getIconForHref = (href: string) => {
+    if (href.startsWith('/projects')) return <Code className="h-4 w-4" />;
+    if (href.startsWith('/ideas')) return <Lightbulb className="h-4 w-4" />;
+    if (href.startsWith('/seo') || href === '/peru-grand-travel') return <Search className="h-4 w-4" />;
+    if (href.startsWith('/industrias')) return <MapPin className="h-4 w-4" />;
+    if (href === '/vision') return <Eye className="h-4 w-4" />;
+    if (href === '/manifiesto') return <BookOpen className="h-4 w-4" />;
+    if (href === '/contacto' || href === '/sobre-mi') return <MessageCircle className="h-4 w-4" />;
+    return <Brain className="h-4 w-4" />;
   };
 
   const getCategoryColor = (category: string) => {

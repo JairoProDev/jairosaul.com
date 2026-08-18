@@ -1,4 +1,4 @@
-import { SiteConfig } from '@/types/content';
+import { SiteConfig, type NavLink, type NavNode } from '@/types/content';
 
 export const siteConfig: SiteConfig = {
   title: 'JairoSaul.com - Jairo Saul Salas Quiñones',
@@ -56,64 +56,93 @@ export const siteConfig: SiteConfig = {
   ],
   navigation: [
     {
-      label: 'Sobre Mí',
+      label: 'Sobre mí',
       href: '/sobre-mi',
-      description: 'Mi perfil profesional y proyectos personales',
-      icon: 'user',
+      description: 'Perfil y trayectoria',
     },
     {
-      label: 'Projects',
+      label: 'Proyectos',
       href: '/projects',
-      description: 'Engramas de construcción - Mis creaciones tecnológicas',
-      icon: 'code',
+      description: 'Productos, clientes y experimentos',
+      children: [
+        {
+          label: 'Proyectos',
+          href: '/projects',
+          description: 'Showcase en vivo y en curso',
+        },
+        {
+          label: 'Archivo',
+          href: '/projects/archive',
+          description: 'Piezas anteriores y archivos',
+        },
+      ],
     },
     {
-      label: 'Ideas',
-      href: '/ideas',
-      description: 'Nodos de memoria - Mi laboratorio de pensamiento',
-      icon: 'lightbulb',
+      label: 'Notas',
+      description: 'SEO, turismo, ideas y recursos',
+      children: [
+        {
+          label: 'SEO técnico',
+          href: '/seo',
+          description: 'Hreflang, schema, WAF, WordPress multidominio',
+        },
+        {
+          label: 'Turismo',
+          href: '/industrias/turismo',
+          description: 'Mercados, cupos, OTAs y catálogo desde Cusco',
+        },
+        {
+          label: 'Industrias',
+          href: '/industrias',
+          description: 'Verticales. Turismo es la que está abierta',
+        },
+        {
+          label: 'Ideas',
+          href: '/ideas',
+          description: 'Startups, tecnología, hábitos',
+        },
+        {
+          label: 'Recursos',
+          href: '/recursos',
+          description: 'Herramientas, libros y guías',
+        },
+        {
+          label: 'Revisión de 4 sitios',
+          href: '/peru-grand-travel',
+          description: 'Auditoría EN, ES, PT, IT',
+        },
+      ],
     },
     {
-      label: 'SEO',
-      href: '/seo',
-      description: 'SEO técnico para turismo y WordPress multidominio',
-      icon: 'search',
+      label: 'Estudio',
+      description: 'Manifiesto, visión y experiencias 3D',
+      children: [
+        {
+          label: 'Manifiesto',
+          href: '/manifiesto',
+          description: 'Principios',
+        },
+        {
+          label: 'Visión',
+          href: '/vision',
+          description: 'Hacia dónde va el trabajo',
+        },
+        {
+          label: 'Brain 3D',
+          href: '/cortex',
+          description: 'Recorrido por regiones cerebrales',
+        },
+        {
+          label: 'Workspace 3D',
+          href: '/workspace-3d',
+          description: 'Escena de trabajo inmersiva',
+        },
+      ],
     },
     {
-      label: 'Turismo',
-      href: '/industrias/turismo',
-      description: 'Mercados, cupos, OTAs y catálogo desde Cusco',
-      icon: 'map-pin',
-    },
-    {
-      label: 'Recursos',
-      href: '/recursos',
-      description: 'Herramientas, libros, frameworks y guías curadas',
-      icon: 'library',
-    },
-    {
-      label: 'Visión',
-      href: '/vision',
-      description: 'Mi visión del futuro y próximos proyectos',
-      icon: 'eye',
-    },
-    {
-      label: 'Brain 3D',
-      href: '/cortex',
-      description: 'Experiencia inmersiva - Navega por las regiones cerebrales',
-      icon: 'brain',
-    },
-    {
-      label: 'Manifiesto',
-      href: '/manifiesto',
-      description: 'Los principios fundamentales que guían mi visión',
-      icon: 'book-open',
-    },
-    {
-      label: 'Sinapsis',
+      label: 'Contacto',
       href: '/contacto',
-      description: 'Establecer conexión - Trabajemos juntos',
-      icon: 'message-circle',
+      description: 'WhatsApp, correo, LinkedIn',
     },
   ],
   projects: {
@@ -159,6 +188,32 @@ export const siteConfig: SiteConfig = {
     },
   },
 };
+
+export function flattenNav(nodes: NavNode[] = siteConfig.navigation): NavLink[] {
+  const out: NavLink[] = [];
+  const seen = new Set<string>();
+
+  const push = (item: NavLink) => {
+    if (seen.has(item.href)) return;
+    seen.add(item.href);
+    out.push(item);
+  };
+
+  for (const node of nodes) {
+    if (node.href) {
+      push({
+        label: node.label,
+        href: node.href,
+        description: node.description,
+      });
+    }
+    for (const child of node.children ?? []) {
+      push(child);
+    }
+  }
+
+  return out;
+}
 
 export const brainRegions = {
   frontal: {
