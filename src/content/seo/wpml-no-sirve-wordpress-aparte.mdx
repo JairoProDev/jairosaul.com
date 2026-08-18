@@ -11,7 +11,7 @@ related:
   - noventa-dias-seo-que-implementa
 ---
 
-WPML está bien cuando los idiomas viven en el mismo WordPress. Aquí no. `agencia.com` y `agencia.it` son dos instalaciones, dos MySQL, a veces otro child theme. Instalar WPML en el inglés no le dice nada al italiano: otro hosting, otro `wp_posts`.
+WPML está bien cuando los idiomas viven en el mismo WordPress. Cuando cada idioma es otra instalación, no. `agencia.com` y `agencia.it` son dos MySQL, a veces otro child theme. Instalar WPML en el inglés no le dice nada al italiano: otro hosting, otro `wp_posts`.
 
 Polylang, TranslatePress y Weglot caen en lo mismo. Weglot además mete otro vendor y traducción automática. Con cuatro sitios ya partidos, el mapa tiene que vivir fuera.
 
@@ -24,11 +24,11 @@ Necesitas tres piezas, y ninguna es “un plugin premium de SEO”:
 3. **Un gancho** `wp_head` con prioridad conocida, que no pelee con Yoast. Si Yoast también emite hreflang (suele, si le das idiomas que no tienes), **apaga el de Yoast**. Dos bloques distintos es peor que cero.
 
 ```php
-add_action('wp_head', 'pgt_emit_hreflang', 1);
+add_action('wp_head', 'emit_hreflang_map', 1);
 
-function pgt_emit_hreflang() {
+function emit_hreflang_map() {
     $current = home_url(add_query_arg([], $GLOBALS['wp']->request));
-    $block = pgt_hreflang_block_for($current);
+    $block = hreflang_block_for($current);
     if (!$block) {
         return;
     }
@@ -44,7 +44,7 @@ Un campo ACF “hreflang IT” editado por marketing es cómo se rompe la recipr
 
 ## Por qué el mapa no puede vivir en la cabeza de nadie
 
-En un catálogo de 70 tours, las equivalencias no son traducción literal del slug. *Machu Picchu Full Day* vs *Machu Picchu 1 día* vs *Machu Picchu 1 giorno* vs *pacote Machu Picchu full day*. Cruzar sitemaps, no títulos. Los títulos mienten; los slugs, menos.
+En un catálogo de tours, las equivalencias no son traducción literal del slug. *Machu Picchu Full Day* vs *Machu Picchu 1 día* vs *Machu Picchu 1 giorno* vs *pacote Machu Picchu full day*. Cruzar sitemaps, no títulos. Los títulos mienten; los slugs, menos.
 
 Gaps: si el lujo solo existe en inglés, el emisor **no** inventa un `hreflang="pt-BR"` a la home brasileña. Eso le dice a Google que el paquete caro *es* la portada en portugués. Es una mentira de producto. El brasileño que aterriza en la home no compra el hotel de lujo.
 
@@ -65,7 +65,7 @@ curl -s -A "Mozilla/5.0" "https://www.agencia.com/tour/machu-picchu-full-day/" \
   | grep -oE 'hreflang="[^"]+" href="[^"]+"'
 ```
 
-Pega la URL italiana que salió. Abre esa URL. El bloque tiene que listar **las mismas** cuatro (o N) URLs, incluido el inglés. Si el italiano no lista al inglés, no hay reciprocidad. Un script de 40 líneas ahorra una tarde de clics. El auditor en Python existe precisamente para eso: no para un informe bonito, para no desplegar un mapa cojo.
+Pega la URL hermana que salió. Ábrela. El bloque tiene que listar **las mismas** N URLs, incluida la original. Si un idioma no lista al otro, no hay reciprocidad. Un script de 40 líneas ahorra una tarde de clics: no es para un informe bonito, es para no desplegar un mapa cojo.
 
 <Steps>
   <Step n={1} title="Apaga el hreflang de Yoast en las cuatro">

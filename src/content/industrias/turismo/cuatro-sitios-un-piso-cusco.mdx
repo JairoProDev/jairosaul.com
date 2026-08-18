@@ -1,10 +1,10 @@
 ---
 title: "Cuatro sitios, un piso en Cusco"
-description: "Un dominio por idioma es una decisión de negocio. Cuatro Yoast, cuatro cachés, cuatro catálogos. Si nadie es dueño de la red, el inglés queda lento, Italia corta y Brasil sin lujo. Cómo se ve operar eso desde aquí."
+description: "Un dominio por idioma es una decisión de negocio. Cuatro Yoast, cuatro cachés, cuatro catálogos. Si nadie es dueño de la red, el inglés queda lento, Italia corta y Brasil sin fichas. Cómo se ve operar eso desde aquí."
 date: "2026-08-18"
 cluster: "demanda"
 tags: ["cusco", "multidominio", "operacion", "catalogo"]
-excerpt: "Mismo tema, distinta config. El portugués en 0,10 s y el inglés en 1 s no es el VPS. Es que la red no tiene un responsable."
+excerpt: "Mismo tema, distinta config. Un idioma en décimas y otro en un segundo no es el VPS. Es que la red no tiene un responsable."
 related:
   - chile-manda-el-volumen
   - italia-todavia-abajo-del-2019
@@ -13,23 +13,14 @@ related:
 
 Vivir en Cusco y mirar agencias con bandera EN / ES / PT / IT es siempre la misma foto: un local, un WhatsApp, un catálogo que se publicó primero en un idioma y se fue copiando. El dominio por idioma es válido. Sin mapa entre fichas, son cuatro sitios peleándose por el mismo viajero.
 
-En agosto abrí cuatro WordPress de una operadora. Mismo stack (Goodlayers, Tourmaster, Yoast). El inglés mandaba `cache-control: no-store` y respondía en ~1 s. El portugués, `public`, ~0,10 s. Si fuera el servidor, los cuatro estarían lentos. Era config.
+El stack se parece: WordPress, constructor, plugin de tours, Yoast. Un idioma manda `cache-control: no-store` y tarda cerca de un segundo. Otro responde en décimas. Si fuera el servidor, los cuatro estarían lentos. Es config.
 
-<StatRow>
-  <Stat value="4" label="WordPress" hint="EN ES PT IT" />
-  <Stat value="74" label="productos" hint="cruce a mano" />
-  <Stat value="0" label="hreflang" hint="en las cuatro homes" />
-  <Stat value="0" label="posts EN" hint="69 tours igual" />
-</StatRow>
-
-Italia, 33 tours. El header ya tenía la bandera. El catálogo no. TreXperience, con dos idiomas, ya emitía hreflang. Valencia Travel, TravelAgency en portada. Nadie que medí tenía el combo completo. Los cuatro dominios son más para ganar si se anota, y más para perder si Google sigue eligiendo el idioma solo.
+Italia a menudo tiene la bandera en el header y la mitad del catálogo. TreXperience, con dos idiomas, ya emite hreflang. Valencia Travel, TravelAgency en portada. Nadie que yo haya medido tiene el combo completo. Más dominios, más que ganar si se anota, y más que perder si Google sigue eligiendo el idioma solo.
 
 ## Quién es dueño de la red
 
-Cuatro Yoast. Cuatro sitemaps. Cuatro robots.txt (dos sin Sitemap, uno con Disallow absoluto que no bloquea nada). Cuatro políticas de caché. Cuatro grafos de schema: un idioma con precio sin moneda, otro sin Offer.
+Cuatro Yoast. Cuatro sitemaps. Cuatro robots.txt. Cuatro políticas de caché. Cuatro grafos de schema: un idioma con precio sin moneda, otro sin Offer.
 
 Eso no se arregla con un community manager por bandera. Se arregla con un mapa de equivalencias, un snippet igual en las cuatro, y ops decidiendo qué producto existe en qué mercado. WPML no habla entre cuatro MySQL. Lo escribí en [SEO](/seo/wpml-no-sirve-wordpress-aparte).
 
-La revisión pública, el CSV y el PHP están en [jairosaul.com/peru-grand-travel](/peru-grand-travel). Las notas de turismo de esta sección son el porqué de negocio. Las de SEO, el cómo se toca el código.
-
-Fuente: medición propia, 9 y 13 de agosto de 2026. Mincetur 2025 para el contexto de mercados.
+Fuente de mercados: Mincetur 2025.

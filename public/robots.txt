@@ -13,6 +13,8 @@ Disallow: /private/
 Disallow: /api/
 Disallow: /_next/
 Disallow: /static/
+Disallow: /peru-grand-travel
+Disallow: /peru-grand-travel/
 
 # Allow important pages
 Allow: /

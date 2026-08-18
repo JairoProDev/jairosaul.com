@@ -175,7 +175,8 @@ export default function TurismoHubPage() {
           <p className="mt-16 max-w-2xl text-sm text-cortex-500">
             Fuentes que cito: Mincetur, Reporte mensual de turismo (diciembre
             2025). Cupo del Camino Inca clásico: 500 personas/día incluyendo
-            staff. Catálogos: medición propia, agosto 2026.
+            staff. El resto son patrones de catálogo y canales que se ven en
+            operadoras de Cusco, no el manual de una sola.
           </p>
         </div>
       </div>

@@ -49,6 +49,18 @@ const nextConfig = {
         ],
       },
       {
+        source: '/peru-grand-travel',
+        headers: [
+          { key: 'X-Robots-Tag', value: 'noindex, nofollow, noarchive' },
+        ],
+      },
+      {
+        source: '/peru-grand-travel/:path*',
+        headers: [
+          { key: 'X-Robots-Tag', value: 'noindex, nofollow, noarchive' },
+        ],
+      },
+      {
         source: '/(.*)',
         headers: [
           {

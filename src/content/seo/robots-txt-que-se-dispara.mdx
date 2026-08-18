@@ -4,7 +4,7 @@ description: "RFC 9309: las rutas son relativas. Una URL absoluta en Disallow no
 date: "2026-08-18"
 cluster: "rastreo"
 tags: ["robots.txt", "rastreo", "indexacion"]
-excerpt: "Disallow con https://…, Disallow: //wp-includes/, Disallow: */page/*. Tres líneas que parecen política y no hacen lo que el autor creía. Sitemap: faltaba en dos de tres idiomas."
+excerpt: "Disallow con https://…, Disallow: //wp-includes/, Disallow: */page/*. Tres líneas que parecen política y no hacen lo que el autor creía. El Sitemap a veces está en un idioma y no en el otro."
 related:
   - waf-screaming-frog-406
   - rastreada-vs-detectada-sin-indexar
@@ -15,7 +15,7 @@ related:
 
 La gente lo usa como interruptor mágico. El archivo se llena de líneas que **no coinciden con ninguna URL**, y el autor se va a casa creyendo que tapa Google Reviews, `wp-includes` y la paginación.
 
-Tres errores que encontré en producción, en la misma red, el mismo día:
+Tres errores que encuentro en producción, a veces los tres en la misma red:
 
 ```
 Disallow: https://www.agencia.com/tptscode/shortcode-google-reviews/
@@ -66,6 +66,6 @@ Sitemap: https://www.agencia.com/sitemap_index.xml
 
 Tester de robots.txt en GSC: pegas una URL, te dice si está permitida. `curl` el archivo y léelo como RFC, no como poesía. Cada `Disallow` tiene que ser una ruta que **existe**. Si no existe, la línea es ruido.
 
-Cuando heredas un WordPress con Yoast, el archivo es una mezcla de Yoast + alguien que pegó reglas de un foro. Tu trabajo de semana 1 es leerlo en los cuatro dominios. Van a diferir. Eso, en una “red”, es el síntoma: nadie es dueño del rastreo.
+Cuando heredas un WordPress con Yoast, el archivo es una mezcla de Yoast + alguien que pegó reglas de un foro. Lo primero es leerlo en todos los hosts. Van a diferir. Eso, en una “red”, es el síntoma: nadie es dueño del rastreo.
 
 La paginación, los shortcodes y `wp-includes` se merecen una decisión. No se merecen tres líneas que no hacen lo que dicen. El archivo más corto del sitio no tiene derecho a ser el más mentiroso.

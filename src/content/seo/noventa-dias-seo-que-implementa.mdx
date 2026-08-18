@@ -1,6 +1,6 @@
 ---
 title: "Noventa días de un SEO técnico que también implementa"
-description: "Semana 1 sin tocar diseño. Moneda, caché del inglés, hreflang piloto. A 90 días el mapa recíproco, GSC de producto en cero, arquitectura de blog EN. Lo que no se promete: posiciones, matar GYG, tráfico TOFU el mes 1."
+description: "Semana 1 sin tocar diseño. Medición, piloto de hreflang, schema de producto. A 90 días el mapa recíproco y criterios que Search Console puede repetir. Lo que no se promete: posiciones, matar marketplaces, tráfico el mes 1."
 date: "2026-08-18"
 cluster: "negocio"
 tags: ["operacion", "90-dias", "implementacion", "kpi"]
@@ -13,27 +13,29 @@ related:
 
 El plan de 90 días que se puede decir en 20 minutos, y cumplir si sistemas abre la puerta, cabe en tres bloques. No cabe “salir primeros en Machu Picchu tour”. Quien lo promete no va a estar a los 90 para explicar el gráfico.
 
+Esto es cómo trabajo un trimestre en una operadora de Cusco. No es el cronograma de una en concreto.
+
 ## Semana 1: no toco producción
 
-Search Console y Analytics de los cuatro hosts. Export con fecha. Crawl con UA de navegador. Usuario de WordPress que no sea dios. Quién aprueba un cambio de plantilla. Un PDF de una página: qué hay, qué no, qué no se toca aún.
+Search Console y Analytics de cada host. Export con fecha. Crawl con UA de navegador. Usuario de WordPress que no sea dios. Quién aprueba un cambio de plantilla. Un PDF de una página: qué hay, qué no, qué no se toca aún.
 
-Si no hay propiedad del `.it`, se crea. Si el inglés manda `no-store`, se diagnostica con sistemas: plugin, cookie, `wp-config`. Todavía no se “optimiza”. Se deja de opinar a ciegas.
+Si falta una propiedad de un idioma, se crea. Si un origen manda `no-store` y el hermano no, se diagnostica con sistemas: plugin, cookie, `wp-config`. Todavía no se “optimiza”. Se deja de opinar a ciegas.
 
 ## Días 8 a 30: lo que se ve
 
-1. `priceCurrency` / `Offer` homogeneizado. El mercado PT no puede ser el único sin precio.
+1. `priceCurrency` / `Offer` homogeneizado. El mercado que más convierte no puede ser el único sin precio.
 2. robots.txt: rutas relativas, sitemap declarado, paginación no bloqueada por error.
-3. Caché EN en el orden de magnitud del PT.
-4. Hreflang piloto: homes + 10 tours que existen en los cuatro idiomas. Reciprocidad medida con script, no a ojo. Yoast deja de emitir su bloque fantasma.
+3. Caché del idioma lento en el orden de magnitud del rápido.
+4. Hreflang piloto: homes + un puñado de tours que existen en todos los idiomas. Reciprocidad medida con script, no a ojo. Yoast deja de emitir su bloque fantasma.
 5. `TravelAgency` + `sameAs`. Redirect apex en un hop.
 
 Informe semanal de una página. Qué subió. Qué bloquea. Sin “sinergias”.
 
 ## Días 30 a 90: red y catálogo
 
-Hreflang del mapa completo, sin inventar equivalentes a 404. Banderas contextuales en los 10 estrella. Reseñas **por tour** en un piloto de 5, o nada. Gaps de PT: publicar lo que ops ya opera (el lujo solo en inglés es inventario escondido). Taxonomía de blog EN: un pilar, tres satélites. Italia: no 40 fichas de golpe; las que se venden.
+Hreflang del mapa completo, sin inventar equivalentes a 404. Banderas que no manden de ficha a portada. Reseñas **por tour** en un piloto chico, o nada. Publicar en cada idioma lo que ops ya opera. Taxonomía de blog en el mercado de mayor ticket: un pilar, tres satélites. El idioma nuevo: las fichas que se venden, no un volcado.
 
-GYG se queda. Paridad de ficha. Mix medido.
+Los marketplaces se quedan. Paridad de ficha. Mix medido.
 
 ## El examen, escrito
 
@@ -43,19 +45,19 @@ A 90 días se puede mirar:
 |---|---|
 | Hreflang recíproco en el catálogo que existe | |
 | Errores de Offer/moneda en GSC → 0 (o tendencia clara) | |
-| GSC EN e IT verificados, línea base guardada | |
-| TTFB EN no es 10× PT | |
-| N fichas PT que antes no existían, si ops quiso | |
-| Arquitectura de blog EN, no tráfico | |
+| GSC de cada host verificado, línea base guardada | |
+| El idioma lento ya no es un orden de magnitud peor | |
+| Fichas nuevas donde ops sí vende y el sitio no tenía URL | |
+| Arquitectura de blog en el mercado caro, no tráfico | |
 
 Si sistemas no dio acceso, el informe lo dice. No se finge el hreflang. Se mueve la fecha. Conviene atar la entrega a estos criterios: no hay hreflang “listo” si GSC sigue marcando bloques rotos.
 
 <Callout type="error" title="Fuera del trimestre">
-Nuevo theme, headless, quinto idioma, link building masivo, chatbot que reserva, traducir todo el blog PT→EN, pegar el 4.9 de la empresa en cada ficha. Si el dueño lo sueña, se aparca con respeto: *eso es año 2; si lo hacemos ahora, no termina el mapa.*
+Nuevo theme, headless, quinto idioma, link building masivo, chatbot que reserva, traducir todo un blog de golpe, pegar la nota de la empresa en cada ficha. Si el dueño lo sueña, se aparca con respeto: *eso es año 2; si lo hacemos ahora, no termina el mapa.*
 </Callout>
 
 ## En tres meses
 
-> Semana 1 no toco el diseño. Después, tres cosas visibles: la moneda para que Google pinte el precio (en portugués hoy puede no haber Offer); un piloto de hreflang; la entidad de agencia. A noventa días, el mapa recíproco, producto en cero errores, y el inglés con arquitectura de blog. GetYourGuide se queda. Cambia que la web deje de ser más pobre que el marketplace, y que un brasileño no aterrice en español.
+> Semana 1 no toco el diseño. Después, tres cosas visibles: la moneda para que Google pinte el precio; un piloto de hreflang; la entidad de agencia. A noventa días, el mapa recíproco, producto en cero errores, y el mercado caro con arquitectura de blog. El marketplace se queda. Cambia que la web deje de ser más pobre que el canal de comisión, y que un viajero no aterrice en el idioma equivocado.
 
 El PDF era el martes anterior. Esto es lo que se implementa.

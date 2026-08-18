@@ -43,6 +43,18 @@ const nextConfig: NextConfig = {
           { key: 'Cache-Control', value: 'public, max-age=3600' },
         ],
       },
+      {
+        source: '/peru-grand-travel',
+        headers: [
+          { key: 'X-Robots-Tag', value: 'noindex, nofollow, noarchive' },
+        ],
+      },
+      {
+        source: '/peru-grand-travel/:path*',
+        headers: [
+          { key: 'X-Robots-Tag', value: 'noindex, nofollow, noarchive' },
+        ],
+      },
     ];
   },
   images: {

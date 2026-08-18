@@ -4,23 +4,23 @@ description: "Por debajo de ~10.000 URLs bien enlazadas, hablar de presupuesto d
 date: "2026-08-18"
 cluster: "rastreo"
 tags: ["crawl-budget", "rastreo", "arquitectura"]
-excerpt: "Un sitio de 137 URLs no tiene un problema de crawl budget. Tiene un problema de caché, de duplicados y de no anotar idiomas. El budget es la palabra que se usa para sonar senior cuando no se midió GSC."
+excerpt: "Un catálogo de unas pocas centenas de URLs no tiene un problema de crawl budget. Tiene un problema de caché, de duplicados y de no anotar idiomas. El budget es la palabra que se usa para sonar senior cuando no se midió GSC."
 related:
   - waf-screaming-frog-406
   - rastreada-vs-detectada-sin-indexar
   - cache-control-nostore-idioma-caro
 ---
 
-“Hay que optimizar el crawl budget” es la frase que más rápido identifica a alguien que copió un playbook de un marketplace de 2 millones de SKU y lo pegó en una agencia de 70 tours. Google rastrea lo que le merece la pena. En un sitio de 200-500 URLs **bien enlazadas**, casi siempre entra. El cuello de botella no es el presupuesto. Es que la URL es duplicada, delgada, bloqueada, lenta, o no existe en el idioma del usuario.
+“Hay que optimizar el crawl budget” es la frase que más rápido identifica a alguien que copió un playbook de un marketplace de 2 millones de SKU y lo pegó en una agencia de Cusco. Google rastrea lo que le merece la pena. En un sitio de 200-500 URLs **bien enlazadas**, casi siempre entra. El cuello de botella no es el presupuesto. Es que la URL es duplicada, delgada, bloqueada, lenta, o no existe en el idioma del usuario.
 
 Google documenta crawl budget para sitios **grandes**. La regla práctica que uso: por debajo de ~10.000 URLs indexables, no abro esa conversación salvo que GSC muestre que Googlebot se está ahogando (5xx, TTFB miserable, laberintos de parámetros).
 
 ## Dónde sí se malgasta el rastreo, aunque seas chico
 
-- **Parámetros y facetas.** `?order=price` × `?ref=ig` × paginación. 70 tours se vuelven 2.000 URLs si el constructor las enlaza. Ahí el budget, aunque pequeño, se va en basura.
+- **Parámetros y facetas.** `?order=price` × `?ref=ig` × paginación. Unas decenas de tours se vuelven miles de URLs si el constructor las enlaza. Ahí el budget, aunque pequeño, se va en basura.
 - **Duplicados en sitemap.** Dos slugs del mismo bike tour. Google rastrea los dos, elige uno, el otro comió una visita.
 - **Cadena de redirección.** `http://dominio` → `https://dominio` → `https://www.dominio`. Dos hops. Cada hop es trabajo. Consolida.
-- **Servidor lento.** Un TTFB de 1,0 s en inglés contra 0,10 s en portugués, mismo grupo: Google reduce el ritmo para no romperte. Eso **sí** es presupuesto, y se arregla con caché, no con un plugin de “crawl optimizer”.
+- **Servidor lento.** Un idioma cerca de un segundo y el hermano en décimas, mismo grupo: Google reduce el ritmo para no romperte. Eso **sí** es presupuesto, y se arregla con caché, no con un plugin de “crawl optimizer”.
 
 <Compare
   leftTitle="Teatro de budget"
@@ -31,7 +31,7 @@ Google documenta crawl budget para sitios **grandes**. La regla práctica que us
 
 ## Qué mirar en GSC en vez de pronunciar la palabra
 
-Estadísticas de rastreo: peticiones por día, tiempo de respuesta, códigos. Si el tiempo de respuesta del inglés es 4× el del PT, el gráfico ya te dijo el problema. Si las peticiones son 80/día en un sitio de 137 URLs, Google está **sobrando**. No lo “optimices” a 40.
+Estadísticas de rastreo: peticiones por día, tiempo de respuesta, códigos. Si un idioma responde varias veces más lento que otro, el gráfico ya te dijo el problema. Si las peticiones son pocas decenas al día en un catálogo chico, Google está **sobrando**. No lo “optimices” a la mitad.
 
 Indexación: si 40 URLs están en “rastreada, sin indexar”, no es budget: es calidad (el artículo siguiente). Si están en “descubierta, sin indexar”, es arquitectura o prioridad, no un número mágico de URLs por día.
 
@@ -44,6 +44,6 @@ Indexación: si 40 URLs están en “rastreada, sin indexar”, no es budget: es
 
 Hasta entonces, la frase útil en la reunión es:
 
-> No tenemos un problema de presupuesto de rastreo. Tenemos 137 puertas en inglés y cero artículos. Google puede rastrearlas. El problema es qué encuentra cuando entra, y en qué idioma se lo sirve al brasileño.
+> No tenemos un problema de presupuesto de rastreo. Tenemos un catálogo en inglés y casi nada de blog. Google puede rastrearlo. El problema es qué encuentra cuando entra, y en qué idioma se lo sirve al brasileño.
 
 Eso es senior. “Hay que ahorrar crawl budget” en un sitio que cabe en una hoja de cálculo es disfraz.

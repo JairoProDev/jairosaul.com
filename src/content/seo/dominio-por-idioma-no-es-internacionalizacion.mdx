@@ -28,7 +28,7 @@ Segmentar por país sin necesidad (`es-MX`, `es-ES`, `es-AR`) multiplica fichas,
 | Subcarpeta | `agencia.com/it/` | Toda la autoridad en un dominio | Un hosting, un WordPress, un certificado |
 | Subdominio | `it.agencia.com` | Separación de servidor | Autoridad a medias |
 | ccTLD | `agencia.it` | Señal geográfica y confianza local | Autoridad desde cero |
-| Dominio distinto por idioma | `viajes….com` + `machupicchu….it` | Marca y keyword en el dominio | **La peor para autoridad.** Hreflang obligatorio |
+| Dominio distinto por idioma | `agencia-es.com` + `agencia.it` | Marca y keyword en el dominio | **La peor para autoridad.** Hreflang obligatorio |
 | Parámetro | `?lang=it` | Nada | Google lo desaconseja. No |
 
 El consenso técnico, si solo importara el PageRank, es **subcarpeta**. El consenso de un operador que quiere rankear *pacotes Machu Picchu* en Brasil y *tour Machu Picchu* en Italia es otro: el nombre de dominio vende. Por eso existen redes de cuatro WordPress. No es estupidez. Es una apuesta de marca que **solo funciona si cierras el mecanismo**.
@@ -52,10 +52,10 @@ Canonical elige la URL preferida entre duplicados del **mismo** documento. Hrefl
 
 Operar cuatro WordPress implica, entre otras cosas:
 
-- Cuatro Yoast, cuatro sitemaps, cuatro robots.txt, cuatro políticas de caché. He visto el inglés mandar `cache-control: no-store` y el portugués responder en décimas de segundo. Mismo stack, distinta config. Eso pasa cuando nadie es dueño de la red.
-- Cuatro plantillas de schema. Un dominio emite `Offer` sin moneda; otro no emite `Offer`. El mercado brasileño, a veces el más caliente, sale el peor marcado.
-- Gaps de catálogo. Publicar el paquete de lujo solo en inglés no es “priorizar ticket alto”. Es esconderlo de Brasil.
-- Migraciones. El dominio viejo que redirige página a página es el único elogio que hay que hacer en voz alta: la mayoría tira 301 masivo a la home y se carga años de URLs.
+- Cuatro Yoast, cuatro sitemaps, cuatro robots.txt, cuatro políticas de caché. Un idioma lento y otro rápido, mismo stack: nadie es dueño de la red.
+- Cuatro plantillas de schema. Un dominio emite `Offer` sin moneda; otro no emite `Offer`. El mercado que más WhatsApp mueve a veces sale el peor marcado.
+- Gaps de catálogo. Un producto caro en un solo idioma no es “priorizar ticket alto”. Es esconderlo del resto.
+- Migraciones. El dominio viejo que redirige página a página es el elogio infrecuente: la mayoría tira 301 masivo a la home y se carga años de URLs.
 
 La arquitectura de dominio-por-idioma **aumenta** el coste de disciplina. Si no hay un mapa de equivalencias, no hay red. Hay franquicias digitales que no se hablan.
 
@@ -65,7 +65,7 @@ Si todavía no compraste el `.it`:
 
 1. ¿El equipo puede mantener contenido nativo, no Google Translate? Si no, subcarpeta `/it/` en el dominio más fuerte.
 2. ¿La keyword del dominio es el negocio (`machupicchu`, `incatrail`)? Entonces el ccTLD o el dominio de marca por idioma puede valer el coste de autoridad. **con** hreflang desde el día 1, no “luego”.
-3. ¿Hay flota, licencia, WhatsApp por idioma? Eso es operación. El SEO no inventa un mercado que ops no puede atender. Un italiano con un tercio del catálogo está bien si ops solo opera esos tours. Está mal si ops vende el resto y el sitio italiano es un folleto.
+3. ¿Hay flota, licencia, WhatsApp por idioma? Eso es operación. El SEO no inventa un mercado que ops no puede atender. Un idioma con el catálogo a medias está bien si ops solo opera esos tours. Está mal si ops vende el resto y el sitio es un folleto.
 
 Si ya compraste los cuatro, no migres a subcarpeta en un trimestre. La migración de cuatro ccTLD hacia un solo dominio es un proyecto de un año, con mapa de 301, y en temporada alta es una forma creativa de incendiarse. **Cierra el hreflang. Homogeneiza plantillas. Publica el inventario que ya existe.** Eso es internacionalización. El `.it` solo es el letrero.
 
