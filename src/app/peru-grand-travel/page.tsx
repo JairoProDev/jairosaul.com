@@ -31,6 +31,7 @@ import {
   methodNotes,
   parseCsv,
   relatedNotes,
+  relatedTurismoNotes,
   secondaryFindings,
   type CsvTable,
   type Severity,
@@ -141,6 +142,12 @@ export default function PeruGrandTravelPage() {
             >
               Notas SEO
             </Link>
+            <Link
+              href="/industrias/turismo"
+              className={`rounded-lg border border-cortex-600 px-3 py-2 text-sm font-medium text-cortex-100 hover:border-cortex-400 ${focusRing}`}
+            >
+              Turismo
+            </Link>
             <ContactChip
               href={contact.whatsapp}
               label="WhatsApp"
@@ -216,6 +223,9 @@ export default function PeruGrandTravelPage() {
             </a>
             <a href="#notas-heading" className={`hover:text-white ${focusRing} rounded`}>
               Notas SEO
+            </a>
+            <a href="#turismo-heading" className={`hover:text-white ${focusRing} rounded`}>
+              Turismo
             </a>
             <a href="#descargas-heading" className={`hover:text-white ${focusRing} rounded`}>
               Descargas
@@ -335,6 +345,38 @@ export default function PeruGrandTravelPage() {
           </p>
           <ul className="mt-6 grid gap-3 sm:grid-cols-2">
             {relatedNotes.map((note) => (
+              <li key={note.href}>
+                <Link
+                  href={note.href}
+                  className={`block h-full rounded-xl border border-cortex-700 bg-cortex-800 px-4 py-4 hover:border-cortex-500 ${focusRing}`}
+                >
+                  <p className="font-medium text-white">{note.title}</p>
+                  <p className="mt-1 text-sm text-cortex-300">{note.why}</p>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        <section className="mt-16" aria-labelledby="turismo-heading">
+          <h2
+            id="turismo-heading"
+            className="font-serif text-2xl font-semibold text-white sm:text-3xl"
+          >
+            Notas de turismo
+          </h2>
+          <p className="mt-2 max-w-2xl text-sm text-cortex-300">
+            El mercado, el cupo y el catálogo. Están en{' '}
+            <Link
+              href="/industrias/turismo"
+              className={`text-acetylcholine-300 underline-offset-2 hover:underline ${focusRing}`}
+            >
+              jairosaul.com/industrias/turismo
+            </Link>
+            .
+          </p>
+          <ul className="mt-6 grid gap-3 sm:grid-cols-3">
+            {relatedTurismoNotes.map((note) => (
               <li key={note.href}>
                 <Link
                   href={note.href}

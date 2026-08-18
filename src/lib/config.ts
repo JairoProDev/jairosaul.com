@@ -80,6 +80,12 @@ export const siteConfig: SiteConfig = {
       icon: 'search',
     },
     {
+      label: 'Turismo',
+      href: '/industrias/turismo',
+      description: 'Mercados, cupos, OTAs y catálogo desde Cusco',
+      icon: 'map-pin',
+    },
+    {
       label: 'Recursos',
       href: '/recursos',
       description: 'Herramientas, libros, frameworks y guías curadas',

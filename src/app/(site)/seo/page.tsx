@@ -72,6 +72,13 @@ export default function SeoHubPage() {
             >
               /peru-grand-travel
             </Link>
+            . Mercados y producto, en{' '}
+            <Link
+              href="/industrias/turismo"
+              className="text-acetylcholine-400 underline underline-offset-2"
+            >
+              /industrias/turismo
+            </Link>
             .
           </p>
 

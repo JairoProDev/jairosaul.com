@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Brain, Menu, X, Command, Settings, User, Code, Lightbulb, Eye, BookOpen, MessageCircle, Search } from 'lucide-react';
+import { Brain, Menu, X, Command, Settings, User, Code, Lightbulb, Eye, BookOpen, MessageCircle, Search, MapPin } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { siteConfig } from '@/lib/config';
 import { usePlasticity } from './PlasticityProvider';
@@ -48,6 +48,7 @@ export function Navigation() {
                   case '/projects': return <Code className="h-4 w-4" />;
                   case '/ideas': return <Lightbulb className="h-4 w-4" />;
                   case '/seo': return <Search className="h-4 w-4" />;
+                  case '/industrias/turismo': return <MapPin className="h-4 w-4" />;
                   case '/vision': return <Eye className="h-4 w-4" />;
                   case '/cortex': return <Brain className="h-4 w-4" />;
                   case '/manifiesto': return <BookOpen className="h-4 w-4" />;

@@ -37,6 +37,13 @@ export default function IdeasPage() {
               <Link href="/seo" className="text-acetylcholine-400 underline underline-offset-2">
                 jairosaul.com/seo
               </Link>
+              . Turismo, en{' '}
+              <Link
+                href="/industrias/turismo"
+                className="text-acetylcholine-400 underline underline-offset-2"
+              >
+                /industrias/turismo
+              </Link>
               .
             </p>
           </div>

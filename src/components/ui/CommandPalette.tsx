@@ -16,7 +16,8 @@ import {
   Zap,
   Eye,
   Command,
-  Home
+  Home,
+  MapPin
 } from 'lucide-react';
 
 interface CommandPaletteProps {
@@ -194,6 +195,8 @@ export default function CommandPalette({ isOpen, onClose, onOpenSystemPanel }: C
       case 'lightbulb': return <Lightbulb className="h-4 w-4" />;
       case 'book-open': return <BookOpen className="h-4 w-4" />;
       case 'message-circle': return <MessageCircle className="h-4 w-4" />;
+      case 'map-pin': return <MapPin className="h-4 w-4" />;
+      case 'search': return <Search className="h-4 w-4" />;
       default: return <Brain className="h-4 w-4" />;
     }
   };

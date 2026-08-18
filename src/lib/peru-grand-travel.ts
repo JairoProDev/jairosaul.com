@@ -235,6 +235,24 @@ export const relatedNotes = [
   },
 ];
 
+export const relatedTurismoNotes = [
+  {
+    href: '/industrias/turismo/brasil-crecio-quince',
+    title: 'Brasil creció 15%',
+    why: 'Mincetur 2025. 19 tours que el PT no publica, varios de lujo.',
+  },
+  {
+    href: '/industrias/turismo/cupo-camino-inca-quinientos',
+    title: '500 al día, unas 200 son turistas',
+    why: 'El cupo del clásico y por qué junio se acaba.',
+  },
+  {
+    href: '/industrias/turismo/cuatro-sitios-un-piso-cusco',
+    title: 'Cuatro sitios, un piso en Cusco',
+    why: 'El mismo stack, distinta config. El porqué de negocio de la revisión.',
+  },
+];
+
 export const downloads = [
   {
     id: 'pdf',
