@@ -8,12 +8,12 @@ import { getAllSeoArticles, seoClusters } from '@/lib/seo-content';
 export const metadata: Metadata = {
   title: 'SEO técnico',
   description:
-    'Veinte ensayos sobre SEO técnico para turismo y WordPress multidominio: hreflang, datos estructurados, rastreo, rendimiento y margen frente a OTAs.',
+    'Notas de hreflang, schema de tours, WAF y GetYourGuide. WordPress multidominio. Jairo, Cusco.',
   alternates: { canonical: '/seo' },
   openGraph: {
-    title: 'SEO técnico — Jairo Saul',
+    title: 'SEO técnico',
     description:
-      'Hreflang, schema de tours, WAF, Core Web Vitals y el margen que se queda en GetYourGuide. Serie publicada en agosto de 2026.',
+      'Notas sobre hreflang, schema de tours, WAF, Core Web Vitals y GetYourGuide. Jairo, Cusco. Agosto 2026.',
     url: 'https://jairosaul.com/seo',
   },
 };
@@ -32,7 +32,7 @@ export default function SeoHubPage() {
       <StructuredData
         type="website"
         data={{
-          name: 'SEO técnico — JairoSaul.com',
+          name: 'SEO técnico',
           url: 'https://jairosaul.com/seo',
         }}
       />
@@ -56,21 +56,28 @@ export default function SeoHubPage() {
       <div className="px-4 pb-20 pt-28 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-5xl">
           <p className="text-xs font-semibold uppercase tracking-widest text-acetylcholine-400">
-            Serie · agosto 2026
+            Agosto 2026
           </p>
           <h1 className="mt-3 font-serif text-4xl font-bold text-glutamate-500 md:text-6xl">
-            SEO técnico que se puede verificar
+            Notas de SEO técnico
           </h1>
           <p className="mt-6 max-w-3xl text-lg leading-relaxed text-cortex-300">
-            No es un blog de “qué es el SEO”. Son veinte ensayos de alguien que rastrea
-            sitios de turismo con user-agent de navegador, cruza catálogos entre
-            idiomas y escribe el PHP que emite el hreflang. Publicados como corpus en
-            agosto de 2026 — sin fingir dos años de archivo.
+            Cómo rastreo un WordPress de turismo con user-agent de navegador,
+            cómo armo el mapa entre idiomas y dónde se toca el PHP. Agosto de
+            2026. Hay una revisión de cuatro sitios de una operadora de Cusco
+            en{' '}
+            <Link
+              href="/peru-grand-travel"
+              className="text-acetylcholine-400 underline underline-offset-2"
+            >
+              /peru-grand-travel
+            </Link>
+            .
           </p>
 
           <section className="mt-14">
             <h2 className="font-serif text-2xl font-bold text-glutamate-500">
-              Empieza por aquí
+              Tres de este mes
             </h2>
             <div className="mt-6 grid gap-4 md:grid-cols-3">
               {startHere.map((slug) => {

@@ -11,9 +11,9 @@ export const AUDIT_DATE_LABEL = '13 de agosto de 2026';
 export const PAGE_PATH = '/peru-grand-travel';
 export const PAGE_URL = `https://jairosaul.com${PAGE_PATH}`;
 
-export const PAGE_TITLE = 'Auditoría SEO Técnica — Peru Grand Travel';
+export const PAGE_TITLE = 'Auditoría técnica: Peru Grand Travel (EN, ES, PT, IT)';
 export const PAGE_DESCRIPTION =
-  'Análisis de los cuatro dominios en vivo de Peru Grand Travel (EN, ES, PT, IT): hreflang, datos estructurados, reseñas y rendimiento. Hallazgos verificables y propuesta de implementación. Jairo, Cusco.';
+  'Revisión de los cuatro sitios en vivo: hreflang, precios en Google, reseñas, blog e inglés lento. Mapa URL a URL, plugin PHP y auditor en Python. Jairo, Cusco.';
 
 const PHONE_DISPLAY = '+51 953 865 163';
 const WHATSAPP = 'https://wa.me/51953865163';
@@ -32,8 +32,10 @@ export const contact = {
   phone: PHONE_DISPLAY,
   avatar: '/peru-grand-travel/avatar.webp',
   whatsapp: `${WHATSAPP}?text=${waText}`,
-  mailto: `mailto:${EMAIL}?subject=${encodeURIComponent('Auditoría SEO — Peru Grand Travel')}`,
+  mailto: `mailto:${EMAIL}?subject=${encodeURIComponent('Auditoría SEO, Peru Grand Travel')}`,
   linkedin: LINKEDIN,
+  role: 'Desarrollo web y SEO técnico',
+  previous: 'CTO en Cachimboz y La Tatuadora',
 };
 
 export const domains = [
@@ -63,15 +65,15 @@ export const findings: {
     severity: 'critica',
     severityLabel: 'Crítica',
     impact:
-      'Google decide qué idioma mostrar. Un italiano o un brasileño puede terminar en la versión en español.',
-    effort: 'Esfuerzo medio',
+      'Google elige qué idioma mostrar. Un brasileño o un italiano puede caer en la ficha en español.',
+    effort: 'Medio',
     body: [
-      'La red en vivo son cuatro WordPress: inglés, español, portugués e italiano. Ninguno declara equivalencias entre idiomas: ni en HTML, ni en cabeceras HTTP, ni en los sitemaps. El selector de banderas solo enlaza home con home.',
-      'El dominio italiano (viaggiomachupicchu.it) está en el encabezado de los otros sitios — bandera subida en enero de 2026 — y tiene los mismos 33 tours sin hreflang que el resto.',
-      'Sin esas anotaciones, Google trata las versiones de un mismo tour como páginas distintas que compiten entre sí, y elige por su cuenta cuál mostrar en cada mercado. Afecta a los 31 productos que ya existen en los cuatro idiomas, sobre una red de unas 620 URLs.',
+      'Pedí las cuatro homes con curl y user-agent de Chrome. grep hreflang da 0 en las cuatro. Tampoco está en cabeceras HTTP ni en los sitemaps. Las banderas del header solo saltan de portada a portada.',
+      'viaggiomachupicchu.it está en el encabezado desde enero de 2026 (bandera it.webp). 33 tours. Mismo hueco que el resto.',
+      'Crucé los catálogos a mano: 74 productos, 31 en los cuatro idiomas. Sin la anotación, Google trata esas URLs como páginas distintas. WPML no entra aquí: son cuatro WordPress, cuatro bases.',
     ],
     solution:
-      'El CSV de esta página mapea URL con URL, ahora con columna italiana. El plugin PHP inyecta el bloque recíproco en wp_head de las cuatro instalaciones. WPML y Polylang no aplican: cada idioma vive en un WordPress aparte.',
+      'El CSV mapea URL con URL (incluida Italia). El PHP inyecta el bloque recíproco en wp_head de las cuatro instalaciones, el mismo archivo en las cuatro. Si una ficha no existe en un idioma, esa fila lleva guion: no apunto a la home.',
   },
   {
     id: 'price-currency',
@@ -80,15 +82,15 @@ export const findings: {
     severity: 'critica',
     severityLabel: 'Crítica',
     impact:
-      'Más de 150 fichas no pueden mostrar precio en Google. Se corrige en la plantilla.',
-    effort: 'Esfuerzo bajo',
+      'Más de 150 fichas quedan fuera del resultado con precio. Se corrige en la plantilla, no ficha por ficha.',
+    effort: 'Bajo',
     body: [
-      'En inglés e italiano el objeto Offer lleva un número (150, 372) y no dice si son dólares, soles, reales o euros.',
-      'En el dominio en portugués, las fichas emiten Product sin Offer. Los cuatro sitios no hablan el mismo idioma de datos.',
-      'Google exige priceCurrency. Sin ese campo, Search Console marca error y la ficha queda fuera del resultado enriquecido de producto.',
+      'En una ficha EN el Offer lleva "price":"150". En una IT, "372". Ninguna dice la moneda. Google pide priceCurrency (ISO 4217) para pintar el precio en el resultado.',
+      'En portugués, al menos en /pacote/vale-sul/, hay Product y no hay Offer. Los cuatro sitios no emiten el mismo grafo.',
+      'priceValidUntil está fijo en 2027-01-01 en EN e IT para todo el catálogo. Si la tarifa cambia antes, el dato queda falso.',
     ],
     solution:
-      'Añadir priceCurrency (la moneda real de cotización) en la plantilla de tourmaster, emitir Offer completo también en ES y PT, y revisar priceValidUntil: hoy está fijo en 2027-01-01 en EN e IT.',
+      'Una línea en la plantilla de Tourmaster: priceCurrency con la moneda real de ese dominio. Offer completo también en PT. Vigencia por tour, no una fecha única.',
   },
   {
     id: 'reviews',
@@ -97,14 +99,14 @@ export const findings: {
     severity: 'alta',
     severityLabel: 'Alta',
     impact:
-      'Las estrellas en el resultado suben el clic sin necesidad de ganar posiciones.',
-    effort: 'Esfuerzo bajo',
+      'Las estrellas en el resultado suben el clic. El trabajo de conseguir las reseñas ya está hecho.',
+    effort: 'Bajo, si hay nota por tour',
     body: [
-      'Las reseñas de Google y Tripadvisor se ven en el sitio (widgets). En el código no hay aggregateRating ni Review, tampoco en el dominio italiano.',
-      'Las reseñas ya están. Falta declararlas para que el buscador pueda pintar estrellas en los resultados.',
+      'Los widgets de Google y Tripadvisor se ven. En el HTML de una ficha, grep aggregateRating da 0. Italia igual.',
+      'Google pide que la nota corresponda a esa página, esté visible, y venga de usuarios reales. Copiar el 4.9 de la empresa en las 69 fichas es el atajo que suele terminar en acción manual.',
     ],
     solution:
-      'Emitir aggregateRating dentro del Product de cada tour, solo con reseñas de ese tour. Pegar la nota global de la empresa en cada ficha es riesgo de acción manual. En la home, marcado TravelAgency en lugar del Organization genérico.',
+      'AggregateRating por tour, con las reseñas de ese producto, visibles en la ficha. En la home, TravelAgency en lugar de Organization genérico (dirección, teléfono, sameAs a Tripadvisor e Instagram).',
   },
   {
     id: 'blog-en',
@@ -113,14 +115,14 @@ export const findings: {
     severity: 'alta',
     severityLabel: 'Alta',
     impact:
-      '0 artículos en EN y 2 en IT, frente a 101 en ES y 105 en PT. Los mercados europeos de mayor ticket no captan búsquedas de investigación.',
-    effort: 'Esfuerzo alto',
+      '0 posts en EN, 2 en IT, 101 en ES, 105 en PT. El mercado de mayor ticket no tiene embudo de investigación.',
+    effort: 'Alto',
     body: [
-      'El post-sitemap de perugrandtravel.com está vacío. El italiano tiene dos notas. Español y portugués ya tienen más de cien artículos cada uno.',
-      'Quien reserva desde EE.UU., Europa o Italia investiga durante meses (días en Cusco, Inca Trail vs Salkantay, mal de altura). Ese tráfico hoy se lo llevan los competidores.',
+      'El post-sitemap de perugrandtravel.com está vacío. En italiano hay dos notas. En ES y PT el blog ya existe.',
+      'Quien vuela desde EE.UU. o Italia suele investigar meses antes: permisos del Camino Inca, Inca Trail vs Salkantay, mal de altura. Eso hoy se lo llevan otros. Tampoco hay categorías de blog en inglés: falta la arquitectura, no solo un artículo.',
     ],
     solution:
-      'Una página pilar por destino ancla (Machu Picchu, Inca Trail, Valle Sagrado, Montaña de Colores, Cusco) y 8–12 artículos alrededor, con enlace a la ficha de tour. Adaptar la intención de búsqueda de cada mercado; no traducir literal desde ES o PT.',
+      'Cinco pilares (Machu Picchu, Inca Trail, Cusco, Valle Sagrado, Rainbow Mountain) y satélites con enlace a la ficha. Intención de cada mercado; no traducir el blog ES o PT. El tráfico de contenido nuevo no llega el primer mes. A 90 días lo razonable es taxonomía + un pilar + tres satélites indexados.',
   },
   {
     id: 'rendimiento',
@@ -129,15 +131,15 @@ export const findings: {
     severity: 'alta',
     severityLabel: 'Alta',
     impact:
-      'TTFB 1,04 s en EN y ~1,3 s en IT, frente a 0,10 s en PT. Inglés se sirve sin caché de página.',
-    effort: 'Esfuerzo medio',
+      'TTFB 1,04 s en EN y ~1,3 s en IT, contra 0,10 s en PT. El inglés manda no-store.',
+    effort: 'Medio',
     body: [
-      'Mismo stack, cuatro hosts. EN responde cache-control: no-store. ES y PT responden public. El HTML en inglés no se está cacheando. El italiano tampoco envía una política de caché útil.',
-      'Además: 23–31 hojas de estilo, 35–72 scripts, y Google Fonts carga Poppins en 18 variantes más DM Sans con subset devanagari, un alfabeto que no usa ningún cliente de esta empresa.',
-      'En móvil, sobre 4G, eso se nota antes de ver el precio.',
+      'Mismo stack. EN responde cache-control: no-store, no-cache, must-revalidate. ES y PT responden public. Cada visita anónima al inglés ejecuta PHP. Si fuera el VPS, el portugués también estaría en 1 s.',
+      'En el HTML: 23 a 31 CSS, 35 a 72 scripts. Google Fonts pide Poppins 100-900 con itálicas, más DM Sans, con subset devanagari. Ese alfabeto no lo usa nadie en estos mercados.',
+      'En el celular, en 4G, se nota antes de ver el precio.',
     ],
     solution:
-      'Activar caché de página en EN e IT. Recortar fuentes a los pesos que realmente se usan, preload de la imagen principal de cada plantilla, y diferir CSS y JS que no hacen falta para el primer pintado.',
+      'Alinear la caché de página del EN (e IT) con la del PT. Recortar fuentes a 3 o 4 pesos, preload del hero, fetchpriority en esa imagen, y diferir lo que no pinta el primer viewport. Coverage de DevTools antes de borrar CSS: con constructor, a ciegas se rompe el menú.',
   },
 ];
 
@@ -169,12 +171,67 @@ export const secondaryFindings = [
   {
     title: 'La migración del dominio anterior está bien hecha',
     detail:
-      'paquetesdeviajesperu.com apunta a viajesmachupicchutours.com página a página, no todo a la home. Es el error más frecuente en migraciones y aquí no está.',
+      'paquetesdeviajesperu.com apunta a viajesmachupicchutours.com página a página, no todo a la home. Lo verifiqué con curl -sIL. Es el error más frecuente en migraciones y aquí no está.',
   },
   {
-    title: 'Italia es el catálogo más corto de la red en vivo',
+    title: 'Italia es el catálogo más corto',
     detail:
-      '33 tours frente a 69 en inglés. Al mercado italiano le faltan 40 productos que sí se venden en otro idioma, incluido el Valle Sagrado, Salkantay, Amazonía y los paquetes de lujo.',
+      '33 tours frente a 69 en inglés. Al italiano le faltan unos 40 que sí se venden en otro idioma (Valle Sagrado, Salkantay, Amazonía, lujo). A Brasil le faltan 19, incluidos paquetes de lujo que solo vi en inglés.',
+  },
+  {
+    title: 'Lo que ya vi en otras agencias de Cusco',
+    detail:
+      'TreXperience declara hreflang entre inglés y español. Valencia Travel emite TravelAgency, TouristTrip y AggregateRating en portada. Nadie que medí tiene el combo completo. Ustedes tienen cuatro dominios: más que ganar si se anota, y más que perder si Google sigue eligiendo el idioma solo.',
+  },
+];
+
+export const methodNotes = [
+  {
+    label: 'Fecha',
+    value: 'EN, ES y PT el 9 de agosto de 2026. Italiano el 13.',
+  },
+  {
+    label: 'Cómo',
+    value:
+      'curl con User-Agent de Chrome y header Accept. El WAF responde 406 a UA de herramienta; Screaming Frog en default va a decir que el sitio no carga.',
+  },
+  {
+    label: 'Stack que vi',
+    value:
+      'WordPress, tema traveltour (Goodlayers) + child, Tourmaster, Yoast, click-to-chat, PixelYourSite.',
+  },
+  {
+    label: 'Qué no pude ver',
+    value:
+      'Search Console, Analytics, CrUX de campo. Sin eso no afirmo indexación real ni conversiones. Con lectura de las cuatro propiedades se cierra en la primera semana.',
+  },
+];
+
+export const relatedNotes = [
+  {
+    href: '/seo/hreflang-turismo-idioma-equivocado',
+    title: 'Hreflang cuando cada idioma es otro dominio',
+    why: 'El grep, la reciprocidad y por qué la bandera no alcanza.',
+  },
+  {
+    href: '/seo/wpml-no-sirve-wordpress-aparte',
+    title: 'Por qué no usaría WPML aquí',
+    why: 'Cuatro MySQL. Un mapa compartido y el mismo snippet en wp_head.',
+  },
+  {
+    href: '/seo/precio-google-offer-pricecurrency',
+    title: 'Offer sin moneda',
+    why: 'Lo que pide Google para pintar el precio y dónde se toca en Tourmaster.',
+  },
+  {
+    href: '/seo/waf-screaming-frog-406',
+    title: 'El 406 del WAF',
+    why: 'Cómo lo rastreé y qué le pediría a sistemas (Googlebot sí, scrapers no).',
+  },
+  {
+    href: '/seo/margen-getyourguide-sin-pelea',
+    title: 'GetYourGuide y la web propia',
+    why: 'Paridad de ficha. No propongo borrar la cuenta.',
   },
 ];
 
@@ -214,7 +271,7 @@ export const codeFiles = [
     filename: 'hreflang-multidominio.php',
     title: 'hreflang-multidominio.php',
     language: 'php' as const,
-    hint: 'Plugin WordPress para emitir hreflang entre las cuatro instalaciones',
+    hint: 'Plugin para wp_head. El mismo archivo en las cuatro instalaciones.',
   },
   {
     id: 'python',
@@ -222,7 +279,7 @@ export const codeFiles = [
     filename: 'auditor_seo.py',
     title: 'auditor_seo.py',
     language: 'python' as const,
-    hint: 'Auditor de sitemaps, TTFB, schema y reciprocidad hreflang',
+    hint: 'Sitemaps, TTFB, schema y si el hreflang se responde entre sí. UA de navegador: el WAF da 406 si no.',
   },
 ] as const;
 

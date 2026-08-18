@@ -14,7 +14,7 @@ export const seoClusters: {
   {
     id: 'internacionalizacion',
     title: 'Internacionalización',
-    blurb: 'Un dominio por idioma no es una red hasta que Google entiende las equivalencias.',
+    blurb: 'Cuatro dominios, el mapa entre fichas, y lo que WPML no resuelve cuando cada idioma es otro WordPress.',
   },
   {
     id: 'serp-money',
@@ -34,7 +34,7 @@ export const seoClusters: {
   {
     id: 'negocio',
     title: 'Negocio',
-    blurb: 'OTAs, margen, E-E-A-T de operador y noventa días de alguien que también implementa.',
+    blurb: 'GetYourGuide, margen, la licencia del Camino Inca, y qué se puede entregar en noventa días.',
   },
 ];
 

@@ -17,7 +17,6 @@ import {
 } from 'lucide-react';
 import { highlightCode } from '@/lib/highlight-code';
 import {
-  AUDIT_DATE_LABEL,
   GITHUB_CODE_URL,
   MARKET_LABEL,
   PAGE_DESCRIPTION,
@@ -29,7 +28,9 @@ import {
   downloads,
   findings,
   isHttpUrl,
+  methodNotes,
   parseCsv,
+  relatedNotes,
   secondaryFindings,
   type CsvTable,
   type Severity,
@@ -133,7 +134,13 @@ export default function PeruGrandTravelPage() {
               JairoSaul
             </span>
           </Link>
-          <nav aria-label="Contacto rápido" className="flex items-center gap-2">
+          <nav aria-label="Secciones" className="flex items-center gap-2">
+            <Link
+              href="/seo"
+              className={`rounded-lg border border-cortex-600 px-3 py-2 text-sm font-medium text-cortex-100 hover:border-cortex-400 ${focusRing}`}
+            >
+              Notas SEO
+            </Link>
             <ContactChip
               href={contact.whatsapp}
               label="WhatsApp"
@@ -160,36 +167,63 @@ export default function PeruGrandTravelPage() {
         className="mx-auto max-w-5xl px-4 pb-28 pt-10 sm:px-6 sm:pt-14 lg:pb-16"
       >
         <section>
-          <p className="text-sm font-medium uppercase tracking-[0.18em] text-acetylcholine-300">
-            Cusco · sin compromiso
+          <p className="text-sm font-medium text-acetylcholine-300">
+            Cusco · 13 de agosto de 2026
           </p>
           <h1 className="mt-3 max-w-3xl font-serif text-3xl font-bold leading-tight text-white text-balance sm:text-5xl">
-            Auditoría SEO Técnica — Peru Grand Travel
+            Revisión técnica de los cuatro sitios
           </h1>
-          <p className="mt-4 text-base text-cortex-200 sm:text-lg">
-            Preparada por {contact.shortName} · {contact.location} · {AUDIT_DATE_LABEL}
-          </p>
-          <p className="mt-4 max-w-2xl text-base leading-relaxed text-cortex-300">
-            Revisé la parte técnica de los cuatro sitios en vivo — inglés,
-            español, portugués e italiano — y el dominio anterior en español.
-            Aquí están los hallazgos, el mapa de equivalencias y el código para
-            implementarlos.
+          <p className="mt-4 max-w-2xl text-base leading-relaxed text-cortex-300 sm:text-lg">
+            Abrí perugrandtravel.com, viajesmachupicchutours.com,
+            machupicchupacotes.com y viaggiomachupicchu.it. También el dominio
+            viejo en español, que ya redirige bien, página a página. Abajo
+            están los hallazgos, el mapa de 74 productos y el PHP para
+            staging. Si quieren el detalle de hreflang, WAF o GetYourGuide,
+            está en{' '}
+            <Link
+              href="/seo"
+              className={`text-acetylcholine-300 underline-offset-2 hover:underline ${focusRing}`}
+            >
+              las notas
+            </Link>
+            .
           </p>
 
           <ul className="mt-6 flex flex-wrap gap-2" aria-label="Dominios analizados">
             {domains.map((d) => (
               <li
                 key={d.host}
-                className="rounded-full border border-cortex-600 bg-cortex-800 px-3 py-1 text-xs text-cortex-200 sm:text-sm"
+                className="rounded-xl border border-cortex-600 bg-cortex-800 px-3 py-2 text-xs text-cortex-200 sm:text-sm"
               >
                 <span className="font-semibold text-white">{d.lang}</span>
                 <span className="mx-1.5 text-cortex-500" aria-hidden="true">
                   ·
                 </span>
-                {d.host}
+                <span>{d.market}</span>
+                <span className="mt-0.5 block font-mono text-[11px] text-cortex-400 sm:text-xs">
+                  {d.host}
+                </span>
               </li>
             ))}
           </ul>
+
+          <nav
+            aria-label="En esta página"
+            className="mt-8 flex flex-wrap gap-x-4 gap-y-2 text-sm text-cortex-300"
+          >
+            <a href="#resumen-heading" className={`hover:text-white ${focusRing} rounded`}>
+              Hallazgos
+            </a>
+            <a href="#notas-heading" className={`hover:text-white ${focusRing} rounded`}>
+              Notas SEO
+            </a>
+            <a href="#descargas-heading" className={`hover:text-white ${focusRing} rounded`}>
+              Descargas
+            </a>
+            <a href="#codigo-heading" className={`hover:text-white ${focusRing} rounded`}>
+              Código
+            </a>
+          </nav>
 
           <div className="mt-8 flex items-center gap-4">
             {/* Avatar local ya está en WebP; next/image añadiría JS de cliente innecesario en esta página. */}
@@ -204,10 +238,39 @@ export default function PeruGrandTravelPage() {
             <div className="min-w-0">
               <p className="font-medium text-white">{contact.name}</p>
               <p className="text-sm text-cortex-300">
-                Desarrollador web · {contact.location}
+                {contact.role} · {contact.location}
               </p>
+              <p className="text-xs text-cortex-400">{contact.previous}</p>
             </div>
           </div>
+        </section>
+
+        <section className="mt-12" aria-labelledby="metodo-heading">
+          <h2
+            id="metodo-heading"
+            className="font-serif text-2xl font-semibold text-white sm:text-3xl"
+          >
+            Cómo lo miré
+          </h2>
+          <p className="mt-2 text-sm text-cortex-300">
+            Sin acceso a Search Console ni Analytics. Lo que está abajo se
+            puede repetir con curl.
+          </p>
+          <dl className="mt-6 grid gap-4 sm:grid-cols-2">
+            {methodNotes.map((note) => (
+              <div
+                key={note.label}
+                className="rounded-xl border border-cortex-700 bg-cortex-800 px-4 py-4"
+              >
+                <dt className="text-xs font-semibold uppercase tracking-wide text-cortex-400">
+                  {note.label}
+                </dt>
+                <dd className="mt-2 text-sm leading-relaxed text-cortex-200">
+                  {note.value}
+                </dd>
+              </div>
+            ))}
+          </dl>
         </section>
 
         <section className="mt-14" aria-labelledby="resumen-heading">
@@ -218,7 +281,7 @@ export default function PeruGrandTravelPage() {
             Resumen ejecutivo
           </h2>
           <p className="mt-2 text-sm text-cortex-300">
-            Cinco puntos, ordenados por impacto en reservas.
+            Cinco puntos, por impacto. El detalle se abre abajo.
           </p>
 
           <ol className="mt-6 grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-5">
@@ -253,6 +316,38 @@ export default function PeruGrandTravelPage() {
           </ol>
         </section>
 
+        <section className="mt-16" aria-labelledby="notas-heading">
+          <h2
+            id="notas-heading"
+            className="font-serif text-2xl font-semibold text-white sm:text-3xl"
+          >
+            Notas sobre este stack
+          </h2>
+          <p className="mt-2 max-w-2xl text-sm text-cortex-300">
+            Las escribí en{' '}
+            <Link
+              href="/seo"
+              className={`text-acetylcholine-300 underline-offset-2 hover:underline ${focusRing}`}
+            >
+              jairosaul.com/seo
+            </Link>
+            . Estas cinco tocan lo que vi en los cuatro sitios.
+          </p>
+          <ul className="mt-6 grid gap-3 sm:grid-cols-2">
+            {relatedNotes.map((note) => (
+              <li key={note.href}>
+                <Link
+                  href={note.href}
+                  className={`block h-full rounded-xl border border-cortex-700 bg-cortex-800 px-4 py-4 hover:border-cortex-500 ${focusRing}`}
+                >
+                  <p className="font-medium text-white">{note.title}</p>
+                  <p className="mt-1 text-sm text-cortex-300">{note.why}</p>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+
         <section className="mt-16 audit-defer" aria-labelledby="descargas-heading">
           <h2
             id="descargas-heading"
@@ -261,8 +356,8 @@ export default function PeruGrandTravelPage() {
             Descargas
           </h2>
           <p className="mt-2 text-sm text-cortex-300">
-            El PDF se abre en el navegador. Los CSV se leen aquí mismo; el
-            botón de descarga es por si quieren llevárselos a Excel.
+            El PDF se abre en el navegador. Los CSV se leen aquí; el botón de
+            descarga es por si quieren Excel.
           </p>
 
           <ul className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2">
@@ -342,7 +437,7 @@ export default function PeruGrandTravelPage() {
           <CsvPreview
             id="equivalencias"
             title="Mapa de equivalencias"
-            caption={`${equivalencias.rows.length} productos. EN, ES, PT e IT. Un enlace abre la ficha; el guion significa que ese mercado no tiene el tour.`}
+            caption={`${equivalencias.rows.length} productos. EN, ES, PT e IT. Un enlace abre la ficha. El guion es que ese mercado no tiene el tour.`}
             table={equivalencias}
             urlHeaders={['url_en', 'url_es', 'url_pt_BR', 'url_it']}
           />
@@ -461,8 +556,10 @@ export default function PeruGrandTravelPage() {
             Código de implementación
           </h2>
           <p className="mt-2 text-sm text-cortex-300">
-            Escrito para WordPress + Goodlayers, cuatro instalaciones aparte, y
-            el WAF que bloquea crawlers con user-agent de herramienta.
+            Para sistemas: WordPress + Goodlayers, cuatro instalaciones. El
+            plugin no toca Tourmaster. WPML no habla entre estos cuatro MySQL.
+            El Python usa UA de navegador porque el WAF corta el de
+            herramienta.
           </p>
 
           <CodePanel
@@ -498,8 +595,8 @@ export default function PeruGrandTravelPage() {
             Conversemos
           </h2>
           <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-cortex-300">
-            Si algo de esto les sirve, lo vemos en persona — vivo en Cusco.
-            El análisis queda de ustedes, sin compromiso.
+            Si quieren mirar el PHP en staging o el mapa con sistemas, estoy en
+            Cusco. El análisis queda de ustedes.
           </p>
           <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
             <a
@@ -581,7 +678,7 @@ function formatCsvCell(header: string, value: string) {
       .map((part) => MARKET_LABEL[part.trim()] ?? part.trim())
       .join(', ');
   }
-  if (value === '— NO EXISTE —') return '—';
+  if (value === '— NO EXISTE —') return '-';
   return value;
 }
 

@@ -61,7 +61,7 @@ export default function OpenGraphImage() {
               maxWidth: 980,
             }}
           >
-            Auditoría SEO Técnica
+            Revisión técnica
           </div>
           <div
             style={{
@@ -136,7 +136,7 @@ export default function OpenGraphImage() {
             }}
           >
             <div style={{ color: '#f8fafc' }}>Jairo · Cusco</div>
-            <div>13 de agosto de 2026</div>
+            <div>desarrollo y SEO técnico</div>
           </div>
         </div>
       </div>

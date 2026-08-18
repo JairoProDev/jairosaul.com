@@ -33,8 +33,7 @@ export default function IdeasPage() {
               Mi Laboratorio de Ideas
             </h1>
             <p className="text-xl text-cortex-300 max-w-3xl mx-auto leading-relaxed">
-              Nodos de memoria — startups, tecnología y alto rendimiento. El SEO técnico
-              vive ahora en su propia sección:{' '}
+              Startups, tecnología y alto rendimiento. El SEO técnico vive en{' '}
               <Link href="/seo" className="text-acetylcholine-400 underline underline-offset-2">
                 jairosaul.com/seo
               </Link>

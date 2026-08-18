@@ -15,13 +15,13 @@ Hay una confusión cara en las agencias de Cusco que venden a Brasil, España, I
 
 La internacionalización son tres decisiones, en este orden. Si saltas a la 3 sin la 1, construyes un museo de banderas.
 
-## Decisión 1 — ¿Segmentas idioma, país, o ambos?
+## Decisión 1: idioma, país, o ambos
 
 La mayoría del turismo receptivo en Perú necesita **idioma**, no país. Un mexicano y un madrileño pueden compartir la ficha en español si el producto, el precio de referencia y el WhatsApp son los mismos. Un brasileño no: moneda, visado, tono, temporada escolar distinta. Un italiano tampoco: calendario, ferries mentales de “quanti giorni a Cusco”, y un dominio `.it` que el viajero ya asocia con “esto está pensado para mí”.
 
 Segmentar por país sin necesidad (`es-MX`, `es-ES`, `es-AR`) multiplica fichas, errores de reciprocidad y trabajo de marketing. No lo hagas porque “se ve profesional”. Hazlo si el producto o el precio **cambian de verdad**.
 
-## Decisión 2 — Estructura de URL
+## Decisión 2: estructura de URL
 
 | Estructura | Ejemplo | Qué ganas | Qué pagas |
 |---|---|---|---|
@@ -40,7 +40,7 @@ El consenso técnico, si solo importara el PageRank, es **subcarpeta**. El conse
   right={<p>Cuatro orígenes, cuatro grafos de enlaces, cero grupos. El italiano de 33 URLs compite con el inglés de 137 y con Tripadvisor.</p>}
 />
 
-## Decisión 3 — El mecanismo
+## Decisión 3: el mecanismo
 
 Hreflang, selector contextual, y **no** un `canonical` que apunte todas las versiones a la inglesa. Canonicalizar el portugués hacia el inglés es decirle a Google: “esta página no existe, mira esa”. Matas el mercado principal para “concentrar autoridad”. Es el atajo que más he visto en implementaciones hechas por alguien que leyó medio artículo.
 
@@ -64,14 +64,14 @@ La arquitectura de dominio-por-idioma **aumenta** el coste de disciplina. Si no 
 Si todavía no compraste el `.it`:
 
 1. ¿El equipo puede mantener contenido nativo, no Google Translate? Si no, subcarpeta `/it/` en el dominio más fuerte.
-2. ¿La keyword del dominio es el negocio (`machupicchu`, `incatrail`)? Entonces el ccTLD o el dominio de marca por idioma puede valer el coste de autoridad — **con** hreflang desde el día 1, no “luego”.
+2. ¿La keyword del dominio es el negocio (`machupicchu`, `incatrail`)? Entonces el ccTLD o el dominio de marca por idioma puede valer el coste de autoridad. **con** hreflang desde el día 1, no “luego”.
 3. ¿Hay flota, licencia, WhatsApp por idioma? Eso es operación. El SEO no inventa un mercado que ops no puede atender. Un italiano de 33 tours contra 69 en inglés está bien si ops solo opera esos 33. Está mal si ops opera 69 y el sitio italiano es un folleto.
 
 Si ya compraste los cuatro, no migres a subcarpeta en un trimestre. La migración de cuatro ccTLD hacia un solo dominio es un proyecto de un año, con mapa de 301, y en temporada alta es una forma creativa de incendiarse. **Cierra el hreflang. Homogeneiza plantillas. Publica el inventario que ya existe.** Eso es internacionalización. El `.it` solo es el letrero.
 
 ## Autoridad: la cuenta que nadie hace
 
-Cada dominio nuevo empieza en cero. Los enlaces que el español ganó en 2019 no se mudan al italiano porque hay una bandera. Hreflang **ayuda a consolidar señales de ranking entre versiones** — Google lo ha descrito así, con matices— pero no es un `rel=linkjuice`. El italiano tiene que ganarse su propio grafo: contenido, menciones, fichas de GetYourGuide en italiano, reseñas.
+Cada dominio nuevo empieza en cero. Los enlaces que el español ganó en 2019 no se mudan al italiano porque hay una bandera. Hreflang **ayuda a consolidar señales de ranking entre versiones**. Google lo ha descrito así, con matices,  pero no es un `rel=linkjuice`. El italiano tiene que ganarse su propio grafo: contenido, menciones, fichas de GetYourGuide en italiano, reseñas.
 
 Por eso el sitio nuevo (dos artículos de blog, treinta tours) no se “come” al inglés. Por eso el plan de 90 días no es “rankear Italia”. Es: no servir español a un italiano, anotar lo que ya es equivalente, y no dejar 40 productos invisibles en ese mercado.
 

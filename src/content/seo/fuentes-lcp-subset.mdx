@@ -1,6 +1,6 @@
 ---
 title: "Fuentes, LCP y el subset que nadie pidió"
-description: "Poppins 100–900 con itálicas, DM Sans, y el subset devanagari — hindi y sánscrito — en una agencia de Cusco. Tres o cuatro pesos, font-display: swap, preconnect o autoalojar. De los arreglos más baratos con efecto en LCP y CLS."
+description: "Poppins 100-900 con itálicas, DM Sans, y el subset devanagari. hindi y sánscrito. en una agencia de Cusco. Tres o cuatro pesos, font-display: swap, preconnect o autoalojar. De los arreglos más baratos con efecto en LCP y CLS."
 date: "2026-08-18"
 cluster: "rendimiento"
 tags: ["fuentes", "lcp", "cls", "fonts"]
@@ -19,13 +19,13 @@ En un `traveltour` de Goodlayers medí Poppins en **dieciocho variantes** (100 a
 
 Si el LCP es **texto** (un H1 de portada), el navegador puede retrasar el pintado hasta tener la fuente, o pintar un fallback y luego saltar: CLS. `font-display: swap` pinta ya, cambia después. Sin `size-adjust` / métricas, el salto se nota. Autoalojar + `unicode-range` + solo los glifos latinos reduce peso.
 
-`preconnect` a `fonts.googleapis.com` y `fonts.gstatic.com` si sigues en Google Fonts. Mejor: **autoalojar** woff2 de 3–4 archivos. Un request menos a un tercero; RGPD y cuelgue de Google Fonts en algunos países europeos son el bonus, no el argumento principal. El argumento es KB y control.
+`preconnect` a `fonts.googleapis.com` y `fonts.gstatic.com` si sigues en Google Fonts. Mejor: **autoalojar** woff2 de 3-4 archivos. Un request menos a un tercero; RGPD y cuelgue de Google Fonts en algunos países europeos son el bonus, no el argumento principal. El argumento es KB y control.
 
 ```html
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 ```
 
-Y en CSS, si aún es Google Fonts, la URL de familia no debería pedir `100..900`. Debería pedir `400;600;700` — los que el `font-weight` del theme usa de verdad. Coverage otra vez: qué pesos se aplican en home y ficha.
+Y en CSS, si aún es Google Fonts, la URL de familia no debería pedir `100..900`. Debería pedir `400;600;700`. los que el `font-weight` del theme usa de verdad. Coverage otra vez: qué pesos se aplican en home y ficha.
 
 <Steps>
   <Step n={1} title="Inventario">
@@ -53,6 +53,6 @@ No precargues las 18. Precargar de más pelea con el hero. Precarga lo que gana 
 
 ## Cómo se lo dices a diseño
 
-> No cambio Poppins. Cambio cuántos Poppins. El look se queda. Bajan 100–200 KB y deja de saltar el título. Si quieren un peso extra para un flyer, se añade ese archivo, no la familia entera otra vez.
+> No cambio Poppins. Cambio cuántos Poppins. El look se queda. Bajan 100-200 KB y deja de saltar el título. Si quieren un peso extra para un flyer, se añade ese archivo, no la familia entera otra vez.
 
 Diseño oye “no tocamos la marca”. Sistemas oye “un `@font-face`”. El dueño oye “más rápido”. El subset hindi desaparece en silencio, que es como deben desaparecer los accidentes de un theme comprado en 2019.
